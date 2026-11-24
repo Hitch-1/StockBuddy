@@ -52,7 +52,7 @@ public class Analyzer {
 
         progress.accept("Reading hot posts on r/ValueInvesting, r/options and r/wallstreetbets...");
         posts = RedditSource.fetchHot(60);
-        sourceStatus.put("Reddit", posts.isEmpty() ? "Could not connect (see README for the free Reddit key)" : "OK - " + posts.size() + " posts read");
+        sourceStatus.put("Reddit", RedditSource.lastStatus);
         int extra = 0;
         for (String t : RedditSource.findTickers(posts, universe)) {
             if (!universe.contains(t) && extra++ < 10) universe.add(t);

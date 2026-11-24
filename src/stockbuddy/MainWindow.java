@@ -455,7 +455,30 @@ public class MainWindow extends JFrame {
             auto.setText(Autostart.isEnabled() ? "Don't start widget with computer" : "Start widget when computer starts");
         });
         btns.add(rover); btns.add(zen); btns.add(folder); btns.add(auto);
-        p.add(btns, BorderLayout.SOUTH);
+
+        JPanel reddit = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+        reddit.setOpaque(false);
+        JLabel rl = new JLabel("Reddit:");
+        rl.setFont(k.font(Font.BOLD, 14));
+        rl.setForeground(k.text());
+        JButton addPosts = button("Add Reddit posts...", "Paste post titles you copied from Reddit (works even when Reddit blocks StockBuddy)");
+        addPosts.addActionListener(e -> addRedditPosts());
+        JButton redditCsv = button("Import Reddit CSV...", "A CSV with a title column (optional: date, subreddit, upvotes)");
+        redditCsv.addActionListener(e -> importRedditCsv());
+        JButton clear = button("Clear my Reddit posts", "Delete the posts you added yourself");
+        clear.addActionListener(e -> {
+            if (JOptionPane.showConfirmDialog(this, "Delete all the Reddit posts you added yourself?", "Clear my Reddit posts",
+                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
+            try { RedditSource.clearManualPosts(); App.refresh(); }
+            catch (Exception ex) { JOptionPane.showMessageDialog(this, "Couldn't delete them: " + ex.getMessage()); }
+        });
+        reddit.add(rl); reddit.add(addPosts); reddit.add(redditCsv); reddit.add(clear);
+
+        JPanel south = new JPanel(new GridLayout(2, 1, 0, 8));
+        south.setOpaque(false);
+        south.add(reddit);
+        south.add(btns);
+        p.add(south, BorderLayout.SOUTH);
         return padded(k, p);
     }
 
@@ -595,6 +618,65 @@ public class MainWindow extends JFrame {
             StockRoverSource.reload();
             WallStreetZenSource.reload();
             JOptionPane.showMessageDialog(this, "Imported " + rows + " stocks from your " + what + " file.\nStockBuddy will now refresh.");
+            App.refresh();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Couldn't import the file: " + e.getMessage());
+        }
+    }
+
+    /** Lets you paste Reddit post titles yourself - handy when Reddit blocks automatic reading. */
+    private void addRedditPosts() {
+        Skin k = App.skin;
+        JComboBox<String> sub = new JComboBox<>(new String[]{"wallstreetbets", "ValueInvesting", "options", "stocks", "investing", "other"});
+        sub.setEditable(true);
+        JTextArea area = new JTextArea(12, 60);
+        area.setLineWrap(true);
+        area.setWrapStyleWord(true);
+        JPanel panel = new JPanel(new BorderLayout(0, 8));
+        JLabel help = new JLabel("<html><div style='width:460px'><b>How:</b> open the subreddit in your browser, copy the titles of the posts "
+                + "you find interesting, and paste them below - <b>one post per line</b>. Tickers like <b>$NVDA</b> or <b>NVDA</b> are "
+                + "recognised automatically. Your posts are used for " + RedditSource.MANUAL_DAYS + " days.<br><br>"
+                + "Tip: a line can start with the subreddit, e.g. <i>r/options: SPY calls look good</i></div></html>");
+        JPanel top = new JPanel(new BorderLayout(0, 8));
+        top.add(help, BorderLayout.NORTH);
+        JPanel subRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 0));
+        subRow.add(new JLabel("Which subreddit are they from?"));
+        subRow.add(sub);
+        top.add(subRow, BorderLayout.SOUTH);
+        panel.add(top, BorderLayout.NORTH);
+        panel.add(new JScrollPane(area), BorderLayout.CENTER);
+        area.setFont(k.font(Font.PLAIN, 14));
+        if (JOptionPane.showConfirmDialog(this, panel, "Add Reddit posts", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE)
+                != JOptionPane.OK_OPTION) return;
+        try {
+            int n = RedditSource.addManualPosts(String.valueOf(sub.getEditor().getItem()), area.getText());
+            if (n == 0) { JOptionPane.showMessageDialog(this, "Nothing to add - paste at least one post title."); return; }
+            JOptionPane.showMessageDialog(this, "Added " + n + " post" + (n == 1 ? "" : "s") + ".\nStockBuddy will now refresh to include them.");
+            App.refresh();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Couldn't save the posts: " + e.getMessage());
+        }
+    }
+
+    private void importRedditCsv() {
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("Choose a CSV file with Reddit posts (needs a 'title' column)");
+        fc.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("CSV files", "csv"));
+        if (fc.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+        try {
+            Path dest = RedditSource.manualFile();
+            Path backup = dest.resolveSibling("reddit.backup.csv");
+            if (Files.exists(dest)) Files.copy(dest, backup, StandardCopyOption.REPLACE_EXISTING);
+            Files.createDirectories(dest.getParent());
+            Files.copy(fc.getSelectedFile().toPath(), dest, StandardCopyOption.REPLACE_EXISTING);
+            int n = RedditSource.manualPosts().size();
+            if (n == 0) {
+                if (Files.exists(backup)) Files.copy(backup, dest, StandardCopyOption.REPLACE_EXISTING); else Files.deleteIfExists(dest);
+                JOptionPane.showMessageDialog(this, "No usable posts found. The file needs a first line with a column called 'title'\n"
+                        + "(optional columns: date, subreddit, upvotes). Dates older than " + RedditSource.MANUAL_DAYS + " days are skipped.");
+                return;
+            }
+            JOptionPane.showMessageDialog(this, "Imported " + n + " Reddit posts (this replaced the posts you had added before).\nStockBuddy will now refresh.");
             App.refresh();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Couldn't import the file: " + e.getMessage());

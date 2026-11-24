@@ -100,12 +100,15 @@ Each source gives a score from -100 to +100. The final score is a weighted avera
 ### WallStreetZen by hand (optional)
 If the Data Sources page says WallStreetZen "could not read", make a CSV in the same format as `data/wallstreetzen.sample.csv`. Then import it with **Data Sources → Import WallStreetZen CSV...**.
 
-### Reddit login (optional, free)
-Reddit sometimes blocks anonymous programs. If the program says Reddit "could not connect":
-1. Go to <https://www.reddit.com/prefs/apps>, click **create app**, and choose **script**.
-2. Before starting StockBuddy, set two environment variables (then start it from that same window):
-   - Windows: `set REDDIT_CLIENT_ID=xxxx` and `set REDDIT_CLIENT_SECRET=yyyy`
-   - Mac/Linux: `export REDDIT_CLIENT_ID=xxxx` and `export REDDIT_CLIENT_SECRET=yyyy`
+### Reddit
+StockBuddy reads Reddit by itself, with no account needed. It tries Reddit's public pages first, then Reddit's public **RSS news feeds**, which often still work when the pages are blocked. The **Data Sources** page shows which one worked.
+
+**Adding posts yourself.** This works even when Reddit blocks StockBuddy completely:
+- **Data Sources → Add Reddit posts...** (on Android: **More → Add Reddit posts**). Copy the titles of posts you find interesting on Reddit and paste them in, **one post per line**. Tickers like `$NVDA` or `NVDA` are recognised automatically. A line can start with the subreddit, for example `r/options: SPY calls look good`.
+- **Import Reddit CSV...** loads a file with a `title` column. The `date` (YYYY-MM-DD), `subreddit` and `upvotes` columns are optional. See `data/reddit.sample.csv`.
+- Your posts are saved in `data/reddit.csv` and used for **7 days**. **Clear my Reddit posts** deletes them.
+
+**Reddit API key (optional).** Since November 2025, Reddit no longer lets people create API keys themselves; they must be requested from Reddit and approved. If you do have an approved key, set the environment variables `REDDIT_CLIENT_ID` and `REDDIT_CLIENT_SECRET` before starting StockBuddy, and it will use the key first.
 
 ### Your watchlist
 Change it on the **My Watchlist** page, or edit `data/watchlist.txt` (one ticker per line). StockBuddy also adds today's biggest movers and the stocks Reddit mentions most, up to 45 stocks in total.

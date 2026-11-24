@@ -50,7 +50,7 @@ import stockbuddy.WallStreetZenSource;
 
 /** The StockBuddy phone app. Pages are drawn as web pages (shared with the desktop app) inside a WebView. */
 public class MainActivity extends Activity implements Droid.Listener {
-    private static final int PICK_ROVER = 11, PICK_ZEN = 12;
+    private static final int PICK_ROVER = 11, PICK_ZEN = 12, PICK_REDDIT = 13;
     private static final String[] IDEA_TABS = {"Best Buys", "Best Sells", "Options", "Shorts", "0DTE"};
     private static final String[][] IDEA_TEXT = {
             {"Best buys today", "Stocks where most sources see good signs. [+] = a source likes it, [-] = a source sees a problem. More stars = sources agree more.", "No stock had enough good signals today. That's OK - waiting is a strategy too."},
@@ -460,7 +460,10 @@ public class MainActivity extends Activity implements Droid.Listener {
                 "Import Stock Rover CSV...",
                 "Import WallStreetZen CSV...",
                 "How to add the home-screen widget",
-                "About & disclaimer"};
+                "About & disclaimer",
+                "Add Reddit posts (paste titles)...",
+                "Import Reddit CSV...",
+                "Clear my Reddit posts"};
         new AlertDialog.Builder(this).setTitle("More").setItems(items, (d, which) -> {
             switch (which) {
                 case 0: show("dictionary"); break;
@@ -482,9 +485,55 @@ public class MainActivity extends Activity implements Droid.Listener {
                         "StockBuddy combines stockanalysis.com, WallStreetZen, Reddit (r/ValueInvesting, r/options, r/wallstreetbets), your Stock Rover export "
                                 + "and StockCharts-style chart signals, and explains them in plain English.\n\nIMPORTANT: this is a learning and research helper, "
                                 + "NOT a financial advisor. It can be wrong, data can be late, and you can lose money. Never invest money you can't afford to lose."); break;
+                case 11: addRedditPosts(); break;
+                case 12: pickFile(PICK_REDDIT); break;
+                case 13:
+                    new AlertDialog.Builder(this).setTitle("Clear my Reddit posts")
+                            .setMessage("Delete all the Reddit posts you added yourself?")
+                            .setPositiveButton("Delete", (dd, w) -> {
+                                try { stockbuddy.RedditSource.clearManualPosts(); Droid.refresh(this, null); }
+                                catch (Exception e) { toast("Couldn't delete them: " + e.getMessage()); }
+                            })
+                            .setNegativeButton("Cancel", null).show();
+                    break;
                 default: break;
             }
         }).show();
+    }
+
+    /** Paste Reddit post titles yourself - works even when Reddit blocks automatic reading. */
+    private void addRedditPosts() {
+        LinearLayout box = new LinearLayout(this);
+        box.setOrientation(LinearLayout.VERTICAL);
+        box.setPadding(dp(20), dp(8), dp(20), 0);
+        TextView help = new TextView(this);
+        help.setText("Open Reddit, copy the titles of posts you find interesting, and paste them below - one post per line. "
+                + "Tickers like $NVDA or NVDA are recognised automatically. Your posts are used for "
+                + stockbuddy.RedditSource.MANUAL_DAYS + " days.");
+        box.addView(help);
+        final EditText sub = new EditText(this);
+        sub.setSingleLine(true);
+        sub.setHint("Subreddit, e.g. wallstreetbets");
+        sub.setText("wallstreetbets");
+        box.addView(sub);
+        final EditText posts = new EditText(this);
+        posts.setHint("Paste post titles here, one per line");
+        posts.setMinLines(5);
+        posts.setGravity(Gravity.TOP);
+        posts.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        box.addView(posts);
+        new AlertDialog.Builder(this).setTitle("Add Reddit posts").setView(box)
+                .setPositiveButton("Add", (d, w) -> {
+                    try {
+                        int n = stockbuddy.RedditSource.addManualPosts(sub.getText().toString(), posts.getText().toString());
+                        if (n == 0) { toast("Nothing to add - paste at least one post title."); return; }
+                        toast("Added " + n + " post" + (n == 1 ? "" : "s") + ". Refreshing...");
+                        Droid.refresh(this, null);
+                    } catch (Exception e) {
+                        toast("Couldn't save the posts: " + e.getMessage());
+                    }
+                })
+                .setNegativeButton("Cancel", null).show();
     }
 
     private void chooseSkin(boolean widget) {
@@ -547,6 +596,7 @@ public class MainActivity extends Activity implements Droid.Listener {
     protected void onActivityResult(int req, int res, Intent data) {
         super.onActivityResult(req, res, data);
         if (res != RESULT_OK || data == null || data.getData() == null) return;
+        if (req == PICK_REDDIT) { importRedditCsv(data.getData()); return; }
         String target = req == PICK_ROVER ? "stockrover.csv" : "wallstreetzen.csv";
         try (InputStream in = getContentResolver().openInputStream(data.getData())) {
             Path dest = AppPaths.data(target);
@@ -556,6 +606,27 @@ public class MainActivity extends Activity implements Droid.Listener {
             StockRoverSource.reload();
             WallStreetZenSource.reload();
             toast("Imported " + rows + " stocks. Refreshing...");
+            Droid.refresh(this, null);
+        } catch (Exception e) {
+            toast("Couldn't import the file: " + e.getMessage());
+        }
+    }
+
+    private void importRedditCsv(Uri uri) {
+        Path dest = stockbuddy.RedditSource.manualFile();
+        Path backup = dest.resolveSibling("reddit.backup.csv");
+        try (InputStream in = getContentResolver().openInputStream(uri)) {
+            Files.createDirectories(dest.getParent());
+            if (Files.exists(dest)) Files.copy(dest, backup, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(in, dest, StandardCopyOption.REPLACE_EXISTING);
+            int n = stockbuddy.RedditSource.manualPosts().size();
+            if (n == 0) {
+                if (Files.exists(backup)) Files.copy(backup, dest, StandardCopyOption.REPLACE_EXISTING); else Files.deleteIfExists(dest);
+                info("No usable posts found", "The file needs a first line with a column called 'title' (optional: date, subreddit, upvotes). "
+                        + "Dates older than " + stockbuddy.RedditSource.MANUAL_DAYS + " days are skipped.");
+                return;
+            }
+            toast("Imported " + n + " Reddit posts. Refreshing...");
             Droid.refresh(this, null);
         } catch (Exception e) {
             toast("Couldn't import the file: " + e.getMessage());

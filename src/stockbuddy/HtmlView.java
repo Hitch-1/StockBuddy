@@ -229,7 +229,9 @@ public final class HtmlView {
          .append("<li><b>Stock Rover</b> needs a paid login, so export a CSV from Stock Rover (with Ticker and Fair Value columns) and click <b>Import Stock Rover CSV</b> below.</li>")
          .append("<li><b>WallStreetZen</b> sometimes blocks programs. You can import a CSV with Ticker, Zen Score and Zen Rating columns instead.</li>")
          .append("<li><b>StockCharts</b> has no public data feed. Its indicators (moving averages, RSI, MACD, SCTR) are calculated by StockBuddy from price history.</li>")
-         .append("<li><b>Reddit</b> may block anonymous readers. A free key from reddit.com/prefs/apps fixes it (see README).</li></ul>");
+         .append("<li><b>Reddit</b> is read automatically (no account needed). If Reddit blocks it, add posts yourself: copy post titles from "
+                 + "Reddit and use <b>Add Reddit posts</b>, or import a CSV with a <i>title</i> column (optional: date, subreddit, upvotes). "
+                 + "Your own posts are used for " + RedditSource.MANUAL_DAYS + " days.</li></ul>");
         return page(k, b.toString());
     }
 
