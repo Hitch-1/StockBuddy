@@ -18,7 +18,10 @@ public class PriceChart extends JPanel {
     private Skin skin;
     private ChartOptions opt = ChartOptions.load();
     private int hover = -1;                 // index of the day under the mouse
-    private int left, plotW, from, count;   // layout from the last paint (for the mouse)
+    private int left, plotW, from, count, to;   // layout from the last paint (for the mouse); days [from, to)
+    private int zoomCount = -1, zoomEnd = -1;   // -1 = follow the Period buttons
+    private Integer dragX;
+    private int dragEnd;
 
     public PriceChart(Skin skin) {
         this.skin = skin;
@@ -32,12 +35,42 @@ public class PriceChart extends JPanel {
                 if (h != hover) { hover = h; repaint(); }
             }
             @Override public void mouseExited(MouseEvent e) { hover = -1; repaint(); }
+            @Override public void mousePressed(MouseEvent e) { dragX = e.getX(); dragEnd = to; }
+            @Override public void mouseReleased(MouseEvent e) { dragX = null; }
+            @Override public void mouseDragged(MouseEvent e) {
+                if (stock == null || dragX == null || plotW <= 0 || count < 2) return;
+                int shift = (int) Math.round((dragX - e.getX()) * (count - 1) / (double) plotW);
+                int n = stock.closes.size();
+                zoomCount = count;
+                zoomEnd = Math.max(count, Math.min(n, dragEnd + shift));
+                hover = -1;
+                repaint();
+            }
+            @Override public void mouseClicked(MouseEvent e) { if (e.getClickCount() == 2) resetZoom(); }
+            @Override public void mouseWheelMoved(java.awt.event.MouseWheelEvent e) {
+                if (stock == null || count < 2 || plotW <= 0) return;
+                int n = stock.closes.size();
+                double f = e.getWheelRotation() < 0 ? 0.8 : 1.25;                 // wheel up = zoom in
+                int newCount = Math.max(10, Math.min(n, (int) Math.round(count * f)));
+                double rel = Math.max(0, Math.min(1, (e.getX() - left) / (double) plotW));
+                int anchor = from + (int) Math.round(rel * (count - 1));          // keep the day under the mouse in place
+                int newFrom = anchor - (int) Math.round(rel * (newCount - 1));
+                int newEnd = Math.max(newCount, Math.min(n, newFrom + newCount));
+                zoomCount = newCount;
+                zoomEnd = newEnd;
+                repaint();
+            }
         };
         addMouseListener(m);
         addMouseMotionListener(m);
+        addMouseWheelListener(m);
+        setToolTipText("Scroll to zoom in or out, drag to move through time, double-click to reset");
     }
 
-    public void show(Stock s, Skin k) { stock = s; skin = k; hover = -1; repaint(); }
+    public void show(Stock s, Skin k) { stock = s; skin = k; hover = -1; zoomCount = zoomEnd = -1; repaint(); }
+
+    /** Back to the period chosen with the Period buttons. */
+    public void resetZoom() { zoomCount = zoomEnd = -1; repaint(); }
 
     public void setOptions(ChartOptions o) { opt = o; repaint(); }
 
@@ -62,8 +95,9 @@ public class PriceChart extends JPanel {
         List<Double> c = stock.closes;
         int n = c.size();
         boolean candles = opt.type.equals("candles") && stock.hasCandles();
-        from = Math.max(0, n - opt.range);
-        count = n - from;
+        to = zoomEnd > 0 ? Math.min(zoomEnd, n) : n;
+        count = Math.min(zoomCount > 0 ? zoomCount : opt.range, to);
+        from = to - count;
 
         // indicator lines over the whole history (so they're ready at the left edge)
         List<Object[]> lines = new ArrayList<>();   // {values, colour, label}
@@ -74,7 +108,7 @@ public class PriceChart extends JPanel {
         double[][] bb = opt.bollinger ? ChartOptions.bollinger(c) : null;
 
         double lo = Double.MAX_VALUE, hi = -Double.MAX_VALUE;
-        for (int i = from; i < n; i++) {
+        for (int i = from; i < to; i++) {
             lo = Math.min(lo, candles ? stock.lows.get(i) : c.get(i));
             hi = Math.max(hi, candles ? stock.highs.get(i) : c.get(i));
             for (Object[] l : lines) { double v = ((double[]) l[0])[i]; if (!Double.isNaN(v)) { lo = Math.min(lo, v); hi = Math.max(hi, v); } }
@@ -99,18 +133,22 @@ public class PriceChart extends JPanel {
             g.setColor(skin.muted());
             g.drawString(String.format("%,.2f", hi - (hi - lo) * i / 4), left + plotW + 6, y + 4);
         }
-        g.drawString(ChartOptions.RANGE_NAMES[rangeIndex()] + " ago", left, getHeight() - 7);
-        g.drawString("today", left + plotW - 30, getHeight() - 7);
+        String startTxt = (n - from) + " days ago", endTxt = to == n ? "today" : (n - to) + " days ago";
+        if (zoomCount < 0) startTxt = ChartOptions.RANGE_NAMES[rangeIndex()] + " ago";
+        g.drawString(startTxt, left, getHeight() - 7);
+        g.drawString(endTxt, left + plotW - g.getFontMetrics().stringWidth(endTxt), getHeight() - 7);
+        String hint = zoomCount > 0 ? "Zoomed - double-click to reset" : "Scroll to zoom, drag to move";
+        g.drawString(hint, left + (plotW - g.getFontMetrics().stringWidth(hint)) / 2, getHeight() - 7);
 
         // Bollinger band (shaded)
         if (bb != null) {
             Path2D band = new Path2D.Double();
             boolean started = false;
-            for (int i = from; i < n; i++) if (!Double.isNaN(bb[0][i])) {
+            for (int i = from; i < to; i++) if (!Double.isNaN(bb[0][i])) {
                 double x = x(i), y = y(bb[0][i], lo, hi, top, mainH);
                 if (!started) { band.moveTo(x, y); started = true; } else band.lineTo(x, y);
             }
-            for (int i = n - 1; i >= from; i--) if (!Double.isNaN(bb[1][i])) band.lineTo(x(i), y(bb[1][i], lo, hi, top, mainH));
+            for (int i = to - 1; i >= from; i--) if (!Double.isNaN(bb[1][i])) band.lineTo(x(i), y(bb[1][i], lo, hi, top, mainH));
             if (started) {
                 band.closePath();
                 g.setColor(alpha(skin.muted(), 40));
@@ -121,11 +159,11 @@ public class PriceChart extends JPanel {
             }
         }
 
-        boolean up = c.get(n - 1) >= c.get(from);
+        boolean up = c.get(to - 1) >= c.get(from);
         Color priceCol = up ? skin.good() : skin.bad();
         if (candles) {
             double cw = Math.max(1, plotW / (double) count * 0.65);
-            for (int i = from; i < n; i++) {
+            for (int i = from; i < to; i++) {
                 double o = stock.opens.get(i), cl = c.get(i);
                 Color col = cl >= o ? skin.good() : skin.bad();
                 g.setColor(col);
@@ -139,8 +177,8 @@ public class PriceChart extends JPanel {
             if (opt.type.equals("area")) {
                 Path2D area = new Path2D.Double();
                 area.moveTo(x(from), top + mainH);
-                for (int i = from; i < n; i++) area.lineTo(x(i), y(c.get(i), lo, hi, top, mainH));
-                area.lineTo(x(n - 1), top + mainH);
+                for (int i = from; i < to; i++) area.lineTo(x(i), y(c.get(i), lo, hi, top, mainH));
+                area.lineTo(x(to - 1), top + mainH);
                 area.closePath();
                 g.setPaint(new GradientPaint(0, top, alpha(priceCol, 90), 0, top + mainH, alpha(priceCol, 5)));
                 g.fill(area);
@@ -165,7 +203,7 @@ public class PriceChart extends JPanel {
         if (bb != null) legend(g, lx, skin.muted(), "Bollinger Bands");
 
         // hover readout
-        if (hover >= from && hover < n) {
+        if (hover >= from && hover < to) {
             int hx = (int) x(hover);
             g.setColor(alpha(skin.text(), 90));
             g.setStroke(new BasicStroke(1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10f, new float[]{3f, 3f}, 0f));
@@ -198,10 +236,10 @@ public class PriceChart extends JPanel {
         g.setColor(skin.muted());
         if (opt.lower.equals("volume")) {
             double max = 0;
-            for (int i = from; i < n && i < stock.volumes.size(); i++) max = Math.max(max, stock.volumes.get(i));
+            for (int i = from; i < to && i < stock.volumes.size(); i++) max = Math.max(max, stock.volumes.get(i));
             if (max <= 0) { g.drawString("No volume data", left + 4, top + 14); return; }
             double bw = Math.max(1, plotW / (double) count * 0.7);
-            for (int i = from; i < n && i < stock.volumes.size(); i++) {
+            for (int i = from; i < to && i < stock.volumes.size(); i++) {
                 boolean upDay = i == 0 || c.get(i) >= c.get(i - 1);
                 g.setColor(alpha(upDay ? skin.good() : skin.bad(), 150));
                 double bh = h * stock.volumes.get(i) / max;
@@ -221,13 +259,13 @@ public class PriceChart extends JPanel {
             }
             line(g, r, 0, 100, top, h, new Color(0xb07cff), 1.6f);
             g.setColor(skin.muted());
-            g.drawString("RSI " + (Double.isNaN(r[n - 1]) ? "" : String.format("%.0f", r[n - 1])), left + plotW + 6, top + 12);
+            g.drawString("RSI " + (Double.isNaN(r[to - 1]) ? "" : String.format("%.0f", r[to - 1])), left + plotW + 6, top + 12);
         } else if (opt.lower.equals("macd")) {
             double[][] m = ChartOptions.macd(c);
             double max = 1e-9;
-            for (int i = from; i < n; i++) for (double[] s : m) if (!Double.isNaN(s[i])) max = Math.max(max, Math.abs(s[i]));
+            for (int i = from; i < to; i++) for (double[] s : m) if (!Double.isNaN(s[i])) max = Math.max(max, Math.abs(s[i]));
             double mid = top + h / 2.0, bw = Math.max(1, plotW / (double) count * 0.7);
-            for (int i = from; i < n; i++) {
+            for (int i = from; i < to; i++) {
                 if (Double.isNaN(m[2][i])) continue;
                 double bh = (h / 2.0) * m[2][i] / max;
                 g.setColor(alpha(m[2][i] >= 0 ? skin.good() : skin.bad(), 140));
@@ -252,7 +290,7 @@ public class PriceChart extends JPanel {
     private void line(Graphics2D g, double[] v, double lo, double hi, int top, int h, Color col, float width) {
         Path2D p = new Path2D.Double();
         boolean started = false;
-        for (int i = from; i < v.length; i++) {
+        for (int i = from; i < Math.min(v.length, to); i++) {
             if (Double.isNaN(v[i])) continue;
             double px = x(i), py = y(v[i], lo, hi, top, h);
             if (!started) { p.moveTo(px, py); started = true; } else p.lineTo(px, py);

@@ -34,6 +34,29 @@ public class Stock {
     public int fhStrongBuy = -1, fhBuy, fhHold, fhSell, fhStrongSell;
     public String fhPeriod;
 
+    // r/wallstreetbets sentiment API (Tradestie / nbshare)
+    public int wsbComments = -1;
+    public double wsbScore = Double.NaN;
+    public String wsbLabel;
+
+    // SEC EDGAR (official filings)
+    public double secRevenueGrowth = Double.NaN;   // % change of yearly revenue
+    public double secNetIncome = Double.NaN;       // latest yearly net income (USD)
+    public String secLast10K;                      // date of the latest annual report
+    public int secForm4Count = -1;                 // insider trading reports, last 90 days
+    public int sec8KCount = -1;                    // "major event" reports, last 30 days
+
+    // Alpha Vantage news sentiment
+    public double newsScore = Double.NaN;          // about -1 .. +1
+    public int newsCount;
+    public final List<String> newsHeadlines = new ArrayList<>();
+
+    // Set for the big companies of the other world markets (see WorldStocks)
+    public WorldStocks.Entry world;
+
+    // Any CSV files you added (file name -> column -> value)
+    public final java.util.Map<String, java.util.Map<String, String>> customData = new java.util.LinkedHashMap<>();
+
     // WallStreetZen
     public double zenScore = Double.NaN;
     public String zenRating;                       // A..F

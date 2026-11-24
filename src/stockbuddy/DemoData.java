@@ -90,6 +90,23 @@ public final class DemoData {
                 s.fhSell = (5 - strength) + rnd.nextInt(2);
                 s.fhStrongSell = strength == 1 ? 3 : 0;
                 s.fhPeriod = LocalDate.now().withDayOfMonth(1).toString();
+                // practice SEC numbers, news tone and WallStreetBets buzz
+                s.secRevenueGrowth = drift * 60 + rnd.nextGaussian() * 4;
+                s.secNetIncome = (s.peRatio < 90 ? 1 : -1) * p * shares / s.peRatio;
+                s.secLast10K = LocalDate.now().minusDays(30 + rnd.nextInt(300)).toString();
+                s.secForm4Count = rnd.nextInt(12);
+                s.sec8KCount = rnd.nextInt(4);
+                s.keyStats.put("Revenue growth (SEC, last year)", String.format(java.util.Locale.US, "%+.1f%%", s.secRevenueGrowth));
+                s.keyStats.put("Latest annual report (10-K)", s.secLast10K);
+                s.keyStats.put("Insider trade reports (90 days)", String.valueOf(s.secForm4Count));
+                s.newsScore = Math.max(-0.5, Math.min(0.5, drift * 0.6 + rnd.nextGaussian() * 0.08));
+                s.newsCount = 5 + rnd.nextInt(30);
+                s.newsHeadlines.add(s.name + (s.newsScore > 0 ? " shares climb as analysts lift targets (practice headline)" : " faces questions after weak quarter (practice headline)"));
+                if (rnd.nextInt(3) == 0 || drift > 0.4 || drift < -0.3) {
+                    s.wsbComments = 40 + rnd.nextInt(900);
+                    s.wsbScore = Math.max(-0.5, Math.min(0.5, drift * 0.5 + rnd.nextGaussian() * 0.1));
+                    s.wsbLabel = s.wsbScore >= 0 ? "Bullish" : "Bearish";
+                }
             }
             a.stocks.put(s.ticker, s);
         }
@@ -135,5 +152,40 @@ public final class DemoData {
         a.sourceStatus.put("WallStreetZen", "practice data");
         a.sourceStatus.put("Reddit", "practice posts");
         a.sourceStatus.put("Finnhub", "practice data");
+        a.sourceStatus.put("Economic calendar (ForexFactory)", "practice data");
+        a.sourceStatus.put("WallStreetBets sentiment (WSB API)", "practice data");
+        a.sourceStatus.put("SEC EDGAR (official filings)", "practice data");
+        a.sourceStatus.put("News sentiment (Alpha Vantage)", "practice data");
+        a.events = EconomicCalendar.practice();
+        a.sourceStatus.put("World stocks (16 biggest markets)", "practice data");
+        for (WorldStocks.Entry e : WorldStocks.ALL) {
+            Stock s = new Stock(e.analysedTicker());
+            if (a.stocks.containsKey(s.ticker)) { a.stocks.get(s.ticker).world = e; continue; }
+            s.world = e;
+            s.name = e.name;
+            String t = s.ticker;
+            s.currency = t.endsWith(".T") ? "JPY" : t.endsWith(".SS") ? "CNY" : t.endsWith(".HK") ? "HKD" : t.endsWith(".NS") ? "INR"
+                    : t.endsWith(".KS") ? "KRW" : t.endsWith(".TW") ? "TWD" : t.endsWith(".AX") ? "AUD" : t.endsWith(".DE") || t.endsWith(".PA") ? "EUR" : "USD";
+            Random wr = new Random(seed * 17 + t.hashCode());
+            double drift = wr.nextGaussian() * 0.25, vol = 0.18 + wr.nextDouble() * 0.2;
+            double p = s.currency.equals("KRW") ? 70000 : s.currency.equals("JPY") ? 3000 : s.currency.equals("INR") ? 1500 : 20 + wr.nextInt(300);
+            for (int d = 0; d < 252; d++) {
+                double daily = vol / Math.sqrt(252), open = p * (1 + daily * 0.3 * wr.nextGaussian());
+                p *= Math.exp(drift / 252 * (d > 210 ? 2 : 1) + daily * wr.nextGaussian());
+                s.opens.add(open); s.closes.add(p);
+                s.highs.add(Math.max(open, p) * (1 + Math.abs(wr.nextGaussian()) * daily * 0.5));
+                s.lows.add(Math.min(open, p) * (1 - Math.abs(wr.nextGaussian()) * daily * 0.5));
+                s.volumes.add(1e6 * (2 + wr.nextDouble() * 4));
+            }
+            s.price = p;
+            s.changePct = 100 * (p / s.closes.get(250) - 1);
+            if (e.hasMainUsListing()) {
+                s.peRatio = 8 + wr.nextInt(30);
+                s.analystRating = drift > 0.15 ? "Buy" : drift < -0.15 ? "Hold" : "Buy";
+                s.priceTarget = p * (1 + drift * 0.5 + 0.05);
+            }
+            KeyStats.fromPrices(s);
+            a.stocks.put(s.ticker, s);
+        }
     }
 }

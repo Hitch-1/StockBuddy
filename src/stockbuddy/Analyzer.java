@@ -20,6 +20,8 @@ public class Analyzer {
     public List<RedditSource.Post> posts = new ArrayList<>();
     public final Map<String, List<List<Double>>> intraday = new HashMap<>();
     public final Map<String, String> sourceStatus = new LinkedHashMap<>();
+    public List<EconomicCalendar.Event> events = new ArrayList<>();
+    public Map<String, WsbSentiment.Row> wsb = new LinkedHashMap<>();
     public long finishedAt;
 
     public Analyzer(boolean demo) { this.demo = demo; }
@@ -31,6 +33,8 @@ public class Analyzer {
         } else {
             runLive(progress);
         }
+        for (Stock s : stocks.values()) CustomCsv.apply(s);   // your own CSV files (also in practice mode)
+        sourceStatus.put("Your CSV files", CustomCsv.status());
         for (Stock s : stocks.values()) if (s.hasPrices()) s.tech = Technicals.compute(s.closes, s.volumes);
         stocks.values().removeIf(s -> s.tech == null);
         Scorer.rankSctr(stocks.values());
@@ -41,9 +45,14 @@ public class Analyzer {
     private void runLive(Consumer<String> progress) {
         Http.clearCache();   // always fetch fresh pages on a refresh
         FinnhubSource.resetCounts();
+        SecEdgar.resetCounts();
+        CustomCsv.reload();
         progress.accept("Checking the world's biggest stock markets...");
         int mk = WorldMarkets.load(markets);
         sourceStatus.put("World markets (Yahoo Finance)", mk > 0 ? "OK - " + mk + " markets" : "Could not connect");
+        progress.accept("Reading this week's economic calendar (inflation, jobs, interest rates)...");
+        events = EconomicCalendar.load();
+        sourceStatus.put("Economic calendar (ForexFactory)", EconomicCalendar.lastStatus);
 
         Set<String> universe = new LinkedHashSet<>(readWatchlist());
         progress.accept("Looking at today's biggest movers on stockanalysis.com...");
@@ -59,6 +68,13 @@ public class Analyzer {
         for (String t : RedditSource.findTickers(posts, universe)) {
             if (!universe.contains(t) && extra++ < 10) universe.add(t);
         }
+        progress.accept("Checking today's WallStreetBets sentiment...");
+        wsb = WsbSentiment.load();
+        sourceStatus.put("WallStreetBets sentiment (WSB API)", WsbSentiment.lastStatus);
+        int wsbExtra = 0;
+        for (String t : wsb.keySet()) if (!universe.contains(t) && t.matches("[A-Z]{1,5}") && wsbExtra++ < 5) universe.add(t);
+        int csvExtra = 0;
+        for (String t : CustomCsv.tickers()) if (!universe.contains(t) && csvExtra++ < 15) universe.add(t);
 
         List<String> list = new ArrayList<>(universe).subList(0, Math.min(MAX_STOCKS, universe.size()));
         progress.accept("Downloading prices and ratings for " + list.size() + " stocks (this can take a minute)...");
@@ -74,6 +90,7 @@ public class Analyzer {
                 if (StockRoverSource.load(s)) synchronized (rover) { rover[0]++; }
                 if (WallStreetZenSource.load(s)) synchronized (zen) { zen[0]++; }
                 FinnhubSource.load(s);
+                SecEdgar.load(s);
             }));
         }
         if (FinnhubSource.enabled()) progress.accept("Asking Finnhub about " + list.size() + " stocks (the free plan is slow - about 2 minutes the first time)...");
@@ -82,6 +99,8 @@ public class Analyzer {
             try { f.get(Math.max(1, deadline - System.currentTimeMillis()), TimeUnit.MILLISECONDS); } catch (Exception ignored) {}
         }
         pool.shutdownNow();
+
+        if (WorldStocks.enabled()) loadWorldStocks(progress);
 
         sourceStatus.put("stockanalysis.com", fund[0] > 0 || !movers.isEmpty() ? "OK - data for " + fund[0] + " stocks" : "Could not connect");
         sourceStatus.put("StockCharts-style technicals", "Calculated from price history (StockCharts has no public data feed)");
@@ -92,13 +111,52 @@ public class Analyzer {
                 : FinnhubSource.lastOk > 0 ? "OK - data for " + FinnhubSource.lastOk + " stocks"
                 : "Could not read - check your Finnhub key");
 
+        sourceStatus.put("SEC EDGAR (official filings)", SecEdgar.status());
+        for (Stock s : stocks.values()) WsbSentiment.apply(wsb, s);
+        List<Stock> withPrices = new ArrayList<>();
+        for (Stock s : stocks.values()) if (s.hasPrices()) withPrices.add(s);
+        if (AlphaVantage.enabled()) progress.accept("Asking Alpha Vantage about today's news...");
+        AlphaVantage.load(withPrices, Settings.getInt("alphavantage.perDay", AlphaVantage.DEFAULT_PER_DAY));
+        sourceStatus.put("News sentiment (Alpha Vantage)", AlphaVantage.lastStatus);
+
         RedditSource.score(posts, stocks);
+        TrackRecord.fetchMissingPrices(this);
 
         progress.accept("Checking today's minute-by-minute moves for 0DTE ideas...");
         for (String t : new String[]{"SPY", "QQQ"}) {
             List<List<Double>> d = PriceSource.loadIntraday(t);
             if (d != null) intraday.put(t, d);
         }
+    }
+
+    /** The biggest companies of the other world markets: prices + chart analysis (+ company numbers when listed in the US). */
+    private void loadWorldStocks(Consumer<String> progress) {
+        progress.accept("Checking the biggest companies of the world's largest stock markets...");
+        ExecutorService pool = Executors.newFixedThreadPool(6);
+        List<Future<?>> jobs = new ArrayList<>();
+        int ok = 0;
+        for (WorldStocks.Entry e : WorldStocks.ALL) {
+            String t = e.analysedTicker();
+            Stock existing = stocks.get(t);
+            if (existing != null) { existing.world = e; continue; }
+            Stock s = new Stock(t);
+            s.world = e;
+            s.name = e.name;
+            stocks.put(s.ticker, s);
+            jobs.add(pool.submit(() -> {
+                if (!PriceSource.loadDaily(s)) return;
+                if (e.hasMainUsListing()) StockAnalysisSource.loadFundamentals(s);
+                s.name = e.name;
+            }));
+        }
+        long deadline = System.currentTimeMillis() + 90_000;
+        for (Future<?> f : jobs) {
+            try { f.get(Math.max(1, deadline - System.currentTimeMillis()), TimeUnit.MILLISECONDS); ok++; } catch (Exception ignored) {}
+        }
+        pool.shutdownNow();
+        int priced = 0;
+        for (Stock s : stocks.values()) if (s.world != null && s.hasPrices()) priced++;
+        sourceStatus.put("World stocks (16 biggest markets)", priced > 0 ? "OK - " + priced + " big companies from " + WorldStocks.ALL.size() + " checked" : "Could not download their prices");
     }
 
     public static List<String> readWatchlist() {
@@ -136,6 +194,9 @@ public class Analyzer {
         StockRoverSource.load(s);
         WallStreetZenSource.load(s);
         FinnhubSource.load(s);
+        SecEdgar.load(s);
+        WsbSentiment.apply(wsb, s);
+        CustomCsv.apply(s);
         Map<String, Stock> one = java.util.Collections.singletonMap(t, s);
         RedditSource.score(posts, one);
         s.tech = Technicals.compute(s.closes, s.volumes);

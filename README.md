@@ -30,8 +30,11 @@ A window opens with a menu on the left:
 |---|---|
 | **Today's Ideas** | Tabs for **Best Buys**, **Sells & Shorts**, **Best Calls**, **Best Puts** and **0DTE**. Each idea shows the company name, with the recommended action underneath. It says *why*, *how to do it*, and *how risky it is*. Sells that are also short candidates are marked **SHORT** |
 | **World Markets** | The 16 biggest stock markets with their **index price**, updated every minute (some exchanges are a few minutes delayed). Also whether each is open right now, and how it's doing today and over the last month |
+| **World Stocks** | The biggest companies of the other 13 big markets (Canada, Brazil, UK, Germany, France, Eurozone, Japan, China, Hong Kong, India, Korea, Taiwan, Australia), today's verdict, and **where you can buy them**: a US listing (easiest), the home exchange (needs an international broker), or a whole-country ETF. Turn this off with **Data Sources → Include world stocks** to refresh faster |
+| **Economic Calendar** | This week's big economic news (inflation, jobs reports, interest-rate decisions...) from the ForexFactory calendar, with what each event means. On days with big US news, the ideas and 0DTE show a warning |
 | **Look Up a Stock** | A chart you can customise (see below), **key statistics** like on Yahoo Finance (day's range, market cap, beta, P/E, EPS, dividend, earnings date…), and a plain-English explanation of what every source says. Includes a **★ Add to My Watchlist** button |
-| **All Stocks** | Every stock checked, ranked best to worst. Double-click a row for details |
+| **Track Record** | How StockBuddy's past ideas actually turned out: every day's buys, sells, calls and puts are remembered with their price, so you can see what share went the right way |
+| **All Stocks** | Every stock checked, with its verdict. Click a column title to sort; double-click a row for details |
 | **Dictionary** | Investing words explained simply, with a search box |
 | **My Watchlist** | Add or remove the stocks that are always checked. Changes are saved straight away. **Double-click** a stock to look it up |
 | **Data Sources** | Which websites worked, plus buttons to import your Stock Rover / WallStreetZen / Reddit CSV files and to add your free Finnhub key |
@@ -53,7 +56,7 @@ Above the chart on **Look Up a Stock** (on Android: under the chart):
 - **Lines:** SMA 20 / 50 / 200 (moving averages), EMA 20, and Bollinger Bands.
 - **Bottom panel:** nothing, Volume, RSI or MACD.
 
-Your choices are remembered. On desktop, move the mouse over the chart to read each day's open, high, low, close and volume.
+Your choices are remembered. On desktop, move the mouse over the chart to read each day's open, high, low, close and volume. **Zoom:** scroll the mouse wheel to zoom in or out around the mouse, drag to move through time, and double-click to reset. On a phone, pinch to zoom, or use the 2W period.
 
 ### The desktop widget
 
@@ -98,9 +101,14 @@ When it's started this way, StockBuddy keeps its files (watchlist, CSV imports, 
 | **WallStreetZen** | Zen Score (0–100) and Zen Rating (A–F) | Read from the website. If the site blocks the program, you can type the numbers into a CSV |
 | **Reddit** (r/ValueInvesting, r/options, r/wallstreetbets) | Which stocks people talk about and whether the mood is positive or negative | Reads the "hot" posts. Each subreddit gets a different trust level: r/wallstreetbets counts least, because it's very hype-driven |
 | **Finnhub.io** (optional, free key) | Wall Street analyst recommendations (strong buy … strong sell), plus financial ratios like profit margin, debt/equity and beta | Get a free key at [finnhub.io/register](https://finnhub.io/register), then use **Data Sources → Add Finnhub key** (Android: **More → Finnhub key**). The key is saved only on your device. The free plan allows 60 requests a minute, so the first refresh with Finnhub takes about 2 minutes; answers are reused for 6 hours |
+| **WallStreetBets sentiment API** (no key) | The ~50 stocks most discussed on r/wallstreetbets today, with comment counts and a bullish/bearish score | From the public-apis list (nbshare / Tradestie). Several addresses are tried, because the service has moved over time |
+| **SEC EDGAR** (no key) | Official company reports: yearly revenue growth and profit, the latest annual report, insider-trading reports (Form 4) and major-event reports (8-K) | US stocks only. If sec.gov refuses, add your email under **Data Sources → SEC email** (it is only sent to sec.gov) |
+| **Alpha Vantage** (optional, free key) | News sentiment: is recent news about the company positive or negative? Plus a couple of headlines | Free key at [alphavantage.co](https://www.alphavantage.co/support/#api-key). The free plan allows about 25 requests a **day**, so StockBuddy checks the first 8 stocks of your list and remembers the answers all day |
+| **Economic calendar** (no key) | This week's big economic events | ForexFactory's public weekly calendar |
+| **Any CSV** | Anything you have in a spreadsheet | **Data Sources → Add any CSV...** (Android: **More → Add any CSV**). The only requirement is a column called Ticker or Symbol. All columns are shown on the stock's page. Columns named like *score / rating / grade*, *recommendation / sentiment* or *target / fair value* also count in the score |
 | **Yahoo Finance** (extra) | Daily prices and candles, minute-by-minute prices, world market indexes | Needed because none of the sites above offer free price history |
 
-Each source gives a score from -100 to +100. The final score is a weighted average: **charts 30%, company numbers 25%, Stock Rover 15%, WallStreetZen 15%, Finnhub 15%, Reddit 15%** (these add up to more than 100%, so each is divided by the total). If a source is missing, the others share its weight. The **confidence stars** show how many sources had data, and whether they agree.
+Each source gives a score from -100 to +100. The final score is a weighted average: **charts 30%, company numbers 25%, Stock Rover 15%, WallStreetZen 15%, Finnhub 15%, Reddit 15%, and 10% each for WallStreetBets sentiment, SEC, news sentiment and each of your CSV files** (these add up to more than 100%, so each is divided by the total). If a source is missing, the others share its weight. A stock needs at least two sources before it can appear as a buy or sell idea. Calls, puts and shorts are only suggested for stocks that trade on a big US exchange. The **confidence stars** show how many sources had data, and whether they agree.
 
 ### Adding your Stock Rover data (optional)
 1. In Stock Rover, open a screener, watchlist or portfolio.

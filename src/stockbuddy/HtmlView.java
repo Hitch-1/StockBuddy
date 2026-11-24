@@ -26,7 +26,11 @@ public final class HtmlView {
 
     /** Tab i's page. */
     public static String ideasTab(Palette k, Advisor.Plan p, int i, boolean demo) {
-        return ideas(k, IDEA_TEXT[i][0], IDEA_TEXT[i][1], ideaLists(p).get(i), IDEA_TEXT[i][2], demo);
+        String html = ideas(k, IDEA_TEXT[i][0], IDEA_TEXT[i][1], ideaLists(p).get(i), IDEA_TEXT[i][2], demo);
+        if (p.newsWarning == null) return html;
+        String banner = "<p class=banner><b>&#9888; " + esc(p.newsWarning) + "</b> <a href='sb://page/calendar'>See the Economic Calendar &rarr;</a></p>";
+        int at = html.indexOf("</h1>");
+        return at < 0 ? html : html.substring(0, at + 5) + banner + html.substring(at + 5);
     }
 
     static String page(Palette k, String body) {
@@ -111,13 +115,126 @@ public final class HtmlView {
              .append("</span><span class=muted style='font-size:10pt'> &middot; ").append(m.localTime()).append("</span></td><td class=num><b>")
              .append(WorldMarkets.price(m.price)).append("</b></td><td class=num>").append(pct(m.changePct)).append("</td><td class=num>").append(pct(m.monthPct)).append("</td></tr>");
         }
-        b.append("</table></div><p class=muted>An \"index\" is a basket of a country's biggest companies. Asian markets open first, "
-                + "then Europe, then the Americas.</p>");
+        b.append("</table></div><p><a href='sb://page/worldstocks'>The biggest companies of each market, and where to buy them &rarr;</a></p>"
+                + "<p class=muted>An \"index\" is a basket of a country's biggest companies. Asian markets open first, then Europe, then the Americas.</p>");
+        return page(k, b.toString());
+    }
+
+    /** This week's economic calendar, with plain-English explanations. */
+    public static String calendar(Palette k, Analyzer a) {
+        StringBuilder b = new StringBuilder("<h1>Economic calendar</h1>");
+        b.append("<p class=muted>Big economic news (inflation, jobs, interest rates) can move whole markets in seconds - especially "
+                + "<b class=bad>high-impact</b> events. Times are shown in your own time zone. Source: ForexFactory"
+                + (a.demo ? " <span class=warn>(practice data)</span>" : "") + ".</p>");
+        if (a.events.isEmpty()) return page(k, b.append("<div class=card>No calendar data right now. Check the Data Sources page.</div>").toString());
+        java.util.List<EconomicCalendar.Event> big = EconomicCalendar.todaysBigUsEvents(a.events);
+        if (!big.isEmpty()) b.append("<p class=banner><b>&#9888; Big US news today.</b> Be extra careful with short-term trades and 0DTE options around these times.</p>");
+        java.time.ZoneId me = java.time.ZoneId.systemDefault();
+        java.time.LocalDate today = java.time.LocalDate.now(me), shown = null;
+        java.time.format.DateTimeFormatter dayFmt = java.time.format.DateTimeFormatter.ofPattern("EEEE, MMMM d", java.util.Locale.US);
+        boolean open = false;
+        for (EconomicCalendar.Event e : a.events) {
+            if (!e.high() && !e.medium()) continue;   // low-impact news rarely matters for beginners
+            java.time.ZonedDateTime local = e.time == null ? null : e.time.withZoneSameInstant(me);
+            java.time.LocalDate d = local != null ? local.toLocalDate() : e.day;
+            if (d == null) continue;
+            if (!d.equals(shown)) {
+                if (open) b.append("</table></div>");
+                b.append("<h2>").append(d.format(dayFmt)).append(d.equals(today) ? " &middot; TODAY" : "").append("</h2><div class=card><table class=grid>");
+                shown = d; open = true;
+            }
+            String ex = EconomicCalendar.explain(e.title);
+            b.append("<tr><td width=60 style='white-space:nowrap;width:60px'>").append(local == null ? "All day" : local.toLocalTime().toString()).append("</td><td>")
+             .append("<b class=").append(e.high() ? "bad" : "warn").append(">").append(e.high() ? "HIGH" : "Medium").append("</b> &middot; ")
+             .append(esc(EconomicCalendar.region(e.country))).append(": <b>").append(esc(e.title)).append("</b>");
+            if (!ex.isEmpty()) b.append("<br><span class=muted style='font-size:10.5pt'>").append(esc(ex)).append("</span>");
+            StringBuilder nums = new StringBuilder();
+            if (!e.forecast.isEmpty()) nums.append("Expected ").append(esc(e.forecast)).append(" &nbsp; ");
+            if (!e.previous.isEmpty()) nums.append("Last time ").append(esc(e.previous)).append(" &nbsp; ");
+            if (!e.actual.isEmpty()) nums.append("<b>Actual ").append(esc(e.actual)).append("</b>");
+            if (nums.length() > 0) b.append("<br><span style='font-size:10.5pt'>").append(nums).append("</span>");
+            b.append("</td></tr>");
+        }
+        if (open) b.append("</table></div>");
+        b.append("<p class=muted>Tip: when the actual number is very different from what was expected, prices usually move the most.</p>");
+        return page(k, b.toString());
+    }
+
+    /** The biggest companies of the other world markets, with where to buy them. */
+    public static String worldStocks(Palette k, Analyzer a) {
+        StringBuilder b = new StringBuilder("<h1>World stocks</h1><p class=muted>The biggest companies of the world's largest stock markets "
+                + "(US companies are in your watchlist), what StockBuddy thinks of them today, and <b>where you can buy them</b>. "
+                + "Tap a name for the full explanation and chart." + (a.demo ? " <span class=warn>(practice data)</span>" : "") + "</p>");
+        String market = null;
+        boolean open = false;
+        for (WorldStocks.Entry e : WorldStocks.ALL) {
+            Stock s = a.stocks.get(e.analysedTicker());
+            if (!e.market.equals(market)) {
+                if (open) b.append("</div>");
+                WorldMarkets.Market m = null;
+                for (WorldMarkets.Market x : a.markets) if (x.symbol.equals(e.market)) m = x;
+                b.append("<h2>").append(esc(WorldStocks.marketName(e.market))).append("</h2>");
+                if (m != null) b.append("<p class=muted style='font-size:10.5pt'>Index ").append(WorldMarkets.price(m.price)).append(" &nbsp;")
+                        .append(pct(m.changePct)).append(" today &middot; ").append(m.isOpenNow() ? "<b class=good>open now</b>" : "closed now").append("</p>");
+                b.append("<div>");
+                market = e.market;
+                open = true;
+            }
+            b.append("<div class=card><b><a href='sb://stock/").append(esc(e.analysedTicker())).append("'>").append(esc(e.name)).append("</a></b> <span class=muted>(")
+             .append(esc(e.analysedTicker())).append(")</span>");
+            if (s != null && s.tech != null) {
+                String cls = s.score >= 0.2 ? "good" : s.score <= -0.2 ? "bad" : "warn";
+                b.append(" &nbsp; ").append(esc(Advisor.money(s))).append(" &nbsp;").append(pct(s.changePct)).append(" &nbsp; <b class=").append(cls).append(">")
+                 .append(esc(Scorer.verdict(s.score))).append("</b>");
+            } else b.append(" &nbsp; <span class=muted>no price data right now</span>");
+            b.append("<ul style='margin-top:6px'>");
+            for (String h : e.howToBuy()) b.append("<li>").append(esc(h)).append("</li>");
+            b.append("</ul></div>");
+        }
+        if (open) b.append("</div>");
+        b.append("<p class=muted>Prices of stocks analysed on their home exchange are in local currency. Buying abroad can add currency-exchange "
+                + "costs and different taxes - check with your broker.</p>");
+        return page(k, b.toString());
+    }
+
+    /** How StockBuddy's past ideas actually turned out. */
+    public static String trackRecord(Palette k, Analyzer a) {
+        java.util.List<TrackRecord.Pick> picks = TrackRecord.withPrices(a);
+        StringBuilder b = new StringBuilder("<h1>Track record</h1><p class=muted>Every day StockBuddy remembers its ideas and the price at that moment. "
+                + "Here you can see how they actually did - the honest way to learn how much to trust the signals. It gets more useful the longer you use the app."
+                + (a.demo ? " <span class=warn>(practice data)</span>" : "") + "</p>");
+        if (picks.isEmpty())
+            return page(k, b.append("<div class=card>Nothing yet - your first ideas are saved today. Come back in a few days!</div>").toString());
+        b.append("<div class=card><table class=grid><tr><th>Ideas older than today</th><th class=num>Went the right way</th><th class=num>Average move</th></tr>");
+        String[] names = {"Buys (want: up)", "Sells (want: down)", "Calls (want: up)", "Puts (want: down)"};
+        int i = 0;
+        for (java.util.Map.Entry<String, double[]> e : TrackRecord.summary(picks).entrySet()) {
+            double[] v = e.getValue();
+            String name = names[i++];
+            if (v[0] == 0) { b.append("<tr><td>").append(name).append("</td><td class=num class=muted>-</td><td class=num>-</td></tr>"); continue; }
+            double rate = 100 * v[1] / v[0];
+            b.append("<tr><td>").append(name).append(" &middot; ").append((int) v[0]).append("</td><td class=num><b class=").append(rate >= 55 ? "good" : rate < 45 ? "bad" : "warn")
+             .append(">").append(String.format("%.0f%%", rate)).append("</b></td><td class=num>").append(pct(v[2])).append("</td></tr>");
+        }
+        b.append("</table><p class=muted style='font-size:10pt'>About 50% is what you'd expect from a coin flip. A few weeks of data is still very little - "
+                + "markets go through good and bad spells.</p></div>");
+        b.append("<h2>Every idea (last ").append(TrackRecord.SHOW_DAYS).append(" days)</h2><div class=card><table class=grid><tr><th>Idea</th><th class=num>Then</th><th class=num>Since</th></tr>");
+        java.util.List<TrackRecord.Pick> sorted = new java.util.ArrayList<>(picks);
+        sorted.sort((x, y) -> y.date.compareTo(x.date));
+        for (TrackRecord.Pick p : sorted) {
+            Boolean w = p.worked();
+            long ago = TrackRecord.daysAgo(p);
+            b.append("<tr><td><b>").append(esc(p.kind)).append("</b> <a href='sb://stock/").append(esc(p.ticker)).append("'>").append(esc(p.ticker)).append("</a> <span class=muted>")
+             .append(esc(p.name)).append("<br>").append(ago == 0 ? "today" : ago + (ago == 1 ? " day ago" : " days ago")).append("</span></td><td class=num>")
+             .append(String.format(java.util.Locale.US, "%,.2f", p.price)).append("</td><td class=num>").append(pct(p.change()))
+             .append(w == null || ago == 0 ? "" : w ? " <b class=good>&#10003;</b>" : " <b class=bad>&#10007;</b>").append("</td></tr>");
+        }
+        b.append("</table></div>");
         return page(k, b.toString());
     }
 
     public static String ranking(Palette k, Analyzer a) {
-        StringBuilder b = new StringBuilder("<h1>Every stock, best to worst</h1><p class=muted>Tap a ticker for the full explanation.</p>");
+        StringBuilder b = new StringBuilder("<h1>Every stock I checked</h1><p class=muted>Tap a ticker for the full explanation.</p>");
         java.util.List<Stock> list = new java.util.ArrayList<>(a.stocks.values());
         list.sort((x, y) -> Double.compare(y.score, x.score));
         b.append("<div class=card><table class=grid><tr><th>Stock</th><th class=num>Price</th><th>Verdict</th></tr>");
@@ -324,6 +441,17 @@ public final class HtmlView {
                  .append(help == null ? "" : "<br><span style='font-size:9.5pt'>" + esc(help) + "</span>")
                  .append("</td><td class=num><b>").append(esc(st[1])).append("</b></td></tr>");
             }
+            b.append("</table></div>");
+        }
+        if (!s.newsHeadlines.isEmpty()) {
+            b.append("<h2>In the news</h2><ul>");
+            for (String h : s.newsHeadlines) b.append("<li>").append(esc(h)).append("</li>");
+            b.append("</ul>");
+        }
+        for (java.util.Map.Entry<String, java.util.Map<String, String>> f : s.customData.entrySet()) {
+            b.append("<h2>From your CSV file: ").append(esc(f.getKey())).append("</h2><div class=card><table class=grid>");
+            for (java.util.Map.Entry<String, String> c : f.getValue().entrySet())
+                b.append("<tr><td class=muted>").append(esc(c.getKey())).append("</td><td class=num><b>").append(esc(c.getValue())).append("</b></td></tr>");
             b.append("</table></div>");
         }
         b.append("<h2>What each source says</h2>");

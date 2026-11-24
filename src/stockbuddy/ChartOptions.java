@@ -10,8 +10,8 @@ import java.util.List;
 public final class ChartOptions {
     public static final String[] TYPES = {"line", "candles", "area"};
     public static final String[] TYPE_NAMES = {"Line", "Candles", "Area"};
-    public static final int[] RANGES = {21, 63, 126, 252};
-    public static final String[] RANGE_NAMES = {"1M", "3M", "6M", "1Y"};
+    public static final int[] RANGES = {10, 21, 63, 126, 252};
+    public static final String[] RANGE_NAMES = {"2W", "1M", "3M", "6M", "1Y"};
     public static final String[] OVERLAYS = {"sma20", "sma50", "sma200", "ema20", "bollinger"};
     public static final String[] OVERLAY_NAMES = {"SMA 20", "SMA 50", "SMA 200", "EMA 20", "Bollinger"};
     public static final String[] LOWERS = {"none", "volume", "rsi", "macd"};

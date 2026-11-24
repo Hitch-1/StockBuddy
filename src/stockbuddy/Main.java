@@ -55,7 +55,7 @@ public final class Main {
             System.out.println("    1) See today's recommendations (buys, sells, options, shorts, 0DTE)");
             System.out.println("    2) See how the world's stock markets are doing");
             System.out.println("    3) Look up one stock and get a full explanation");
-            System.out.println("    4) Show every stock I checked, ranked best to worst");
+            System.out.println("    4) Show every stock I checked");
             System.out.println("    5) Beginner's dictionary (what do these words mean?)");
             System.out.println("    6) Save today's report as a web page");
             System.out.println("    7) Edit my watchlist");
@@ -201,7 +201,7 @@ public final class Main {
     static String plainSummary(Stock s) { return Scorer.plainSummary(s); }
 
     private static void printRanking() {
-        Ui.title("EVERY STOCK I CHECKED - best to worst");
+        Ui.title("EVERY STOCK I CHECKED");
         System.out.printf("  %-4s %-8s %-28s %10s %9s  %-20s %s%n", "#", "Ticker", "Name", "Price", "Today", "Verdict", "Conf.");
         List<Stock> list = new ArrayList<>(analyzer.stocks.values());
         list.sort((p, q) -> Double.compare(q.score, p.score));
