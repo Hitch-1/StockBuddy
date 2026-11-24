@@ -23,11 +23,11 @@ import java.util.Map;
 
 /** The main StockBuddy window. */
 public class MainWindow extends JFrame {
-    private static final String[] PAGES = {"Today's Ideas", "World Markets", "Look Up a Stock", "All Stocks",
-            "Dictionary", "My Watchlist", "Data Sources"};
+    private static final String[] PAGES = {"Today's Ideas", "World Markets", "World Stocks", "Economic Calendar", "Look Up a Stock",
+            "All Stocks", "Track Record", "Dictionary", "My Watchlist", "Data Sources"};
     private static final String[] PAGE_HINTS = {"Buys, sells, options, shorts and 0DTE", "The 16 biggest stock markets",
-            "Full explanation and chart", "Every stock, best to worst", "Investing words made simple",
-            "Stocks you always want checked", "Which websites worked"};
+            "Big companies abroad + where to buy", "Big news this week", "Full explanation and chart", "Every stock checked today",
+            "How past ideas turned out", "Investing words made simple", "Stocks you always want checked", "Which websites worked"};
 
     private String currentPage = PAGES[0];
     private String lookupTicker;
@@ -48,7 +48,7 @@ public class MainWindow extends JFrame {
     private final List<JEditorPane> ideaPanes = new ArrayList<>();
     private JLabel worldMood, worldUpdated;
     private DefaultTableModel worldModel, allModel;
-    private JEditorPane lookupPane, glossaryPane, sourcesPane;
+    private JEditorPane lookupPane, glossaryPane, sourcesPane, worldStocksPane, calendarPane, trackPane;
     private PriceChart chart;
     private JComboBox<String> lookupBox;
     private DefaultListModel<String> watchModel;
@@ -87,18 +87,27 @@ public class MainWindow extends JFrame {
         JPanel root = new JPanel(new BorderLayout());
         root.setBackground(k.bg());
         root.add(header(k), BorderLayout.NORTH);
-        root.add(sidebar(k), BorderLayout.WEST);
+        JScrollPane side = new JScrollPane(sidebar(k), ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        side.setBorder(BorderFactory.createEmptyBorder());
+        side.getVerticalScrollBar().setUnitIncrement(16);
+        root.add(side, BorderLayout.WEST);
 
         cards = new CardLayout();
         cardPanel = new JPanel(cards);
         cardPanel.setBackground(k.bg());
-        cardPanel.add(ideasPage(k), PAGES[0]);
-        cardPanel.add(worldPage(k), PAGES[1]);
-        cardPanel.add(lookupPage(k), PAGES[2]);
-        cardPanel.add(allPage(k), PAGES[3]);
-        cardPanel.add(glossaryPage(k), PAGES[4]);
-        cardPanel.add(watchlistPage(k), PAGES[5]);
-        cardPanel.add(sourcesPage(k), PAGES[6]);
+        worldStocksPane = htmlPane();
+        calendarPane = htmlPane();
+        trackPane = htmlPane();
+        cardPanel.add(ideasPage(k), "Today's Ideas");
+        cardPanel.add(worldPage(k), "World Markets");
+        cardPanel.add(padded(k, scroll(worldStocksPane)), "World Stocks");
+        cardPanel.add(padded(k, scroll(calendarPane)), "Economic Calendar");
+        cardPanel.add(lookupPage(k), "Look Up a Stock");
+        cardPanel.add(allPage(k), "All Stocks");
+        cardPanel.add(padded(k, scroll(trackPane)), "Track Record");
+        cardPanel.add(glossaryPage(k), "Dictionary");
+        cardPanel.add(watchlistPage(k), "My Watchlist");
+        cardPanel.add(sourcesPage(k), "Data Sources");
         root.add(cardPanel, BorderLayout.CENTER);
         root.add(statusBar(k), BorderLayout.SOUTH);
         setContentPane(root);
@@ -202,8 +211,8 @@ public class MainWindow extends JFrame {
             b.setForeground(k.text());
             b.setFont(k.font(Font.PLAIN, 14));
             b.setBorder(new EmptyBorder(8, 14, 8, 10));
-            b.setMaximumSize(new Dimension(250, 58));
-            b.setPreferredSize(new Dimension(240, 58));
+            b.setMaximumSize(new Dimension(250, 52));
+            b.setPreferredSize(new Dimension(240, 52));
             b.setAlignmentX(Component.LEFT_ALIGNMENT);
             b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             b.addActionListener(e -> showPage(p));
@@ -376,7 +385,7 @@ public class MainWindow extends JFrame {
         for (int i = 0; i < ChartOptions.RANGES.length; i++) {
             int v = ChartOptions.RANGES[i];
             JToggleButton b = smallPill(ChartOptions.RANGE_NAMES[i], k, v == o.range);
-            b.addActionListener(e -> { o.range = v; o.save(); chart.repaint(); });
+            b.addActionListener(e -> { o.range = v; o.save(); chart.resetZoom(); });
             ranges.add(b); r1.add(b);
         }
 
@@ -414,7 +423,7 @@ public class MainWindow extends JFrame {
     private JComponent allPage(Skin k) {
         JPanel p = new JPanel(new BorderLayout(0, 10));
         p.setOpaque(false);
-        p.add(label("Every stock I checked, best to worst", k.font(Font.BOLD, 20), k.text()), BorderLayout.NORTH);
+        p.add(label("Every stock I checked", k.font(Font.BOLD, 20), k.text()), BorderLayout.NORTH);
         allModel = new DefaultTableModel(new Object[]{"#", "Ticker", "Name", "Price", "Today", "Verdict", "Score", "Confidence"}, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
             @Override public Class<?> getColumnClass(int c) { return c == 0 ? Integer.class : c == 3 || c == 4 || c == 6 ? Double.class : String.class; }
@@ -611,7 +620,44 @@ public class MainWindow extends JFrame {
             askFinnhubKey();
             fin.setText(FinnhubSource.enabled() ? "Finnhub key: set (change...)" : "Add Finnhub key...");
         });
-        btns.add(rover); btns.add(zen); btns.add(fin); btns.add(folder); btns.add(auto);
+        JButton anyCsv = button("Add any CSV...", "Any CSV with a Ticker or Symbol column becomes a data source");
+        anyCsv.addActionListener(e -> addAnyCsv());
+        JButton noCsv = button("Remove my CSV files", null);
+        noCsv.addActionListener(e -> {
+            if (JOptionPane.showConfirmDialog(this, "Remove all the CSV files you added with \"Add any CSV\"?", "Remove CSV files",
+                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
+            try { CustomCsv.removeAll(); App.refresh(); } catch (Exception ex) { JOptionPane.showMessageDialog(this, "Couldn't remove them: " + ex.getMessage()); }
+        });
+        JButton av = button(AlphaVantage.enabled() ? "Alpha Vantage key: set (change...)" : "Add Alpha Vantage key...", "Free key from alphavantage.co: news sentiment");
+        av.addActionListener(e -> {
+            askAlphaVantageKey();
+            av.setText(AlphaVantage.enabled() ? "Alpha Vantage key: set (change...)" : "Add Alpha Vantage key...");
+        });
+        JButton sec = button(SecEdgar.email().isEmpty() ? "SEC email (optional)..." : "SEC email: set (change...)", "The SEC asks programs to say who is asking");
+        sec.addActionListener(e -> {
+            String v = (String) JOptionPane.showInputDialog(this, "<html><div style='width:380px'>The SEC (sec.gov) asks every program to say who it is. "
+                    + "StockBuddy works without this, but if the SEC data doesn't load, enter your email here. It is only ever sent to sec.gov.</div></html>",
+                    "SEC EDGAR", JOptionPane.PLAIN_MESSAGE, null, null, SecEdgar.email());
+            if (v == null) return;
+            SecEdgar.setEmail(v);
+            sec.setText(SecEdgar.email().isEmpty() ? "SEC email (optional)..." : "SEC email: set (change...)");
+        });
+        JCheckBox world = new JCheckBox("Include world stocks", WorldStocks.enabled());
+        world.setOpaque(false);
+        world.setForeground(k.text());
+        world.setToolTipText("Also analyse the biggest companies of the other 13 big stock markets (refreshing takes a bit longer)");
+        world.addActionListener(e -> { Settings.set("worldStocks", world.isSelected()); App.refresh(); });
+
+        JPanel files = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+        files.setOpaque(false);
+        files.add(label("Your files:", k.font(Font.BOLD, 14), k.text()));
+        files.add(rover); files.add(zen); files.add(anyCsv); files.add(noCsv);
+        btns.add(label("Keys & settings:", k.font(Font.BOLD, 14), k.text()));
+        btns.add(fin); btns.add(av); btns.add(sec); btns.add(world);
+        JPanel app = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+        app.setOpaque(false);
+        app.add(label("This computer:", k.font(Font.BOLD, 14), k.text()));
+        app.add(folder); app.add(auto);
 
         JPanel reddit = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
         reddit.setOpaque(false);
@@ -631,10 +677,12 @@ public class MainWindow extends JFrame {
         });
         reddit.add(rl); reddit.add(addPosts); reddit.add(redditCsv); reddit.add(clear);
 
-        JPanel south = new JPanel(new GridLayout(2, 1, 0, 8));
+        JPanel south = new JPanel(new GridLayout(4, 1, 0, 8));
         south.setOpaque(false);
         south.add(reddit);
+        south.add(files);
         south.add(btns);
+        south.add(app);
         p.add(south, BorderLayout.SOUTH);
         return padded(k, p);
     }
@@ -681,6 +729,12 @@ public class MainWindow extends JFrame {
         lookupBox.getEditor().setItem(keep);
 
         sourcesPane.setText(HtmlView.sources(k.palette(), a));
+        worldStocksPane.setText(HtmlView.worldStocks(k.palette(), a));
+        worldStocksPane.setCaretPosition(0);
+        calendarPane.setText(HtmlView.calendar(k.palette(), a));
+        calendarPane.setCaretPosition(0);
+        trackPane.setText(HtmlView.trackRecord(k.palette(), a));
+        trackPane.setCaretPosition(0);
         sourcesPane.setCaretPosition(0);
         if (lookupTicker != null) showStock(a.stocks.get(lookupTicker));
     }
@@ -708,7 +762,7 @@ public class MainWindow extends JFrame {
     }
 
     public void openLookup(String ticker) {
-        showPage(PAGES[2]);
+        showPage("Look Up a Stock");
         lookupBox.getEditor().setItem(ticker);
         doLookup(ticker);
     }
@@ -784,6 +838,46 @@ public class MainWindow extends JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Couldn't import the file: " + e.getMessage());
         }
+    }
+
+    private void addAnyCsv() {
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("Choose any CSV file with a Ticker or Symbol column");
+        fc.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("CSV files", "csv"));
+        if (fc.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) return;
+        try {
+            int n = CustomCsv.add(fc.getSelectedFile().toPath(), fc.getSelectedFile().getName());
+            if (n == 0) {
+                JOptionPane.showMessageDialog(this, "This file has no column called Ticker or Symbol in its first line, so StockBuddy can't use it.");
+                return;
+            }
+            JOptionPane.showMessageDialog(this, "Added \"" + fc.getSelectedFile().getName() + "\" with " + n + " stocks.\n"
+                    + "Its columns appear on each stock's page. Columns like score, rating, recommendation or target are also used in the score.\nStockBuddy will now refresh.");
+            App.refresh();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Couldn't add the file: " + e.getMessage());
+        }
+    }
+
+    private void askAlphaVantageKey() {
+        String k = (String) JOptionPane.showInputDialog(this, "<html><div style='width:400px'><b>Alpha Vantage</b> adds news sentiment: is the news about a company "
+                + "positive or negative?<br><br>Get a free key at <b>alphavantage.co/support/#api-key</b> and paste it below. It is saved only on this computer. "
+                + "The free plan allows about 25 requests a day, so StockBuddy checks your first " + AlphaVantage.DEFAULT_PER_DAY
+                + " stocks and remembers the answers all day.<br><br>Leave it empty to turn it off.</div></html>",
+                "Alpha Vantage key", JOptionPane.PLAIN_MESSAGE, null, null, AlphaVantage.key());
+        if (k == null) return;
+        if (k.trim().isEmpty()) { AlphaVantage.setKey(""); return; }
+        AlphaVantage.setKey(k);
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        new SwingWorker<String, Void>() {
+            @Override protected String doInBackground() { return AlphaVantage.test(k.trim()); }
+            @Override protected void done() {
+                setCursor(Cursor.getDefaultCursor());
+                String err;
+                try { err = get(); } catch (Exception ex) { err = ex.getMessage(); }
+                JOptionPane.showMessageDialog(MainWindow.this, err == null ? "Your Alpha Vantage key works and is saved. Click Refresh data to use it." : err);
+            }
+        }.execute();
     }
 
     /** Asks for the free Finnhub key, tests it, and saves it on this computer only. */
@@ -891,6 +985,8 @@ public class MainWindow extends JFrame {
             if (e.getEventType() != javax.swing.event.HyperlinkEvent.EventType.ACTIVATED || d == null) return;
             if (d.startsWith("sb://stock/")) openLookup(d.substring("sb://stock/".length()));
             else if (d.startsWith("sb://watch/")) addToWatchlist(d.substring("sb://watch/".length()));
+            else if (d.equals("sb://page/calendar")) showPage("Economic Calendar");
+            else if (d.equals("sb://page/worldstocks")) showPage("World Stocks");
         });
         return p;
     }

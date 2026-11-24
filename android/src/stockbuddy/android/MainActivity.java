@@ -52,7 +52,7 @@ import stockbuddy.WallStreetZenSource;
 
 /** The StockBuddy phone app. Pages are drawn as web pages (shared with the desktop app) inside a WebView. */
 public class MainActivity extends Activity implements Droid.Listener {
-    private static final int PICK_ROVER = 11, PICK_ZEN = 12, PICK_REDDIT = 13;
+    private static final int PICK_ROVER = 11, PICK_ZEN = 12, PICK_REDDIT = 13, PICK_CSV = 14;
     private static final String[] IDEA_TABS = HtmlView.IDEA_TABS;
     private static final String[] NAV = {"Ideas", "Markets", "Look up", "All stocks", "More"};
 
@@ -245,6 +245,9 @@ public class MainActivity extends Activity implements Droid.Listener {
         web.setBackgroundColor(c(k.bg()));
         web.getSettings().setJavaScriptEnabled(false);
         web.getSettings().setTextZoom(88);
+        web.getSettings().setSupportZoom(true);              // pinch to zoom (e.g. into the chart)
+        web.getSettings().setBuiltInZoomControls(true);
+        web.getSettings().setDisplayZoomControls(false);
         web.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -354,6 +357,9 @@ public class MainActivity extends Activity implements Droid.Listener {
             case "dictionary": html = HtmlView.glossary(k, filter); break;
             case "watchlist": html = HtmlView.watchlist(k, Analyzer.readWatchlist()); break;
             case "sources": html = HtmlView.sources(k, a); break;
+            case "calendar": html = HtmlView.calendar(k, a); break;
+            case "worldstocks": html = HtmlView.worldStocks(k, a); break;
+            case "track": html = HtmlView.trackRecord(k, a); break;
             default:
                 html = HtmlView.ideasTab(k, plan, ideaTab, a.demo);
         }
@@ -443,6 +449,10 @@ public class MainActivity extends Activity implements Droid.Listener {
 
     private void handleLink(String url) {
         if (url == null) return;
+        if (url.startsWith("sb://page/")) {
+            show(url.substring("sb://page/".length()));
+            return;
+        }
         if (url.startsWith("sb://chart/")) {
             stockbuddy.ChartOptions.applyLink(url);
             render();
@@ -482,47 +492,46 @@ public class MainActivity extends Activity implements Droid.Listener {
 
     // ================================================================= menus
     private void moreMenu(View anchor) {
-        String[] items = {
-                "Dictionary (what do the words mean?)",
-                "My watchlist",
-                "Data sources (which websites worked)",
-                "Practice mode (made-up data): " + (Droid.demo() ? "ON - tap to turn off" : "OFF - tap to turn on"),
-                "App skin...",
-                "Home-screen widget skin...",
-                "Widget see-through...",
-                "Import Stock Rover CSV...",
-                "Import WallStreetZen CSV...",
-                "How to add the home-screen widget",
-                "About & disclaimer",
-                "Add Reddit posts (paste titles)...",
-                "Import Reddit CSV...",
-                "Clear my Reddit posts",
-                "Finnhub key (" + (stockbuddy.FinnhubSource.enabled() ? "set" : "not set") + ")..."};
-        new AlertDialog.Builder(this).setTitle("More").setItems(items, (d, which) -> {
-            switch (which) {
-                case 0: show("dictionary"); break;
-                case 1: show("watchlist"); break;
-                case 2: show("sources"); break;
-                case 3:
+        final String[][] items = {
+                {"Economic calendar (big news this week)", "calendar"},
+                {"World stocks (and where to buy them)", "worldstocks"},
+                {"Track record (how past ideas did)", "track"},
+                {"Dictionary (what do the words mean?)", "dictionary"},
+                {"My watchlist", "watchlist"},
+                {"Data sources (which websites worked)", "sources"},
+                {"Practice mode (made-up data): " + (Droid.demo() ? "ON - tap to turn off" : "OFF - tap to turn on"), "practice"},
+                {"App skin...", "skin"},
+                {"Home-screen widget skin...", "wskin"},
+                {"Widget see-through...", "opacity"},
+                {"Add Reddit posts (paste titles)...", "redditadd"},
+                {"Import Reddit CSV...", "redditcsv"},
+                {"Clear my Reddit posts", "redditclear"},
+                {"Add any CSV as a data source...", "anycsv"},
+                {"Remove my CSV files", "nocsv"},
+                {"Import Stock Rover CSV...", "rover"},
+                {"Import WallStreetZen CSV...", "zen"},
+                {"Finnhub key (" + (stockbuddy.FinnhubSource.enabled() ? "set" : "not set") + ")...", "finnhub"},
+                {"Alpha Vantage key (" + (stockbuddy.AlphaVantage.enabled() ? "set" : "not set") + ")...", "alpha"},
+                {"SEC email (optional)...", "sec"},
+                {"World stocks: " + (stockbuddy.WorldStocks.enabled() ? "ON - tap to turn off" : "OFF - tap to turn on"), "worldtoggle"},
+                {"How to add the home-screen widget", "widgethelp"},
+                {"About & disclaimer", "about"}};
+        String[] labels = new String[items.length];
+        for (int i = 0; i < items.length; i++) labels[i] = items[i][0];
+        new AlertDialog.Builder(this).setTitle("More").setItems(labels, (d, which) -> {
+            switch (items[which][1]) {
+                case "calendar": case "worldstocks": case "track": case "dictionary": case "watchlist": case "sources":
+                    show(items[which][1]); break;
+                case "practice":
                     Settings.set("practiceMode", !Droid.demo());
                     Droid.refresh(this, null);
                     break;
-                case 4: chooseSkin(false); break;
-                case 5: chooseSkin(true); break;
-                case 6: chooseOpacity(); break;
-                case 7: pickFile(PICK_ROVER); break;
-                case 8: pickFile(PICK_ZEN); break;
-                case 9: info("Add the widget to your home screen",
-                        "1. Go to your home screen.\n2. Touch and hold an empty spot.\n3. Tap \"Widgets\".\n4. Find StockBuddy and drag it onto your home screen.\n\n"
-                                + "Tap the widget to open the app, or tap \u21BB on it to refresh. Change its colours with \"Home-screen widget skin\"."); break;
-                case 10: info("About StockBuddy",
-                        "StockBuddy combines stockanalysis.com, WallStreetZen, Reddit (r/ValueInvesting, r/options, r/wallstreetbets), your Stock Rover export "
-                                + "and StockCharts-style chart signals, and explains them in plain English.\n\nIMPORTANT: this is a learning and research helper, "
-                                + "NOT a financial advisor. It can be wrong, data can be late, and you can lose money. Never invest money you can't afford to lose."); break;
-                case 11: addRedditPosts(); break;
-                case 12: pickFile(PICK_REDDIT); break;
-                case 14: askFinnhubKey(); break;
-                case 13:
+                case "skin": chooseSkin(false); break;
+                case "wskin": chooseSkin(true); break;
+                case "opacity": chooseOpacity(); break;
+                case "redditadd": addRedditPosts(); break;
+                case "redditcsv": pickFile(PICK_REDDIT); break;
+                case "redditclear":
                     new AlertDialog.Builder(this).setTitle("Clear my Reddit posts")
                             .setMessage("Delete all the Reddit posts you added yourself?")
                             .setPositiveButton("Delete", (dd, w) -> {
@@ -531,9 +540,76 @@ public class MainActivity extends Activity implements Droid.Listener {
                             })
                             .setNegativeButton("Cancel", null).show();
                     break;
+                case "anycsv": pickFile(PICK_CSV); break;
+                case "nocsv":
+                    try { stockbuddy.CustomCsv.removeAll(); toast("Your CSV files were removed."); Droid.refresh(this, null); }
+                    catch (Exception e) { toast("Couldn't remove them: " + e.getMessage()); }
+                    break;
+                case "rover": pickFile(PICK_ROVER); break;
+                case "zen": pickFile(PICK_ZEN); break;
+                case "finnhub": askFinnhubKey(); break;
+                case "alpha": askAlphaVantageKey(); break;
+                case "sec": askSecEmail(); break;
+                case "worldtoggle":
+                    Settings.set("worldStocks", !stockbuddy.WorldStocks.enabled());
+                    toast("World stocks " + (stockbuddy.WorldStocks.enabled() ? "on" : "off") + ". Refreshing...");
+                    Droid.refresh(this, null);
+                    break;
+                case "widgethelp": info("Add the widget to your home screen",
+                        "1. Go to your home screen.\n2. Touch and hold an empty spot.\n3. Tap \"Widgets\".\n4. Find StockBuddy and drag it onto your home screen.\n\n"
+                                + "Tap the widget to open the app, or tap \u21BB on it to refresh. Change its colours with \"Home-screen widget skin\"."); break;
+                case "about": info("About StockBuddy",
+                        "StockBuddy combines stockanalysis.com, WallStreetZen, Reddit, the WallStreetBets sentiment API, Finnhub, Alpha Vantage, SEC EDGAR, "
+                                + "the economic calendar, your own CSV files and StockCharts-style chart signals, and explains them in plain English.\n\nIMPORTANT: this is a learning and research helper, "
+                                + "NOT a financial advisor. It can be wrong, data can be late, and you can lose money. Never invest money you can't afford to lose."); break;
                 default: break;
             }
         }).show();
+    }
+
+    private void askAlphaVantageKey() {
+        final EditText f = new EditText(this);
+        f.setSingleLine(true);
+        f.setText(stockbuddy.AlphaVantage.key());
+        f.setHint("Your Alpha Vantage key");
+        LinearLayout box = new LinearLayout(this);
+        box.setOrientation(LinearLayout.VERTICAL);
+        box.setPadding(dp(20), dp(8), dp(20), 0);
+        TextView help = new TextView(this);
+        help.setText("Alpha Vantage adds news sentiment (is the news about a company positive or negative?). Get a free key at "
+                + "alphavantage.co/support/#api-key. The free plan allows about 25 requests a day, so StockBuddy checks your first "
+                + stockbuddy.AlphaVantage.DEFAULT_PER_DAY + " stocks and remembers the answers all day. Leave empty to turn it off.");
+        box.addView(help);
+        box.addView(f);
+        new AlertDialog.Builder(this).setTitle("Alpha Vantage key").setView(box)
+                .setPositiveButton("Save", (d, w) -> {
+                    final String key = f.getText().toString().trim();
+                    stockbuddy.AlphaVantage.setKey(key);
+                    if (key.isEmpty()) { toast("Alpha Vantage is turned off."); return; }
+                    new Thread(() -> {
+                        final String err = stockbuddy.AlphaVantage.test(key);
+                        runOnUiThread(() -> { if (err == null) toast("Key works and is saved. Tap refresh to use it."); else info("Alpha Vantage", err); });
+                    }).start();
+                })
+                .setNegativeButton("Cancel", null).show();
+    }
+
+    private void askSecEmail() {
+        final EditText f = new EditText(this);
+        f.setSingleLine(true);
+        f.setText(stockbuddy.SecEdgar.email());
+        f.setHint("you@example.com (optional)");
+        LinearLayout box = new LinearLayout(this);
+        box.setOrientation(LinearLayout.VERTICAL);
+        box.setPadding(dp(20), dp(8), dp(20), 0);
+        TextView help = new TextView(this);
+        help.setText("The SEC (sec.gov) asks every program to say who it is. StockBuddy works without this, but if the SEC data doesn't load, "
+                + "enter your email. It is only ever sent to sec.gov.");
+        box.addView(help);
+        box.addView(f);
+        new AlertDialog.Builder(this).setTitle("SEC EDGAR").setView(box)
+                .setPositiveButton("Save", (d, w) -> { stockbuddy.SecEdgar.setEmail(f.getText().toString()); toast("Saved."); })
+                .setNegativeButton("Cancel", null).show();
     }
 
     /** Free Finnhub key: analyst recommendations + financial ratios. Saved on this phone only. */
@@ -663,6 +739,7 @@ public class MainActivity extends Activity implements Droid.Listener {
         super.onActivityResult(req, res, data);
         if (res != RESULT_OK || data == null || data.getData() == null) return;
         if (req == PICK_REDDIT) { importRedditCsv(data.getData()); return; }
+        if (req == PICK_CSV) { importAnyCsv(data.getData()); return; }
         String target = req == PICK_ROVER ? "stockrover.csv" : "wallstreetzen.csv";
         try (InputStream in = getContentResolver().openInputStream(data.getData())) {
             Path dest = AppPaths.data(target);
@@ -675,6 +752,22 @@ public class MainActivity extends Activity implements Droid.Listener {
             Droid.refresh(this, null);
         } catch (Exception e) {
             toast("Couldn't import the file: " + e.getMessage());
+        }
+    }
+
+    private void importAnyCsv(Uri uri) {
+        try (InputStream in = getContentResolver().openInputStream(uri)) {
+            Path tmp = AppPaths.data("incoming.csv");
+            Files.createDirectories(tmp.getParent());
+            Files.copy(in, tmp, StandardCopyOption.REPLACE_EXISTING);
+            String name = uri.getLastPathSegment() == null ? "my-data" : uri.getLastPathSegment().replaceAll(".*[/:]", "");
+            int n = stockbuddy.CustomCsv.add(tmp, name);
+            Files.deleteIfExists(tmp);
+            if (n == 0) { info("Can't use this file", "The first line needs a column called Ticker or Symbol."); return; }
+            toast("Added " + n + " stocks from your file. Refreshing...");
+            Droid.refresh(this, null);
+        } catch (Exception e) {
+            toast("Couldn't add the file: " + e.getMessage());
         }
     }
 

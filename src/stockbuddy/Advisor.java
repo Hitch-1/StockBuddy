@@ -29,6 +29,8 @@ public final class Advisor {
     public static final class Plan {
         public final List<Idea> buys = new ArrayList<>(), sells = new ArrayList<>(), calls = new ArrayList<>(),
                 puts = new ArrayList<>(), zeroDte = new ArrayList<>();
+        /** Set when big economic news (inflation, jobs, interest rates) comes out in the US today. */
+        public String newsWarning;
     }
 
     private static final DateTimeFormatter NICE = DateTimeFormatter.ofPattern("EEEE, MMMM d");
@@ -41,21 +43,22 @@ public final class Advisor {
         Comparator<Stock> best = Comparator.comparingDouble((Stock s) -> s.score * (0.5 + s.confidence)).reversed();
 
         // ---------- BUYS ----------
-        all.stream().filter(s -> s.score >= 0.2 && !s.tech.downtrend(s.price)).sorted(best).limit(5).forEach(s -> {
+        all.stream().filter(s -> s.score >= 0.2 && !s.tech.downtrend(s.price) && s.signals.size() >= 2).sorted(best).limit(5).forEach(s -> {
             Idea i = new Idea(Kind.BUY, s);
             name(i, s, +1, String.format("BUY at about %s  -  %s  -  confidence %s", money(s), Scorer.verdict(s.score), Scorer.stars(s.confidence)));
             addReasons(i, s, true);
+            if (s.world != null) for (String w : s.world.howToBuy()) i.howTo.add("Where to buy: " + w);
             double stop = s.price * 0.92;
             i.howTo.add("In your broker app, search " + s.ticker + ", choose \"Buy\", and use a LIMIT order near " + money(s) + " so you don't overpay.");
-            i.howTo.add(String.format("Consider a \"stop-loss\" around $%.2f (8%% below) - it sells automatically if things go wrong.", stop));
+            i.howTo.add(String.format("Consider a \"stop-loss\" around %s (8%% below) - it sells automatically if things go wrong.", money(s, stop)));
             i.howTo.add("Only put in money you can leave alone for months; don't put everything into one stock.");
             i.risk = riskLine(s);
             p.buys.add(i);
         });
 
         // ---------- SELLS & SHORTS (one list: every short idea is also a sell idea) ----------
-        all.stream().filter(s -> s.score <= -0.2).sorted(best.reversed()).limit(6).forEach(s -> {
-            boolean shortable = s.score <= -0.3 && s.tech.downtrend(s.price) && s.price < s.tech.sma20
+        all.stream().filter(s -> s.score <= -0.2 && s.signals.size() >= 2).sorted(best.reversed()).limit(6).forEach(s -> {
+            boolean shortable = usListed(s) && s.score <= -0.3 && s.tech.downtrend(s.price) && s.price < s.tech.sma20
                     && !(s.redditMentions >= 8 && s.redditSentiment > 0);   // avoid crowd "short squeeze" names
             Idea i = new Idea(Kind.SELL, s);
             i.alsoShort = shortable;
@@ -80,15 +83,31 @@ public final class Advisor {
         LocalDate exp = Options.monthlyExpiry(today, 30);
         long days = ChronoUnit.DAYS.between(today, exp);
         Comparator<Stock> optionRank = Comparator.comparingDouble((Stock s) -> Math.abs(s.score) * (1 + 0.05 * (s.optionsTalkCalls + s.optionsTalkPuts))).reversed();
-        all.stream().filter(s -> s.score >= 0.3 && s.confidence >= 0.5 && s.tech.uptrend(s.price))
+        all.stream().filter(s -> s.score >= 0.3 && s.confidence >= 0.5 && s.tech.uptrend(s.price) && usListed(s))
                 .sorted(optionRank).limit(3).forEach(s -> p.calls.add(option(s, true, exp, days)));
-        all.stream().filter(s -> s.score <= -0.3 && s.confidence >= 0.5 && s.tech.downtrend(s.price))
+        all.stream().filter(s -> s.score <= -0.3 && s.confidence >= 0.5 && s.tech.downtrend(s.price) && usListed(s))
                 .sorted(optionRank).limit(3).forEach(s -> p.puts.add(option(s, false, exp, days)));
 
         // ---------- 0DTE ----------
-        for (String t : new String[]{"SPY", "QQQ"}) p.zeroDte.add(zeroDte(a, t));
+        List<EconomicCalendar.Event> big = EconomicCalendar.todaysBigUsEvents(a.events);
+        if (!big.isEmpty()) {
+            List<String> parts = new ArrayList<>();
+            for (EconomicCalendar.Event e : big)
+                parts.add((e.time == null ? "" : e.time.withZoneSameInstant(ZoneId.of("America/New_York")).toLocalTime() + " New York time: ") + e.title);
+            p.newsWarning = "Big news day in the US: " + String.join("; ", parts)
+                    + ". Prices can jump suddenly around these times - consider waiting until after the news, and keep positions small.";
+        }
+        for (String t : new String[]{"SPY", "QQQ"}) {
+            Idea z = zeroDte(a, t);
+            if (p.newsWarning != null) z.why.add(0, p.newsWarning);
+            p.zeroDte.add(z);
+        }
+        if (!a.demo && !a.stocks.isEmpty()) TrackRecord.save(p);   // remember today's ideas for the Track Record
         return p;
     }
+
+    /** Options and shorting are only practical for stocks that trade on a big US exchange. */
+    static boolean usListed(Stock s) { return s.ticker.indexOf('.') < 0 && "USD".equals(s.currency); }
 
     private static Idea option(Stock s, boolean call, LocalDate exp, long days) {
         double vol = Math.max(0.15, s.tech.volatility * 1.1);
@@ -189,6 +208,11 @@ public final class Advisor {
         double v = s.tech.volatility * 100;
         String lvl = v < 20 ? "LOW (a calm stock)" : v < 40 ? "MEDIUM" : v < 70 ? "HIGH (big daily swings)" : "VERY HIGH (wild swings)";
         return String.format("Risk level: %s - it typically moves about %.0f%% up or down in a year. Past results don't guarantee future ones.", lvl, v);
+    }
+
+    static String money(Stock s, double v) {
+        String sym = "USD".equals(s.currency) ? "$" : s.currency + " ";
+        return String.format("%s%.2f", sym, v);
     }
 
     static String money(Stock s) {

@@ -6,7 +6,8 @@ import java.util.List;
 /** Turns the raw numbers from each website into simple "good / bad" signals with plain-English reasons. */
 public final class Scorer {
     // How much each source counts in the final score (they're re-balanced if a source is missing).
-    public static final double W_TECH = 0.30, W_FUND = 0.25, W_ROVER = 0.15, W_ZEN = 0.15, W_REDDIT = 0.15, W_FINNHUB = 0.15;
+    public static final double W_TECH = 0.30, W_FUND = 0.25, W_ROVER = 0.15, W_ZEN = 0.15, W_REDDIT = 0.15, W_FINNHUB = 0.15,
+            W_WSB = 0.10, W_SEC = 0.10, W_NEWS = 0.10, W_CSV = 0.10;
 
     private Scorer() {}
 
@@ -104,7 +105,52 @@ public final class Scorer {
             total += W_FINNHUB * clamp(sc); weights += W_FINNHUB; sources++;
         }
 
-        // ---------- 6. Reddit crowd ----------
+        // ---------- 6. WallStreetBets sentiment API ----------
+        if (s.wsbComments > 0 && !Double.isNaN(s.wsbScore)) {
+            double sc = Math.max(-1, Math.min(1, s.wsbScore * 2)) * 0.8;
+            String mood = s.wsbLabel != null ? s.wsbLabel.toLowerCase() : s.wsbScore > 0.05 ? "bullish" : s.wsbScore < -0.05 ? "bearish" : "mixed";
+            String why = String.format("%d comments on r/wallstreetbets today; the overall mood is %s (score %+.2f).", s.wsbComments, mood, s.wsbScore);
+            if (s.wsbComments > 300) why += " It's one of the most-talked-about stocks there - expect big swings.";
+            add(s, "WallStreetBets sentiment (WSB API)", sc, why);
+            total += W_WSB * clamp(sc); weights += W_WSB; sources++;
+        }
+
+        // ---------- 7. SEC EDGAR official filings ----------
+        if (!Double.isNaN(s.secRevenueGrowth) || !Double.isNaN(s.secNetIncome)) {
+            double sc = 0;
+            StringBuilder why = new StringBuilder();
+            if (!Double.isNaN(s.secRevenueGrowth)) {
+                sc += clamp(s.secRevenueGrowth / 25) * 0.6;
+                why.append(String.format("In its official yearly report, sales %s %.0f%%. ", s.secRevenueGrowth >= 0 ? "grew" : "shrank", Math.abs(s.secRevenueGrowth)));
+            }
+            if (!Double.isNaN(s.secNetIncome)) {
+                sc += s.secNetIncome > 0 ? 0.2 : -0.35;
+                why.append(s.secNetIncome > 0 ? "The company made a profit. " : "The company lost money last year. ");
+            }
+            if (s.secForm4Count > 0) why.append(s.secForm4Count).append(" insider-trading reports in 90 days (insiders bought or sold shares). ");
+            if (s.sec8KCount > 0) why.append(s.sec8KCount).append(" major-event report").append(s.sec8KCount == 1 ? "" : "s").append(" (8-K) in the last 30 days.");
+            add(s, "SEC EDGAR (official company reports)", sc, why.toString().trim());
+            total += W_SEC * clamp(sc); weights += W_SEC; sources++;
+        }
+
+        // ---------- 8. Alpha Vantage news sentiment ----------
+        if (!Double.isNaN(s.newsScore)) {
+            double sc = clamp(s.newsScore * 2.5);
+            String mood = s.newsScore > 0.15 ? "positive" : s.newsScore > 0.05 ? "slightly positive" : s.newsScore < -0.15 ? "negative" : s.newsScore < -0.05 ? "slightly negative" : "neutral";
+            add(s, "News sentiment (Alpha Vantage)", sc, String.format("%d recent news articles; the tone is %s.", s.newsCount, mood));
+            total += W_NEWS * clamp(sc); weights += W_NEWS; sources++;
+        }
+
+        // ---------- 9. Your own CSV files ----------
+        for (java.util.Map.Entry<String, java.util.Map<String, String>> f : s.customData.entrySet()) {
+            Object[] r = CustomCsv.score(s, f.getValue());
+            if (r == null) continue;
+            double sc = (Double) r[0];
+            add(s, "Your CSV: " + f.getKey(), sc, (String) r[1]);
+            total += W_CSV * clamp(sc); weights += W_CSV; sources++;
+        }
+
+        // ---------- 10. Reddit crowd ----------
         if (s.redditMentions > 0) {
             double sc = s.redditSentiment * Math.min(1, 0.4 + s.redditMentions / 10.0);
             String mood = s.redditSentiment > 0.15 ? "mostly positive" : s.redditSentiment < -0.15 ? "mostly negative" : "mixed";
