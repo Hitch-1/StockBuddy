@@ -54,10 +54,13 @@ PY
 fi
 
 mkdir -p "$OUT/Source code"
-cp -r "$ROOT/src" "$ROOT/data" "$ROOT/README.md" "$ROOT/run.sh" "$ROOT/run.bat" "$ROOT/make-app.sh" "$ROOT/make-app.bat" "$OUT/Source code/"
+cp -r "$ROOT/src" "$ROOT/README.md" "$ROOT/run.sh" "$ROOT/run.bat" "$ROOT/make-app.sh" "$ROOT/make-app.bat" "$OUT/Source code/"
 mkdir -p "$OUT/Source code/android"
 cp -r "$ROOT/android/src" "$ROOT/android/res" "$ROOT/android/AndroidManifest.xml" "$ROOT/android/build-android.sh" "$ROOT/android/sign-android.sh" "$OUT/Source code/android/"
-rm -f "$OUT/Source code/data/settings.properties"
+# only the samples and the default watchlist - never your own files (Stock Rover export, Reddit posts, portfolio, settings...)
+mkdir -p "$OUT/Source code/data"
+cp "$ROOT/data/"*.sample.csv "$OUT/Source code/data/"
+printf '%s\n' "# Your watchlist: one ticker per line. Lines starting with # are ignored." AAPL MSFT NVDA AMZN GOOGL META TSLA JPM KO WMT > "$OUT/Source code/data/watchlist.txt"
 
 python3 - "$B" "$NAME" <<'PY'
 import os, sys, zipfile, stat
