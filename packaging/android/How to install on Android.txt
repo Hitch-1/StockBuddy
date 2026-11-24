@@ -1,0 +1,36 @@
+HOW TO INSTALL STOCKBUDDY ON ANDROID (Android 8.0 or newer)
+===========================================================
+
+1. Get StockBuddy.apk onto your phone. Any of these work:
+   - Email it to yourself, or upload it to Google Drive, then open it on
+     the phone.
+   - Connect the phone to your computer with a USB cable and copy the file
+     into the phone's "Download" folder.
+
+2. On the phone, open the file (for example from the "Files" app >
+   Downloads) and tap "Install".
+   - Android may say: "For your security, your phone is not allowed to
+     install unknown apps from this source". Tap "Settings", turn on
+     "Allow from this source", go back, and tap "Install" again.
+   - Google Play Protect may warn that the app is unknown, because it
+     isn't from the Play Store. Tap "More details" > "Install anyway".
+
+3. Open StockBuddy from your app list.
+   - The bottom bar has: Ideas, Markets, Look up, All stocks and More.
+   - "Skin" (top right) changes the colours. Tap the refresh arrow to get
+     new data.
+   - More > "Practice mode" lets you learn with made-up data.
+
+4. Add the home-screen widget:
+   - Touch and hold an empty spot on your home screen, then tap "Widgets".
+   - Find StockBuddy and drag it onto your home screen.
+   - Change its colours and transparency in the app:
+     More > "Home-screen widget skin" and More > "Widget see-through".
+   - Tap the refresh arrow on the widget to update it. It also updates by
+     itself about every 30 minutes.
+
+To uninstall: touch and hold the StockBuddy icon, then tap "Uninstall"
+(or "App info" > "Uninstall").
+
+IMPORTANT: StockBuddy is a learning and research helper, NOT a financial
+advisor. It can be wrong, and you can lose money.

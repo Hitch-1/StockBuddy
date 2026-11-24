@@ -1,0 +1,9 @@
+out/
+reports/
+dist/
+build/
+StockBuddy.jar
+data/settings.properties
+android/build/
+android/tools/
+*.jks

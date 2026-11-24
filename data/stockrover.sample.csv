@@ -1,0 +1,4 @@
+Ticker,Company,Price,Fair Value,Quality Score,Value Score,Growth Score
+AAPL,Apple Inc.,190.00,175.00,92,35,60
+MSFT,Microsoft Corp.,410.00,440.00,95,40,75
+JPM,JPMorgan Chase,200.00,230.00,80,70,55

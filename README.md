@@ -1,0 +1,156 @@
+# StockBuddy – your friendly daily stock helper (Java)
+
+StockBuddy collects information from several investing websites, mixes it together, and tells you **in plain English**:
+
+- **Best buys:** stocks that look good to buy today
+- **Best sells:** stocks you might want to sell or protect, if you own them
+- **Best options ideas:** calls or puts for the next 1–2 months, with an estimated cost and breakeven price
+- **Best short ideas:** stocks that look likely to fall (advanced)
+- **0DTE ideas:** options on SPY / QQQ that expire *today* (very risky)
+- **World markets:** the 16 biggest stock markets (USA, Canada, Brazil, UK, Germany, France, Europe, Japan, China, Hong Kong, India, Korea, Taiwan, Australia). It shows which are open right now and how each is doing.
+
+For every idea it explains **why**, **how to do it**, and **how risky it is**.
+
+> ⚠️ **This is a learning and research tool, not a financial advisor.** It can be wrong, the data can be late, and you can lose money. Never invest money you can't afford to lose.
+
+---
+
+## 1. Install Java (one time only)
+
+Download the free **JDK 17 or newer** from <https://adoptium.net> and install it with the default options.
+
+## 2. Open the app
+
+- **Windows:** double-click `run.bat`
+- **Mac / Linux:** open a Terminal in this folder and type `./run.sh`
+
+A window opens with a menu on the left:
+
+| Page | What it shows |
+|---|---|
+| **Today's Ideas** | Tabs for Best Buys, Best Sells, Options, Shorts and 0DTE. Each idea says *why*, *how to do it*, and *how risky it is* |
+| **World Markets** | The 16 biggest stock markets, whether each is open right now, and how it's doing today and over the last month |
+| **Look Up a Stock** | A 1-year price chart, plus a plain-English explanation of what every source says |
+| **All Stocks** | Every stock checked, ranked best to worst. Double-click a row for details |
+| **Dictionary** | Investing words explained simply, with a search box |
+| **My Watchlist** | Add or remove the stocks that are always checked |
+| **Data Sources** | Which websites worked, plus buttons to import your Stock Rover / WallStreetZen CSV files |
+
+Along the top:
+
+- **Practice mode:** switch on to learn with made-up data (works without internet).
+- **Skin:** pick a colour theme: Classic Light, Night Mode, Wall Street Terminal, Ocean Blue, Sunset, Bull Gold, Mint Fresh or High Contrast. Your choice is remembered.
+- **Desktop widget:** opens a small panel that stays on your desktop (see below).
+- **Save report:** saves today's ideas as a web page.
+- **Refresh data:** downloads everything again. The app also refreshes by itself every 15 minutes.
+
+### The desktop widget
+
+A small floating panel that shows the world markets, today's top buys, the stocks to be careful with, and the 0DTE lean.
+
+- **Drag** it anywhere on your screen.
+- **Click a ticker** (or double-click the widget) to open its full explanation in the main window.
+- **Right-click** it (or click ≡) to choose:
+  - **Widget skin:** the same as the app, or a different one just for the widget
+  - **Size:** Full (markets + ideas) or Compact (markets only)
+  - **See-through:** how transparent it is
+  - **Always on top** of other windows
+  - **Show widget when my computer starts**
+- You can close the main window and keep only the widget. Its position and settings are remembered.
+
+To start with only the widget: `run.bat --widget` or `./run.sh --widget`.
+
+### Make a real app with a desktop icon (optional)
+
+Run `make-app.bat` (Windows) or `./make-app.sh` (Mac/Linux). It creates a stand-alone app in `dist/StockBuddy`, with `StockBuddy.exe` on Windows. That app includes its own Java, so it can be copied to another computer. On Windows, right-click `StockBuddy.exe` → *Send to* → *Desktop (create shortcut)*.
+
+When it's started this way, StockBuddy keeps its files (watchlist, CSV imports, reports, settings) in a `StockBuddy` folder in your home folder. **Data Sources → Open my StockBuddy folder** shows you where that is.
+
+### Other start options
+
+| Option      | What it does |
+|-------------|--------------|
+| `--demo`    | Start in practice mode |
+| `--widget`  | Show only the desktop widget |
+| `--console` | The old text version in the terminal (add `--report` to print the report and quit) |
+| `--debug`   | Text version only: shows which websites could not be reached, and why |
+
+---
+
+## 3. Where the information comes from
+
+| Source | What we use | How |
+|---|---|---|
+| **stockanalysis.com** | Today's top gainers, losers and most active stocks; P/E ratio; analyst rating; price target | Read automatically from the website |
+| **StockCharts** | Moving averages, RSI, MACD and the **SCTR** rank | StockCharts has no public data feed, so StockBuddy **calculates these itself** using StockCharts' published formulas |
+| **Stock Rover** | Fair value; quality, value and growth scores | Stock Rover needs a paid login, so **you export a CSV** (see below) |
+| **WallStreetZen** | Zen Score (0–100) and Zen Rating (A–F) | Read from the website. If the site blocks the program, you can type the numbers into a CSV |
+| **Reddit** (r/ValueInvesting, r/options, r/wallstreetbets) | Which stocks people talk about and whether the mood is positive or negative | Reads the "hot" posts. Each subreddit gets a different trust level: r/wallstreetbets counts least, because it's very hype-driven |
+| **Yahoo Finance** (extra) | Daily and minute-by-minute prices, world market indexes | Needed because none of the sites above offer free price history |
+
+Each source gives a score from -100 to +100. The final score is a weighted average: **charts 30%, company numbers 25%, Stock Rover 15%, WallStreetZen 15%, Reddit 15%**. If a source is missing, the others share its weight. The **confidence stars** show how many sources had data, and whether they agree.
+
+### Adding your Stock Rover data (optional)
+1. In Stock Rover, open a screener, watchlist or portfolio.
+2. Add the columns **Ticker**, **Fair Value**, and optionally **Quality Score**, **Value Score** and **Growth Score**.
+3. Export it as CSV. Then, in StockBuddy, go to **Data Sources → Import Stock Rover CSV...** and pick the file. (Or save it yourself as `data/stockrover.csv`.)
+
+`data/stockrover.sample.csv` shows the format. Every stock in your export is analysed automatically.
+
+### WallStreetZen by hand (optional)
+If the Data Sources page says WallStreetZen "could not read", make a CSV in the same format as `data/wallstreetzen.sample.csv`. Then import it with **Data Sources → Import WallStreetZen CSV...**.
+
+### Reddit login (optional, free)
+Reddit sometimes blocks anonymous programs. If the program says Reddit "could not connect":
+1. Go to <https://www.reddit.com/prefs/apps>, click **create app**, and choose **script**.
+2. Before starting StockBuddy, set two environment variables (then start it from that same window):
+   - Windows: `set REDDIT_CLIENT_ID=xxxx` and `set REDDIT_CLIENT_SECRET=yyyy`
+   - Mac/Linux: `export REDDIT_CLIENT_ID=xxxx` and `export REDDIT_CLIENT_SECRET=yyyy`
+
+### Your watchlist
+Change it on the **My Watchlist** page, or edit `data/watchlist.txt` (one ticker per line). StockBuddy also adds today's biggest movers and the stocks Reddit mentions most, up to 45 stocks in total.
+
+---
+
+## 4. Good habits for beginners
+- Start with **paper trading** (fake money). Most brokers offer it.
+- Use **limit orders** and **stop-losses**. The program suggests levels for both.
+- **Options and 0DTE** can lose 100% of what you pay, very fast. Shorting can lose *more* than you put in.
+- Websites change their layout from time to time. If a source stops working, the **Data Sources** page shows which one.
+
+---
+
+## 5. Building the downloadable installers (for developers)
+
+`packaging/make-release.sh` builds `build/release/StockBuddy-<version>.zip`, which contains:
+
+| Folder | What's inside |
+|---|---|
+| `Windows/` | `Install StockBuddy.bat`. It copies the app to `%LOCALAPPDATA%\StockBuddy`, offers to install Java (via winget) if it's missing, and creates Desktop and Start-menu shortcuts plus an uninstaller |
+| `Linux/` | `install.sh` with a small built-in Java (x86_64). It adds menu entries, Desktop icons and a `stockbuddy` command |
+| `Android/` | `StockBuddy.apk`, if a signed one has been built, plus install instructions |
+| `Source code/` | This project |
+
+### Android app
+
+The phone app (`android/`) reuses the shared code in `src/stockbuddy` and shows the same pages in a WebView. It also has a home-screen widget, with its own skin and see-through settings. It needs Android 8.0 or newer.
+
+The Android app is built with Ubuntu/Debian's packaged Android tools:
+
+```bash
+sudo apt install aapt dalvik-exchange zipalign apksigner android-sdk-platform-23 openjdk-8-jdk-headless
+```
+
+Then build it and sign it:
+
+```bash
+android/build-android.sh
+```
+
+```bash
+android/sign-android.sh
+```
+
+The first signing run creates `android/stockbuddy-release.jks`. **Keep that file:** updates to the app must be signed with the same key.
+
+The shared files used by Android must stay **Java 8 compatible**: no records, `switch` expressions or `instanceof` patterns, and no `List.of` or `java.net.http`. The build script checks this, because it compiles them with `--release 8`.
