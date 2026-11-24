@@ -1,0 +1,18 @@
+date,kind,ticker,name,price,currency
+2026-11-24,BUY,SONY,"Sony Group Corporation",27.85,USD
+2026-11-24,BUY,AMZN,"Amazon.com, Inc.",255.39,USD
+2026-11-24,BUY,V,"Visa Inc.",409.4,USD
+2026-11-24,BUY,DIS,"The Walt Disney Company",120.27,USD
+2026-11-24,BUY,MSFT,"Microsoft Corporation",492.5,USD
+2026-11-24,SELL,PDC,"Perpetuals.com Ltd",0.724,USD
+2026-11-24,SELL,WETO,"Wetour Robotics Limited",0.5385,USD
+2026-11-24,SELL,FCHL,"Fitness Champs Holdings Limited",0.014,USD
+2026-11-24,SELL,GMEX,"GMEX Robotics Corporation",0.213,USD
+2026-11-24,SELL,PAAI,"Paradium AI, Inc.",0.713,USD
+2026-11-24,SELL,AI,"C3.ai, Inc.",9.96,USD
+2026-11-24,CALL,SONY,"Sony Group Corporation",27.85,USD
+2026-11-24,CALL,AMZN,"Amazon.com, Inc.",255.39,USD
+2026-11-24,CALL,V,"Visa Inc.",409.4,USD
+2026-11-24,PUT,PDC,"Perpetuals.com Ltd",0.724,USD
+2026-11-24,PUT,WETO,"Wetour Robotics Limited",0.5385,USD
+2026-11-24,PUT,FCHL,"Fitness Champs Holdings Limited",0.014,USD
