@@ -29,6 +29,8 @@ public final class Advisor {
     public static final class Plan {
         public final List<Idea> buys = new ArrayList<>(), sells = new ArrayList<>(), calls = new ArrayList<>(),
                 puts = new ArrayList<>(), zeroDte = new ArrayList<>();
+        /** The market these ideas are for (index symbol), or null for all markets. */
+        public String market;
         /** Set when big economic news (inflation, jobs, interest rates) comes out in the US today. */
         public String newsWarning;
     }
@@ -37,9 +39,14 @@ public final class Advisor {
 
     private Advisor() {}
 
-    public static Plan build(Analyzer a) {
+    public static Plan build(Analyzer a) { return build(a, null); }
+
+    /** Today's ideas, only for stocks of one market (index symbol like "^N225"), or all markets when null. */
+    public static Plan build(Analyzer a, String market) {
         Plan p = new Plan();
-        List<Stock> all = new ArrayList<>(a.stocks.values());
+        p.market = market;
+        List<Stock> all = new ArrayList<>();
+        for (Stock s : a.stocks.values()) if (WorldMarkets.belongs(s, market)) all.add(s);
         Comparator<Stock> best = Comparator.comparingDouble((Stock s) -> s.score * (0.5 + s.confidence)).reversed();
 
         // ---------- BUYS ----------
@@ -98,11 +105,12 @@ public final class Advisor {
                     + ". Prices can jump suddenly around these times - consider waiting until after the news, and keep positions small.";
         }
         for (String t : new String[]{"SPY", "QQQ"}) {
+            if (market != null && !WorldMarkets.isUs(market)) break;   // 0DTE is about US index options
             Idea z = zeroDte(a, t);
             if (p.newsWarning != null) z.why.add(0, p.newsWarning);
             p.zeroDte.add(z);
         }
-        if (!a.demo && !a.stocks.isEmpty()) TrackRecord.save(p);   // remember today's ideas for the Track Record
+        if (!a.demo && !a.stocks.isEmpty() && market == null) TrackRecord.save(p);   // remember today's ideas for the Track Record
         return p;
     }
 

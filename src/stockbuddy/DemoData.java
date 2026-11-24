@@ -108,6 +108,7 @@ public final class DemoData {
                     s.wsbLabel = s.wsbScore >= 0 ? "Bullish" : "Bearish";
                 }
             }
+            s.exchange = WorldMarkets.belongs(s, "^IXIC") ? "NasdaqGS" : "NYSE";
             a.stocks.put(s.ticker, s);
         }
 
@@ -158,7 +159,7 @@ public final class DemoData {
         a.sourceStatus.put("News sentiment (Alpha Vantage)", "practice data");
         a.events = EconomicCalendar.practice();
         a.sourceStatus.put("World stocks (16 biggest markets)", "practice data");
-        for (WorldStocks.Entry e : WorldStocks.ALL) {
+        for (WorldStocks.Entry e : WorldStocks.active()) {
             Stock s = new Stock(e.analysedTicker());
             if (a.stocks.containsKey(s.ticker)) { a.stocks.get(s.ticker).world = e; continue; }
             s.world = e;

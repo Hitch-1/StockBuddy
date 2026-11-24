@@ -52,7 +52,9 @@ import stockbuddy.WallStreetZenSource;
 
 /** The StockBuddy phone app. Pages are drawn as web pages (shared with the desktop app) inside a WebView. */
 public class MainActivity extends Activity implements Droid.Listener {
-    private static final int PICK_ROVER = 11, PICK_ZEN = 12, PICK_REDDIT = 13, PICK_CSV = 14;
+    private static final int PICK_ROVER = 11, PICK_ZEN = 12, PICK_REDDIT = 13, PICK_CSV = 14, SAVE_REPORT = 15;
+    private stockbuddy.ReportWriter.Format pendingFormat;
+    private TextView marketChip;
     private static final String[] IDEA_TABS = HtmlView.IDEA_TABS;
     private static final String[] NAV = {"Ideas", "Markets", "Look up", "All stocks", "More"};
 
@@ -101,11 +103,19 @@ public class MainActivity extends Activity implements Droid.Listener {
             ideaTab = saved.getInt("ideaTab", 0);
             lookupTicker = saved.getString("lookup");
         }
+        if (getIntent() != null && getIntent().getStringExtra("page") != null) page = getIntent().getStringExtra("page");
         build();
         Droid.listener = this;
         if (Droid.plan == null && !Droid.loading) Droid.refresh(this, null);
         else render();
         showPreviousCrash();
+        Notifier.scheduleAlertJob(this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent != null && intent.getStringExtra("page") != null) show(intent.getStringExtra("page"));
     }
 
     @Override
@@ -208,6 +218,9 @@ public class MainActivity extends Activity implements Droid.Listener {
         chipScroll.setHorizontalScrollBarEnabled(false);
         LinearLayout chipRow = new LinearLayout(this);
         chipRow.setPadding(dp(10), dp(8), dp(10), dp(4));
+        marketChip = pillButton("All markets \u25BE");
+        marketChip.setOnClickListener(v -> chooseMarket());
+        chipRow.addView(marketChip);
         for (int i = 0; i < IDEA_TABS.length; i++) {
             final int idx = i;
             TextView t = pillButton(IDEA_TABS[i]);
@@ -333,6 +346,9 @@ public class MainActivity extends Activity implements Droid.Listener {
             t.setBackground(on ? rounded(k.mix(k.panel(), k.accent(), 0.18), k.panel(), 12) : null);
         }
         chipScroll.setVisibility(page.equals("ideas") ? View.VISIBLE : View.GONE);
+        String market = Settings.get("ideas.market", "all");
+        marketChip.setText((market.equals("all") ? "All markets" : stockbuddy.WorldStocks.marketName(market).replaceAll(" \\(.*\\)$", "")) + " \u25BE");
+        if (plan != null && a != null && !market.equals("all")) plan = stockbuddy.Advisor.build(a, market);
         for (int i = 0; i < chips.size(); i++) {
             boolean on = i == ideaTab;
             String count = plan == null || i == 4 ? "" : "  " + lists(plan).get(i).size();
@@ -360,6 +376,8 @@ public class MainActivity extends Activity implements Droid.Listener {
             case "calendar": html = HtmlView.calendar(k, a); break;
             case "worldstocks": html = HtmlView.worldStocks(k, a); break;
             case "track": html = HtmlView.trackRecord(k, a); break;
+            case "alerts": html = HtmlView.alerts(k, a); break;
+            case "paper": html = HtmlView.portfolio(k, a); break;
             default:
                 html = HtmlView.ideasTab(k, plan, ideaTab, a.demo);
         }
@@ -388,6 +406,18 @@ public class MainActivity extends Activity implements Droid.Listener {
                 inputBtn.setText("Add");
                 inputBtn.setVisibility(View.VISIBLE);
                 break;
+            case "alerts":
+                input.setHint("e.g. NVDA above 150 / AAPL move 5%");
+                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+                inputBtn.setText("Add alert");
+                inputBtn.setVisibility(View.VISIBLE);
+                break;
+            case "paper":
+                input.setHint("e.g. buy 10 AAPL / sell all AAPL");
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                inputBtn.setText("Do it");
+                inputBtn.setVisibility(View.VISIBLE);
+                break;
             case "dictionary":
                 input.setHint("Search a word");
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -413,6 +443,17 @@ public class MainActivity extends Activity implements Droid.Listener {
         if (t.isEmpty()) return;
         hideKeyboard();
         if (page.equals("lookup")) lookup(t);
+        else if (page.equals("alerts")) {
+            String err = stockbuddy.Alerts.add(t);
+            if (err != null) { toast(err); return; }
+            input.setText("");
+            askNotificationPermission();
+            Notifier.scheduleAlertJob(this);
+            render();
+        } else if (page.equals("paper")) {
+            paperCommand(t);
+            input.setText("");
+        }
         else if (page.equals("watchlist")) {
             List<String> w = new ArrayList<>(Analyzer.readWatchlist());
             for (String x : t.toUpperCase().split("[\\s,]+")) {
@@ -449,6 +490,41 @@ public class MainActivity extends Activity implements Droid.Listener {
 
     private void handleLink(String url) {
         if (url == null) return;
+        if (url.startsWith("sb://alert/")) {
+            page = "alerts";
+            render();
+            input.setText(url.substring("sb://alert/".length()) + " above ");
+            input.setSelection(input.getText().length());
+            return;
+        }
+        if (url.startsWith("sb://alertdel/")) { stockbuddy.Alerts.remove(url.substring("sb://alertdel/".length())); Notifier.scheduleAlertJob(this); render(); return; }
+        if (url.equals("sb://alertclear")) { stockbuddy.Alerts.clearTriggered(); render(); return; }
+        if (url.startsWith("sb://pbuy/")) {
+            final String tk = url.substring("sb://pbuy/".length());
+            final EditText qty = new EditText(this);
+            qty.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            qty.setText("10");
+            new AlertDialog.Builder(this).setTitle("Paper-buy " + tk).setMessage("How many pretend shares? (Pretend money - nothing real is bought.)")
+                    .setView(qty).setPositiveButton("Buy", (d, w) -> paperCommand("buy " + qty.getText().toString().trim() + " " + tk))
+                    .setNegativeButton("Cancel", null).show();
+            return;
+        }
+        if (url.startsWith("sb://psell/")) {
+            final String tk = url.substring("sb://psell/".length());
+            new AlertDialog.Builder(this).setTitle("Sell all " + tk + "?").setMessage("Sell all your pretend shares of " + tk + "?")
+                    .setPositiveButton("Sell", (d, w) -> paperCommand("sell all " + tk)).setNegativeButton("Cancel", null).show();
+            return;
+        }
+        if (url.equals("sb://preset")) {
+            new AlertDialog.Builder(this).setTitle("Start again?").setMessage("Start again with $10,000 and delete all pretend trades?")
+                    .setPositiveButton("Start again", (d, w) -> { stockbuddy.PaperPortfolio.reset(); render(); }).setNegativeButton("Cancel", null).show();
+            return;
+        }
+        if (url.startsWith("sb://wtop/")) {
+            stockbuddy.WorldStocks.setTop(Integer.parseInt(url.substring("sb://wtop/".length())));
+            render();
+            return;
+        }
         if (url.startsWith("sb://page/")) {
             show(url.substring("sb://page/".length()));
             return;
@@ -493,6 +569,9 @@ public class MainActivity extends Activity implements Droid.Listener {
     // ================================================================= menus
     private void moreMenu(View anchor) {
         final String[][] items = {
+                {"Price alerts", "alerts"},
+                {"Paper trading (pretend money)", "paper"},
+                {"Save report (web page, Word, CSV or JSON)...", "report"},
                 {"Economic calendar (big news this week)", "calendar"},
                 {"World stocks (and where to buy them)", "worldstocks"},
                 {"Track record (how past ideas did)", "track"},
@@ -513,14 +592,15 @@ public class MainActivity extends Activity implements Droid.Listener {
                 {"Finnhub key (" + (stockbuddy.FinnhubSource.enabled() ? "set" : "not set") + ")...", "finnhub"},
                 {"Alpha Vantage key (" + (stockbuddy.AlphaVantage.enabled() ? "set" : "not set") + ")...", "alpha"},
                 {"SEC email (optional)...", "sec"},
-                {"World stocks: " + (stockbuddy.WorldStocks.enabled() ? "ON - tap to turn off" : "OFF - tap to turn on"), "worldtoggle"},
+                {"World stocks: " + (stockbuddy.WorldStocks.top() == 0 ? "off" : "top " + stockbuddy.WorldStocks.top() + " of each market") + "...", "worldtoggle"},
                 {"How to add the home-screen widget", "widgethelp"},
                 {"About & disclaimer", "about"}};
         String[] labels = new String[items.length];
         for (int i = 0; i < items.length; i++) labels[i] = items[i][0];
         new AlertDialog.Builder(this).setTitle("More").setItems(labels, (d, which) -> {
             switch (items[which][1]) {
-                case "calendar": case "worldstocks": case "track": case "dictionary": case "watchlist": case "sources":
+                case "report": saveReport(); break;
+                case "calendar": case "worldstocks": case "track": case "dictionary": case "watchlist": case "sources": case "alerts": case "paper":
                     show(items[which][1]); break;
                 case "practice":
                     Settings.set("practiceMode", !Droid.demo());
@@ -550,11 +630,7 @@ public class MainActivity extends Activity implements Droid.Listener {
                 case "finnhub": askFinnhubKey(); break;
                 case "alpha": askAlphaVantageKey(); break;
                 case "sec": askSecEmail(); break;
-                case "worldtoggle":
-                    Settings.set("worldStocks", !stockbuddy.WorldStocks.enabled());
-                    toast("World stocks " + (stockbuddy.WorldStocks.enabled() ? "on" : "off") + ". Refreshing...");
-                    Droid.refresh(this, null);
-                    break;
+                case "worldtoggle": chooseWorldTop(); break;
                 case "widgethelp": info("Add the widget to your home screen",
                         "1. Go to your home screen.\n2. Touch and hold an empty spot.\n3. Tap \"Widgets\".\n4. Find StockBuddy and drag it onto your home screen.\n\n"
                                 + "Tap the widget to open the app, or tap \u21BB on it to refresh. Change its colours with \"Home-screen widget skin\"."); break;
@@ -565,6 +641,71 @@ public class MainActivity extends Activity implements Droid.Listener {
                 default: break;
             }
         }).show();
+    }
+
+    private void paperCommand(final String cmd) {
+        final Analyzer a = Droid.analyzer;
+        new Thread(() -> {
+            final String msg = stockbuddy.PaperPortfolio.load().run(cmd, a);
+            runOnUiThread(() -> {
+                toast(msg);
+                if (msg.startsWith("OK")) page = "paper";
+                render();
+            });
+        }).start();
+    }
+
+    private void askNotificationPermission() {
+        if (android.os.Build.VERSION.SDK_INT >= 33 && checkSelfPermission("android.permission.POST_NOTIFICATIONS") != android.content.pm.PackageManager.PERMISSION_GRANTED)
+            requestPermissions(new String[]{"android.permission.POST_NOTIFICATIONS"}, 7);
+    }
+
+    private void chooseMarket() {
+        final List<String[]> options = new ArrayList<>();
+        options.add(new String[]{"all", "All markets"});
+        for (stockbuddy.WorldMarkets.Market m : stockbuddy.WorldMarkets.all()) options.add(new String[]{m.symbol, m.name});
+        String cur = Settings.get("ideas.market", "all");
+        String[] labels = new String[options.size()];
+        int sel = 0;
+        for (int i = 0; i < labels.length; i++) { labels[i] = options.get(i)[1]; if (options.get(i)[0].equals(cur)) sel = i; }
+        new AlertDialog.Builder(this).setTitle("Show ideas for").setSingleChoiceItems(labels, sel, (d, w) -> {
+            d.dismiss();
+            Settings.set("ideas.market", options.get(w)[0]);
+            render();
+        }).setNegativeButton("Cancel", null).show();
+    }
+
+    private void chooseWorldTop() {
+        final int[] values = {0, 3, 5, 10, 20};
+        String[] labels = {"Off", "Top 3 of each market", "Top 5", "Top 10", "Top 20 (slower refresh)"};
+        int cur = stockbuddy.WorldStocks.top(), sel = 1;
+        for (int i = 0; i < values.length; i++) if (values[i] == cur) sel = i;
+        new AlertDialog.Builder(this).setTitle("World stocks").setSingleChoiceItems(labels, sel, (d, w) -> {
+            d.dismiss();
+            stockbuddy.WorldStocks.setTop(values[w]);
+            toast("Refreshing...");
+            Droid.refresh(this, null);
+        }).setNegativeButton("Cancel", null).show();
+    }
+
+    private void saveReport() {
+        if (Droid.plan == null) { toast("Please wait until the data has loaded."); return; }
+        final stockbuddy.ReportWriter.Format[] formats = stockbuddy.ReportWriter.Format.values();
+        String[] labels = new String[formats.length];
+        for (int i = 0; i < formats.length; i++) labels[i] = formats[i].label;
+        new AlertDialog.Builder(this).setTitle("Save today's report as").setItems(labels, (d, w) -> {
+            pendingFormat = formats[w];
+            Intent i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            i.addCategory(Intent.CATEGORY_OPENABLE);
+            i.setType(pendingFormat.mime);
+            i.putExtra(Intent.EXTRA_TITLE, stockbuddy.ReportWriter.fileName(pendingFormat, shownPlan()));
+            try { startActivityForResult(i, SAVE_REPORT); } catch (Exception e) { toast("No file saver available on this phone."); }
+        }).show();
+    }
+
+    private stockbuddy.Advisor.Plan shownPlan() {
+        String m = Settings.get("ideas.market", "all");
+        return m.equals("all") || Droid.analyzer == null ? Droid.plan : stockbuddy.Advisor.build(Droid.analyzer, m);
     }
 
     private void askAlphaVantageKey() {
@@ -740,6 +881,21 @@ public class MainActivity extends Activity implements Droid.Listener {
         if (res != RESULT_OK || data == null || data.getData() == null) return;
         if (req == PICK_REDDIT) { importRedditCsv(data.getData()); return; }
         if (req == PICK_CSV) { importAnyCsv(data.getData()); return; }
+        if (req == SAVE_REPORT && pendingFormat != null) {
+            final Uri uri = data.getData();
+            final stockbuddy.ReportWriter.Format f = pendingFormat;
+            final stockbuddy.Advisor.Plan plan = shownPlan();
+            new Thread(() -> {
+                String msg;
+                try (java.io.OutputStream out = getContentResolver().openOutputStream(uri)) {
+                    out.write(stockbuddy.ReportWriter.build(f, Droid.analyzer, plan));
+                    msg = "Report saved.";
+                } catch (Exception e) { msg = "Couldn't save the report: " + e.getMessage(); }
+                final String m = msg;
+                runOnUiThread(() -> toast(m));
+            }).start();
+            return;
+        }
         String target = req == PICK_ROVER ? "stockrover.csv" : "wallstreetzen.csv";
         try (InputStream in = getContentResolver().openInputStream(data.getData())) {
             Path dest = AppPaths.data(target);

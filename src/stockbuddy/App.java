@@ -23,7 +23,8 @@ public final class App {
 
     private static final List<Runnable> dataListeners = new ArrayList<>();
     private static final List<Runnable> marketListeners = new ArrayList<>();
-    private static Timer marketTimer;
+    private static Timer marketTimer, alertTimer;
+    private static java.awt.TrayIcon tray;
     private static volatile boolean marketsLoading;
     private static final List<Runnable> skinListeners = new ArrayList<>();
     private static final List<Consumer<String>> statusListeners = new ArrayList<>();
@@ -49,6 +50,8 @@ public final class App {
             autoRefresh.start();
             marketTimer = new Timer(60_000, e -> refreshMarkets());   // live index prices every minute
             marketTimer.start();
+            alertTimer = new Timer(5 * 60_000, e -> checkAlertsSoon());   // price alerts every 5 minutes
+            alertTimer.start();
         });
     }
 
@@ -88,9 +91,12 @@ public final class App {
         Analyzer next = new Analyzer(demo);
         setStatus(demo ? "Loading practice data..." : "Collecting today's data from the websites...");
         new SwingWorker<Advisor.Plan, String>() {
+            List<String> firedAlerts;
             @Override protected Advisor.Plan doInBackground() {
                 next.run(this::publish);
-                return Advisor.build(next);
+                Advisor.Plan built = Advisor.build(next);
+                firedAlerts = Alerts.check(Alerts.prices(next, false));
+                return built;
             }
             @Override protected void process(List<String> chunks) { setStatus(chunks.get(chunks.size() - 1)); }
             @Override protected void done() {
@@ -98,6 +104,7 @@ public final class App {
                 try {
                     plan = get();
                     analyzer = next;
+                    notifyAlerts(firedAlerts);
                     setStatus(next.stocks.isEmpty()
                             ? "Couldn't download any stock prices. Check your internet connection, or turn on Practice mode."
                             : "Ready - " + next.stocks.size() + " stocks analysed" + (demo ? " (PRACTICE DATA - not real)" : "") + ".");
@@ -131,6 +138,43 @@ public final class App {
     }
 
     public static void onData(Runnable r) { dataListeners.add(r); }
+
+    /** Checks the price alerts with fresh prices in the background. */
+    public static void checkAlertsSoon() {
+        if (!Alerts.anyWaiting()) return;
+        final Analyzer a = analyzer;
+        new Thread(() -> {
+            List<String> fired = Alerts.check(Alerts.prices(a, !a.demo));
+            SwingUtilities.invokeLater(() -> {
+                notifyAlerts(fired);
+                for (Window w : Window.getWindows()) if (w instanceof MainWindow && w.isDisplayable()) ((MainWindow) w).refreshAlertsAndPaper();
+            });
+        }, "StockBuddy alerts").start();
+    }
+
+    /** Desktop notification (system tray) + a small window that doesn't block the app. */
+    static void notifyAlerts(List<String> fired) {
+        if (fired == null || fired.isEmpty()) return;
+        String text = String.join("\n", fired);
+        try {
+            if (java.awt.SystemTray.isSupported()) {
+                if (tray == null) {
+                    tray = new java.awt.TrayIcon(icons().get(1), "StockBuddy");
+                    tray.setImageAutoSize(true);
+                    java.awt.SystemTray.getSystemTray().add(tray);
+                }
+                tray.displayMessage("StockBuddy price alert", text, java.awt.TrayIcon.MessageType.INFO);
+            }
+        } catch (Exception ignored) { /* no tray on this computer - the window below is enough */ }
+        Toolkit.getDefaultToolkit().beep();
+        JOptionPane pane = new JOptionPane("<html><b>Price alert" + (fired.size() > 1 ? "s" : "") + "</b><br>" + String.join("<br>", fired)
+                + "<br><br><span style='color:gray'>See the Price Alerts page.</span></html>", JOptionPane.INFORMATION_MESSAGE);
+        JDialog d = pane.createDialog(null, "StockBuddy price alert");
+        d.setModal(false);
+        d.setAlwaysOnTop(true);
+        d.setIconImages(icons());
+        d.setVisible(true);
+    }
     public static void onMarkets(Runnable r) { marketListeners.add(r); }
 
     /** Updates just the world index prices (quick, in the background). */

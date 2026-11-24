@@ -80,6 +80,7 @@ public final class Droid {
                 analyzer = a;
                 plan = p;
                 saveSnapshot(a, p);
+                Notifier.alerts(app, stockbuddy.Alerts.check(stockbuddy.Alerts.prices(a, false)));
                 status = a.stocks.isEmpty()
                         ? "Couldn't download any stock prices. Check your internet, or turn on Practice mode (More menu)."
                         : "Ready - " + a.stocks.size() + " stocks analysed" + (demo ? " (PRACTICE DATA - not real)" : "") + ".";

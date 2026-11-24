@@ -24,10 +24,11 @@ import java.util.Map;
 /** The main StockBuddy window. */
 public class MainWindow extends JFrame {
     private static final String[] PAGES = {"Today's Ideas", "World Markets", "World Stocks", "Economic Calendar", "Look Up a Stock",
-            "All Stocks", "Track Record", "Dictionary", "My Watchlist", "Data Sources"};
+            "All Stocks", "Price Alerts", "Paper Trading", "Track Record", "Dictionary", "My Watchlist", "Data Sources"};
     private static final String[] PAGE_HINTS = {"Buys, sells, options, shorts and 0DTE", "The 16 biggest stock markets",
             "Big companies abroad + where to buy", "Big news this week", "Full explanation and chart", "Every stock checked today",
-            "How past ideas turned out", "Investing words made simple", "Stocks you always want checked", "Which websites worked"};
+            "Get told when a price is reached", "Practise with pretend money", "How past ideas turned out", "Investing words made simple",
+            "Stocks you always want checked", "Which websites worked"};
 
     private String currentPage = PAGES[0];
     private String lookupTicker;
@@ -48,7 +49,8 @@ public class MainWindow extends JFrame {
     private final List<JEditorPane> ideaPanes = new ArrayList<>();
     private JLabel worldMood, worldUpdated;
     private DefaultTableModel worldModel, allModel;
-    private JEditorPane lookupPane, glossaryPane, sourcesPane, worldStocksPane, calendarPane, trackPane;
+    private JEditorPane lookupPane, glossaryPane, sourcesPane, worldStocksPane, calendarPane, trackPane, alertsPane, paperPane;
+    private JTextField alertField, paperField;
     private PriceChart chart;
     private JComboBox<String> lookupBox;
     private DefaultListModel<String> watchModel;
@@ -104,6 +106,8 @@ public class MainWindow extends JFrame {
         cardPanel.add(padded(k, scroll(calendarPane)), "Economic Calendar");
         cardPanel.add(lookupPage(k), "Look Up a Stock");
         cardPanel.add(allPage(k), "All Stocks");
+        cardPanel.add(commandPage(k, "alerts"), "Price Alerts");
+        cardPanel.add(commandPage(k, "paper"), "Paper Trading");
         cardPanel.add(padded(k, scroll(trackPane)), "Track Record");
         cardPanel.add(glossaryPage(k), "Dictionary");
         cardPanel.add(watchlistPage(k), "My Watchlist");
@@ -256,6 +260,8 @@ public class MainWindow extends JFrame {
         ideasCardPanel.setOpaque(false);
         ButtonGroup g = new ButtonGroup();
         String[] names = HtmlView.IDEA_TABS;
+        tabs.add(marketPicker(k));
+        tabs.add(Box.createHorizontalStrut(8));
         for (int i = 0; i < names.length; i++) {
             final int idx = i;
             JEditorPane pane = htmlPane();
@@ -272,6 +278,49 @@ public class MainWindow extends JFrame {
         p.add(tabs, BorderLayout.NORTH);
         p.add(ideasCardPanel, BorderLayout.CENTER);
         return padded(k, p);
+    }
+
+    /** "Market: ..." picker: filter today's ideas to one of the 16 biggest markets. */
+    private JComponent marketPicker(Skin k) {
+        String cur = Settings.get("ideas.market", "all");
+        JToggleButton b = pill("Market: " + (cur.equals("all") ? "All markets" : shortMarket(cur)) + "  \u25BE", k);
+        b.setToolTipText("Show ideas for one market only");
+        b.addActionListener(e -> {
+            b.setSelected(false);
+            JPopupMenu menu = new JPopupMenu();
+            JPanel list = new JPanel(new GridLayout(0, 1, 0, 2));
+            list.setBackground(k.panel());
+            list.setBorder(new EmptyBorder(6, 6, 6, 6));
+            List<String[]> options = new ArrayList<>();
+            options.add(new String[]{"all", "All markets"});
+            for (WorldMarkets.Market m : WorldMarkets.all()) options.add(new String[]{m.symbol, m.name});
+            for (String[] o : options) {
+                JToggleButton item = smallPill(o[1], k, o[0].equals(cur));
+                item.setHorizontalAlignment(SwingConstants.LEFT);
+                item.addActionListener(a -> {
+                    menu.setVisible(false);
+                    Settings.set("ideas.market", o[0]);
+                    SwingUtilities.invokeLater(this::rebuild);
+                });
+                list.add(item);
+            }
+            menu.setBorder(BorderFactory.createLineBorder(k.line()));
+            menu.add(list);
+            menu.show(b, 0, b.getHeight() + 2);
+        });
+        return b;
+    }
+
+    private static String shortMarket(String symbol) {
+        for (WorldMarkets.Market m : WorldMarkets.all()) if (m.symbol.equals(symbol)) return m.name.replaceAll(" \\(.*\\)$", "");
+        return symbol;
+    }
+
+    /** The ideas to show: for all markets, or rebuilt for the chosen market. */
+    private Advisor.Plan shownPlan() {
+        String m = Settings.get("ideas.market", "all");
+        if (App.plan == null || m.equals("all")) return App.plan;
+        return Advisor.build(App.analyzer, m);
     }
 
     /** A rounded "pill" tab button drawn in the skin's colours (readable on every skin). */
@@ -361,6 +410,79 @@ public class MainWindow extends JFrame {
         center.add(scroll(lookupPane), BorderLayout.CENTER);
         p.add(center, BorderLayout.CENTER);
         return padded(k, p);
+    }
+
+    /** A page with a "type a command" box on top and an HTML page below (alerts, paper trading). */
+    private JComponent commandPage(Skin k, String which) {
+        boolean alerts = which.equals("alerts");
+        JPanel p = new JPanel(new BorderLayout(0, 10));
+        p.setOpaque(false);
+        JPanel bar = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+        bar.setOpaque(false);
+        bar.add(label(alerts ? "New alert:" : "Trade:", k.font(Font.BOLD, 15), k.text()));
+        JTextField f = new JTextField(alerts ? 22 : 18);
+        f.setFont(k.font(Font.PLAIN, 15));
+        f.setToolTipText(alerts ? "For example: NVDA above 150   TSLA below 200   AAPL move 5%" : "For example: buy 10 AAPL   sell 5 AAPL   sell all AAPL");
+        JButton go = button(alerts ? "Add alert" : "Do it", null);
+        JLabel example = label(alerts ? "e.g.  NVDA above 150  \u00B7  TSLA below 200  \u00B7  AAPL move 5%" : "e.g.  buy 10 AAPL  \u00B7  sell 5 AAPL  \u00B7  sell all AAPL",
+                k.font(Font.PLAIN, 13), k.muted());
+        Runnable act = () -> {
+            if (alerts) {
+                String err = Alerts.add(f.getText());
+                if (err != null) { JOptionPane.showMessageDialog(this, err); return; }
+                f.setText("");
+                refreshAlertsAndPaper();
+                App.checkAlertsSoon();
+            } else {
+                paperCommand(f.getText());
+                f.setText("");
+            }
+        };
+        f.addActionListener(e -> act.run());
+        go.addActionListener(e -> act.run());
+        bar.add(f); bar.add(go); bar.add(example);
+        if (alerts) {
+            JButton check = button("Check now", "Check all alerts with fresh prices");
+            check.addActionListener(e -> App.checkAlertsSoon());
+            bar.add(check);
+            alertField = f;
+        } else paperField = f;
+        JEditorPane pane = htmlPane();
+        if (alerts) alertsPane = pane; else paperPane = pane;
+        p.add(bar, BorderLayout.NORTH);
+        p.add(scroll(pane), BorderLayout.CENTER);
+        return padded(k, p);
+    }
+
+    void refreshAlertsAndPaper() {
+        if (alertsPane == null) return;
+        alertsPane.setText(HtmlView.alerts(App.skin.palette(), App.analyzer));
+        alertsPane.setCaretPosition(0);
+        paperPane.setText(HtmlView.portfolio(App.skin.palette(), App.analyzer));
+        paperPane.setCaretPosition(0);
+    }
+
+    private void paperBuy(String ticker) {
+        String n = (String) JOptionPane.showInputDialog(this, "How many pretend shares of " + ticker + " do you want to buy?\n(Pretend money - nothing real is bought.)",
+                "Paper trading", JOptionPane.PLAIN_MESSAGE, null, null, "10");
+        if (n == null || n.trim().isEmpty()) return;
+        paperCommand("buy " + n.trim() + " " + ticker);
+    }
+
+    private void paperCommand(String cmd) {
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        Analyzer a = App.analyzer;
+        new SwingWorker<String, Void>() {
+            @Override protected String doInBackground() { return PaperPortfolio.load().run(cmd, a); }
+            @Override protected void done() {
+                setCursor(Cursor.getDefaultCursor());
+                String msg;
+                try { msg = get(); } catch (Exception e) { msg = e.getMessage(); }
+                if (!msg.startsWith("OK")) JOptionPane.showMessageDialog(MainWindow.this, msg);
+                else { showPage("Paper Trading"); updateStatus(msg); }
+                refreshAlertsAndPaper();
+            }
+        }.execute();
     }
 
     /** The buttons above the chart: style, period, indicator lines and the bottom panel. */
@@ -642,11 +764,11 @@ public class MainWindow extends JFrame {
             SecEdgar.setEmail(v);
             sec.setText(SecEdgar.email().isEmpty() ? "SEC email (optional)..." : "SEC email: set (change...)");
         });
-        JCheckBox world = new JCheckBox("Include world stocks", WorldStocks.enabled());
+        JCheckBox world = new JCheckBox("Include world stocks (choose how many on the World Stocks page)", WorldStocks.enabled());
         world.setOpaque(false);
         world.setForeground(k.text());
         world.setToolTipText("Also analyse the biggest companies of the other 13 big stock markets (refreshing takes a bit longer)");
-        world.addActionListener(e -> { Settings.set("worldStocks", world.isSelected()); App.refresh(); });
+        world.addActionListener(e -> { WorldStocks.setTop(world.isSelected() ? 3 : 0); App.refresh(); });
 
         JPanel files = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
         files.setOpaque(false);
@@ -704,9 +826,10 @@ public class MainWindow extends JFrame {
             sourcesPane.setText(msg);
             return;
         }
-        List<List<Advisor.Idea>> lists = HtmlView.ideaLists(plan);
+        Advisor.Plan shown = shownPlan();
+        List<List<Advisor.Idea>> lists = HtmlView.ideaLists(shown);
         for (int i = 0; i < 5; i++) {
-            ideaPanes.get(i).setText(HtmlView.ideasTab(k.palette(), plan, i, a.demo));
+            ideaPanes.get(i).setText(HtmlView.ideasTab(k.palette(), shown, i, a.demo));
             ideaPanes.get(i).setCaretPosition(0);
             ideaTabButtons.get(i).setText(HtmlView.IDEA_TABS[i] + (i < 4 ? "  " + lists.get(i).size() : ""));
         }
@@ -735,6 +858,7 @@ public class MainWindow extends JFrame {
         calendarPane.setCaretPosition(0);
         trackPane.setText(HtmlView.trackRecord(k.palette(), a));
         trackPane.setCaretPosition(0);
+        refreshAlertsAndPaper();
         sourcesPane.setCaretPosition(0);
         if (lookupTicker != null) showStock(a.stocks.get(lookupTicker));
     }
@@ -811,13 +935,23 @@ public class MainWindow extends JFrame {
     // =============================================================== actions
     private void saveReport() {
         if (App.plan == null) { JOptionPane.showMessageDialog(this, "Please wait until the data has finished loading."); return; }
+        ReportWriter.Format[] formats = ReportWriter.Format.values();
+        String[] labels = new String[formats.length];
+        for (int i = 0; i < formats.length; i++) labels[i] = formats[i].label;
+        String market = Settings.get("ideas.market", "all");
+        Object choice = JOptionPane.showInputDialog(this, "Save today's report as:" + (market.equals("all") ? "" : "\n(only " + shortMarket(market) + ", the market you picked)"),
+                "Save report", JOptionPane.PLAIN_MESSAGE, null, labels, labels[0]);
+        if (choice == null) return;
+        ReportWriter.Format f = formats[java.util.Arrays.asList(labels).indexOf(choice)];
         try {
-            Path p = ReportWriter.write(App.analyzer, App.plan);
-            int r = JOptionPane.showConfirmDialog(this, "Saved your report:\n" + p.toAbsolutePath() + "\n\nOpen it in your web browser now?",
-                    "Report saved", JOptionPane.YES_NO_OPTION);
-            if (r == JOptionPane.YES_OPTION) Desktop.getDesktop().browse(p.toUri());
+            Path p = ReportWriter.write(f, App.analyzer, shownPlan());
+            int r = JOptionPane.showConfirmDialog(this, "Saved your report:\n" + p.toAbsolutePath() + "\n\nOpen it now?", "Report saved", JOptionPane.YES_NO_OPTION);
+            if (r == JOptionPane.YES_OPTION) {
+                if (f == ReportWriter.Format.HTML) Desktop.getDesktop().browse(p.toUri());
+                else Desktop.getDesktop().open(p.toFile());
+            }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Couldn't save the report: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Couldn't save or open the report: " + e.getMessage());
         }
     }
 
@@ -986,6 +1120,24 @@ public class MainWindow extends JFrame {
             if (d.startsWith("sb://stock/")) openLookup(d.substring("sb://stock/".length()));
             else if (d.startsWith("sb://watch/")) addToWatchlist(d.substring("sb://watch/".length()));
             else if (d.equals("sb://page/calendar")) showPage("Economic Calendar");
+            else if (d.startsWith("sb://wtop/")) {
+                WorldStocks.setTop(Integer.parseInt(d.substring("sb://wtop/".length())));
+                worldStocksPane.setText(HtmlView.worldStocks(App.skin.palette(), App.analyzer));
+                worldStocksPane.setCaretPosition(0);
+            }
+            else if (d.startsWith("sb://alert/")) { showPage("Price Alerts"); alertField.setText(d.substring("sb://alert/".length()) + " above "); alertField.requestFocusInWindow(); }
+            else if (d.startsWith("sb://alertdel/")) { Alerts.remove(d.substring("sb://alertdel/".length())); refreshAlertsAndPaper(); }
+            else if (d.equals("sb://alertclear")) { Alerts.clearTriggered(); refreshAlertsAndPaper(); }
+            else if (d.startsWith("sb://pbuy/")) paperBuy(d.substring("sb://pbuy/".length()));
+            else if (d.startsWith("sb://psell/")) {
+                String t = d.substring("sb://psell/".length());
+                if (JOptionPane.showConfirmDialog(this, "Sell all your pretend " + t + " shares?", "Paper trading", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+                    paperCommand("sell all " + t);
+            } else if (d.equals("sb://preset")) {
+                if (JOptionPane.showConfirmDialog(this, "Start again with $10,000 and delete all pretend trades?", "Paper trading", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    PaperPortfolio.reset(); refreshAlertsAndPaper();
+                }
+            }
             else if (d.equals("sb://page/worldstocks")) showPage("World Stocks");
         });
         return p;

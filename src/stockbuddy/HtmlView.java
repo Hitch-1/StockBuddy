@@ -26,7 +26,17 @@ public final class HtmlView {
 
     /** Tab i's page. */
     public static String ideasTab(Palette k, Advisor.Plan p, int i, boolean demo) {
-        String html = ideas(k, IDEA_TEXT[i][0], IDEA_TEXT[i][1], ideaLists(p).get(i), IDEA_TEXT[i][2], demo);
+        String empty = IDEA_TEXT[i][2];
+        if (i == 4 && p.market != null && !WorldMarkets.isUs(p.market)) empty = "0DTE ideas are only for US index options (SPY and QQQ). Choose All markets or a US market to see them.";
+        else if (p.market != null && !empty.isEmpty()) empty += " (in this market)";
+        String html = ideas(k, IDEA_TEXT[i][0], IDEA_TEXT[i][1], ideaLists(p).get(i), empty, demo);
+        if (p.market != null) {
+            int at = html.indexOf("</h1>");
+            String hint = WorldMarkets.isUs(p.market) ? "" : " <span class=muted style='font-size:10.5pt'>- outside the US many companies only have chart data, and an idea "
+                    + "needs at least two sources, so fewer ideas appear. <a href='sb://page/worldstocks'>See every company's verdict on World Stocks &rarr;</a></span>";
+            if (at > 0) html = html.substring(0, at + 5) + "<p><b style='color:" + k.accent() + "'>Showing only: " + esc(WorldStocks.marketName(p.market))
+                    + "</b>" + hint + "</p>" + html.substring(at + 5);
+        }
         if (p.newsWarning == null) return html;
         String banner = "<p class=banner><b>&#9888; " + esc(p.newsWarning) + "</b> <a href='sb://page/calendar'>See the Economic Calendar &rarr;</a></p>";
         int at = html.indexOf("</h1>");
@@ -75,9 +85,14 @@ public final class HtmlView {
                 b.append("</ul>");
             }
             if (i.risk != null) b.append("<p class=warn><b>Risk:</b> ").append(esc(i.risk)).append("</p>");
-            if (i.stock != null && i.kind != Advisor.Kind.ZERO_DTE)
-                b.append("<p><a href='sb://stock/").append(esc(i.stock.ticker)).append("'>Full explanation and chart for ")
-                 .append(esc(i.stock.ticker)).append(" &rarr;</a></p>");
+            if (i.stock != null && i.kind != Advisor.Kind.ZERO_DTE) {
+                String t = esc(i.stock.ticker);
+                b.append("<p><a href='sb://stock/").append(t).append("'>Full explanation and chart for ").append(t).append(" &rarr;</a>")
+                 .append(" &nbsp;&middot;&nbsp; <a href='sb://alert/").append(t).append("'>&#128276; Set a price alert</a>");
+                if ("USD".equals(i.stock.currency) && i.stock.ticker.indexOf('.') < 0)
+                    b.append(" &nbsp;&middot;&nbsp; <a href='sb://pbuy/").append(t).append("'>Paper-trade it (pretend money)</a>");
+                b.append("</p>");
+            }
             b.append("</div>");
         }
         b.append(disclaimer());
@@ -117,6 +132,81 @@ public final class HtmlView {
         }
         b.append("</table></div><p><a href='sb://page/worldstocks'>The biggest companies of each market, and where to buy them &rarr;</a></p>"
                 + "<p class=muted>An \"index\" is a basket of a country's biggest companies. Asian markets open first, then Europe, then the Americas.</p>");
+        return page(k, b.toString());
+    }
+
+    /** Your price alerts. */
+    public static String alerts(Palette k, Analyzer a) {
+        StringBuilder b = new StringBuilder("<h1>Price alerts</h1><p class=muted>Get told when a stock reaches a price. Type an alert above, for example "
+                + "<b>NVDA above 150</b>, <b>TSLA below 200</b> or <b>AAPL move 5%</b> (a move of 5% up or down in one day). "
+                + "Alerts are checked on every refresh and every few minutes while StockBuddy runs.</p>");
+        java.util.List<Alerts.Alert> list = Alerts.load();
+        if (list.isEmpty()) return page(k, b.append("<div class=card>No alerts yet.</div>").toString());
+        b.append("<div class=card><table class=grid><tr><th>Alert</th><th class=num>Price now</th><th>Status</th><th></th></tr>");
+        boolean anyTriggered = false;
+        for (Alerts.Alert al : list) {
+            Stock s = a.stocks.get(al.ticker);
+            String now = s == null || Double.isNaN(s.price) ? "<span class=muted>-</span>" : esc(Advisor.money(s)) + "<br>" + pct(s.changePct);
+            String status = al.triggeredAt == null ? "<span class=muted>Waiting</span>"
+                    : "<b class=good>&#128276; Triggered</b><br><span class=muted style='font-size:10pt'>" + esc(al.triggeredAt) + " at " + Alerts.num(al.triggeredPrice) + "</span>";
+            anyTriggered |= al.triggeredAt != null;
+            b.append("<tr><td><a href='sb://stock/").append(esc(al.ticker)).append("'><b>").append(esc(al.ticker)).append("</b></a> ")
+             .append(esc(al.describe().substring(al.ticker.length()))).append("</td><td class=num>").append(now).append("</td><td>").append(status)
+             .append("</td><td><a href='sb://alertdel/").append(esc(al.id)).append("'>Remove</a></td></tr>");
+        }
+        b.append("</table></div>");
+        if (anyTriggered) b.append("<p><a href='sb://alertclear'>Remove all triggered alerts</a></p>");
+        return page(k, b.toString());
+    }
+
+    /** The paper-trading portfolio (pretend money). */
+    public static String portfolio(Palette k, Analyzer a) {
+        PaperPortfolio p = PaperPortfolio.load();
+        java.util.Map<String, Double> prices = new java.util.LinkedHashMap<>();
+        for (String t : p.positions.keySet()) { Stock s = a.stocks.get(t); if (s != null && !Double.isNaN(s.price)) prices.put(t, s.price); }
+        double[] v = p.value(prices);
+        double total = p.cash + v[0], gain = total - p.startCash, gainPct = 100 * gain / p.startCash;
+        StringBuilder b = new StringBuilder("<h1>Paper trading</h1><p class=muted>Practise with <b>pretend money</b> - nothing real is bought or sold. "
+                + "Type a trade above, for example <b>buy 10 AAPL</b>, <b>sell 5 AAPL</b> or <b>sell all AAPL</b>. Trades use today's real prices "
+                + "(US-listed stocks)." + (a.demo ? " <span class=warn>Practice mode is on: prices are made up.</span>" : "") + "</p>");
+        b.append("<div class=card><table class=grid>")
+         .append("<tr><td class=muted>Total value</td><td class=num><b style='font-size:15pt'>").append(String.format(java.util.Locale.US, "$%,.2f", total)).append("</b></td></tr>")
+         .append("<tr><td class=muted>Since you started (").append(esc(p.started)).append(")</td><td class=num><b class=").append(gain >= 0 ? "good" : "bad").append(">")
+         .append(String.format(java.util.Locale.US, "%+,.2f (%+.2f%%)", gain, gainPct)).append("</b></td></tr>")
+         .append("<tr><td class=muted>Pretend cash</td><td class=num>").append(String.format(java.util.Locale.US, "$%,.2f", p.cash)).append("</td></tr>")
+         .append("<tr><td class=muted>Invested in stocks</td><td class=num>").append(String.format(java.util.Locale.US, "$%,.2f", v[0])).append("</td></tr>");
+        double spxNow = Double.NaN;
+        for (WorldMarkets.Market m : a.markets) if (m.symbol.equals("^GSPC")) spxNow = m.price;
+        if (!Double.isNaN(p.spxAtStart) && !Double.isNaN(spxNow) && !a.demo) {
+            double spx = 100 * (spxNow / p.spxAtStart - 1);
+            b.append("<tr><td class=muted>The S&amp;P 500 did</td><td class=num>").append(pct(spx)).append(" &nbsp;").append(gainPct >= spx ? "<b class=good>you're ahead</b>" : "<b class=warn>you're behind</b>").append("</td></tr>");
+        }
+        b.append("</table></div>");
+        if (!p.positions.isEmpty()) {
+            b.append("<h2>What you hold</h2><div class=card><table class=grid><tr><th>Stock</th><th class=num>Shares</th><th class=num>Paid / now</th><th class=num>Profit</th><th></th></tr>");
+            for (PaperPortfolio.Position pos : p.positions.values()) {
+                Double now = prices.get(pos.ticker);
+                double pl = now == null ? Double.NaN : pos.shares * now - pos.cost;
+                b.append("<tr><td><a href='sb://stock/").append(esc(pos.ticker)).append("'><b>").append(esc(pos.ticker)).append("</b></a></td><td class=num>")
+                 .append(PaperPortfolio.fmt(pos.shares)).append("</td><td class=num>").append(String.format(java.util.Locale.US, "$%,.2f", pos.avgCost())).append("<br>")
+                 .append(now == null ? "<span class=muted>refresh</span>" : String.format(java.util.Locale.US, "$%,.2f", now)).append("</td><td class=num>")
+                 .append(Double.isNaN(pl) ? "-" : "<b class=" + (pl >= 0 ? "good" : "bad") + ">" + String.format(java.util.Locale.US, "%+,.2f", pl) + "</b><br>"
+                         + pct(100 * pl / pos.cost))
+                 .append("</td><td><a href='sb://psell/").append(esc(pos.ticker)).append("'>Sell all</a></td></tr>");
+            }
+            b.append("</table></div>");
+        }
+        if (!p.trades.isEmpty()) {
+            b.append("<h2>Your trades</h2><div class=card><table class=grid>");
+            for (int i = p.trades.size() - 1; i >= 0 && i >= p.trades.size() - 30; i--) {
+                PaperPortfolio.Trade t = p.trades.get(i);
+                b.append("<tr><td>").append(esc(t.date)).append("</td><td><b class=").append(t.side.equals("BUY") ? "good" : "bad").append(">").append(t.side)
+                 .append("</b> ").append(PaperPortfolio.fmt(t.shares)).append(" ").append(esc(t.ticker)).append("</td><td class=num>")
+                 .append(String.format(java.util.Locale.US, "$%,.2f", t.price)).append("</td></tr>");
+            }
+            b.append("</table></div>");
+        }
+        b.append("<p><a href='sb://preset'>Start again with $10,000</a></p>");
         return page(k, b.toString());
     }
 
@@ -162,12 +252,21 @@ public final class HtmlView {
 
     /** The biggest companies of the other world markets, with where to buy them. */
     public static String worldStocks(Palette k, Analyzer a) {
-        StringBuilder b = new StringBuilder("<h1>World stocks</h1><p class=muted>The biggest companies of the world's largest stock markets "
-                + "(US companies are in your watchlist), what StockBuddy thinks of them today, and <b>where you can buy them</b>. "
-                + "Tap a name for the full explanation and chart." + (a.demo ? " <span class=warn>(practice data)</span>" : "") + "</p>");
+        StringBuilder b = new StringBuilder("<h1>World stocks</h1><p class=muted>The biggest companies of the world's largest stock markets, "
+                + "what StockBuddy thinks of them today, and <b>where you can buy them</b>. Tap a name for the full explanation and chart."
+                + (a.demo ? " <span class=warn>(practice data)</span>" : "") + "</p>");
+        int top = WorldStocks.top();
+        b.append("<p><b>Companies per market:</b> &nbsp;");
+        for (int n : WorldStocks.TOP_CHOICES)
+            b.append(n == top ? "<b style='color:" + k.accent() + "'>[ Top " + n + " ]</b>" : "<a href='sb://wtop/" + n + "'>Top " + n + "</a>").append(" &nbsp;&middot;&nbsp; ");
+        b.append("<a href='sb://wtop/0'>Off</a> &nbsp; <span class=muted>(more companies = slower refresh)</span></p>");
+        if (top == 0) return page(k, b.append("<div class=card>World stocks are turned off. Choose 3, 5, 10 or 20 above.</div>").toString());
+        boolean changedSinceRefresh = false;
+        for (WorldStocks.Entry e : WorldStocks.active()) if (!a.stocks.containsKey(e.analysedTicker())) changedSinceRefresh = true;
+        if (changedSinceRefresh) b.append("<p class=banner>Refresh the data to analyse the companies you just added.</p>");
         String market = null;
         boolean open = false;
-        for (WorldStocks.Entry e : WorldStocks.ALL) {
+        for (WorldStocks.Entry e : WorldStocks.active()) {
             Stock s = a.stocks.get(e.analysedTicker());
             if (!e.market.equals(market)) {
                 if (open) b.append("</div>");
@@ -431,7 +530,11 @@ public final class HtmlView {
         b.append("<div class=card><h3>Overall: <span class=").append(cls).append(">").append(Scorer.verdict(s.score)).append("</span></h3>")
          .append(String.format("Score %+.0f out of 100 &nbsp;&middot;&nbsp; confidence %s", s.score * 100, prettyStars(Scorer.stars(s.confidence))))
          .append("<p>").append(esc(Scorer.plainSummary(s))).append("</p></div>");
-        b.append("<p><a href='sb://watch/").append(esc(s.ticker)).append("'>&#9733; Add ").append(esc(s.ticker)).append(" to My Watchlist</a></p>");
+        b.append("<p><a href='sb://watch/").append(esc(s.ticker)).append("'>&#9733; Add ").append(esc(s.ticker)).append(" to My Watchlist</a>")
+         .append(" &nbsp;&middot;&nbsp; <a href='sb://alert/").append(esc(s.ticker)).append("'>&#128276; Set a price alert</a>");
+        if ("USD".equals(s.currency) && s.ticker.indexOf('.') < 0)
+            b.append(" &nbsp;&middot;&nbsp; <a href='sb://pbuy/").append(esc(s.ticker)).append("'>Paper-trade it</a>");
+        b.append("</p>");
         java.util.List<String[]> stats = KeyStats.ordered(s);
         if (!stats.isEmpty()) {
             b.append("<h2>Key statistics</h2><div class=card><table class=grid>");

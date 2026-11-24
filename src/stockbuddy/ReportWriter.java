@@ -1,22 +1,64 @@
 package stockbuddy;
 
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
-/** Saves the daily report as an easy-to-read web page in the "reports" folder. */
+/**
+ * Saves the daily report: as a web page (HTML), a Word document (.docx), a spreadsheet (.csv) or data (.json).
+ * Shared by the desktop app (saved in the "reports" folder) and the phone app (saved where you choose).
+ */
 public final class ReportWriter {
+    public enum Format {
+        HTML("Web page (.html)", "html", "text/html"),
+        WORD("Word document (.docx)", "docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"),
+        CSV("Spreadsheet (.csv)", "csv", "text/csv"),
+        JSON("Data for programs (.json)", "json", "application/json");
+
+        public final String label, extension, mime;
+        Format(String label, String extension, String mime) { this.label = label; this.extension = extension; this.mime = mime; }
+    }
+
+    private static final String[] SECTIONS = {"Best buys", "Sells & shorts", "Best calls", "Best puts", "0DTE"};
+
     private ReportWriter() {}
 
-    public static Path write(Analyzer a, Advisor.Plan p) throws Exception {
-        LocalDateTime now = LocalDateTime.now();
+    /** Saves a web page report in the reports folder (kept for the text version). */
+    public static Path write(Analyzer a, Advisor.Plan p) throws Exception { return write(Format.HTML, a, p); }
+
+    public static Path write(Format f, Analyzer a, Advisor.Plan p) throws Exception {
         Path dir = AppPaths.reports();
         Files.createDirectories(dir);
-        Path file = dir.resolve("stockbuddy-" + now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HHmm")) + ".html");
+        Path file = dir.resolve(fileName(f, p));
+        Files.write(file, build(f, a, p));
+        return file;
+    }
 
+    public static String fileName(Format f, Advisor.Plan p) {
+        String market = p == null || p.market == null ? "" : "-" + p.market.replaceAll("[^A-Za-z0-9]", "");
+        return "stockbuddy-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HHmm")) + market + "." + f.extension;
+    }
+
+    public static byte[] build(Format f, Analyzer a, Advisor.Plan p) throws Exception {
+        switch (f) {
+            case WORD: return docx(a, p);
+            case CSV: return csv(a, p).getBytes(StandardCharsets.UTF_8);
+            case JSON: return json(a, p).getBytes(StandardCharsets.UTF_8);
+            default: return html(a, p).getBytes(StandardCharsets.UTF_8);
+        }
+    }
+
+    static String html(Analyzer a, Advisor.Plan p) {
+        LocalDateTime now = LocalDateTime.now();
         StringBuilder h = new StringBuilder();
         h.append("<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'>")
          .append("<title>StockBuddy daily report</title><style>")
@@ -61,9 +103,239 @@ public final class ReportWriter {
         h.append("</ul><h2>Dictionary</h2>");
         Glossary.WORDS.forEach((k, v) -> h.append("<p><b>").append(esc(k)).append("</b> &mdash; ").append(esc(v)).append("</p>"));
         h.append("</main></body></html>");
-        Files.writeString(file, h.toString());
-        return file;
+        return h.toString();
     }
+
+    // ------------------------------------------------------------------ CSV (one table: markets, ideas, stocks)
+    static String csv(Analyzer a, Advisor.Plan p) {
+        StringBuilder b = new StringBuilder("\uFEFF");   // lets Excel read accents correctly
+        b.append("type,section,rank,ticker,name,price,currency,change_pct_today,verdict,score,confidence,action,why\n");
+        for (WorldMarkets.Market m : a.markets)
+            row(b, "market", m.country, "", m.symbol, m.name, m.price, "", m.changePct, m.isOpenNow() ? "open" : "closed", "", "", "", "");
+        List<List<Advisor.Idea>> lists = HtmlView.ideaLists(p);
+        for (int s = 0; s < lists.size(); s++) {
+            int n = 1;
+            for (Advisor.Idea i : lists.get(s)) {
+                Stock st = i.stock;
+                row(b, "idea", SECTIONS[s], String.valueOf(n++), st == null ? "" : st.ticker, st != null && st.name != null ? st.name : (i.title == null ? i.headline : i.title),
+                        st == null ? Double.NaN : st.price, st == null ? "" : st.currency, st == null ? Double.NaN : st.changePct,
+                        st == null ? "" : Scorer.verdict(st.score), st == null ? "" : fmt(st.score * 100, "%.0f"), st == null ? "" : Scorer.stars(st.confidence),
+                        i.action == null ? i.headline : i.action, String.join(" | ", i.why));
+            }
+        }
+        int n = 1;
+        for (Stock s : ranked(a))
+            row(b, "stock", s.world == null ? "" : WorldStocks.marketName(s.world.market), String.valueOf(n++), s.ticker, s.name == null ? "" : s.name,
+                    s.price, s.currency, s.changePct, Scorer.verdict(s.score), fmt(s.score * 100, "%.0f"), Scorer.stars(s.confidence), "", "");
+        return b.toString();
+    }
+
+    private static void row(StringBuilder b, String type, String section, String rank, String ticker, String name, double price, String cur,
+                            double change, String verdict, String score, String conf, String action, String why) {
+        String[] cells = {type, section, rank, ticker, name, Double.isNaN(price) ? "" : fmt(price, "%.4f"), cur,
+                Double.isNaN(change) ? "" : fmt(change, "%.2f"), verdict, score, conf, action, why};
+        for (int i = 0; i < cells.length; i++) {
+            if (i > 0) b.append(',');
+            String c = cells[i] == null ? "" : cells[i];
+            if (c.contains(",") || c.contains("\"") || c.contains("\n")) c = "\"" + c.replace("\"", "\"\"") + "\"";
+            b.append(c);
+        }
+        b.append('\n');
+    }
+
+    // ------------------------------------------------------------------ JSON
+    static String json(Analyzer a, Advisor.Plan p) {
+        StringBuilder b = new StringBuilder("{\n");
+        b.append("  \"generated\": ").append(q(LocalDateTime.now().toString())).append(",\n");
+        b.append("  \"practiceData\": ").append(a.demo).append(",\n");
+        b.append("  \"disclaimer\": ").append(q("A learning and research helper, not financial advice.")).append(",\n");
+        b.append("  \"market\": ").append(p.market == null ? "\"all\"" : q(p.market)).append(",\n");
+        b.append("  \"newsWarning\": ").append(p.newsWarning == null ? "null" : q(p.newsWarning)).append(",\n");
+        b.append("  \"worldMarkets\": [\n");
+        for (int i = 0; i < a.markets.size(); i++) {
+            WorldMarkets.Market m = a.markets.get(i);
+            b.append("    {\"symbol\": ").append(q(m.symbol)).append(", \"name\": ").append(q(m.name)).append(", \"country\": ").append(q(m.country))
+             .append(", \"price\": ").append(n(m.price)).append(", \"changePct\": ").append(n(m.changePct)).append(", \"monthPct\": ").append(n(m.monthPct))
+             .append(", \"open\": ").append(m.isOpenNow()).append("}").append(i + 1 < a.markets.size() ? ",\n" : "\n");
+        }
+        b.append("  ],\n  \"ideas\": {\n");
+        String[] keys = {"buys", "sellsAndShorts", "calls", "puts", "zeroDte"};
+        List<List<Advisor.Idea>> lists = HtmlView.ideaLists(p);
+        for (int s = 0; s < lists.size(); s++) {
+            b.append("    ").append(q(keys[s])).append(": [");
+            List<Advisor.Idea> l = lists.get(s);
+            for (int i = 0; i < l.size(); i++) {
+                Advisor.Idea idea = l.get(i);
+                b.append(i == 0 ? "\n" : ",\n").append("      {\"ticker\": ").append(idea.stock == null ? "null" : q(idea.stock.ticker))
+                 .append(", \"title\": ").append(q(idea.title == null ? idea.headline : idea.title)).append(", \"action\": ").append(q(idea.action == null ? idea.headline : idea.action))
+                 .append(", \"price\": ").append(idea.stock == null ? "null" : n(idea.stock.price)).append(", \"currency\": ").append(idea.stock == null ? "null" : q(idea.stock.currency))
+                 .append(", \"why\": ").append(arr(idea.why)).append(", \"howTo\": ").append(arr(idea.howTo)).append(", \"risk\": ").append(idea.risk == null ? "null" : q(idea.risk)).append("}");
+            }
+            b.append(l.isEmpty() ? "]" : "\n    ]").append(s + 1 < lists.size() ? ",\n" : "\n");
+        }
+        b.append("  },\n  \"stocks\": [\n");
+        List<Stock> ranked = ranked(a);
+        for (int i = 0; i < ranked.size(); i++) {
+            Stock s = ranked.get(i);
+            b.append("    {\"ticker\": ").append(q(s.ticker)).append(", \"name\": ").append(s.name == null ? "null" : q(s.name))
+             .append(", \"price\": ").append(n(s.price)).append(", \"currency\": ").append(q(s.currency)).append(", \"changePct\": ").append(n(s.changePct))
+             .append(", \"verdict\": ").append(q(Scorer.verdict(s.score))).append(", \"score\": ").append(n(Math.round(s.score * 100)))
+             .append(", \"confidence\": ").append(n(Math.round(s.confidence * 100) / 100.0))
+             .append(", \"market\": ").append(s.world == null ? "null" : q(s.world.market)).append(", \"signals\": [");
+            for (int g = 0; g < s.signals.size(); g++) {
+                Signal sg = s.signals.get(g);
+                b.append(g == 0 ? "" : ", ").append("{\"source\": ").append(q(sg.source())).append(", \"score\": ").append(n(Math.round(sg.score() * 100) / 100.0))
+                 .append(", \"reason\": ").append(q(sg.reason())).append("}");
+            }
+            b.append("]}").append(i + 1 < ranked.size() ? ",\n" : "\n");
+        }
+        b.append("  ],\n  \"sources\": {");
+        int i = 0;
+        for (Map.Entry<String, String> e : a.sourceStatus.entrySet())
+            b.append(i++ == 0 ? "\n" : ",\n").append("    ").append(q(e.getKey())).append(": ").append(q(e.getValue()));
+        b.append("\n  }\n}\n");
+        return b.toString();
+    }
+
+    private static String q(String s) {
+        StringBuilder b = new StringBuilder("\"");
+        for (char c : s.toCharArray()) {
+            if (c == '"' || c == '\\') b.append('\\').append(c);
+            else if (c == '\n') b.append("\\n");
+            else if (c < 0x20) b.append(String.format("\\u%04x", (int) c));
+            else b.append(c);
+        }
+        return b.append('"').toString();
+    }
+
+    private static String n(double v) { return Double.isNaN(v) || Double.isInfinite(v) ? "null" : (v == Math.rint(v) ? String.valueOf((long) v) : String.valueOf(v)); }
+
+    private static String arr(List<String> l) {
+        StringBuilder b = new StringBuilder("[");
+        for (int i = 0; i < l.size(); i++) b.append(i == 0 ? "" : ", ").append(q(l.get(i)));
+        return b.append("]").toString();
+    }
+
+    // ------------------------------------------------------------------ Word (.docx, written by hand - no extra libraries)
+    static byte[] docx(Analyzer a, Advisor.Plan p) throws Exception {
+        StringBuilder d = new StringBuilder();
+        para(d, "StockBuddy daily report" + (a.demo ? " (PRACTICE DATA)" : ""), 36, true, "1F3B73");
+        para(d, "Made " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("EEEE MMMM d, yyyy 'at' HH:mm", Locale.US)) + " - " + a.stocks.size() + " stocks analysed"
+                + (p.market == null ? "" : " - only " + WorldStocks.marketName(p.market)), 20, false, "5D6676");
+        para(d, "Important: this is a learning and research helper, not financial advice. It can be wrong and you can lose money.", 20, true, "9A6700");
+        if (p.newsWarning != null) para(d, p.newsWarning, 20, true, "B42318");
+
+        heading(d, "World markets");
+        para(d, WorldMarkets.mood(a.markets), 22, false, null);
+        List<String[]> rows = new ArrayList<>();
+        rows.add(new String[]{"Market", "Index price", "Today", "Last month", "Status"});
+        for (WorldMarkets.Market m : a.markets)
+            rows.add(new String[]{m.name, WorldMarkets.price(m.price), pctText(m.changePct), pctText(m.monthPct), m.isOpenNow() ? "Open" : "Closed"});
+        table(d, rows);
+
+        List<List<Advisor.Idea>> lists = HtmlView.ideaLists(p);
+        for (int s = 0; s < lists.size(); s++) {
+            heading(d, HtmlView.IDEA_TEXT[s][0]);
+            if (lists.get(s).isEmpty()) { para(d, HtmlView.IDEA_TEXT[s][2].isEmpty() ? "No ideas right now." : HtmlView.IDEA_TEXT[s][2], 22, false, "5D6676"); continue; }
+            int n = 1;
+            for (Advisor.Idea i : lists.get(s)) {
+                para(d, "#" + n++ + "  " + (i.title == null ? i.headline : i.title), 26, true, null);
+                if (i.action != null) para(d, i.action, 22, true, i.tone > 0 ? "127A3E" : i.tone < 0 ? "B42318" : "9A6700");
+                para(d, "Why", 22, true, null);
+                for (String w : i.why) para(d, "\u2022 " + w, 21, false, null);
+                if (!i.howTo.isEmpty()) {
+                    para(d, "How to do it", 22, true, null);
+                    for (String h : i.howTo) para(d, "\u2022 " + h, 21, false, null);
+                }
+                if (i.risk != null) para(d, "Risk: " + i.risk, 21, false, "9A6700");
+            }
+        }
+
+        heading(d, "Every stock");
+        rows = new ArrayList<>();
+        rows.add(new String[]{"#", "Ticker", "Name", "Price", "Today", "Verdict", "Confidence"});
+        int n = 1;
+        for (Stock s : ranked(a))
+            rows.add(new String[]{String.valueOf(n++), s.ticker, s.name == null ? "" : s.name, Advisor.money(s), pctText(s.changePct), Scorer.verdict(s.score), Scorer.stars(s.confidence)});
+        table(d, rows);
+
+        heading(d, "Where the data came from");
+        for (Map.Entry<String, String> e : a.sourceStatus.entrySet()) para(d, e.getKey() + ": " + e.getValue(), 20, false, null);
+
+        String document = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+                + "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body>" + d
+                + "<w:sectPr><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:top=\"1134\" w:right=\"1134\" w:bottom=\"1134\" w:left=\"1134\" w:header=\"567\" w:footer=\"567\" w:gutter=\"0\"/></w:sectPr>"
+                + "</w:body></w:document>";
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try (ZipOutputStream z = new ZipOutputStream(out)) {
+            put(z, "[Content_Types].xml", "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+                    + "<Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\">"
+                    + "<Default Extension=\"rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/>"
+                    + "<Default Extension=\"xml\" ContentType=\"application/xml\"/>"
+                    + "<Override PartName=\"/word/document.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml\"/>"
+                    + "</Types>");
+            put(z, "_rels/.rels", "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+                    + "<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">"
+                    + "<Relationship Id=\"rId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument\" Target=\"word/document.xml\"/>"
+                    + "</Relationships>");
+            put(z, "word/document.xml", document);
+        }
+        return out.toByteArray();
+    }
+
+    private static void put(ZipOutputStream z, String name, String content) throws Exception {
+        z.putNextEntry(new ZipEntry(name));
+        z.write(content.getBytes(StandardCharsets.UTF_8));
+        z.closeEntry();
+    }
+
+    private static void heading(StringBuilder d, String text) { para(d, text, 30, true, "2457C5"); }
+
+    /** One paragraph. size is in half-points (22 = 11pt). color is hex without # (or null). */
+    private static void para(StringBuilder d, String text, int size, boolean bold, String color) {
+        d.append("<w:p><w:pPr><w:spacing w:after=\"80\"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>")
+         .append(bold ? "<w:b/>" : "").append(color == null ? "" : "<w:color w:val=\"" + color + "\"/>")
+         .append("<w:sz w:val=\"").append(size).append("\"/></w:rPr><w:t xml:space=\"preserve\">").append(xml(text)).append("</w:t></w:r></w:p>");
+    }
+
+    private static void table(StringBuilder d, List<String[]> rows) {
+        d.append("<w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:tblBorders>");
+        for (String side : new String[]{"top", "left", "bottom", "right", "insideH", "insideV"})
+            d.append("<w:").append(side).append(" w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"D9DEE6\"/>");
+        d.append("</w:tblBorders></w:tblPr>");
+        for (int r = 0; r < rows.size(); r++) {
+            d.append("<w:tr>");
+            for (String c : rows.get(r)) {
+                d.append("<w:tc><w:tcPr>").append(r == 0 ? "<w:shd w:val=\"clear\" w:color=\"auto\" w:fill=\"EEF1F5\"/>" : "").append("</w:tcPr><w:p><w:r><w:rPr>")
+                 .append(r == 0 ? "<w:b/>" : "").append("<w:sz w:val=\"18\"/></w:rPr><w:t xml:space=\"preserve\">").append(xml(c)).append("</w:t></w:r></w:p></w:tc>");
+            }
+            d.append("</w:tr>");
+        }
+        d.append("</w:tbl><w:p/>");
+    }
+
+    private static String xml(String s) {
+        StringBuilder b = new StringBuilder();
+        for (char c : (s == null ? "" : s).toCharArray()) {
+            if (c == '&') b.append("&amp;");
+            else if (c == '<') b.append("&lt;");
+            else if (c == '>') b.append("&gt;");
+            else if (c == '"') b.append("&quot;");
+            else if (c < 0x20 && c != '\t' && c != '\n') continue;   // not allowed in XML
+            else b.append(c);
+        }
+        return b.toString();
+    }
+
+    private static List<Stock> ranked(Analyzer a) {
+        List<Stock> list = new ArrayList<>(a.stocks.values());
+        list.sort((x, y) -> Double.compare(y.score, x.score));
+        return list;
+    }
+
+    private static String pctText(double v) { return Double.isNaN(v) ? "n/a" : String.format(Locale.US, "%+.2f%%", v); }
+
+    private static String fmt(double v, String f) { return String.format(Locale.US, f, v); }
 
     private static void section(StringBuilder h, String title, List<Advisor.Idea> ideas, String empty) {
         h.append("<h2>").append(esc(title)).append("</h2>");

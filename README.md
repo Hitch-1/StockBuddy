@@ -28,11 +28,13 @@ A window opens with a menu on the left:
 
 | Page | What it shows |
 |---|---|
-| **Today's Ideas** | Tabs for **Best Buys**, **Sells & Shorts**, **Best Calls**, **Best Puts** and **0DTE**. Each idea shows the company name, with the recommended action underneath. It says *why*, *how to do it*, and *how risky it is*. Sells that are also short candidates are marked **SHORT** |
+| **Today's Ideas** | Tabs for **Best Buys**, **Sells & Shorts**, **Best Calls**, **Best Puts** and **0DTE**. Each idea shows the company name, with the recommended action underneath. It says *why*, *how to do it*, and *how risky it is*. Sells that are also short candidates are marked **SHORT**. Use **Market: ...** to show ideas for just one of the 16 markets (S&P 500, Nasdaq, Dow, Canada, Brazil, UK, Germany, France, Eurozone, Japan, China, Hong Kong, India, Korea, Taiwan, Australia) |
 | **World Markets** | The 16 biggest stock markets with their **index price**, updated every minute (some exchanges are a few minutes delayed). Also whether each is open right now, and how it's doing today and over the last month |
-| **World Stocks** | The biggest companies of the other 13 big markets (Canada, Brazil, UK, Germany, France, Eurozone, Japan, China, Hong Kong, India, Korea, Taiwan, Australia), today's verdict, and **where you can buy them**: a US listing (easiest), the home exchange (needs an international broker), or a whole-country ETF. Turn this off with **Data Sources → Include world stocks** to refresh faster |
+| **World Stocks** | The biggest companies of every big market (choose the **top 3, 5, 10 or 20** of each). This covers the US and the other 13 markets (Canada, Brazil, UK, Germany, France, Eurozone, Japan, China, Hong Kong, India, Korea, Taiwan, Australia), today's verdict, and **where you can buy them**: a US listing (easiest), the home exchange (needs an international broker), or a whole-country ETF. Turn this off with **Data Sources → Include world stocks** to refresh faster |
 | **Economic Calendar** | This week's big economic news (inflation, jobs reports, interest-rate decisions...) from the ForexFactory calendar, with what each event means. On days with big US news, the ideas and 0DTE show a warning |
 | **Look Up a Stock** | A chart you can customise (see below), **key statistics** like on Yahoo Finance (day's range, market cap, beta, P/E, EPS, dividend, earnings date…), and a plain-English explanation of what every source says. Includes a **★ Add to My Watchlist** button |
+| **Price Alerts** | Type an alert like **NVDA above 150**, **TSLA below 200** or **AAPL move 5%**. Alerts are checked on every refresh and every 5 minutes, and you get a desktop notification. On Android they're checked about every 30 minutes even when the app is closed, and arrive as phone notifications |
+| **Paper Trading** | Practise with **$10,000 of pretend money**: type **buy 10 AAPL**, **sell 5 AAPL** or **sell all AAPL**, or use "Paper-trade it" on any idea. Shows your positions, profit and trades, and how you compare with the S&P 500. US-listed stocks only |
 | **Track Record** | How StockBuddy's past ideas actually turned out: every day's buys, sells, calls and puts are remembered with their price, so you can see what share went the right way |
 | **All Stocks** | Every stock checked, with its verdict. Click a column title to sort; double-click a row for details |
 | **Dictionary** | Investing words explained simply, with a search box |
@@ -44,7 +46,7 @@ Along the top:
 - **Practice mode:** switch on to learn with made-up data (works without internet).
 - **Skin:** pick a colour theme: Classic Light, Night Mode, Wall Street Terminal, Ocean Blue, Sunset, Bull Gold, Mint Fresh or High Contrast. Your choice is remembered.
 - **Desktop widget:** opens a small panel that stays on your desktop (see below).
-- **Save report:** saves today's ideas as a web page.
+- **Save report:** saves today's report as a **web page (.html)**, a **Word document (.docx)**, a **spreadsheet (.csv)** or **data for programs (.json)**. On Android: **More → Save report**, then choose where to save it.
 - **Refresh data:** downloads everything again. The app also refreshes by itself every 15 minutes.
 
 ### The chart

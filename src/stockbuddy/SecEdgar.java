@@ -32,7 +32,7 @@ public final class SecEdgar {
 
     private static String userAgent() {
         String e = email();
-        return "StockBuddy/1.2 (personal research app" + (e.isEmpty() ? "" : "; " + e) + ")";
+        return "StockBuddy/1.3 (personal research app" + (e.isEmpty() ? "" : "; " + e) + ")";
     }
 
     public static void resetCounts() { lastOk = 0; lastRefused = 0; }

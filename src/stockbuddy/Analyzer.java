@@ -55,6 +55,8 @@ public class Analyzer {
         sourceStatus.put("Economic calendar (ForexFactory)", EconomicCalendar.lastStatus);
 
         Set<String> universe = new LinkedHashSet<>(readWatchlist());
+        for (String t : PaperPortfolio.load().positions.keySet()) universe.add(t);   // so your paper portfolio has today's prices
+        for (String t : Alerts.waitingTickers()) universe.add(t);                    // ...and your alerts too
         progress.accept("Looking at today's biggest movers on stockanalysis.com...");
         Set<String> movers = StockAnalysisSource.todaysMovers(6);
         universe.addAll(movers);
@@ -135,7 +137,8 @@ public class Analyzer {
         ExecutorService pool = Executors.newFixedThreadPool(6);
         List<Future<?>> jobs = new ArrayList<>();
         int ok = 0;
-        for (WorldStocks.Entry e : WorldStocks.ALL) {
+        List<WorldStocks.Entry> entries = WorldStocks.active();
+        for (WorldStocks.Entry e : entries) {
             String t = e.analysedTicker();
             Stock existing = stocks.get(t);
             if (existing != null) { existing.world = e; continue; }
@@ -149,14 +152,14 @@ public class Analyzer {
                 s.name = e.name;
             }));
         }
-        long deadline = System.currentTimeMillis() + 90_000;
+        long deadline = System.currentTimeMillis() + 60_000 + 1_000L * entries.size();
         for (Future<?> f : jobs) {
             try { f.get(Math.max(1, deadline - System.currentTimeMillis()), TimeUnit.MILLISECONDS); ok++; } catch (Exception ignored) {}
         }
         pool.shutdownNow();
         int priced = 0;
         for (Stock s : stocks.values()) if (s.world != null && s.hasPrices()) priced++;
-        sourceStatus.put("World stocks (16 biggest markets)", priced > 0 ? "OK - " + priced + " big companies from " + WorldStocks.ALL.size() + " checked" : "Could not download their prices");
+        sourceStatus.put("World stocks (16 biggest markets)", priced > 0 ? "OK - top " + WorldStocks.top() + " companies of each market (" + priced + " with prices)" : "Could not download their prices");
     }
 
     public static List<String> readWatchlist() {

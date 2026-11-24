@@ -73,6 +73,8 @@ public final class PriceSource {
                     Object nm = m.get("longName") != null ? m.get("longName") : m.get("shortName");
                     if (nm instanceof String && s.name == null) s.name = (String) nm;
                     if (m.get("currency") instanceof String) s.currency = (String) m.get("currency");
+                    Object ex = m.get("fullExchangeName") != null ? m.get("fullExchangeName") : m.get("exchangeName");
+                    if (ex instanceof String) s.exchange = (String) ex;
                 }
                 double prev = "1d".equals(range)
                         ? Json.num(Json.path(meta, "chartPreviousClose"), Double.NaN)

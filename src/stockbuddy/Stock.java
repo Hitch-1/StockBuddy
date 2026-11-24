@@ -8,6 +8,7 @@ public class Stock {
     public final String ticker;
     public String name;
     public String currency = "USD";
+    public String exchange;   // e.g. "NasdaqGS", "NYSE" (from Yahoo)
 
     // Prices
     public double price = Double.NaN;
