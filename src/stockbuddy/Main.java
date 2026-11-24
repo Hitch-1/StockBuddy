@@ -129,12 +129,12 @@ public final class Main {
 
         block("1. BEST BUYS  -  stocks that look good to buy today", Ui.GREEN, plan.buys,
                 "No stock had enough good signals today. That's OK - waiting is a strategy too.");
-        block("2. BEST SELLS  -  if you own these, consider selling or protecting them", Ui.RED, plan.sells,
+        block("2. SELLS & SHORTS  -  if you own these, consider selling or protecting them", Ui.RED, plan.sells,
                 "No stock had strong sell signals today.");
-        block("3. BEST OPTIONS IDEAS  (for 1-2 months)", Ui.MAGENTA, plan.options,
-                "No stock had signals strong and clear enough for an options idea today.");
-        block("4. BEST SHORT IDEAS  (advanced - read the warning!)", Ui.YELLOW, plan.shorts,
-                "No good short candidates today (we need a clear downtrend AND bad ratings).");
+        block("3. BEST CALLS  (bet on up, 1-2 months)", Ui.MAGENTA, plan.calls,
+                "No stock had signals strong and clear enough for a call today.");
+        block("4. BEST PUTS  (bet on down, 1-2 months)", Ui.YELLOW, plan.puts,
+                "No stock had signals strong and clear enough for a put today.");
         block("5. 0DTE IDEAS  (options that expire TODAY - extremely risky)", Ui.RED, plan.zeroDte, "");
         Ui.disclaimer();
     }
@@ -145,7 +145,8 @@ public final class Main {
         int n = 1;
         for (Advisor.Idea i : ideas) {
             System.out.println();
-            System.out.println("  " + color + Ui.BOLD + "#" + n++ + "  " + i.headline + Ui.RESET);
+            System.out.println("  " + color + Ui.BOLD + "#" + n++ + "  " + (i.title != null ? i.title : i.headline) + Ui.RESET);
+            if (i.action != null) System.out.println("      " + Ui.BOLD + i.action + Ui.RESET);
             System.out.println("     " + Ui.BOLD + "Why:" + Ui.RESET);
             for (String w : i.why) Ui.bullet(w, "       ");
             if (!i.howTo.isEmpty()) {

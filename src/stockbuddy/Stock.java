@@ -14,6 +14,10 @@ public class Stock {
     public double changePct = Double.NaN;          // today's move in %
     public List<Double> closes = new ArrayList<>();   // daily closing prices, oldest first
     public List<Double> volumes = new ArrayList<>();
+    public List<Double> opens = new ArrayList<>(), highs = new ArrayList<>(), lows = new ArrayList<>(); // for candle charts
+
+    /** "Key statistics" like on Yahoo Finance (label -> value as text), filled by the sources. */
+    public final java.util.Map<String, String> keyStats = new java.util.LinkedHashMap<>();
 
     // Fundamentals (stockanalysis.com)
     public double peRatio = Double.NaN;
@@ -25,6 +29,10 @@ public class Stock {
     // Stock Rover (CSV export)
     public double fairValue = Double.NaN;
     public double roverQuality = Double.NaN, roverValue = Double.NaN, roverGrowth = Double.NaN;
+
+    // Finnhub analyst recommendations (latest month)
+    public int fhStrongBuy = -1, fhBuy, fhHold, fhSell, fhStrongSell;
+    public String fhPeriod;
 
     // WallStreetZen
     public double zenScore = Double.NaN;
@@ -49,6 +57,11 @@ public class Stock {
 
     public String display() {
         return name == null || name.trim().isEmpty() ? ticker : ticker + " (" + name + ")";
+    }
+
+    /** True when we have open/high/low for every day (needed for candles). */
+    public boolean hasCandles() {
+        return opens.size() == closes.size() && highs.size() == closes.size() && lows.size() == closes.size() && !closes.isEmpty();
     }
 
     public boolean hasPrices() { return closes.size() >= 60 && !Double.isNaN(price); }

@@ -47,8 +47,13 @@ public final class DemoData {
             for (int d = 0; d < 252; d++) {
                 // the last 40 days follow the stock's trend more strongly so the chart has a clear story
                 double mu = drift / 252 * (d > 210 ? 2.0 : 1.0);
-                p *= Math.exp(mu + vol / Math.sqrt(252) * rnd.nextGaussian());
+                double daily = vol / Math.sqrt(252);
+                double open = p * (1 + daily * 0.3 * rnd.nextGaussian());
+                p *= Math.exp(mu + daily * rnd.nextGaussian());
+                s.opens.add(open);
                 s.closes.add(p);
+                s.highs.add(Math.max(open, p) * (1 + Math.abs(rnd.nextGaussian()) * daily * 0.5));
+                s.lows.add(Math.min(open, p) * (1 - Math.abs(rnd.nextGaussian()) * daily * 0.5));
                 s.volumes.add(1e6 * (5 + rnd.nextDouble() * 5));
             }
             s.price = p;
@@ -63,6 +68,28 @@ public final class DemoData {
                 s.roverQuality = 40 + rnd.nextInt(50);
                 s.roverValue = (Double) r[9] > 1 ? 60 + rnd.nextInt(35) : 20 + rnd.nextInt(40);
                 s.roverGrowth = drift > 0.1 ? 60 + rnd.nextInt(35) : 25 + rnd.nextInt(40);
+            }
+            KeyStats.fromPrices(s);
+            if (!Double.isNaN(s.peRatio)) {
+                double shares = 1e9 * (1 + rnd.nextInt(15));
+                s.keyStats.put("Market cap", KeyStats.big(p * shares));
+                s.keyStats.put("Beta (5Y monthly)", String.format(java.util.Locale.US, "%.2f", vol / 0.22));
+                s.keyStats.put("P/E ratio (TTM)", String.format(java.util.Locale.US, "%.2f", s.peRatio));
+                s.keyStats.put("EPS (TTM)", String.format(java.util.Locale.US, "%.2f", p / s.peRatio));
+                s.keyStats.put("Earnings date", LocalDate.now().plusDays(5 + rnd.nextInt(60)).toString());
+                s.keyStats.put("Dividend & yield", rnd.nextBoolean() ? String.format(java.util.Locale.US, "%.2f (%.2f%%)", p * 0.012, 1.2) : "None");
+                s.keyStats.put("1y target estimate", String.format(java.util.Locale.US, "%,.2f", s.priceTarget));
+                s.keyStats.put("Analyst rating", s.analystRating);
+                s.keyStats.put("Profit margin", String.format(java.util.Locale.US, "%.1f%%", 5 + rnd.nextDouble() * 30));
+                s.keyStats.put("Debt / equity", String.format(java.util.Locale.US, "%.2f", rnd.nextDouble() * 2));
+                // practice "Finnhub" analyst counts that match the rating
+                int strength = s.analystRating.equals("Strong Buy") ? 4 : s.analystRating.equals("Buy") ? 3 : s.analystRating.equals("Hold") ? 2 : 1;
+                s.fhStrongBuy = strength * 3 + rnd.nextInt(3);
+                s.fhBuy = strength * 4 + rnd.nextInt(4);
+                s.fhHold = (5 - strength) * 4 + rnd.nextInt(4);
+                s.fhSell = (5 - strength) + rnd.nextInt(2);
+                s.fhStrongSell = strength == 1 ? 3 : 0;
+                s.fhPeriod = LocalDate.now().withDayOfMonth(1).toString();
             }
             a.stocks.put(s.ticker, s);
         }
@@ -107,5 +134,6 @@ public final class DemoData {
         a.sourceStatus.put("Stock Rover", "practice data");
         a.sourceStatus.put("WallStreetZen", "practice data");
         a.sourceStatus.put("Reddit", "practice posts");
+        a.sourceStatus.put("Finnhub", "practice data");
     }
 }

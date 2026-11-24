@@ -33,6 +33,15 @@ public final class Glossary {
         WORDS.put("RSI", "A 0-100 meter of how fast a price moved recently. Above 70 = maybe \"overheated\", below 30 = maybe \"oversold\".");
         WORDS.put("MACD", "A momentum gauge. When it turns positive, the price is speeding up; negative = slowing down.");
         WORDS.put("SCTR", "StockCharts Technical Rank: 0-99 score of how strong a stock's chart is compared to others. 90+ = among the strongest.");
+        WORDS.put("Candlestick chart", "Each day is drawn as a 'candle': the thick body goes from the opening to the closing price (green = it rose that day, red = it fell), and the thin wicks show the day's high and low.");
+        WORDS.put("SMA / EMA", "Simple / Exponential Moving Average: the average price of the last N days drawn as a smooth line. The EMA gives recent days more weight, so it reacts faster.");
+        WORDS.put("Bollinger Bands", "A band drawn 2 'standard deviations' above and below the 20-day average. Price near the top band = it rose fast lately; near the bottom = it fell fast lately.");
+        WORDS.put("Market cap", "Market capitalisation: share price x number of shares = what the whole company is worth on the stock market.");
+        WORDS.put("Beta", "How much a stock swings compared with the whole market. Beta 1 = moves like the market, 2 = twice as much, 0.5 = half as much.");
+        WORDS.put("EPS", "Earnings Per Share: the company's profit divided by its number of shares.");
+        WORDS.put("Dividend yield", "The cash a company pays its shareholders each year, as a % of the share price.");
+        WORDS.put("Debt / equity", "How much the company has borrowed compared with what its owners have put in. Lower usually means safer.");
+        WORDS.put("Volume", "How many shares were bought and sold. A big move on high volume is taken more seriously than one on low volume.");
         WORDS.put("VWAP", "Volume-Weighted Average Price: the average price everyone paid today. Day traders use it as a line in the sand.");
         WORDS.put("Volatility", "How much a price jumps around. High volatility = bigger gains AND bigger losses.");
         WORDS.put("Bullish / Bearish", "Bullish = expecting prices to go up. Bearish = expecting prices to go down.");

@@ -132,7 +132,8 @@ public final class Droid {
         StringBuilder m = new StringBuilder();
         for (WorldMarkets.Market mk : a.markets) {
             if (!WIDGET_MARKETS.contains(mk.symbol)) continue;
-            m.append(mk.symbol).append('|').append(Double.isNaN(mk.changePct) ? "NaN" : String.valueOf(mk.changePct)).append('\n');
+            m.append(mk.symbol).append('|').append(Double.isNaN(mk.changePct) ? "NaN" : String.valueOf(mk.changePct))
+             .append('|').append(Double.isNaN(mk.price) ? "NaN" : String.valueOf(mk.price)).append('\n');
         }
         s.setProperty("markets", m.toString());
         s.setProperty("buys", tickers(p.buys));

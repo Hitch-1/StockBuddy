@@ -20,11 +20,12 @@ public class DesktopWidget extends JFrame {
             "^FTSE", "FTSE 100 (UK)", "^GDAXI", "DAX (Germany)", "^N225", "Nikkei (Japan)", "^HSI", "Hang Seng (HK)",
             "^BSESN", "Sensex (India)", "000001.SS", "Shanghai", "^STOXX50E", "Euro Stoxx 50");
     private static final List<String> SHOWN = List.of("^GSPC", "^IXIC", "^DJI", "^FTSE", "^GDAXI", "^N225", "^HSI", "^BSESN");
-    private static final int W = 320;
+    private static final int W = 340;
 
     private final Panel panel = new Panel();
     private final Runnable onData = () -> SwingUtilities.invokeLater(this::relayout);
     private final Runnable onSkin = () -> SwingUtilities.invokeLater(this::relayout);
+    private final Runnable onMarkets = () -> SwingUtilities.invokeLater(() -> panel.repaint());
     private final List<Object[]> hotspots = new ArrayList<>(); // {Rectangle, ticker}
     private String updatedAt = "";
     private Point dragFrom;
@@ -73,10 +74,11 @@ public class DesktopWidget extends JFrame {
         panel.addMouseListener(m);
         panel.addMouseMotionListener(m);
         addWindowListener(new WindowAdapter() {
-            @Override public void windowClosed(WindowEvent e) { App.removeListeners(onData, onSkin); }
+            @Override public void windowClosed(WindowEvent e) { App.removeListeners(onData, onSkin, onMarkets); }
         });
         App.onData(onData);
         App.onSkin(onSkin);
+        App.onMarkets(onMarkets);
 
         relayout();
         Rectangle screen = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
@@ -239,6 +241,10 @@ public class DesktopWidget extends JFrame {
                 g.setColor(k.text());
                 g.setFont(k.font(Font.PLAIN, 13));
                 g.drawString(SHORT.getOrDefault(sym, m.name), 32, y);
+                g.setFont(k.font(Font.PLAIN, 12));
+                g.setColor(k.muted());
+                String px = WorldMarkets.price(m.price);
+                g.drawString(px, w - 84 - g.getFontMetrics().stringWidth(px), y);
                 pct(g, k, m.changePct, w - 18, y);
                 y += 20;
             }

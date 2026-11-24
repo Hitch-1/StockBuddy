@@ -21,6 +21,9 @@ public final class Http {
 
     private Http() {}
 
+    /** Always downloads again (no cache) - for prices that change every minute. */
+    public static String getFresh(String url) { return request("GET", url, null, null, null); }
+
     /** Forget downloaded pages (used before a fresh refresh). */
     public static void clearCache() { CACHE.clear(); }
 
@@ -57,7 +60,7 @@ public final class Http {
             }
             int code = c.getResponseCode();
             if (code < 200 || code >= 300) {
-                Log.debug("HTTP " + code + " for " + url);
+                Log.debug("HTTP " + code + " for " + url.replaceAll("token=[^&]*", "token=***"));
                 return null;
             }
             InputStream in = c.getInputStream();
@@ -70,7 +73,7 @@ public final class Http {
                 return new String(buf.toByteArray(), StandardCharsets.UTF_8);
             }
         } catch (Exception e) {
-            Log.debug("Could not reach " + url + " (" + e.getClass().getSimpleName() + ")");
+            Log.debug("Could not reach " + url.replaceAll("token=[^&]*", "token=***") + " (" + e.getClass().getSimpleName() + ")");
             return null;
         } finally {
             if (c != null) c.disconnect();

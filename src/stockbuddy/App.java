@@ -22,6 +22,9 @@ public final class App {
     public static String status = "Starting...";
 
     private static final List<Runnable> dataListeners = new ArrayList<>();
+    private static final List<Runnable> marketListeners = new ArrayList<>();
+    private static Timer marketTimer;
+    private static volatile boolean marketsLoading;
     private static final List<Runnable> skinListeners = new ArrayList<>();
     private static final List<Consumer<String>> statusListeners = new ArrayList<>();
     private static MainWindow mainWindow;
@@ -44,6 +47,8 @@ public final class App {
             int minutes = Math.max(5, Settings.getInt("refreshMinutes", 15));
             autoRefresh = new Timer(minutes * 60_000, e -> { if (!demo) refresh(); });
             autoRefresh.start();
+            marketTimer = new Timer(60_000, e -> refreshMarkets());   // live index prices every minute
+            marketTimer.start();
         });
     }
 
@@ -126,10 +131,25 @@ public final class App {
     }
 
     public static void onData(Runnable r) { dataListeners.add(r); }
+    public static void onMarkets(Runnable r) { marketListeners.add(r); }
+
+    /** Updates just the world index prices (quick, in the background). */
+    public static void refreshMarkets() {
+        if (demo || loading || marketsLoading || analyzer.markets.isEmpty()) return;
+        marketsLoading = true;
+        final List<WorldMarkets.Market> markets = analyzer.markets;
+        new Thread(() -> {
+            try { WorldMarkets.refreshPrices(markets); }
+            finally {
+                marketsLoading = false;
+                SwingUtilities.invokeLater(() -> new ArrayList<>(marketListeners).forEach(Runnable::run));
+            }
+        }, "StockBuddy index prices").start();
+    }
     public static void onSkin(Runnable r) { skinListeners.add(r); }
     public static void onStatus(Consumer<String> c) { statusListeners.add(c); }
     public static void removeListeners(Object... rs) {
-        for (Object r : rs) { dataListeners.remove(r); skinListeners.remove(r); statusListeners.remove(r); }
+        for (Object r : rs) { dataListeners.remove(r); skinListeners.remove(r); statusListeners.remove(r); marketListeners.remove(r); }
     }
 
     // ------------------------------------------------------------ icon

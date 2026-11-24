@@ -6,7 +6,7 @@ import java.util.List;
 /** Turns the raw numbers from each website into simple "good / bad" signals with plain-English reasons. */
 public final class Scorer {
     // How much each source counts in the final score (they're re-balanced if a source is missing).
-    public static final double W_TECH = 0.30, W_FUND = 0.25, W_ROVER = 0.15, W_ZEN = 0.15, W_REDDIT = 0.15;
+    public static final double W_TECH = 0.30, W_FUND = 0.25, W_ROVER = 0.15, W_ZEN = 0.15, W_REDDIT = 0.15, W_FINNHUB = 0.15;
 
     private Scorer() {}
 
@@ -94,7 +94,17 @@ public final class Scorer {
             total += W_ZEN * clamp(sc); weights += W_ZEN; sources++;
         }
 
-        // ---------- 5. Reddit crowd ----------
+        // ---------- 5. Finnhub analyst recommendations ----------
+        int fhTotal = s.fhStrongBuy < 0 ? 0 : s.fhStrongBuy + s.fhBuy + s.fhHold + s.fhSell + s.fhStrongSell;
+        if (fhTotal > 0) {
+            double sc = (2.0 * s.fhStrongBuy + s.fhBuy - s.fhSell - 2.0 * s.fhStrongSell) / (2.0 * fhTotal);
+            String why = String.format("Of %d analysts, %d say strong buy, %d buy, %d hold, %d sell and %d strong sell%s.",
+                    fhTotal, s.fhStrongBuy, s.fhBuy, s.fhHold, s.fhSell, s.fhStrongSell, s.fhPeriod == null ? "" : " (" + s.fhPeriod + ")");
+            add(s, "Finnhub (analyst recommendations)", sc, why);
+            total += W_FINNHUB * clamp(sc); weights += W_FINNHUB; sources++;
+        }
+
+        // ---------- 6. Reddit crowd ----------
         if (s.redditMentions > 0) {
             double sc = s.redditSentiment * Math.min(1, 0.4 + s.redditMentions / 10.0);
             String mood = s.redditSentiment > 0.15 ? "mostly positive" : s.redditSentiment < -0.15 ? "mostly negative" : "mixed";
@@ -108,7 +118,7 @@ public final class Scorer {
         // confidence: more sources and agreement between them = more confident
         double agree = 0;
         for (Signal g : s.signals) agree += Math.signum(g.score()) == Math.signum(s.score) ? 1 : 0;
-        s.confidence = s.signals.isEmpty() ? 0 : (sources / 5.0) * 0.5 + (agree / s.signals.size()) * 0.5;
+        s.confidence = s.signals.isEmpty() ? 0 : Math.min(1, sources / 5.0) * 0.5 + (agree / s.signals.size()) * 0.5;
     }
 
     private static void add(Stock s, String src, double sc, String why) { s.signals.add(new Signal(src, sc, why)); }

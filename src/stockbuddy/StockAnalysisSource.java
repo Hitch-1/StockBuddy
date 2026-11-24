@@ -37,6 +37,7 @@ public final class StockAnalysisSource {
         String html = Http.get(BASE + path + s.ticker.toLowerCase() + "/");
         if (html == null) return false;
         String text = Http.htmlToText(html);
+        KeyStats.fromStockAnalysis(s, text);
         boolean found = false;
 
         double pe = number(text, "PE Ratio\\s+([0-9,.]+)");

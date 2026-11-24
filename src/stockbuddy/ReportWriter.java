@@ -41,9 +41,9 @@ public final class ReportWriter {
         h.append("</table></div>");
 
         section(h, "Best buys", p.buys, "No stock had enough good signals today.");
-        section(h, "Best sells (if you own them)", p.sells, "No strong sell signals today.");
-        section(h, "Best options ideas (1-2 months)", p.options, "No clear options ideas today.");
-        section(h, "Best short ideas (advanced)", p.shorts, "No good short candidates today.");
+        section(h, "Sells & shorts (if you own them)", p.sells, "No strong sell signals today.");
+        section(h, "Best calls (bet on up, 1-2 months)", p.calls, "No clear call ideas today.");
+        section(h, "Best puts (bet on down, 1-2 months)", p.puts, "No clear put ideas today.");
         section(h, "0DTE ideas (expire today - extremely risky)", p.zeroDte, "");
 
         h.append("<h2>Every stock, ranked</h2><div class=wrap><table><tr><th>#</th><th>Ticker</th><th>Name</th><th>Price</th><th>Today</th><th>Verdict</th><th>Confidence</th></tr>");
@@ -69,7 +69,9 @@ public final class ReportWriter {
         h.append("<h2>").append(esc(title)).append("</h2>");
         if (ideas.isEmpty()) { h.append("<p class=muted>").append(esc(empty)).append("</p>"); return; }
         for (Advisor.Idea i : ideas) {
-            h.append("<div class=card><h3>").append(esc(i.headline)).append("</h3><b>Why</b><ul>");
+            h.append("<div class=card><h3>").append(esc(i.title != null ? i.title : i.headline)).append("</h3>");
+            if (i.action != null) h.append("<p class=").append(i.tone > 0 ? "up" : i.tone < 0 ? "down" : "risk").append("><b>").append(esc(i.action)).append("</b></p>");
+            h.append("<b>Why</b><ul>");
             for (String w : i.why) {
                 String cls = w.startsWith("[+]") ? "up" : w.startsWith("[-]") ? "down" : "";
                 h.append("<li class='").append(cls).append("'>").append(esc(w)).append("</li>");

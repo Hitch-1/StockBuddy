@@ -18,7 +18,8 @@ fi
 
 # Shared code used by both the desktop and the phone app (must stay Java 8 compatible)
 CORE="Json Http Log Ui Stock Signal Technicals PriceSource StockAnalysisSource WallStreetZenSource StockRoverSource Csv
-      RedditSource WorldMarkets Scorer Options Analyzer Advisor DemoData Glossary HtmlView Settings AppPaths Palette"
+      RedditSource WorldMarkets Scorer Options Analyzer Advisor DemoData Glossary HtmlView Settings AppPaths Palette
+      KeyStats FinnhubSource ChartOptions"
 FILES=()
 for c in $CORE; do FILES+=("$ROOT/src/stockbuddy/$c.java"); done
 while IFS= read -r f; do FILES+=("$f"); done < <(find "$A/src" -name '*.java')

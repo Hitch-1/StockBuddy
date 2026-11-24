@@ -39,6 +39,8 @@ public class Analyzer {
     }
 
     private void runLive(Consumer<String> progress) {
+        Http.clearCache();   // always fetch fresh pages on a refresh
+        FinnhubSource.resetCounts();
         progress.accept("Checking the world's biggest stock markets...");
         int mk = WorldMarkets.load(markets);
         sourceStatus.put("World markets (Yahoo Finance)", mk > 0 ? "OK - " + mk + " markets" : "Could not connect");
@@ -71,9 +73,14 @@ public class Analyzer {
                 if (StockAnalysisSource.loadFundamentals(s)) synchronized (fund) { fund[0]++; }
                 if (StockRoverSource.load(s)) synchronized (rover) { rover[0]++; }
                 if (WallStreetZenSource.load(s)) synchronized (zen) { zen[0]++; }
+                FinnhubSource.load(s);
             }));
         }
-        for (Future<?> f : jobs) { try { f.get(90, TimeUnit.SECONDS); } catch (Exception ignored) {} }
+        if (FinnhubSource.enabled()) progress.accept("Asking Finnhub about " + list.size() + " stocks (the free plan is slow - about 2 minutes the first time)...");
+        long deadline = System.currentTimeMillis() + (FinnhubSource.enabled() ? 240_000 : 120_000);
+        for (Future<?> f : jobs) {
+            try { f.get(Math.max(1, deadline - System.currentTimeMillis()), TimeUnit.MILLISECONDS); } catch (Exception ignored) {}
+        }
         pool.shutdownNow();
 
         sourceStatus.put("stockanalysis.com", fund[0] > 0 || !movers.isEmpty() ? "OK - data for " + fund[0] + " stocks" : "Could not connect");
@@ -81,6 +88,9 @@ public class Analyzer {
         sourceStatus.put("Stock Rover", StockRoverSource.available() ? "OK - " + rover[0] + " stocks from data/stockrover.csv"
                 : "Not set up - export a CSV from Stock Rover to data/stockrover.csv");
         sourceStatus.put("WallStreetZen", zen[0] > 0 ? "OK - data for " + zen[0] + " stocks" : "Could not read (site may block programs; you can use data/wallstreetzen.csv)");
+        sourceStatus.put("Finnhub", !FinnhubSource.enabled() ? "Not set up - add your free key from finnhub.io (optional)"
+                : FinnhubSource.lastOk > 0 ? "OK - data for " + FinnhubSource.lastOk + " stocks"
+                : "Could not read - check your Finnhub key");
 
         RedditSource.score(posts, stocks);
 
@@ -125,6 +135,7 @@ public class Analyzer {
         StockAnalysisSource.loadFundamentals(s);
         StockRoverSource.load(s);
         WallStreetZenSource.load(s);
+        FinnhubSource.load(s);
         Map<String, Stock> one = java.util.Collections.singletonMap(t, s);
         RedditSource.score(posts, one);
         s.tech = Technicals.compute(s.closes, s.volumes);

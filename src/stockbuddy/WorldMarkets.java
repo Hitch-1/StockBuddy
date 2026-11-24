@@ -63,7 +63,29 @@ public final class WorldMarkets {
                 ok++;
             }
         }
+        if (ok > 0) lastPriceUpdate = System.currentTimeMillis();
         return ok;
+    }
+
+    /**
+     * Quick "live" update of every index's price (never cached). Yahoo's index prices are
+     * real-time or a few minutes delayed depending on the exchange. Returns how many updated.
+     */
+    public static int refreshPrices(List<Market> markets) {
+        int ok = 0;
+        for (Market mk : markets) {
+            Stock s = new Stock(mk.symbol);
+            if (PriceSource.loadDailyFresh(s, "3mo")) { fill(mk, s); ok++; }
+        }
+        if (ok > 0) lastPriceUpdate = System.currentTimeMillis();
+        return ok;
+    }
+
+    public static volatile long lastPriceUpdate;
+
+    /** An index level like 6,812.45 */
+    public static String price(double v) {
+        return Double.isNaN(v) ? "n/a" : String.format(java.util.Locale.US, "%,.2f", v);
     }
 
     static void fill(Market mk, Stock s) {

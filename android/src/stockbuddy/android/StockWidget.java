@@ -97,7 +97,12 @@ public class StockWidget extends AppWidgetProvider {
         for (String line : s.getProperty("markets", "").split("\n")) {
             String[] p = line.split("\\|");
             if (p.length < 2) continue;
-            b.append(SHORT.containsKey(p[0]) ? SHORT.get(p[0]) : esc(p[0])).append(" &nbsp; ").append(pct(k, p[1])).append("<br>");
+            b.append(SHORT.containsKey(p[0]) ? SHORT.get(p[0]) : esc(p[0]));
+            if (p.length > 2 && !p[2].equals("NaN")) {
+                try { b.append(" &nbsp;<font color='").append(k.muted()).append("'>").append(stockbuddy.WorldMarkets.price(Double.parseDouble(p[2]))).append("</font>"); }
+                catch (NumberFormatException ignored) {}
+            }
+            b.append(" &nbsp; ").append(pct(k, p[1])).append("<br>");
         }
         b.append("<br><small><b><font color='").append(k.muted()).append("'>TOP BUYS TODAY</font></b></small><br>");
         b.append(chips(k, s.getProperty("buys", ""), k.good(), "none today - waiting is fine"));

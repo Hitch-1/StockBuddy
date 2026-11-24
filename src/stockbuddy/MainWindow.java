@@ -35,6 +35,7 @@ public class MainWindow extends JFrame {
 
     private final Runnable onData = this::refreshContent;
     private final Runnable onSkin = this::rebuild;
+    private final Runnable onMarkets = this::refreshMarkets;
     private final java.util.function.Consumer<String> onStatus = s -> SwingUtilities.invokeLater(() -> updateStatus(s));
 
     // widgets that get refreshed when new data arrives
@@ -45,7 +46,7 @@ public class MainWindow extends JFrame {
     private CardLayout ideasCards;
     private JPanel ideasCardPanel;
     private final List<JEditorPane> ideaPanes = new ArrayList<>();
-    private JLabel worldMood;
+    private JLabel worldMood, worldUpdated;
     private DefaultTableModel worldModel, allModel;
     private JEditorPane lookupPane, glossaryPane, sourcesPane;
     private PriceChart chart;
@@ -62,12 +63,13 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override public void windowClosed(WindowEvent e) {
-                App.removeListeners(onData, onSkin, onStatus);
+                App.removeListeners(onData, onSkin, onStatus, onMarkets);
                 Settings.set("main.w", getWidth()); Settings.set("main.h", getHeight());
                 App.exitIfNoWindows();
             }
         });
         App.onData(onData);
+        App.onMarkets(onMarkets);
         App.onSkin(onSkin);
         App.onStatus(onStatus);
         rebuild();
@@ -244,7 +246,7 @@ public class MainWindow extends JFrame {
         ideasCardPanel = new JPanel(ideasCards);
         ideasCardPanel.setOpaque(false);
         ButtonGroup g = new ButtonGroup();
-        String[] names = {"Best Buys", "Best Sells", "Options", "Shorts", "0DTE (today)"};
+        String[] names = HtmlView.IDEA_TABS;
         for (int i = 0; i < names.length; i++) {
             final int idx = i;
             JEditorPane pane = htmlPane();
@@ -296,15 +298,17 @@ public class MainWindow extends JFrame {
     private JComponent worldPage(Skin k) {
         JPanel p = new JPanel(new BorderLayout(0, 10));
         p.setOpaque(false);
-        JPanel top = new JPanel(new GridLayout(2, 1));
+        JPanel top = new JPanel(new GridLayout(3, 1));
         top.setOpaque(false);
         top.add(label("The world's biggest stock markets", k.font(Font.BOLD, 20), k.text()));
         worldMood = label(" ", k.font(Font.PLAIN, 15), k.accent());
         top.add(worldMood);
+        worldUpdated = label(" ", k.font(Font.PLAIN, 12), k.muted());
+        top.add(worldUpdated);
         p.add(top, BorderLayout.NORTH);
-        worldModel = new DefaultTableModel(new Object[]{"Market", "Country", "Status", "Today", "Last month", "Local time"}, 0) {
+        worldModel = new DefaultTableModel(new Object[]{"Market", "Index price", "Today", "Last month", "Status", "Local time", "Country"}, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
-            @Override public Class<?> getColumnClass(int c) { return c == 3 || c == 4 ? Double.class : String.class; }
+            @Override public Class<?> getColumnClass(int c) { return c >= 1 && c <= 3 ? Double.class : String.class; }
         };
         JTable t = table(k, worldModel);
         t.getColumnModel().getColumn(0).setPreferredWidth(300);
@@ -328,16 +332,83 @@ public class MainWindow extends JFrame {
         lookupBox.getEditor().addActionListener(e -> doLookup(String.valueOf(lookupBox.getEditor().getItem())));
         bar.add(lookupBox);
         bar.add(go);
+        JButton watch = button("\u2605 Add to My Watchlist", "Always check this stock from now on");
+        watch.addActionListener(e -> {
+            String t = lookupTicker != null ? lookupTicker : String.valueOf(lookupBox.getEditor().getItem());
+            addToWatchlist(t);
+        });
+        bar.add(watch);
         p.add(bar, BorderLayout.NORTH);
         chart = new PriceChart(k);
         lookupPane = htmlPane();
         lookupPane.setText(HtmlView.message(k.palette(), "Look up a stock", "Type a ticker above and press Enter. You'll get a chart and a plain-English explanation of what every source says."));
         JPanel center = new JPanel(new BorderLayout(0, 10));
         center.setOpaque(false);
-        center.add(chart, BorderLayout.NORTH);
+        JPanel chartBox = new JPanel(new BorderLayout(0, 6));
+        chartBox.setOpaque(false);
+        chartBox.add(chartToolbar(k), BorderLayout.NORTH);
+        chartBox.add(chart, BorderLayout.CENTER);
+        center.add(chartBox, BorderLayout.NORTH);
         center.add(scroll(lookupPane), BorderLayout.CENTER);
         p.add(center, BorderLayout.CENTER);
         return padded(k, p);
+    }
+
+    /** The buttons above the chart: style, period, indicator lines and the bottom panel. */
+    private JComponent chartToolbar(Skin k) {
+        ChartOptions o = chart.options();
+        JPanel rows = new JPanel(new GridLayout(2, 1, 0, 4));
+        rows.setOpaque(false);
+        JPanel r1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 0)), r2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 0));
+        r1.setOpaque(false); r2.setOpaque(false);
+
+        r1.add(label("Chart:", k.font(Font.BOLD, 13), k.muted()));
+        ButtonGroup types = new ButtonGroup();
+        for (int i = 0; i < ChartOptions.TYPES.length; i++) {
+            String v = ChartOptions.TYPES[i];
+            JToggleButton b = smallPill(ChartOptions.TYPE_NAMES[i], k, v.equals(o.type));
+            b.addActionListener(e -> { o.type = v; o.save(); chart.repaint(); });
+            types.add(b); r1.add(b);
+        }
+        r1.add(Box.createHorizontalStrut(14));
+        r1.add(label("Period:", k.font(Font.BOLD, 13), k.muted()));
+        ButtonGroup ranges = new ButtonGroup();
+        for (int i = 0; i < ChartOptions.RANGES.length; i++) {
+            int v = ChartOptions.RANGES[i];
+            JToggleButton b = smallPill(ChartOptions.RANGE_NAMES[i], k, v == o.range);
+            b.addActionListener(e -> { o.range = v; o.save(); chart.repaint(); });
+            ranges.add(b); r1.add(b);
+        }
+
+        r2.add(label("Lines:", k.font(Font.BOLD, 13), k.muted()));
+        for (int i = 0; i < ChartOptions.OVERLAYS.length; i++) {
+            String v = ChartOptions.OVERLAYS[i];
+            JToggleButton b = smallPill(ChartOptions.OVERLAY_NAMES[i], k, o.overlay(v));
+            b.setToolTipText(v.equals("bollinger") ? "A band around the price: touching the top = expensive lately, the bottom = cheap lately"
+                    : "The average price of the last " + v.replaceAll("\\D", "") + " days" + (v.startsWith("ema") ? " (recent days count more)" : ""));
+            b.addActionListener(e -> { o.toggle(v); o.save(); chart.repaint(); });
+            r2.add(b);
+        }
+        r2.add(Box.createHorizontalStrut(14));
+        r2.add(label("Bottom panel:", k.font(Font.BOLD, 13), k.muted()));
+        ButtonGroup lowers = new ButtonGroup();
+        for (int i = 0; i < ChartOptions.LOWERS.length; i++) {
+            String v = ChartOptions.LOWERS[i];
+            JToggleButton b = smallPill(ChartOptions.LOWER_NAMES[i], k, v.equals(o.lower));
+            b.addActionListener(e -> { o.lower = v; o.save(); chart.repaint(); });
+            lowers.add(b); r2.add(b);
+        }
+        rows.add(r1);
+        rows.add(r2);
+        return rows;
+    }
+
+    private static JToggleButton smallPill(String text, Skin k, boolean selected) {
+        JToggleButton b = pill(text, k);
+        b.setFont(k.font(Font.PLAIN, 12));
+        b.setBorder(new EmptyBorder(3, 11, 3, 11));
+        b.setSelected(selected);
+        return b;
     }
 
     private JComponent allPage(Skin k) {
@@ -383,55 +454,135 @@ public class MainWindow extends JFrame {
         return padded(k, p);
     }
 
+    private JLabel watchMsg;
+
     private JComponent watchlistPage(Skin k) {
         JPanel p = new JPanel(new BorderLayout(12, 10));
         p.setOpaque(false);
-        p.add(label("<html><b style='font-size:16pt'>My watchlist</b><br>These stocks are always checked - plus today's biggest movers "
-                + "and the stocks Reddit talks about most.</html>", k.font(Font.PLAIN, 14), k.text()), BorderLayout.NORTH);
+
+        JPanel top = new JPanel(new BorderLayout(0, 8));
+        top.setOpaque(false);
+        top.add(label("<html><b style='font-size:16pt'>My watchlist</b><br>These stocks are always checked - plus today's biggest movers "
+                + "and the stocks Reddit talks about most. <b>Double-click a stock</b> to see its full explanation and chart.</html>",
+                k.font(Font.PLAIN, 14), k.text()), BorderLayout.NORTH);
+        JPanel addRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+        addRow.setOpaque(false);
+        addRow.add(label("Add ticker(s):", k.font(Font.BOLD, 14), k.text()));
+        JTextField add = new JTextField(16);
+        add.setFont(k.font(Font.PLAIN, 15));
+        add.setToolTipText("For example: AAPL  or several at once: AAPL MSFT NVDA");
+        JButton addB = button("Add", "Add the ticker(s) - saved straight away");
+        addRow.add(add);
+        addRow.add(addB);
+        watchMsg = label(" ", k.font(Font.PLAIN, 13), k.good());
+        addRow.add(watchMsg);
+        top.add(addRow, BorderLayout.SOUTH);
+        p.add(top, BorderLayout.NORTH);
+
         watchModel = new DefaultListModel<>();
         Analyzer.readWatchlist().forEach(watchModel::addElement);
         JList<String> list = new JList<>(watchModel);
         list.setFont(k.font(Font.BOLD, 15));
-        list.setFixedCellHeight(28);
+        list.setFixedCellHeight(30);
+        list.setCellRenderer(new DefaultListCellRenderer() {
+            @Override public Component getListCellRendererComponent(JList<?> l, Object v, int i, boolean sel, boolean foc) {
+                super.getListCellRendererComponent(l, v, i, sel, foc);
+                Stock s = App.analyzer.stocks.get(String.valueOf(v));
+                String extra = s == null ? "" : "   " + (s.name == null ? "" : s.name + "   ") + Advisor.money(s) + "   " + Scorer.verdict(s.score);
+                setText("<html><b>" + v + "</b><span style='color:" + Skin.hex(k.muted()) + "'>" + HtmlView.esc(extra) + "</span></html>");
+                setBorder(new EmptyBorder(0, 10, 0, 10));
+                setBackground(sel ? k.soft() : k.panel());
+                setForeground(k.text());
+                return this;
+            }
+        });
+        list.addMouseListener(new MouseAdapter() {
+            @Override public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int i = list.locationToIndex(e.getPoint());
+                    if (i >= 0) openLookup(watchModel.get(i));
+                }
+            }
+        });
         p.add(scroll(list), BorderLayout.CENTER);
 
         JPanel btns = new JPanel();
         btns.setOpaque(false);
         btns.setLayout(new BoxLayout(btns, BoxLayout.Y_AXIS));
-        JTextField add = new JTextField(10);
-        add.setMaximumSize(new Dimension(220, 32));
-        add.setToolTipText("Type one or more tickers separated by spaces");
-        JButton addB = button("Add", "Add the ticker(s) typed above");
-        JButton rem = button("Remove selected", null);
+        JButton look = button("Look up selected", "See the full explanation and chart");
+        JButton rem = button("Remove selected", "Removed straight away");
         JButton reset = button("Reset to default list", null);
-        JButton save = button("Save and refresh", "Save the list and analyse it now");
+        JButton refresh = button("Analyse my list now", "Download fresh data for your watchlist");
         Runnable doAdd = () -> {
-            for (String t : add.getText().toUpperCase().split("[\\s,]+")) {
-                t = t.replace("$", "").trim();
-                if (!t.isEmpty() && !watchModel.contains(t)) watchModel.addElement(t);
-            }
+            List<String> added = addToWatchlistQuiet(add.getText());
             add.setText("");
+            watchMsg.setForeground(added.isEmpty() ? k.warn() : k.good());
+            watchMsg.setText(added.isEmpty() ? "Type a ticker like AAPL (letters, 1-6 characters)."
+                    : "Added " + String.join(", ", added) + " - saved. Click \"Analyse my list now\" to check it.");
         };
         add.addActionListener(e -> doAdd.run());
         addB.addActionListener(e -> doAdd.run());
-        rem.addActionListener(e -> list.getSelectedValuesList().forEach(watchModel::removeElement));
-        reset.addActionListener(e -> { watchModel.clear(); Analyzer.DEFAULT_WATCHLIST.forEach(watchModel::addElement); });
-        save.addActionListener(e -> {
-            try {
-                List<String> l = new ArrayList<>();
-                for (int i = 0; i < watchModel.size(); i++) l.add(watchModel.get(i));
-                Analyzer.saveWatchlist(l);
-                App.refresh();
-            } catch (Exception ex) { JOptionPane.showMessageDialog(this, "Couldn't save: " + ex.getMessage()); }
+        look.addActionListener(e -> { if (list.getSelectedValue() != null) openLookup(list.getSelectedValue()); });
+        rem.addActionListener(e -> {
+            List<String> gone = list.getSelectedValuesList();
+            gone.forEach(watchModel::removeElement);
+            saveWatchModel();
+            if (!gone.isEmpty()) { watchMsg.setForeground(k.good()); watchMsg.setText("Removed " + String.join(", ", gone) + "."); }
         });
-        btns.add(label("New ticker(s):", k.font(Font.PLAIN, 14), k.text()));
-        for (JComponent c : new JComponent[]{add, addB, rem, reset, save}) {
+        reset.addActionListener(e -> {
+            if (JOptionPane.showConfirmDialog(this, "Replace your watchlist with the default list?", "Reset watchlist",
+                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
+            watchModel.clear();
+            Analyzer.DEFAULT_WATCHLIST.forEach(watchModel::addElement);
+            saveWatchModel();
+        });
+        refresh.addActionListener(e -> App.refresh());
+        for (JComponent c : new JComponent[]{look, rem, reset, refresh}) {
             c.setAlignmentX(Component.LEFT_ALIGNMENT);
-            btns.add(Box.createVerticalStrut(8));
             btns.add(c);
+            btns.add(Box.createVerticalStrut(8));
         }
         p.add(btns, BorderLayout.EAST);
         return padded(k, p);
+    }
+
+    /** Checks the text, adds new tickers to the saved watchlist, and returns the ones added. */
+    private List<String> addToWatchlistQuiet(String text) {
+        List<String> added = new ArrayList<>();
+        List<String> w = new ArrayList<>(Analyzer.readWatchlist());
+        for (String t : text == null ? new String[0] : text.toUpperCase().split("[\\s,;]+")) {
+            t = t.replace("$", "").trim();
+            if (!t.matches("[A-Z][A-Z0-9.\\-]{0,9}")) continue;
+            if (!w.contains(t)) { w.add(t); added.add(t); }
+        }
+        if (!added.isEmpty()) {
+            try { Analyzer.saveWatchlist(w); }
+            catch (Exception ex) { JOptionPane.showMessageDialog(this, "Couldn't save the watchlist: " + ex.getMessage()); return new ArrayList<>(); }
+            if (watchModel != null) for (String t : added) if (!watchModel.contains(t)) watchModel.addElement(t);
+        }
+        return added;
+    }
+
+    /** "Add to My Watchlist" from the Look Up page. */
+    private void addToWatchlist(String ticker) {
+        if (ticker == null || ticker.trim().isEmpty() || ticker.equals("null")) {
+            JOptionPane.showMessageDialog(this, "Look up a stock first, then add it.");
+            return;
+        }
+        String t = ticker.trim().toUpperCase();
+        if (Analyzer.readWatchlist().contains(t)) { JOptionPane.showMessageDialog(this, t + " is already in your watchlist."); return; }
+        List<String> added = addToWatchlistQuiet(t);
+        JOptionPane.showMessageDialog(this, added.isEmpty() ? "\"" + t + "\" doesn't look like a ticker." : "Added " + t + " to your watchlist.");
+    }
+
+    private void saveWatchModel() {
+        try {
+            List<String> l = new ArrayList<>();
+            for (int i = 0; i < watchModel.size(); i++) l.add(watchModel.get(i));
+            Analyzer.saveWatchlist(l);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Couldn't save: " + ex.getMessage());
+        }
     }
 
     private JComponent sourcesPage(Skin k) {
@@ -454,7 +605,13 @@ public class MainWindow extends JFrame {
             if (err != null) JOptionPane.showMessageDialog(this, err);
             auto.setText(Autostart.isEnabled() ? "Don't start widget with computer" : "Start widget when computer starts");
         });
-        btns.add(rover); btns.add(zen); btns.add(folder); btns.add(auto);
+        JButton fin = button(FinnhubSource.enabled() ? "Finnhub key: set (change...)" : "Add Finnhub key...",
+                "Free key from finnhub.io: adds analyst recommendations and financial ratios");
+        fin.addActionListener(e -> {
+            askFinnhubKey();
+            fin.setText(FinnhubSource.enabled() ? "Finnhub key: set (change...)" : "Add Finnhub key...");
+        });
+        btns.add(rover); btns.add(zen); btns.add(fin); btns.add(folder); btns.add(auto);
 
         JPanel reddit = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
         reddit.setOpaque(false);
@@ -499,24 +656,14 @@ public class MainWindow extends JFrame {
             sourcesPane.setText(msg);
             return;
         }
-        String[][] intro = {
-                {"Best buys today", "Stocks where most sources see good signs. [+] = a source likes it, [-] = a source sees a problem. More stars = sources agree more.", "No stock had enough good signals today. That's OK - waiting is a strategy too."},
-                {"Best sells (if you own them)", "Stocks where most sources see warning signs. If you don't own them, this simply means \"don't buy right now\".", "No stock had strong sell signals today."},
-                {"Best options ideas (1-2 months)", "Calls (bet on up) or puts (bet on down) on stocks with strong, clear signals. Costs are estimates - check your broker.", "No stock had signals strong and clear enough for an options idea today."},
-                {"Best short ideas (advanced)", "Stocks in a clear downtrend with weak ratings. Shorting is risky - buying a put is the safer way for beginners.", "No good short candidates today (we need a clear downtrend AND bad ratings)."},
-                {"0DTE ideas (expire today)", "Options on SPY and QQQ that expire at today's close. Extremely risky - often the best idea is to sit out.", ""}};
-        List<List<Advisor.Idea>> lists = List.of(plan.buys, plan.sells, plan.options, plan.shorts, plan.zeroDte);
-        String[] tabNames = {"Best Buys", "Best Sells", "Options", "Shorts", "0DTE (today)"};
+        List<List<Advisor.Idea>> lists = HtmlView.ideaLists(plan);
         for (int i = 0; i < 5; i++) {
-            ideaPanes.get(i).setText(HtmlView.ideas(k.palette(), intro[i][0], intro[i][1], lists.get(i), intro[i][2], a.demo));
+            ideaPanes.get(i).setText(HtmlView.ideasTab(k.palette(), plan, i, a.demo));
             ideaPanes.get(i).setCaretPosition(0);
-            ideaTabButtons.get(i).setText(tabNames[i] + (i < 4 ? "  " + lists.get(i).size() : ""));
+            ideaTabButtons.get(i).setText(HtmlView.IDEA_TABS[i] + (i < 4 ? "  " + lists.get(i).size() : ""));
         }
 
-        worldMood.setText(WorldMarkets.mood(a.markets));
-        worldModel.setRowCount(0);
-        for (WorldMarkets.Market m : a.markets)
-            worldModel.addRow(new Object[]{m.name, m.country, m.isOpenNow() ? "OPEN" : "closed", m.changePct, m.monthPct, m.localTime()});
+        refreshMarkets();
 
         allModel.setRowCount(0);
         List<Stock> list = new ArrayList<>(a.stocks.values());
@@ -536,6 +683,21 @@ public class MainWindow extends JFrame {
         sourcesPane.setText(HtmlView.sources(k.palette(), a));
         sourcesPane.setCaretPosition(0);
         if (lookupTicker != null) showStock(a.stocks.get(lookupTicker));
+    }
+
+    /** Fills the World Markets table (also called every minute when index prices update). */
+    void refreshMarkets() {
+        if (worldModel == null) return;
+        Analyzer a = App.analyzer;
+        worldMood.setText(WorldMarkets.mood(a.markets));
+        worldModel.setRowCount(0);
+        for (WorldMarkets.Market m : a.markets)
+            worldModel.addRow(new Object[]{m.name, m.price, m.changePct, m.monthPct, m.isOpenNow() ? "OPEN" : "closed", m.localTime(), m.country});
+        long t = WorldMarkets.lastPriceUpdate;
+        worldUpdated.setText(a.demo ? "Practice data - made-up numbers."
+                : t == 0 ? "Index prices update every minute while StockBuddy is open."
+                : "Index prices update every minute (some exchanges are a few minutes delayed). Last update: "
+                + java.time.LocalTime.now().withNano(0).minusSeconds((System.currentTimeMillis() - t) / 1000) + ".");
     }
 
     private void updateStatus(String s) {
@@ -624,6 +786,36 @@ public class MainWindow extends JFrame {
         }
     }
 
+    /** Asks for the free Finnhub key, tests it, and saves it on this computer only. */
+    private void askFinnhubKey() {
+        JPanel panel = new JPanel(new BorderLayout(0, 8));
+        panel.add(new JLabel("<html><div style='width:420px'><b>Finnhub</b> adds Wall Street analyst recommendations and financial ratios "
+                + "(profit margin, debt, beta...).<br><br>1. Get a free key at <b>finnhub.io/register</b> (it's on your dashboard).<br>"
+                + "2. Paste it below. It is saved only on this computer.<br><br>Leave it empty and click OK to turn Finnhub off.</div></html>"), BorderLayout.NORTH);
+        JTextField f = new JTextField(FinnhubSource.key(), 30);
+        panel.add(f, BorderLayout.CENTER);
+        if (JOptionPane.showConfirmDialog(this, panel, "Finnhub key", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE) != JOptionPane.OK_OPTION) return;
+        String k = f.getText().trim();
+        if (k.isEmpty()) { FinnhubSource.setKey(""); JOptionPane.showMessageDialog(this, "Finnhub is turned off."); return; }
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        new SwingWorker<String, Void>() {
+            @Override protected String doInBackground() { return FinnhubSource.test(k); }
+            @Override protected void done() {
+                setCursor(Cursor.getDefaultCursor());
+                String err;
+                try { err = get(); } catch (Exception ex) { err = ex.getMessage(); }
+                if (err == null) {
+                    FinnhubSource.setKey(k);
+                    JOptionPane.showMessageDialog(MainWindow.this, "Your Finnhub key works and is saved.\nStockBuddy will now refresh (the first time takes about 2 minutes).");
+                    App.refresh();
+                } else {
+                    int r = JOptionPane.showConfirmDialog(MainWindow.this, err + "\n\nSave the key anyway?", "Finnhub key", JOptionPane.YES_NO_OPTION);
+                    if (r == JOptionPane.YES_OPTION) FinnhubSource.setKey(k);
+                }
+            }
+        }.execute();
+    }
+
     /** Lets you paste Reddit post titles yourself - handy when Reddit blocks automatic reading. */
     private void addRedditPosts() {
         Skin k = App.skin;
@@ -696,8 +888,9 @@ public class MainWindow extends JFrame {
         p.setBackground(App.skin.bg());
         p.addHyperlinkListener(e -> {
             String d = e.getDescription();
-            if (e.getEventType() == javax.swing.event.HyperlinkEvent.EventType.ACTIVATED && d != null && d.startsWith("sb://stock/"))
-                openLookup(d.substring("sb://stock/".length()));
+            if (e.getEventType() != javax.swing.event.HyperlinkEvent.EventType.ACTIVATED || d == null) return;
+            if (d.startsWith("sb://stock/")) openLookup(d.substring("sb://stock/".length()));
+            else if (d.startsWith("sb://watch/")) addToWatchlist(d.substring("sb://watch/".length()));
         });
         return p;
     }
@@ -750,7 +943,7 @@ public class MainWindow extends JFrame {
                 Object shown = v;
                 if (v instanceof Double d) {
                     if (Double.isNaN(d)) shown = "n/a";
-                    else if (name.equals("Price")) shown = String.format("%.2f", d);
+                    else if (name.equals("Price") || name.equals("Index price")) shown = String.format("%,.2f", d);
                     else if (name.equals("Score")) shown = String.format("%+.0f", d);
                     else shown = String.format("%+.2f%%", d);
                 }
@@ -759,7 +952,7 @@ public class MainWindow extends JFrame {
                 setHorizontalAlignment(v instanceof Number ? RIGHT : LEFT);
                 setBackground(sel ? k.soft() : row % 2 == 0 ? k.panel() : k.mix(k.panel(), k.bg(), 0.6));
                 Color fg = k.text();
-                if (v instanceof Double d && !name.equals("Price") && !Double.isNaN(d)) fg = d > 0.05 ? k.good() : d < -0.05 ? k.bad() : k.warn();
+                if (v instanceof Double d && !name.equals("Price") && !name.equals("Index price") && !Double.isNaN(d)) fg = d > 0.05 ? k.good() : d < -0.05 ? k.bad() : k.warn();
                 if (v instanceof String s) {
                     if (s.contains("BUY") || s.equals("OPEN")) fg = k.good();
                     else if (s.contains("SELL")) fg = k.bad();

@@ -3,7 +3,7 @@
 # Run on Linux x86_64 with JDK 17+. The Android app must be built and signed first
 # (android/build-android.sh, then android/sign-android.sh) - otherwise it is left out.
 set -euo pipefail
-VERSION="${VERSION:-1.0}"
+VERSION="${VERSION:-1.1}"
 P="$(cd "$(dirname "$0")" && pwd)"
 ROOT="$(dirname "$P")"
 B="$ROOT/build/release"

@@ -28,13 +28,13 @@ A window opens with a menu on the left:
 
 | Page | What it shows |
 |---|---|
-| **Today's Ideas** | Tabs for Best Buys, Best Sells, Options, Shorts and 0DTE. Each idea says *why*, *how to do it*, and *how risky it is* |
-| **World Markets** | The 16 biggest stock markets, whether each is open right now, and how it's doing today and over the last month |
-| **Look Up a Stock** | A 1-year price chart, plus a plain-English explanation of what every source says |
+| **Today's Ideas** | Tabs for **Best Buys**, **Sells & Shorts**, **Best Calls**, **Best Puts** and **0DTE**. Each idea shows the company name, with the recommended action underneath. It says *why*, *how to do it*, and *how risky it is*. Sells that are also short candidates are marked **SHORT** |
+| **World Markets** | The 16 biggest stock markets with their **index price**, updated every minute (some exchanges are a few minutes delayed). Also whether each is open right now, and how it's doing today and over the last month |
+| **Look Up a Stock** | A chart you can customise (see below), **key statistics** like on Yahoo Finance (day's range, market cap, beta, P/E, EPS, dividend, earnings date…), and a plain-English explanation of what every source says. Includes a **★ Add to My Watchlist** button |
 | **All Stocks** | Every stock checked, ranked best to worst. Double-click a row for details |
 | **Dictionary** | Investing words explained simply, with a search box |
-| **My Watchlist** | Add or remove the stocks that are always checked |
-| **Data Sources** | Which websites worked, plus buttons to import your Stock Rover / WallStreetZen CSV files |
+| **My Watchlist** | Add or remove the stocks that are always checked. Changes are saved straight away. **Double-click** a stock to look it up |
+| **Data Sources** | Which websites worked, plus buttons to import your Stock Rover / WallStreetZen / Reddit CSV files and to add your free Finnhub key |
 
 Along the top:
 
@@ -43,6 +43,17 @@ Along the top:
 - **Desktop widget:** opens a small panel that stays on your desktop (see below).
 - **Save report:** saves today's ideas as a web page.
 - **Refresh data:** downloads everything again. The app also refreshes by itself every 15 minutes.
+
+### The chart
+
+Above the chart on **Look Up a Stock** (on Android: under the chart):
+
+- **Chart:** Line, Candles or Area.
+- **Period:** 1 month, 3 months, 6 months or 1 year.
+- **Lines:** SMA 20 / 50 / 200 (moving averages), EMA 20, and Bollinger Bands.
+- **Bottom panel:** nothing, Volume, RSI or MACD.
+
+Your choices are remembered. On desktop, move the mouse over the chart to read each day's open, high, low, close and volume.
 
 ### The desktop widget
 
@@ -86,9 +97,10 @@ When it's started this way, StockBuddy keeps its files (watchlist, CSV imports, 
 | **Stock Rover** | Fair value; quality, value and growth scores | Stock Rover needs a paid login, so **you export a CSV** (see below) |
 | **WallStreetZen** | Zen Score (0–100) and Zen Rating (A–F) | Read from the website. If the site blocks the program, you can type the numbers into a CSV |
 | **Reddit** (r/ValueInvesting, r/options, r/wallstreetbets) | Which stocks people talk about and whether the mood is positive or negative | Reads the "hot" posts. Each subreddit gets a different trust level: r/wallstreetbets counts least, because it's very hype-driven |
-| **Yahoo Finance** (extra) | Daily and minute-by-minute prices, world market indexes | Needed because none of the sites above offer free price history |
+| **Finnhub.io** (optional, free key) | Wall Street analyst recommendations (strong buy … strong sell), plus financial ratios like profit margin, debt/equity and beta | Get a free key at [finnhub.io/register](https://finnhub.io/register), then use **Data Sources → Add Finnhub key** (Android: **More → Finnhub key**). The key is saved only on your device. The free plan allows 60 requests a minute, so the first refresh with Finnhub takes about 2 minutes; answers are reused for 6 hours |
+| **Yahoo Finance** (extra) | Daily prices and candles, minute-by-minute prices, world market indexes | Needed because none of the sites above offer free price history |
 
-Each source gives a score from -100 to +100. The final score is a weighted average: **charts 30%, company numbers 25%, Stock Rover 15%, WallStreetZen 15%, Reddit 15%**. If a source is missing, the others share its weight. The **confidence stars** show how many sources had data, and whether they agree.
+Each source gives a score from -100 to +100. The final score is a weighted average: **charts 30%, company numbers 25%, Stock Rover 15%, WallStreetZen 15%, Finnhub 15%, Reddit 15%** (these add up to more than 100%, so each is divided by the total). If a source is missing, the others share its weight. The **confidence stars** show how many sources had data, and whether they agree.
 
 ### Adding your Stock Rover data (optional)
 1. In Stock Rover, open a screener, watchlist or portfolio.

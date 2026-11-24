@@ -7,6 +7,8 @@ import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -51,13 +53,7 @@ import stockbuddy.WallStreetZenSource;
 /** The StockBuddy phone app. Pages are drawn as web pages (shared with the desktop app) inside a WebView. */
 public class MainActivity extends Activity implements Droid.Listener {
     private static final int PICK_ROVER = 11, PICK_ZEN = 12, PICK_REDDIT = 13;
-    private static final String[] IDEA_TABS = {"Best Buys", "Best Sells", "Options", "Shorts", "0DTE"};
-    private static final String[][] IDEA_TEXT = {
-            {"Best buys today", "Stocks where most sources see good signs. [+] = a source likes it, [-] = a source sees a problem. More stars = sources agree more.", "No stock had enough good signals today. That's OK - waiting is a strategy too."},
-            {"Best sells (if you own them)", "Stocks where most sources see warning signs. If you don't own them, this simply means \"don't buy right now\".", "No stock had strong sell signals today."},
-            {"Best options ideas (1-2 months)", "Calls (bet on up) or puts (bet on down) on stocks with strong, clear signals. Costs are estimates - check your broker.", "No stock had signals strong and clear enough for an options idea today."},
-            {"Best short ideas (advanced)", "Stocks in a clear downtrend with weak ratings. Shorting is risky - buying a put is the safer way for beginners.", "No good short candidates today (we need a clear downtrend AND bad ratings)."},
-            {"0DTE ideas (expire today)", "Options on SPY and QQQ that expire at today's close. Extremely risky - often the best idea is to sit out.", ""}};
+    private static final String[] IDEA_TABS = HtmlView.IDEA_TABS;
     private static final String[] NAV = {"Ideas", "Markets", "Look up", "All stocks", "More"};
 
     private Palette k;
@@ -76,6 +72,23 @@ public class MainActivity extends Activity implements Droid.Listener {
     private EditText input;
     private Button inputBtn;
     private TextWatcher filterWatcher;
+    private final Handler ticker = new Handler(Looper.getMainLooper());
+    private volatile boolean marketsLoading;
+    /** Every minute: refresh the world index prices while the Markets page is open. */
+    private final Runnable marketTick = new Runnable() {
+        @Override public void run() {
+            final Analyzer a = Droid.analyzer;
+            if (page.equals("markets") && a != null && !a.demo && !Droid.loading && !marketsLoading) {
+                marketsLoading = true;
+                new Thread(() -> {
+                    try { stockbuddy.WorldMarkets.refreshPrices(a.markets); } catch (Throwable ignored) {}
+                    marketsLoading = false;
+                    runOnUiThread(() -> { if (page.equals("markets")) render(); });
+                }).start();
+            }
+            ticker.postDelayed(this, 60_000);
+        }
+    };
 
     // ================================================================= lifecycle
     @Override
@@ -108,6 +121,14 @@ public class MainActivity extends Activity implements Droid.Listener {
         super.onResume();
         Droid.listener = this;
         render();
+        ticker.removeCallbacks(marketTick);
+        ticker.postDelayed(marketTick, 60_000);
+    }
+
+    @Override
+    protected void onPause() {
+        ticker.removeCallbacks(marketTick);
+        super.onPause();
     }
 
     @Override
@@ -334,14 +355,14 @@ public class MainActivity extends Activity implements Droid.Listener {
             case "watchlist": html = HtmlView.watchlist(k, Analyzer.readWatchlist()); break;
             case "sources": html = HtmlView.sources(k, a); break;
             default:
-                html = HtmlView.ideas(k, IDEA_TEXT[ideaTab][0], IDEA_TEXT[ideaTab][1], lists(plan).get(ideaTab), IDEA_TEXT[ideaTab][2], a.demo);
+                html = HtmlView.ideasTab(k, plan, ideaTab, a.demo);
         }
         web.setBackgroundColor(c(k.bg()));
         web.loadDataWithBaseURL("https://stockbuddy.local/", html, "text/html", "utf-8", null);
     }
 
     private static List<List<Advisor.Idea>> lists(Advisor.Plan p) {
-        return Arrays.asList(p.buys, p.sells, p.options, p.shorts, p.zeroDte);
+        return HtmlView.ideaLists(p);
     }
 
     private void setupInput() {
@@ -422,6 +443,18 @@ public class MainActivity extends Activity implements Droid.Listener {
 
     private void handleLink(String url) {
         if (url == null) return;
+        if (url.startsWith("sb://chart/")) {
+            stockbuddy.ChartOptions.applyLink(url);
+            render();
+            return;
+        }
+        if (url.startsWith("sb://watch/")) {
+            String t = url.substring("sb://watch/".length());
+            List<String> w = new ArrayList<>(Analyzer.readWatchlist());
+            if (w.contains(t)) toast(t + " is already in your watchlist.");
+            else { w.add(t); saveWatchlist(w); toast("Added " + t + " to your watchlist."); }
+            return;
+        }
         if (url.startsWith("sb://stock/")) {
             String t = url.substring("sb://stock/".length());
             page = "lookup";
@@ -463,7 +496,8 @@ public class MainActivity extends Activity implements Droid.Listener {
                 "About & disclaimer",
                 "Add Reddit posts (paste titles)...",
                 "Import Reddit CSV...",
-                "Clear my Reddit posts"};
+                "Clear my Reddit posts",
+                "Finnhub key (" + (stockbuddy.FinnhubSource.enabled() ? "set" : "not set") + ")..."};
         new AlertDialog.Builder(this).setTitle("More").setItems(items, (d, which) -> {
             switch (which) {
                 case 0: show("dictionary"); break;
@@ -487,6 +521,7 @@ public class MainActivity extends Activity implements Droid.Listener {
                                 + "NOT a financial advisor. It can be wrong, data can be late, and you can lose money. Never invest money you can't afford to lose."); break;
                 case 11: addRedditPosts(); break;
                 case 12: pickFile(PICK_REDDIT); break;
+                case 14: askFinnhubKey(); break;
                 case 13:
                     new AlertDialog.Builder(this).setTitle("Clear my Reddit posts")
                             .setMessage("Delete all the Reddit posts you added yourself?")
@@ -499,6 +534,37 @@ public class MainActivity extends Activity implements Droid.Listener {
                 default: break;
             }
         }).show();
+    }
+
+    /** Free Finnhub key: analyst recommendations + financial ratios. Saved on this phone only. */
+    private void askFinnhubKey() {
+        LinearLayout box = new LinearLayout(this);
+        box.setOrientation(LinearLayout.VERTICAL);
+        box.setPadding(dp(20), dp(8), dp(20), 0);
+        TextView help = new TextView(this);
+        help.setText("Finnhub adds Wall Street analyst recommendations and financial ratios. Get a free key at finnhub.io/register "
+                + "and paste it below. It is saved only on this phone. Leave it empty to turn Finnhub off.");
+        box.addView(help);
+        final EditText f = new EditText(this);
+        f.setSingleLine(true);
+        f.setText(stockbuddy.FinnhubSource.key());
+        f.setHint("Your Finnhub API key");
+        box.addView(f);
+        new AlertDialog.Builder(this).setTitle("Finnhub key").setView(box)
+                .setPositiveButton("Save", (d, w) -> {
+                    final String key = f.getText().toString().trim();
+                    if (key.isEmpty()) { stockbuddy.FinnhubSource.setKey(""); toast("Finnhub is turned off."); return; }
+                    toast("Checking the key...");
+                    new Thread(() -> {
+                        final String err = stockbuddy.FinnhubSource.test(key);
+                        runOnUiThread(() -> {
+                            stockbuddy.FinnhubSource.setKey(key);
+                            if (err == null) { toast("Key works and is saved. Refreshing (about 2 minutes the first time)..."); Droid.refresh(this, null); }
+                            else info("Finnhub key saved, but...", err);
+                        });
+                    }).start();
+                })
+                .setNegativeButton("Cancel", null).show();
     }
 
     /** Paste Reddit post titles yourself - works even when Reddit blocks automatic reading. */
