@@ -7,3 +7,4 @@ data/settings.properties
 android/build/
 android/tools/
 *.jks
+stockbuddy-release-password.txt

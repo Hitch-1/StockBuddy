@@ -55,8 +55,9 @@ home-screen widget.
 TIPS FOR BEGINNERS
 ------------------
 - Start with "Practice mode". It uses made-up data, so you can learn safely.
-- Use the Skin button to choose colours you like. The desktop widget can
-  have its own skin too: right-click it.
+- Use the Skin button to choose colours you like. The desktop widget
+  (right-click it) and the Android home-screen widget (More menu) can each
+  have their own skin.
 - Try ideas with "paper trading" (fake money in your broker's app) before
   using real money.
 
