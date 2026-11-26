@@ -56,7 +56,12 @@ public class MainActivity extends Activity implements Droid.Listener {
     private stockbuddy.ReportWriter.Format pendingFormat;
     private TextView marketChip;
     private static final String[] IDEA_TABS = HtmlView.IDEA_TABS;
-    private static final String[] NAV = {"Ideas", "Markets", "Look up", "All stocks", "More"};
+    /** The pages in the menu: id, icon, name. Their order can be changed by dragging (saved in settings). */
+    private static final String[][] PAGES = {
+            {"ideas", "\uD83D\uDCA1", "Today's ideas"}, {"markets", "\uD83C\uDF0D", "World markets"}, {"worldstocks", "\uD83C\uDFE6", "World stocks"},
+            {"calendar", "\uD83D\uDCC5", "Economic calendar"}, {"lookup", "\uD83D\uDD0D", "Look up a stock"}, {"all", "\uD83D\uDCCB", "All stocks"},
+            {"alerts", "\uD83D\uDD14", "Price alerts"}, {"paper", "\uD83D\uDCBC", "Paper trading"}, {"track", "\uD83D\uDCC8", "Track record"},
+            {"dictionary", "\uD83D\uDCD6", "Dictionary"}, {"sources", "\uD83D\uDD0C", "Data sources"}};
 
     private Palette k;
     private String page = "ideas";
@@ -69,7 +74,16 @@ public class MainActivity extends Activity implements Droid.Listener {
     private ProgressBar progress;
     private HorizontalScrollView chipScroll;
     private final List<TextView> chips = new ArrayList<>();
-    private final List<TextView> navItems = new ArrayList<>();
+    // menu (drawer), header buttons and swiping
+    private LinearLayout drawer, pageRows;
+    private android.widget.ScrollView drawerScroll;
+    private View dim;
+    private final List<LinearLayout> slots = new ArrayList<>();
+    private List<String> menuOrder;
+    private int dragIndex = -1;
+    private TextView pageTitle;
+    private LinearLayout starBtn;
+    private float baseScale = -1, scaleNow = -1;
     private LinearLayout inputRow;
     private EditText input;
     private Button inputBtn;
@@ -110,6 +124,10 @@ public class MainActivity extends Activity implements Droid.Listener {
         else render();
         showPreviousCrash();
         Notifier.scheduleAlertJob(this);
+        if (!Settings.getBool("hint.menu", false)) {
+            Settings.set("hint.menu", true);
+            Toast.makeText(this, "Tip: tap \u2630 for all pages, swipe left or right to move between them, \u2605 for your watchlist.", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -149,7 +167,8 @@ public class MainActivity extends Activity implements Droid.Listener {
 
     @Override
     public void onBackPressed() {
-        if (!page.equals("ideas")) show("ideas");
+        if (drawer != null && drawer.getVisibility() == View.VISIBLE) closeDrawer();
+        else if (!page.equals("ideas")) show("ideas");
         else super.onBackPressed();
     }
 
@@ -163,7 +182,7 @@ public class MainActivity extends Activity implements Droid.Listener {
     private void build() {
         k = Droid.appSkin();
         chips.clear();
-        navItems.clear();
+        slots.clear();
         getWindow().setStatusBarColor(c(k.panel()));
         getWindow().setNavigationBarColor(c(k.panel()));
         getWindow().getDecorView().setSystemUiVisibility(k.dark() ? 0 : View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -172,31 +191,57 @@ public class MainActivity extends Activity implements Droid.Listener {
         root.setOrientation(LinearLayout.VERTICAL);
         root.setBackgroundColor(c(k.bg()));
 
-        // ---- header
-        LinearLayout header = new LinearLayout(this);
-        header.setOrientation(LinearLayout.HORIZONTAL);
-        header.setGravity(Gravity.CENTER_VERTICAL);
-        header.setPadding(dp(14), dp(10), dp(8), dp(8));
+        // ---- header: menu (left), My watchlist (middle), refresh + three dots (right)
+        android.widget.FrameLayout header = new android.widget.FrameLayout(this);
         header.setBackgroundColor(c(k.panel()));
+        header.setPadding(dp(4), dp(4), dp(4), 0);
+        TextView burger = iconButton("\u2630", 24);
+        burger.setContentDescription("Menu");
+        burger.setOnClickListener(v -> openDrawer());
+        header.addView(burger, new android.widget.FrameLayout.LayoutParams(dp(52), dp(52), Gravity.START | Gravity.CENTER_VERTICAL));
+        starBtn = new LinearLayout(this);
+        starBtn.setOrientation(LinearLayout.VERTICAL);
+        starBtn.setGravity(Gravity.CENTER);
+        starBtn.setPadding(dp(14), dp(2), dp(14), dp(2));
+        starBtn.setContentDescription("My watchlist");
+        TextView star = text("\u2605", 22, k.warn(), true);
+        star.setGravity(Gravity.CENTER);
+        TextView starLabel = text("Watchlist", 10, k.muted(), false);
+        starLabel.setGravity(Gravity.CENTER);
+        starBtn.addView(star);
+        starBtn.addView(starLabel);
+        starBtn.setOnClickListener(v -> show("watchlist"));
+        header.addView(starBtn, new android.widget.FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dp(52), Gravity.CENTER));
+        LinearLayout right = new LinearLayout(this);
+        right.setGravity(Gravity.CENTER_VERTICAL);
+        TextView refreshBtn = iconButton("\u21BB", 22);
+        refreshBtn.setContentDescription("Refresh data");
+        refreshBtn.setOnClickListener(v -> Droid.refresh(this, null));
+        TextView dots = iconButton("\u22EE", 24);
+        dots.setContentDescription("More options");
+        dots.setOnClickListener(this::dotsMenu);
+        right.addView(refreshBtn, new LinearLayout.LayoutParams(dp(46), dp(52)));
+        right.addView(dots, new LinearLayout.LayoutParams(dp(42), dp(52)));
+        header.addView(right, new android.widget.FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dp(52), Gravity.END | Gravity.CENTER_VERTICAL));
+        root.addView(header);
+
+        // ---- title row: logo + page name + practice-mode note
+        LinearLayout titleRow = new LinearLayout(this);
+        titleRow.setGravity(Gravity.CENTER_VERTICAL);
+        titleRow.setPadding(dp(14), 0, dp(14), dp(4));
+        titleRow.setBackgroundColor(c(k.panel()));
         android.widget.ImageView logo = new android.widget.ImageView(this);
         logo.setImageResource(com.stockbuddy.app.R.drawable.icon);
-        header.addView(logo, new LinearLayout.LayoutParams(dp(34), dp(34)));
+        titleRow.addView(logo, new LinearLayout.LayoutParams(dp(26), dp(26)));
         LinearLayout titles = new LinearLayout(this);
         titles.setOrientation(LinearLayout.VERTICAL);
         titles.setPadding(dp(10), 0, 0, 0);
-        TextView title = text("StockBuddy", 20, k.text(), true);
-        subtitle = text("", 12, k.muted(), false);
-        titles.addView(title);
+        pageTitle = text("StockBuddy", 17, k.text(), true);
+        subtitle = text("", 11, k.muted(), false);
+        titles.addView(pageTitle);
         titles.addView(subtitle);
-        header.addView(titles, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-        TextView skinBtn = pillButton("Skin");
-        skinBtn.setOnClickListener(v -> chooseSkin(false));
-        TextView refreshBtn = pillButton("↻");
-        refreshBtn.setTextSize(18);
-        refreshBtn.setOnClickListener(v -> Droid.refresh(this, null));
-        header.addView(skinBtn);
-        header.addView(refreshBtn);
-        root.addView(header);
+        titleRow.addView(titles, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+        root.addView(titleRow);
 
         // ---- status line
         LinearLayout statusRow = new LinearLayout(this);
@@ -261,7 +306,27 @@ public class MainActivity extends Activity implements Droid.Listener {
         web.getSettings().setSupportZoom(true);              // pinch to zoom (e.g. into the chart)
         web.getSettings().setBuiltInZoomControls(true);
         web.getSettings().setDisplayZoomControls(false);
+        final android.view.GestureDetector swipes = new android.view.GestureDetector(this, new android.view.GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onFling(android.view.MotionEvent e1, android.view.MotionEvent e2, float vx, float vy) {
+                if (e1 == null || e2 == null) return false;
+                float dx = e2.getX() - e1.getX(), dy = e2.getY() - e1.getY();
+                boolean zoomedIn = baseScale > 0 && scaleNow > baseScale * 1.05f;   // pinch-zoomed: let the page pan instead
+                if (!zoomedIn && Math.abs(dx) > dp(90) && Math.abs(dx) > 2 * Math.abs(dy) && Math.abs(vx) > 600) {
+                    swipe(dx < 0 ? 1 : -1);
+                    return true;
+                }
+                return false;
+            }
+        });
+        web.setOnTouchListener((v, ev) -> { swipes.onTouchEvent(ev); return false; });
         web.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onScaleChanged(WebView view, float oldScale, float newScale) {
+                if (baseScale < 0) baseScale = oldScale;
+                scaleNow = newScale;
+            }
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 handleLink(url);
@@ -270,26 +335,25 @@ public class MainActivity extends Activity implements Droid.Listener {
         });
         root.addView(web, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
 
-        // ---- bottom navigation
-        View line2 = new View(this);
-        line2.setBackgroundColor(c(k.line()));
-        root.addView(line2, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
-        LinearLayout nav = new LinearLayout(this);
-        nav.setBackgroundColor(c(k.panel()));
-        nav.setPadding(dp(4), dp(4), dp(4), dp(4));
-        for (String n : NAV) {
-            TextView t = text(n, 13, k.muted(), true);
-            t.setGravity(Gravity.CENTER);
-            t.setPadding(0, dp(10), 0, dp(10));
-            t.setOnClickListener(v -> {
-                if (n.equals("More")) moreMenu(v);
-                else show(n.equals("Ideas") ? "ideas" : n.equals("Markets") ? "markets" : n.equals("Look up") ? "lookup" : "all");
-            });
-            navItems.add(t);
-            nav.addView(t, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-        }
-        root.addView(nav);
-        setContentView(root);
+        // ---- the menu (slides in from the left over the page)
+        android.widget.FrameLayout frame = new android.widget.FrameLayout(this);
+        frame.addView(root, new android.widget.FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        dim = new View(this);
+        dim.setBackgroundColor(0x99000000);
+        dim.setVisibility(View.GONE);
+        dim.setOnClickListener(v -> closeDrawer());
+        frame.addView(dim, new android.widget.FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        int w = Math.min(dp(330), (int) (getResources().getDisplayMetrics().widthPixels * 0.86));
+        drawer = new LinearLayout(this);
+        drawer.setOrientation(LinearLayout.VERTICAL);
+        drawer.setBackgroundColor(c(k.panel()));
+        drawer.setElevation(dp(16));
+        drawer.setClickable(true);
+        drawer.setTranslationX(-w);
+        drawer.setVisibility(View.INVISIBLE);
+        buildDrawer();
+        frame.addView(drawer, new android.widget.FrameLayout.LayoutParams(w, ViewGroup.LayoutParams.MATCH_PARENT, Gravity.START));
+        setContentView(frame);
     }
 
     private TextView text(String s, float sp, String color, boolean bold) {
@@ -338,13 +402,9 @@ public class MainActivity extends Activity implements Droid.Listener {
         statusText.setText(Droid.status);
         progress.setVisibility(Droid.loading ? View.VISIBLE : View.GONE);
 
-        String navKey = page.equals("ideas") ? "Ideas" : page.equals("markets") ? "Markets" : page.equals("lookup") ? "Look up"
-                : page.equals("all") ? "All stocks" : "More";
-        for (TextView t : navItems) {
-            boolean on = t.getText().toString().equals(navKey);
-            t.setTextColor(c(on ? k.accent() : k.muted()));
-            t.setBackground(on ? rounded(k.mix(k.panel(), k.accent(), 0.18), k.panel(), 12) : null);
-        }
+        pageTitle.setText(pageName(page));
+        starBtn.setBackground(page.equals("watchlist") ? rounded(k.mix(k.panel(), k.accent(), 0.22), k.panel(), 14) : null);
+        bindSlots();
         chipScroll.setVisibility(page.equals("ideas") ? View.VISIBLE : View.GONE);
         String market = Settings.get("ideas.market", "all");
         marketChip.setText((market.equals("all") ? "All markets" : stockbuddy.WorldStocks.marketName(market).replaceAll(" \\(.*\\)$", "")) + " \u25BE");
@@ -567,80 +627,279 @@ public class MainActivity extends Activity implements Droid.Listener {
     }
 
     // ================================================================= menus
-    private void moreMenu(View anchor) {
-        final String[][] items = {
-                {"Price alerts", "alerts"},
-                {"Paper trading (pretend money)", "paper"},
-                {"Save report (web page, Word, CSV or JSON)...", "report"},
-                {"Economic calendar (big news this week)", "calendar"},
-                {"World stocks (and where to buy them)", "worldstocks"},
-                {"Track record (how past ideas did)", "track"},
-                {"Dictionary (what do the words mean?)", "dictionary"},
-                {"My watchlist", "watchlist"},
-                {"Data sources (which websites worked)", "sources"},
-                {"Practice mode (made-up data): " + (Droid.demo() ? "ON - tap to turn off" : "OFF - tap to turn on"), "practice"},
-                {"App skin...", "skin"},
-                {"Home-screen widget skin...", "wskin"},
-                {"Widget see-through...", "opacity"},
-                {"Add Reddit posts (paste titles)...", "redditadd"},
-                {"Import Reddit CSV...", "redditcsv"},
-                {"Clear my Reddit posts", "redditclear"},
-                {"Add any CSV as a data source...", "anycsv"},
-                {"Remove my CSV files", "nocsv"},
-                {"Import Stock Rover CSV...", "rover"},
-                {"Import WallStreetZen CSV...", "zen"},
-                {"Finnhub key (" + (stockbuddy.FinnhubSource.enabled() ? "set" : "not set") + ")...", "finnhub"},
-                {"Alpha Vantage key (" + (stockbuddy.AlphaVantage.enabled() ? "set" : "not set") + ")...", "alpha"},
-                {"SEC email (optional)...", "sec"},
-                {"World stocks: " + (stockbuddy.WorldStocks.top() == 0 ? "off" : "top " + stockbuddy.WorldStocks.top() + " of each market") + "...", "worldtoggle"},
-                {"How to add the home-screen widget", "widgethelp"},
-                {"About & disclaimer", "about"}};
-        String[] labels = new String[items.length];
-        for (int i = 0; i < items.length; i++) labels[i] = items[i][0];
-        new AlertDialog.Builder(this).setTitle("More").setItems(labels, (d, which) -> {
-            switch (items[which][1]) {
-                case "report": saveReport(); break;
-                case "calendar": case "worldstocks": case "track": case "dictionary": case "watchlist": case "sources": case "alerts": case "paper":
-                    show(items[which][1]); break;
-                case "practice":
-                    Settings.set("practiceMode", !Droid.demo());
-                    Droid.refresh(this, null);
-                    break;
-                case "skin": chooseSkin(false); break;
-                case "wskin": chooseSkin(true); break;
-                case "opacity": chooseOpacity(); break;
-                case "redditadd": addRedditPosts(); break;
-                case "redditcsv": pickFile(PICK_REDDIT); break;
-                case "redditclear":
-                    new AlertDialog.Builder(this).setTitle("Clear my Reddit posts")
-                            .setMessage("Delete all the Reddit posts you added yourself?")
-                            .setPositiveButton("Delete", (dd, w) -> {
-                                try { stockbuddy.RedditSource.clearManualPosts(); Droid.refresh(this, null); }
-                                catch (Exception e) { toast("Couldn't delete them: " + e.getMessage()); }
-                            })
-                            .setNegativeButton("Cancel", null).show();
-                    break;
-                case "anycsv": pickFile(PICK_CSV); break;
-                case "nocsv":
-                    try { stockbuddy.CustomCsv.removeAll(); toast("Your CSV files were removed."); Droid.refresh(this, null); }
-                    catch (Exception e) { toast("Couldn't remove them: " + e.getMessage()); }
-                    break;
-                case "rover": pickFile(PICK_ROVER); break;
-                case "zen": pickFile(PICK_ZEN); break;
-                case "finnhub": askFinnhubKey(); break;
-                case "alpha": askAlphaVantageKey(); break;
-                case "sec": askSecEmail(); break;
-                case "worldtoggle": chooseWorldTop(); break;
-                case "widgethelp": info("Add the widget to your home screen",
-                        "1. Go to your home screen.\n2. Touch and hold an empty spot.\n3. Tap \"Widgets\".\n4. Find StockBuddy and drag it onto your home screen.\n\n"
-                                + "Tap the widget to open the app, or tap \u21BB on it to refresh. Change its colours with \"Home-screen widget skin\"."); break;
-                case "about": info("About StockBuddy",
-                        "StockBuddy combines stockanalysis.com, WallStreetZen, Reddit, the WallStreetBets sentiment API, Finnhub, Alpha Vantage, SEC EDGAR, "
-                                + "the economic calendar, your own CSV files and StockCharts-style chart signals, and explains them in plain English.\n\nIMPORTANT: this is a learning and research helper, "
-                                + "NOT a financial advisor. It can be wrong, data can be late, and you can lose money. Never invest money you can't afford to lose."); break;
-                default: break;
+    /** Settings & data actions shown at the bottom of the menu: {label, action}. */
+    private String[][] settingsItems() {
+        return new String[][]{
+                {"\uD83C\uDF93 Practice mode (made-up data): " + (Droid.demo() ? "ON" : "OFF"), "practice"},
+                {"\uD83C\uDF10 World stocks: " + (stockbuddy.WorldStocks.top() == 0 ? "off" : "top " + stockbuddy.WorldStocks.top() + " of each market"), "worldtoggle"},
+                {"\u270D Add Reddit posts (paste titles)", "redditadd"},
+                {"\uD83D\uDCE5 Import Reddit CSV", "redditcsv"},
+                {"\uD83D\uDDD1 Clear my Reddit posts", "redditclear"},
+                {"\uD83D\uDCC4 Add any CSV as a data source", "anycsv"},
+                {"\uD83D\uDDD1 Remove my CSV files", "nocsv"},
+                {"\uD83D\uDCE5 Import Stock Rover CSV", "rover"},
+                {"\uD83D\uDCE5 Import WallStreetZen CSV", "zen"},
+                {"\uD83D\uDD11 Finnhub key (" + (stockbuddy.FinnhubSource.enabled() ? "set" : "not set") + ")", "finnhub"},
+                {"\uD83D\uDD11 Alpha Vantage key (" + (stockbuddy.AlphaVantage.enabled() ? "set" : "not set") + ")", "alpha"},
+                {"\u2709 SEC email (optional)", "sec"},
+                {"\u2195 Reset the menu order", "resetorder"},
+                {"\u2753 How to add the home-screen widget", "widgethelp"},
+                {"\u2139 About & disclaimer", "about"}};
+    }
+
+    private void runAction(String action) {
+        switch (action) {
+            case "report": saveReport(); break;
+            case "practice":
+                Settings.set("practiceMode", !Droid.demo());
+                Droid.refresh(this, null);
+                break;
+            case "skin": chooseSkin(false); break;
+            case "wskin": chooseSkin(true); break;
+            case "opacity": chooseOpacity(); break;
+            case "redditadd": addRedditPosts(); break;
+            case "redditcsv": pickFile(PICK_REDDIT); break;
+            case "redditclear":
+                new AlertDialog.Builder(this).setTitle("Clear my Reddit posts")
+                        .setMessage("Delete all the Reddit posts you added yourself?")
+                        .setPositiveButton("Delete", (dd, w) -> {
+                            try { stockbuddy.RedditSource.clearManualPosts(); Droid.refresh(this, null); }
+                            catch (Exception e) { toast("Couldn't delete them: " + e.getMessage()); }
+                        })
+                        .setNegativeButton("Cancel", null).show();
+                break;
+            case "anycsv": pickFile(PICK_CSV); break;
+            case "nocsv":
+                try { stockbuddy.CustomCsv.removeAll(); toast("Your CSV files were removed."); Droid.refresh(this, null); }
+                catch (Exception e) { toast("Couldn't remove them: " + e.getMessage()); }
+                break;
+            case "rover": pickFile(PICK_ROVER); break;
+            case "zen": pickFile(PICK_ZEN); break;
+            case "finnhub": askFinnhubKey(); break;
+            case "alpha": askAlphaVantageKey(); break;
+            case "sec": askSecEmail(); break;
+            case "worldtoggle": chooseWorldTop(); break;
+            case "resetorder":
+                Settings.set("menu.order", "");
+                menuOrder = null;
+                bindSlots();
+                toast("Menu order reset.");
+                break;
+            case "widgethelp": info("Add the widget to your home screen",
+                    "1. Go to your home screen.\n2. Touch and hold an empty spot.\n3. Tap \"Widgets\".\n4. Find StockBuddy and drag it onto your home screen.\n\n"
+                            + "Tap the widget to open the app, or tap \u21BB on it to refresh. Change its colours in \u22EE > Home-screen widget skin."); break;
+            case "about": info("About StockBuddy",
+                    "StockBuddy combines stockanalysis.com, WallStreetZen, Reddit, the WallStreetBets sentiment API, Finnhub, Alpha Vantage, SEC EDGAR, "
+                            + "the economic calendar, your own CSV files and StockCharts-style chart signals, and explains them in plain English.\n\nIMPORTANT: this is a learning and research helper, "
+                            + "NOT a financial advisor. It can be wrong, data can be late, and you can lose money. Never invest money you can't afford to lose."); break;
+            default: break;
+        }
+    }
+
+    // ---------------------------------------------------------------- menu order + swiping
+    private List<String> order() {
+        if (menuOrder != null) return menuOrder;
+        List<String> o = new ArrayList<>();
+        for (String id : Settings.get("menu.order", "").split(",")) if (pageIndex(id) >= 0 && !o.contains(id)) o.add(id);
+        for (String[] p : PAGES) if (!o.contains(p[0])) o.add(p[0]);
+        menuOrder = o;
+        return o;
+    }
+
+    private static int pageIndex(String id) {
+        for (int i = 0; i < PAGES.length; i++) if (PAGES[i][0].equals(id)) return i;
+        return -1;
+    }
+
+    private static String pageName(String id) {
+        if (id.equals("watchlist")) return "\u2605 My watchlist";
+        int i = pageIndex(id);
+        return i < 0 ? "StockBuddy" : PAGES[i][1] + " " + PAGES[i][2];
+    }
+
+    /** Swipe left = next page, swipe right = previous page (in your menu order). */
+    private void swipe(final int dir) {
+        List<String> o = order();
+        int idx = o.indexOf(page);
+        if (idx < 0) idx = dir > 0 ? -1 : o.size();
+        final int next = idx + dir;
+        if (next < 0 || next >= o.size()) return;
+        final String target = o.get(next);
+        final float width = web.getWidth();
+        web.animate().translationX(-dir * width * 0.35f).alpha(0f).setDuration(110).withEndAction(() -> {
+            show(target);
+            web.setTranslationX(dir * width * 0.35f);
+            web.animate().translationX(0).alpha(1f).setDuration(170).start();
+        }).start();
+        if (!Settings.getBool("hint.swipe", false)) Settings.set("hint.swipe", true);
+    }
+
+    // ---------------------------------------------------------------- the menu (drawer)
+    private void buildDrawer() {
+        drawer.removeAllViews();
+        LinearLayout head = new LinearLayout(this);
+        head.setOrientation(LinearLayout.VERTICAL);
+        head.setPadding(dp(18), dp(18), dp(18), dp(10));
+        head.addView(text("StockBuddy", 20, k.text(), true));
+        TextView hint = text("Hold \u2261 and drag to change the order. Swipe a page left or right to move between pages.", 12, k.muted(), false);
+        hint.setPadding(0, dp(4), 0, 0);
+        head.addView(hint);
+        drawer.addView(head);
+        View line = new View(this);
+        line.setBackgroundColor(c(k.line()));
+        drawer.addView(line, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
+
+        drawerScroll = new android.widget.ScrollView(this);
+        LinearLayout list = new LinearLayout(this);
+        list.setOrientation(LinearLayout.VERTICAL);
+        list.setPadding(0, dp(6), 0, dp(20));
+        list.addView(sectionLabel("PAGES"));
+        pageRows = new LinearLayout(this);
+        pageRows.setOrientation(LinearLayout.VERTICAL);
+        slots.clear();
+        for (int i = 0; i < PAGES.length; i++) {
+            final int slot = i;
+            LinearLayout row = new LinearLayout(this);
+            row.setGravity(Gravity.CENTER_VERTICAL);
+            row.setPadding(dp(18), 0, dp(4), 0);
+            TextView label = text("", 16, k.text(), false);
+            label.setPadding(0, dp(13), 0, dp(13));
+            label.setOnClickListener(v -> { show(order().get(slot)); closeDrawer(); });
+            TextView handle = text("\u2261", 24, k.muted(), true);
+            handle.setGravity(Gravity.CENTER);
+            handle.setContentDescription("Drag to move");
+            handle.setOnTouchListener((v, ev) -> dragRow(slot, ev));
+            row.addView(label, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+            row.addView(handle, new LinearLayout.LayoutParams(dp(52), dp(48)));
+            slots.add(row);
+            pageRows.addView(row, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
+        list.addView(pageRows);
+        list.addView(sectionLabel("SETTINGS & DATA"));
+        for (final String[] item : settingsItems()) {
+            TextView row = text(item[0], 14, k.text(), false);
+            row.setPadding(dp(18), dp(11), dp(18), dp(11));
+            row.setOnClickListener(v -> { closeDrawer(); runAction(item[1]); });
+            list.addView(row);
+        }
+        drawerScroll.addView(list);
+        drawer.addView(drawerScroll, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
+        bindSlots();
+    }
+
+    private TextView sectionLabel(String s) {
+        TextView t = text(s, 11, k.muted(), true);
+        t.setPadding(dp(18), dp(12), dp(18), dp(4));
+        return t;
+    }
+
+    /** Shows the pages in your order and highlights the page you're on (and the one being dragged). */
+    private void bindSlots() {
+        List<String> o = order();
+        for (int i = 0; i < slots.size() && i < o.size(); i++) {
+            LinearLayout row = slots.get(i);
+            String id = o.get(i);
+            TextView label = (TextView) row.getChildAt(0);
+            label.setText(pageName(id));
+            boolean current = id.equals(page), dragging = i == dragIndex;
+            label.setTextColor(c(current ? k.accent() : k.text()));
+            label.setTypeface(current ? Typeface.DEFAULT_BOLD : Typeface.DEFAULT);
+            row.setBackground(dragging ? rounded(k.mix(k.panel(), k.accent(), 0.30), k.accent(), 10)
+                    : current ? rounded(k.mix(k.panel(), k.accent(), 0.14), k.panel(), 10) : null);
+            row.setElevation(dragging ? dp(6) : 0);
+        }
+    }
+
+    /** Drag the \u2261 handle up or down to move a page in the menu. */
+    private boolean dragRow(int slot, android.view.MotionEvent ev) {
+        switch (ev.getActionMasked()) {
+            case android.view.MotionEvent.ACTION_DOWN:
+                dragIndex = slot;
+                drawerScroll.requestDisallowInterceptTouchEvent(true);
+                bindSlots();
+                return true;
+            case android.view.MotionEvent.ACTION_MOVE: {
+                if (dragIndex < 0) return true;
+                int[] loc = new int[2];
+                pageRows.getLocationOnScreen(loc);
+                float y = ev.getRawY() - loc[1];
+                int target = dragIndex;
+                for (int i = 0; i < slots.size(); i++) {
+                    View row = slots.get(i);
+                    if (y >= row.getTop() && y < row.getBottom()) target = i;
+                }
+                if (y < 0) target = 0;
+                if (y >= slots.get(slots.size() - 1).getBottom()) target = slots.size() - 1;
+                if (target != dragIndex) {
+                    List<String> o = order();
+                    String moved = o.remove(dragIndex);
+                    o.add(target, moved);
+                    dragIndex = target;
+                    bindSlots();
+                }
+                int[] sv = new int[2];
+                drawerScroll.getLocationOnScreen(sv);
+                if (ev.getRawY() < sv[1] + dp(40)) drawerScroll.scrollBy(0, -dp(12));          // scroll while dragging near the edges
+                else if (ev.getRawY() > sv[1] + drawerScroll.getHeight() - dp(40)) drawerScroll.scrollBy(0, dp(12));
+                return true;
             }
-        }).show();
+            case android.view.MotionEvent.ACTION_UP:
+            case android.view.MotionEvent.ACTION_CANCEL:
+                if (dragIndex >= 0) {
+                    dragIndex = -1;
+                    Settings.set("menu.order", String.join(",", order()));
+                    bindSlots();
+                }
+                drawerScroll.requestDisallowInterceptTouchEvent(false);
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private void openDrawer() {
+        hideKeyboard();
+        drawer.setVisibility(View.VISIBLE);
+        dim.setAlpha(0f);
+        dim.setVisibility(View.VISIBLE);
+        dim.animate().alpha(1f).setDuration(200).start();
+        drawer.animate().translationX(0).setDuration(220).start();
+        bindSlots();
+    }
+
+    private void closeDrawer() {
+        if (drawer.getVisibility() != View.VISIBLE) return;
+        dim.animate().alpha(0f).setDuration(180).withEndAction(() -> dim.setVisibility(View.GONE)).start();
+        drawer.animate().translationX(-drawer.getWidth()).setDuration(200).withEndAction(() -> drawer.setVisibility(View.INVISIBLE)).start();
+    }
+
+    // ---------------------------------------------------------------- three dots (top right)
+    private void dotsMenu(View anchor) {
+        String[][] items = {
+                {"\uD83D\uDCBE  Save report (web page, Word, CSV or JSON)", "report"},
+                {"\uD83C\uDFA8  App skin", "skin"},
+                {"\uD83D\uDDBC  Home-screen widget skin", "wskin"},
+                {"\uD83D\uDC53  Widget see-through", "opacity"}};
+        LinearLayout box = new LinearLayout(this);
+        box.setOrientation(LinearLayout.VERTICAL);
+        box.setPadding(0, dp(6), 0, dp(6));
+        box.setBackground(rounded(k.panel(), k.line(), 12));
+        final android.widget.PopupWindow pop = new android.widget.PopupWindow(box, dp(300), ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        for (final String[] item : items) {
+            TextView row = text(item[0], 15, k.text(), false);
+            row.setPadding(dp(16), dp(13), dp(16), dp(13));
+            row.setOnClickListener(v -> { pop.dismiss(); runAction(item[1]); });
+            box.addView(row);
+        }
+        pop.setElevation(dp(12));
+        pop.setOutsideTouchable(true);
+        pop.showAsDropDown(anchor, -dp(256), 0);
+    }
+
+    private TextView iconButton(String symbol, float sp) {
+        TextView t = text(symbol, sp, k.text(), true);
+        t.setGravity(Gravity.CENTER);
+        return t;
     }
 
     private void paperCommand(final String cmd) {

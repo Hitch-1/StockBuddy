@@ -16,16 +16,23 @@ HOW TO INSTALL STOCKBUDDY ON ANDROID (Android 8.0 or newer)
      isn't from the Play Store. Tap "More details" > "Install anyway".
 
 3. Open StockBuddy from your app list.
-   - The bottom bar has: Ideas, Markets, Look up, All stocks and More.
-   - "Skin" (top right) changes the colours. Tap the refresh arrow to get
-     new data.
-   - More > "Practice mode" lets you learn with made-up data.
+   - Tap the menu button (three lines, top left) to see every page:
+     Today's ideas, World markets, World stocks, Economic calendar,
+     Look up a stock, Price alerts, Paper trading and more.
+     Hold the handle on the right of a page name and drag it up or down to
+     put the pages in the order you like.
+   - Swipe a page left or right to move to the next or previous page.
+   - The star at the top middle opens My watchlist.
+   - The three dots (top right) have: Save report (web page, Word, CSV or
+     JSON), App skin, Home-screen widget skin and Widget see-through.
+   - The round arrow (top right) gets new data.
+   - Menu > Practice mode lets you learn with made-up data.
 
 4. Add the home-screen widget:
    - Touch and hold an empty spot on your home screen, then tap "Widgets".
    - Find StockBuddy and drag it onto your home screen.
    - Change its colours and transparency in the app:
-     More > "Home-screen widget skin" and More > "Widget see-through".
+     the three dots > "Home-screen widget skin" and "Widget see-through".
    - Tap the refresh arrow on the widget to update it. It also updates by
      itself about every 30 minutes.
 

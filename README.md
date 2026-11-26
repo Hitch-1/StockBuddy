@@ -46,7 +46,7 @@ Along the top:
 - **Practice mode:** switch on to learn with made-up data (works without internet).
 - **Skin:** pick a colour theme: Classic Light, Night Mode, Wall Street Terminal, Ocean Blue, Sunset, Bull Gold, Mint Fresh or High Contrast. Your choice is remembered.
 - **Desktop widget:** opens a small panel that stays on your desktop (see below).
-- **Save report:** saves today's report as a **web page (.html)**, a **Word document (.docx)**, a **spreadsheet (.csv)** or **data for programs (.json)**. On Android: **More → Save report**, then choose where to save it.
+- **Save report:** saves today's report as a **web page (.html)**, a **Word document (.docx)**, a **spreadsheet (.csv)** or **data for programs (.json)**. On Android: **⋮ (top right) → Save report**, then choose where to save it.
 - **Refresh data:** downloads everything again. The app also refreshes by itself every 15 minutes.
 
 ### The chart
@@ -102,12 +102,12 @@ When it's started this way, StockBuddy keeps its files (watchlist, CSV imports, 
 | **Stock Rover** | Fair value; quality, value and growth scores | Stock Rover needs a paid login, so **you export a CSV** (see below) |
 | **WallStreetZen** | Zen Score (0–100) and Zen Rating (A–F) | Read from the website. If the site blocks the program, you can type the numbers into a CSV |
 | **Reddit** (r/ValueInvesting, r/options, r/wallstreetbets) | Which stocks people talk about and whether the mood is positive or negative | Reads the "hot" posts. Each subreddit gets a different trust level: r/wallstreetbets counts least, because it's very hype-driven |
-| **Finnhub.io** (optional, free key) | Wall Street analyst recommendations (strong buy … strong sell), plus financial ratios like profit margin, debt/equity and beta | Get a free key at [finnhub.io/register](https://finnhub.io/register), then use **Data Sources → Add Finnhub key** (Android: **More → Finnhub key**). The key is saved only on your device. The free plan allows 60 requests a minute, so the first refresh with Finnhub takes about 2 minutes; answers are reused for 6 hours |
+| **Finnhub.io** (optional, free key) | Wall Street analyst recommendations (strong buy … strong sell), plus financial ratios like profit margin, debt/equity and beta | Get a free key at [finnhub.io/register](https://finnhub.io/register), then use **Data Sources → Add Finnhub key** (Android: **☰ menu → Finnhub key**). The key is saved only on your device. The free plan allows 60 requests a minute, so the first refresh with Finnhub takes about 2 minutes; answers are reused for 6 hours |
 | **WallStreetBets sentiment API** (no key) | The ~50 stocks most discussed on r/wallstreetbets today, with comment counts and a bullish/bearish score | From the public-apis list (nbshare / Tradestie). Several addresses are tried, because the service has moved over time |
 | **SEC EDGAR** (no key) | Official company reports: yearly revenue growth and profit, the latest annual report, insider-trading reports (Form 4) and major-event reports (8-K) | US stocks only. If sec.gov refuses, add your email under **Data Sources → SEC email** (it is only sent to sec.gov) |
 | **Alpha Vantage** (optional, free key) | News sentiment: is recent news about the company positive or negative? Plus a couple of headlines | Free key at [alphavantage.co](https://www.alphavantage.co/support/#api-key). The free plan allows about 25 requests a **day**, so StockBuddy checks the first 8 stocks of your list and remembers the answers all day |
 | **Economic calendar** (no key) | This week's big economic events | ForexFactory's public weekly calendar |
-| **Any CSV** | Anything you have in a spreadsheet | **Data Sources → Add any CSV...** (Android: **More → Add any CSV**). The only requirement is a column called Ticker or Symbol. All columns are shown on the stock's page. Columns named like *score / rating / grade*, *recommendation / sentiment* or *target / fair value* also count in the score |
+| **Any CSV** | Anything you have in a spreadsheet | **Data Sources → Add any CSV...** (Android: **☰ menu → Add any CSV**). The only requirement is a column called Ticker or Symbol. All columns are shown on the stock's page. Columns named like *score / rating / grade*, *recommendation / sentiment* or *target / fair value* also count in the score |
 | **Yahoo Finance** (extra) | Daily prices and candles, minute-by-minute prices, world market indexes | Needed because none of the sites above offer free price history |
 
 Each source gives a score from -100 to +100. The final score is a weighted average: **charts 30%, company numbers 25%, Stock Rover 15%, WallStreetZen 15%, Finnhub 15%, Reddit 15%, and 10% each for WallStreetBets sentiment, SEC, news sentiment and each of your CSV files** (these add up to more than 100%, so each is divided by the total). If a source is missing, the others share its weight. A stock needs at least two sources before it can appear as a buy or sell idea. Calls, puts and shorts are only suggested for stocks that trade on a big US exchange. The **confidence stars** show how many sources had data, and whether they agree.
@@ -126,7 +126,7 @@ If the Data Sources page says WallStreetZen "could not read", make a CSV in the 
 StockBuddy reads Reddit by itself, with no account needed. It tries Reddit's public pages first, then Reddit's public **RSS news feeds**, which often still work when the pages are blocked. The **Data Sources** page shows which one worked.
 
 **Adding posts yourself.** This works even when Reddit blocks StockBuddy completely:
-- **Data Sources → Add Reddit posts...** (on Android: **More → Add Reddit posts**). Copy the titles of posts you find interesting on Reddit and paste them in, **one post per line**. Tickers like `$NVDA` or `NVDA` are recognised automatically. A line can start with the subreddit, for example `r/options: SPY calls look good`.
+- **Data Sources → Add Reddit posts...** (on Android: **☰ menu → Add Reddit posts**). Copy the titles of posts you find interesting on Reddit and paste them in, **one post per line**. Tickers like `$NVDA` or `NVDA` are recognised automatically. A line can start with the subreddit, for example `r/options: SPY calls look good`.
 - **Import Reddit CSV...** loads a file with a `title` column. The `date` (YYYY-MM-DD), `subreddit` and `upvotes` columns are optional. See `data/reddit.sample.csv`.
 - Your posts are saved in `data/reddit.csv` and used for **7 days**. **Clear my Reddit posts** deletes them.
 
@@ -158,7 +158,7 @@ Change it on the **My Watchlist** page, or edit `data/watchlist.txt` (one ticker
 
 ### Android app
 
-The phone app (`android/`) reuses the shared code in `src/stockbuddy` and shows the same pages in a WebView. It also has a home-screen widget, with its own skin and see-through settings. It needs Android 8.0 or newer.
+The phone app (`android/`) reuses the shared code in `src/stockbuddy` and shows the same pages in a WebView. Its pages are in a **☰ menu** (top left): drag the ≡ handle on a page to change the order, and swipe a page left or right to go to the next or previous one. The **★** at the top middle opens My watchlist, and **⋮** (top right) has Save report, App skin, Home-screen widget skin and Widget see-through. It also has a home-screen widget, with its own skin and see-through settings. It needs Android 8.0 or newer.
 
 The Android app is built with Ubuntu/Debian's packaged Android tools:
 

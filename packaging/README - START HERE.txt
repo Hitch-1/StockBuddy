@@ -1,4 +1,4 @@
-STOCKBUDDY 1.3 - your friendly daily stock helper
+STOCKBUDDY 1.4 - your friendly daily stock helper
 ==================================================
 
 StockBuddy reads stockanalysis.com, WallStreetZen, Reddit (r/ValueInvesting,
