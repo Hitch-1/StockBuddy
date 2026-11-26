@@ -15,6 +15,17 @@ For every idea it explains **why**, **how to do it**, and **how risky it is**.
 
 ---
 
+
+## Download
+
+- **Android (8.0 or newer):** [**StockBuddy.apk**](https://github.com/Hitch-1/StockBuddy/raw/main/downloads/StockBuddy.apk), version 1.4.
+  Open the link on your phone, tap the downloaded file, and allow "Install unknown apps" when asked.
+  The step-by-step guide is in [`packaging/android/How to install on Android.txt`](packaging/android/How%20to%20install%20on%20Android.txt).
+  SHA-256: `925d89579894a8b8427ca79b1098099f1792b5be42fc1081aea145d1a669f7e9`
+- **Windows / Linux:** download the latest `StockBuddy-x.y.zip` from the [Releases page](https://github.com/Hitch-1/StockBuddy/releases), or build it yourself with `packaging/make-release.sh`.
+
+Your own files (watchlist, imported CSVs, settings, keys, alerts, paper portfolio, track record) are kept on your device in the `data` folder and are never uploaded here. The `data/*.sample.csv` files show the formats StockBuddy understands.
+
 ## 1. Install Java (one time only)
 
 Download the free **JDK 17 or newer** from <https://adoptium.net> and install it with the default options.

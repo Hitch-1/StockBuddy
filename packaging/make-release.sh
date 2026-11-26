@@ -10,6 +10,12 @@ B="$ROOT/build/release"
 NAME="StockBuddy-$VERSION"
 OUT="$B/$NAME"
 
+# A fresh default watchlist (never your own one)
+default_watchlist() {
+  printf '%s\n' "# Your watchlist: one ticker per line. Lines starting with # are ignored." \
+    AAPL MSFT NVDA AMZN GOOGL META TSLA AMD AVGO JPM V KO PEP JNJ WMT COST XOM DIS NFLX INTC PLTR BRK-B UNH BAC > "$1"
+}
+
 rm -rf "$B"
 mkdir -p "$B/classes" "$OUT"
 echo "1/5 Compiling the desktop app..."
@@ -24,14 +30,16 @@ echo "3/5 Windows folder..."
 W="$OUT/Windows"
 mkdir -p "$W/data"
 cp "$B/StockBuddy.jar" "$P/icons/stockbuddy.ico" "$P/windows/"* "$W/"
-cp "$ROOT/data/watchlist.txt" "$ROOT/data/"*.sample.csv "$W/data/"
+cp "$ROOT/data/"*.sample.csv "$W/data/"
+default_watchlist "$W/data/watchlist.txt"
 
 echo "4/5 Linux folder..."
 L="$OUT/Linux"
 mkdir -p "$L/data"
 cp "$B/StockBuddy.jar" "$P/icons/stockbuddy.png" "$P/linux/"* "$L/"
 cp -r "$B/runtime-linux-x64" "$L/runtime"
-cp "$ROOT/data/watchlist.txt" "$ROOT/data/"*.sample.csv "$L/data/"
+cp "$ROOT/data/"*.sample.csv "$L/data/"
+default_watchlist "$L/data/watchlist.txt"
 
 echo "5/5 Android folder..."
 cp "$P/README - START HERE.txt" "$OUT/"

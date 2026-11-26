@@ -3,8 +3,12 @@ reports/
 dist/
 build/
 StockBuddy.jar
-data/settings.properties
 android/build/
 android/tools/
 *.jks
 stockbuddy-release-password.txt
+
+# Your personal StockBuddy files stay on your computer only (watchlist, Stock Rover / Reddit / CSV imports,
+# settings, keys, alerts, paper portfolio, track record, caches). Only the empty sample templates are shared.
+data/*
+!data/*.sample.csv
