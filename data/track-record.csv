@@ -1,0 +1,52 @@
+date,kind,ticker,name,price,currency
+2026-11-24,BUY,DIS,"The Walt Disney Company",122.51,USD
+2026-11-24,BUY,SONY,"Sony Group Corporation",27.79,USD
+2026-11-24,BUY,V,"Visa Inc.",416.78,USD
+2026-11-24,BUY,IBN,"ICICI Bank",35.9,USD
+2026-11-24,BUY,WCN,"Waste Connections",183.89,USD
+2026-11-24,SELL,APUS,"Apimeds Pharmaceuticals US, Inc.",2.31,USD
+2026-11-24,SELL,FCHL,"Fitness Champs Holdings Limited",0.0096,USD
+2026-11-24,SELL,RMSG,"Real Messenger Corporation",0.2101,USD
+2026-11-24,SELL,BENF,"Beneficient",0.915,USD
+2026-11-24,SELL,AI,"C3.ai, Inc.",9.84,USD
+2026-11-24,SELL,ABTS,"Abits Group Inc.",0.128,USD
+2026-11-24,CALL,SONY,"Sony Group Corporation",27.79,USD
+2026-11-24,CALL,DIS,"The Walt Disney Company",122.51,USD
+2026-11-24,CALL,IBN,"ICICI Bank",35.9,USD
+2026-11-24,PUT,APUS,"Apimeds Pharmaceuticals US, Inc.",2.31,USD
+2026-11-24,PUT,HDRN,"Hadron Energy, Inc.",0.242,USD
+2026-11-24,PUT,FCHL,"Fitness Champs Holdings Limited",0.0096,USD
+2026-11-25,BUY,JHX,"James Hardie",28.83,USD
+2026-11-25,BUY,V,"Visa Inc.",424.39,USD
+2026-11-25,BUY,DIS,"The Walt Disney Company",125.6,USD
+2026-11-25,BUY,MA,"Mastercard",659.97,USD
+2026-11-25,BUY,WCN,"Waste Connections",187.27,USD
+2026-11-25,SELL,GDHG,"Golden Heaven Group Holdings Ltd.",0.061,USD
+2026-11-25,SELL,PDC,"Perpetuals.com Ltd",0.5185,USD
+2026-11-25,SELL,RAYA,"Erayak Power Solution Group Inc.",0.655,USD
+2026-11-25,SELL,TOPP,"Toppoint Holdings Inc.",0.565,USD
+2026-11-25,SELL,FCHL,"Fitness Champs Holdings Limited",0.0107,USD
+2026-11-25,SELL,AI,"C3.ai, Inc.",10.0,USD
+2026-11-25,CALL,JHX,"James Hardie",28.83,USD
+2026-11-25,CALL,MA,"Mastercard",659.97,USD
+2026-11-25,CALL,WCN,"Waste Connections",187.27,USD
+2026-11-25,PUT,GDHG,"Golden Heaven Group Holdings Ltd.",0.061,USD
+2026-11-25,PUT,PDC,"Perpetuals.com Ltd",0.5185,USD
+2026-11-25,PUT,RAYA,"Erayak Power Solution Group Inc.",0.655,USD
+2026-11-26,BUY,JHX,"James Hardie",28.83,USD
+2026-11-26,BUY,V,"Visa Inc.",424.39,USD
+2026-11-26,BUY,DIS,"The Walt Disney Company",125.6,USD
+2026-11-26,BUY,MA,"Mastercard",659.97,USD
+2026-11-26,BUY,WCN,"Waste Connections",187.27,USD
+2026-11-26,SELL,GDHG,"Golden Heaven Group Holdings Ltd.",0.061,USD
+2026-11-26,SELL,PDC,"Perpetuals.com Ltd",0.5185,USD
+2026-11-26,SELL,RAYA,"Erayak Power Solution Group Inc.",0.655,USD
+2026-11-26,SELL,TOPP,"Toppoint Holdings Inc.",0.565,USD
+2026-11-26,SELL,FCHL,"Fitness Champs Holdings Limited",0.0107,USD
+2026-11-26,SELL,AI,"C3.ai, Inc.",10.0,USD
+2026-11-26,CALL,JHX,"James Hardie",28.83,USD
+2026-11-26,CALL,MA,"Mastercard",659.97,USD
+2026-11-26,CALL,WCN,"Waste Connections",187.27,USD
+2026-11-26,PUT,GDHG,"Golden Heaven Group Holdings Ltd.",0.061,USD
+2026-11-26,PUT,PDC,"Perpetuals.com Ltd",0.5185,USD
+2026-11-26,PUT,RAYA,"Erayak Power Solution Group Inc.",0.655,USD
