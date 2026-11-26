@@ -20,7 +20,7 @@ fi
 CORE="Json Http Log Ui Stock Signal Technicals PriceSource StockAnalysisSource WallStreetZenSource StockRoverSource Csv
       RedditSource WorldMarkets Scorer Options Analyzer Advisor DemoData Glossary HtmlView Settings AppPaths Palette
       KeyStats FinnhubSource ChartOptions EconomicCalendar WsbSentiment SecEdgar AlphaVantage CustomCsv WorldStocks TrackRecord
-      Alerts PaperPortfolio ReportWriter"
+      Alerts PaperPortfolio ReportWriter I18n LocalNews CheckedHistory"
 FILES=()
 for c in $CORE; do FILES+=("$ROOT/src/stockbuddy/$c.java"); done
 while IFS= read -r f; do FILES+=("$f"); done < <(find "$A/src" -name '*.java')
@@ -39,6 +39,7 @@ dalvik-exchange --dex --min-sdk-version=26 --output="$B/dex/classes.dex" "$B/rl"
 echo "5/6 Packaging..."
 aapt package -f -M "$A/AndroidManifest.xml" -S "$A/res" -I "$AJ" -F "$B/pkg.apk"
 (cd "$B/dex" && aapt add "$B/pkg.apk" classes.dex > /dev/null)
+(cd "$ROOT/src" && aapt add "$B/pkg.apk" stockbuddy/i18n/*.txt > /dev/null)   # translations
 echo "6/6 Aligning..."
 zipalign -f -p 4 "$B/pkg.apk" "$B/StockBuddy-unsigned.apk"
 rm -f "$B/pkg.apk"

@@ -64,7 +64,7 @@ public class PriceChart extends JPanel {
         addMouseListener(m);
         addMouseMotionListener(m);
         addMouseWheelListener(m);
-        setToolTipText("Scroll to zoom in or out, drag to move through time, double-click to reset");
+        setToolTipText(I18n.tr("Scroll to zoom in or out, drag to move through time, double-click to reset"));
     }
 
     public void show(Stock s, Skin k) { stock = s; skin = k; hover = -1; zoomCount = zoomEnd = -1; repaint(); }
@@ -88,7 +88,7 @@ public class PriceChart extends JPanel {
         if (stock == null || stock.closes.size() < 2) {
             g.setColor(skin.muted());
             g.setFont(skin.font(Font.PLAIN, 14));
-            g.drawString("Look up a stock to see its price chart here.", 16, getHeight() / 2);
+            g.drawString(I18n.tr("Look up a stock to see its price chart here."), 16, getHeight() / 2);
             g.dispose();
             return;
         }
@@ -133,11 +133,11 @@ public class PriceChart extends JPanel {
             g.setColor(skin.muted());
             g.drawString(String.format("%,.2f", hi - (hi - lo) * i / 4), left + plotW + 6, y + 4);
         }
-        String startTxt = (n - from) + " days ago", endTxt = to == n ? "today" : (n - to) + " days ago";
-        if (zoomCount < 0) startTxt = ChartOptions.RANGE_NAMES[rangeIndex()] + " ago";
+        String startTxt = I18n.trf("%d days ago", n - from), endTxt = to == n ? I18n.tr("today") : I18n.trf("%d days ago", n - to);
+        if (zoomCount < 0) startTxt = I18n.trf("%s ago", ChartOptions.RANGE_NAMES[rangeIndex()]);
         g.drawString(startTxt, left, getHeight() - 7);
         g.drawString(endTxt, left + plotW - g.getFontMetrics().stringWidth(endTxt), getHeight() - 7);
-        String hint = zoomCount > 0 ? "Zoomed - double-click to reset" : "Scroll to zoom, drag to move";
+        String hint = zoomCount > 0 ? I18n.tr("Zoomed - double-click to reset") : I18n.tr("Scroll to zoom, drag to move");
         g.drawString(hint, left + (plotW - g.getFontMetrics().stringWidth(hint)) / 2, getHeight() - 7);
 
         // Bollinger band (shaded)
@@ -198,9 +198,9 @@ public class PriceChart extends JPanel {
         g.drawString(head, left + 2, 24);
         int lx = left + 16 + g.getFontMetrics().stringWidth(head);
         g.setFont(skin.font(Font.PLAIN, 12));
-        lx = legend(g, lx, priceCol, candles ? "Candles" : "Price");
+        lx = legend(g, lx, priceCol, candles ? I18n.tr("Candles") : I18n.tr("Price"));
         for (Object[] l : lines) lx = legend(g, lx, (Color) l[1], (String) l[2]);
-        if (bb != null) legend(g, lx, skin.muted(), "Bollinger Bands");
+        if (bb != null) legend(g, lx, skin.muted(), I18n.tr("Bollinger Bands"));
 
         // hover readout
         if (hover >= from && hover < to) {
@@ -209,10 +209,10 @@ public class PriceChart extends JPanel {
             g.setStroke(new BasicStroke(1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10f, new float[]{3f, 3f}, 0f));
             g.drawLine(hx, top, hx, getHeight() - bottom);
             int ago = n - 1 - hover;
-            String txt = (ago == 0 ? "Today" : ago + (ago == 1 ? " day ago" : " days ago"))
-                    + (stock.hasCandles() ? String.format("   Open %,.2f   High %,.2f   Low %,.2f   Close %,.2f",
+            String txt = (ago == 0 ? I18n.tr("Today") : ago == 1 ? I18n.tr("1 day ago") : I18n.trf("%d days ago", ago))
+                    + (stock.hasCandles() ? I18n.trf("   Open %,.2f   High %,.2f   Low %,.2f   Close %,.2f",
                     stock.opens.get(hover), stock.highs.get(hover), stock.lows.get(hover), c.get(hover))
-                    : String.format("   Close %,.2f", c.get(hover)))
+                    : I18n.trf("   Close %,.2f", c.get(hover)))
                     + (hover < stock.volumes.size() && stock.volumes.get(hover) > 0 ? String.format("   Volume %,.0f", stock.volumes.get(hover)) : "");
             g.setFont(skin.font(Font.PLAIN, 12));
             int tw = g.getFontMetrics().stringWidth(txt) + 16;
@@ -237,7 +237,7 @@ public class PriceChart extends JPanel {
         if (opt.lower.equals("volume")) {
             double max = 0;
             for (int i = from; i < to && i < stock.volumes.size(); i++) max = Math.max(max, stock.volumes.get(i));
-            if (max <= 0) { g.drawString("No volume data", left + 4, top + 14); return; }
+            if (max <= 0) { g.drawString(I18n.tr("No volume data"), left + 4, top + 14); return; }
             double bw = Math.max(1, plotW / (double) count * 0.7);
             for (int i = from; i < to && i < stock.volumes.size(); i++) {
                 boolean upDay = i == 0 || c.get(i) >= c.get(i - 1);
@@ -246,7 +246,7 @@ public class PriceChart extends JPanel {
                 g.fill(new java.awt.geom.Rectangle2D.Double(x(i) - bw / 2, top + h - bh, bw, bh));
             }
             g.setColor(skin.muted());
-            g.drawString("Volume", left + plotW + 6, top + 12);
+            g.drawString(I18n.tr("Volume"), left + plotW + 6, top + 12);
         } else if (opt.lower.equals("rsi")) {
             double[] r = ChartOptions.rsi(c, 14);
             for (int lvl : new int[]{30, 70}) {

@@ -5,7 +5,8 @@ if exist out rmdir /s /q out
 if exist dist rmdir /s /q dist
 if exist build rmdir /s /q build
 mkdir out & mkdir build
-javac -d out src\stockbuddy\*.java || (pause & exit /b 1)
+javac -encoding UTF-8 -d out src\stockbuddy\*.java || (pause & exit /b 1)
+xcopy /y /q /i src\stockbuddy\i18n out\stockbuddy\i18n >nul
 jar --create --file build\StockBuddy.jar --main-class stockbuddy.Main -C out . || (pause & exit /b 1)
 jpackage --type app-image --name StockBuddy --input build --main-jar StockBuddy.jar --dest dist --description "Beginner-friendly daily stock helper" || (pause & exit /b 1)
 echo.

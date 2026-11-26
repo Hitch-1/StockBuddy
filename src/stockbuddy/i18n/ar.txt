@@ -1,0 +1,3224 @@
+# StockBuddy translations (ar). Format: "= English" then "> translation". \n means a new line.
+
+= BUY at about %s  -  %s  -  confidence %s
+> شراء بسعر %s تقريباً  -  %s  -  الثقة %s
+
+= Consider a "stop-loss" around %s (8%% below) - it sells automatically if things go wrong.
+> فكّر في أمر "إيقاف الخسارة" قرب %s (أقل بـ 8%%) - يبيع تلقائياً إذا ساءت الأمور.
+
+= SELL if you own it%s  -  %s  -  confidence %s
+> بيع إن كنت تملكه%s  -  %s  -  الثقة %s
+
+=   +  SHORT idea (advanced)
+>   +  فكرة بيع على المكشوف (للمتقدمين)
+
+= The price (%s) is below its 20-, 50- and 200-day averages - a falling staircase.
+> السعر (%s) أقل من متوسطاته لـ 20 و50 و200 يوم - درج هابط.
+
+= If you short, set a buy-stop around $%.2f (6%% above) to cap the loss. A simpler, safer way to bet on a fall: buy a PUT (see Best Puts).
+> إذا بعت على المكشوف، ضع أمر شراء وقائي قرب $%.2f (أعلى بـ 6%%) للحد من الخسارة. طريقة أبسط وأكثر أماناً للمراهنة على الهبوط: شراء خيار PUT (انظر أفضل خيارات البيع).
+
+= Selling locks in your gain or loss (and a profit can mean tax). DANGER: when shorting, losses have NO limit if the price rises - not for beginners.
+> البيع يثبّت ربحك أو خسارتك (وقد يخضع الربح للضريبة). خطر: عند البيع على المكشوف لا حدود للخسارة إذا ارتفع السعر - ليس للمبتدئين.
+
+= Selling locks in your gain or loss, and in many countries a profit means tax. Stocks with bad signals can still bounce.
+> البيع يثبّت ربحك أو خسارتك، وفي كثير من الدول يخضع الربح للضريبة. الأسهم ذات الإشارات السيئة قد ترتد رغم ذلك.
+
+=  New York time: 
+>  بتوقيت نيويورك: 
+
+= Big news day in the US: 
+> يوم أخبار كبيرة في الولايات المتحدة: 
+
+= . Prices can jump suddenly around these times - consider waiting until after the news, and keep positions small.
+> . قد تقفز الأسعار فجأة في هذه الأوقات - فكّر في الانتظار حتى بعد الخبر وأبقِ صفقاتك صغيرة.
+
+= BUY a %s  -  $%s strike, expires %s (%d days)  -  about $%.0f per contract
+> شراء %s  -  سعر التنفيذ $%s، ينتهي %s (%d يوم)  -  نحو $%.0f للعقد
+
+= CALL (bet on up)
+> CALL (مراهنة على الصعود)
+
+= PUT (bet on down)
+> PUT (مراهنة على الهبوط)
+
+= Options traders on Reddit mentioned calls %d times and puts %d times.
+> ذكر متداولو الخيارات على Reddit خيارات الشراء %d مرة وخيارات البيع %d مرة.
+
+= A PUT gains value if the stock goes DOWN. It gives you the right to sell 100 shares at the strike price.
+> خيار PUT تزيد قيمته إذا هبط السهم. يمنحك الحق في بيع 100 سهم بسعر التنفيذ.
+
+= Estimated cost: about $%.2f per share = about $%.0f for one contract (100 shares). Check the real price in your broker.
+> التكلفة التقديرية: نحو $%.2f للسهم = نحو $%.0f لعقد واحد (100 سهم). تحقق من السعر الحقيقي لدى وسيطك.
+
+= At expiry the stock needs to be %s $%.2f for you to make money (your "breakeven").
+> عند الانتهاء يجب أن يكون السهم %s $%.2f لتربح ("نقطة التعادل").
+
+= You can lose 100% of what you pay for an option. Options lose value every day ("time decay"). Start with 1 contract.
+> قد تخسر 100% مما تدفعه في الخيار. تفقد الخيارات قيمتها كل يوم ("التآكل الزمني"). ابدأ بعقد واحد.
+
+= SPY (tracks the S&P 500)
+> SPY (يتبع S&P 500)
+
+= QQQ (tracks the Nasdaq 100)
+> QQQ (يتبع ناسداك 100)
+
+= 0DTE options can go to ZERO within minutes. Most beginners lose money with them. Practise with tiny amounts or paper trading first.
+> قد تصل خيارات 0DTE إلى الصفر خلال دقائق. معظم المبتدئين يخسرون بها. تدرّب أولاً بمبالغ صغيرة جداً أو بالتداول الوهمي.
+
+= : no 0DTE idea right now
+> : لا توجد فكرة 0DTE حالياً
+
+= No 0DTE idea right now
+> لا توجد فكرة 0DTE حالياً
+
+=  there now).
+>  الآن).
+
+= Today's minute-by-minute prices couldn't be downloaded.
+> تعذّر تنزيل أسعار اليوم دقيقة بدقيقة.
+
+= %s is %+.2f%% since the open and %+.2f%% in the last 30 minutes.
+> %s تغيّر %+.2f%% منذ الافتتاح و%+.2f%% في آخر 30 دقيقة.
+
+= It's trading %s its average price of the day (VWAP $%.2f) - big traders watch this line.
+> يُتداول %s متوسط سعره اليومي (VWAP $%.2f) - كبار المتداولين يراقبون هذا الخط.
+
+= : SIT OUT - no clear direction today
+> : ابقَ خارج السوق - لا اتجاه واضح اليوم
+
+= SIT OUT - no clear direction today
+> ابقَ خارج السوق - لا اتجاه واضح اليوم
+
+= %s: lean %s - $%s strike expiring TODAY
+> %s: الميل %s - سعر تنفيذ $%s ينتهي اليوم
+
+= Lean %s  -  $%s strike expiring TODAY
+> الميل %s  -  سعر تنفيذ $%s ينتهي اليوم
+
+= Price is falling steadily and staying below VWAP: sellers are in control right now.
+> السعر يهبط باستمرار ويبقى تحت VWAP: البائعون يسيطرون الآن.
+
+= Estimated cost: about $%.2f per share (~$%.0f per contract). %d minutes of trading left.
+> التكلفة التقديرية: نحو $%.2f للسهم (~$%.0f للعقد). تبقّى %d دقيقة من التداول.
+
+= If %s crosses back %s VWAP ($%.2f), the idea is wrong - get out.
+> إذا عاد %s %s خط VWAP ($%.2f)، فالفكرة خاطئة - اخرج.
+
+= Today it moved %+.2f%%.
+> تحرّك اليوم %+.2f%%.
+
+= LOW (a calm stock)
+> منخفض (سهم هادئ)
+
+= HIGH (big daily swings)
+> مرتفع (تقلبات يومية كبيرة)
+
+= VERY HIGH (wild swings)
+> مرتفع جداً (تقلبات عنيفة)
+
+= Risk level: %s - it typically moves about %.0f%% up or down in a year. Past results don't guarantee future ones.
+> مستوى المخاطرة: %s - يتحرك عادةً نحو %.0f%% صعوداً أو هبوطاً في السنة. النتائج السابقة لا تضمن المستقبلية.
+
+= StockBuddy - your friendly daily stock helper
+> StockBuddy - مساعدك اليومي الودود للأسهم
+
+= Your friendly daily stock helper
+> مساعدك اليومي الودود للأسهم
+
+= Refresh data
+> تحديث البيانات
+
+= Download the latest data from all websites
+> تنزيل أحدث البيانات من جميع المواقع
+
+= Practice mode
+> وضع التدريب
+
+= Use made-up data to learn safely (works without internet)
+> استخدام بيانات وهمية للتعلّم بأمان (يعمل دون إنترنت)
+
+= Change the colours of StockBuddy
+> تغيير ألوان StockBuddy
+
+= Desktop widget
+> أداة سطح المكتب
+
+= Show a small always-visible StockBuddy panel on your desktop
+> عرض لوحة StockBuddy صغيرة ظاهرة دائماً على سطح المكتب
+
+= Save report
+> حفظ التقرير
+
+= Save today's ideas as a web page you can open any time
+> حفظ أفكار اليوم كصفحة ويب تفتحها متى شئت
+
+= Language
+> اللغة
+
+= <html><div style='width:190px'><b>Not financial advice.</b> StockBuddy can be wrong. 
+> <html><div style='width:190px'><b>ليست نصيحة مالية.</b> قد يخطئ StockBuddy. 
+
+= Never invest money you can't afford to lose.</div></html>
+> لا تستثمر أبداً مالاً لا تستطيع تحمّل خسارته.</div></html>
+
+= Market: ...
+> السوق: ...
+
+= Show ideas for one market only
+> عرض أفكار سوق واحد فقط
+
+= All markets
+> كل الأسواق
+
+= The world's biggest stock markets
+> أكبر أسواق الأسهم في العالم
+
+= Market
+> السوق
+
+= Index price
+> سعر المؤشر
+
+= Today
+> اليوم
+
+= Last month
+> الشهر الماضي
+
+= Status
+> الحالة
+
+= Local time
+> التوقيت المحلي
+
+= Country
+> الدولة
+
+= Double-click a market to see all its stocks
+> انقر نقراً مزدوجاً على سوق لرؤية كل أسهمه
+
+= <html>An "index" is a basket of a country's biggest companies. Asian markets open first, then Europe, then the Americas - 
+> <html>"المؤشر" سلة من أكبر شركات بلد ما. تفتح الأسواق الآسيوية أولاً، ثم أوروبا، ثم الأمريكتان - 
+
+= Type a ticker (like AAPL) or pick one:
+> اكتب رمز سهم (مثل AAPL) أو اختر واحداً:
+
+= Explain this stock
+> اشرح هذا السهم
+
+= ★ Add to My Watchlist
+> ★ أضف إلى قائمتي
+
+= Always check this stock from now on
+> تحقّق من هذا السهم دائماً من الآن
+
+= Look up a stock
+> ابحث عن سهم
+
+= Type a ticker above and press Enter. You'll get a chart and a plain-English explanation of what every source says.
+> اكتب رمز السهم بالأعلى واضغط Enter. ستحصل على رسم بياني وشرح مبسّط لما يقوله كل مصدر.
+
+= type a command
+> اكتب أمراً
+
+= New alert:
+> تنبيه جديد:
+
+= For example: NVDA above 150   TSLA below 200   AAPL move 5%
+> مثال: NVDA above 150   TSLA below 200   AAPL move 5%
+
+= For example: buy 10 AAPL   sell 5 AAPL   sell all AAPL
+> مثال: buy 10 AAPL   sell 5 AAPL   sell all AAPL
+
+= Add alert
+> إضافة تنبيه
+
+= Do it
+> نفّذ
+
+= e.g.  NVDA above 150  ·  TSLA below 200  ·  AAPL move 5%
+> مثال  NVDA above 150  ·  TSLA below 200  ·  AAPL move 5%
+
+= e.g.  buy 10 AAPL  ·  sell 5 AAPL  ·  sell all AAPL
+> مثال  buy 10 AAPL  ·  sell 5 AAPL  ·  sell all AAPL
+
+= Check now
+> تحقّق الآن
+
+= Check all alerts with fresh prices
+> تحقّق من كل التنبيهات بأسعار حديثة
+
+= How many pretend shares of 
+> كم سهماً وهمياً من 
+
+=  do you want to buy?\n(Pretend money - nothing real is bought.)
+>  تريد شراءه؟\n(مال وهمي - لا يُشترى شيء حقيقي.)
+
+= Paper trading
+> التداول الوهمي
+
+= A band around the price: touching the top = expensive lately, the bottom = cheap lately
+> نطاق حول السعر: لمس الأعلى = مرتفع مؤخراً، والأسفل = رخيص مؤخراً
+
+= The average price of the last 
+> متوسط السعر لآخر 
+
+=  (recent days count more)
+>  (الأيام الأخيرة لها وزن أكبر)
+
+= Bottom panel:
+> اللوحة السفلية:
+
+= Every stock I checked
+> كل سهم تحققتُ منه
+
+= Show the stocks of one market only
+> عرض أسهم سوق واحد فقط
+
+= Ticker
+> الرمز
+
+= Name
+> الاسم
+
+= Price
+> السعر
+
+= Verdict
+> الحكم
+
+= Score
+> النتيجة
+
+= Confidence
+> الثقة
+
+= Checked
+> تاريخ التحقق
+
+= Tip: double-click a row to see the full explanation. Click a column title to sort.
+> نصيحة: انقر نقراً مزدوجاً على صف لرؤية الشرح الكامل. انقر عنوان عمود للترتيب.
+
+= Search a word:
+> ابحث عن كلمة:
+
+= <html><b style='font-size:16pt'>My watchlist</b><br>These stocks are always checked - plus today's biggest movers 
+> <html><b style='font-size:16pt'>قائمتي</b><br>هذه الأسهم تُفحص دائماً - إضافة إلى أكبر المتحركين اليوم 
+
+= and the stocks Reddit talks about most. <b>Double-click a stock</b> to see its full explanation and chart.</html>
+> والأسهم الأكثر تداولاً في نقاشات Reddit. <b>انقر نقراً مزدوجاً على سهم</b> لرؤية شرحه الكامل ورسمه البياني.</html>
+
+= Add ticker(s):
+> إضافة رموز:
+
+= For example: AAPL  or several at once: AAPL MSFT NVDA
+> مثال: AAPL  أو عدة رموز معاً: AAPL MSFT NVDA
+
+= Add
+> إضافة
+
+= Add the ticker(s) - saved straight away
+> أضف الرموز - تُحفظ فوراً
+
+= Look up selected
+> ابحث عن المحدد
+
+= See the full explanation and chart
+> اعرض الشرح الكامل والرسم البياني
+
+= Remove selected
+> احذف المحدد
+
+= Removed straight away
+> يُحذف فوراً
+
+= Reset to default list
+> العودة إلى القائمة الافتراضية
+
+= Analyse my list now
+> حلّل قائمتي الآن
+
+= Download fresh data for your watchlist
+> تنزيل بيانات حديثة لقائمتك
+
+= Type a ticker like AAPL (letters, 1-6 characters).
+> اكتب رمزاً مثل AAPL (حروف، من 1 إلى 6).
+
+= Added 
+> أُضيف 
+
+=  - saved. Click "Analyse my list now" to check it.
+>  - حُفظ. انقر "حلّل قائمتي الآن" لفحصه.
+
+= Removed 
+> حُذف 
+
+= Replace your watchlist with the default list?
+> استبدال قائمتك بالقائمة الافتراضية؟
+
+= Reset watchlist
+> إعادة ضبط القائمة
+
+= Couldn't save the watchlist: 
+> تعذّر حفظ القائمة: 
+
+= Add to My Watchlist
+> أضف إلى قائمتي
+
+= Look up a stock first, then add it.
+> ابحث عن سهم أولاً ثم أضفه.
+
+=  is already in your watchlist.
+>  موجود بالفعل في قائمتك.
+
+= " doesn't look like a ticker.
+> " لا يبدو رمز سهم.
+
+=  to your watchlist.
+>  إلى قائمتك.
+
+= Couldn't save: 
+> تعذّر الحفظ: 
+
+= Import Stock Rover CSV...
+> استيراد ملف CSV من Stock Rover...
+
+= Choose the CSV file you exported from Stock Rover
+> اختر ملف CSV الذي صدّرته من Stock Rover
+
+= Import WallStreetZen CSV...
+> استيراد ملف CSV من WallStreetZen...
+
+= A CSV with Ticker, Zen Score and Zen Rating columns
+> ملف CSV بأعمدة Ticker وZen Score وZen Rating
+
+= Open my StockBuddy folder
+> افتح مجلد StockBuddy
+
+= Where your watchlist, CSV files and reports are kept
+> مكان حفظ قائمتك وملفات CSV والتقارير
+
+= Don't start widget with computer
+> لا تشغّل الأداة مع بدء الجهاز
+
+= Start widget when computer starts
+> شغّل الأداة عند بدء تشغيل الجهاز
+
+= Finnhub key: set (change...)
+> مفتاح Finnhub: مُعيّن (تغيير...)
+
+= Add Finnhub key...
+> إضافة مفتاح Finnhub...
+
+= Free key from finnhub.io: adds analyst recommendations and financial ratios
+> مفتاح مجاني من finnhub.io: يضيف توصيات المحللين والنسب المالية
+
+= Add any CSV...
+> إضافة أي ملف CSV...
+
+= Any CSV with a Ticker or Symbol column becomes a data source
+> أي ملف CSV فيه عمود Ticker أو Symbol يصبح مصدر بيانات
+
+= Remove my CSV files
+> إزالة ملفات CSV الخاصة بي
+
+= Remove all the CSV files you added with "Add any CSV"?
+> إزالة كل ملفات CSV التي أضفتها عبر "إضافة أي ملف CSV"؟
+
+= Remove CSV files
+> إزالة ملفات CSV
+
+= Couldn't remove them: 
+> تعذّرت إزالتها: 
+
+= Alpha Vantage key: set (change...)
+> مفتاح Alpha Vantage: مُعيّن (تغيير...)
+
+= Add Alpha Vantage key...
+> إضافة مفتاح Alpha Vantage...
+
+= Free key from alphavantage.co: news sentiment
+> مفتاح مجاني من alphavantage.co: اتجاه الأخبار
+
+= SEC email (optional)...
+> بريد SEC (اختياري)...
+
+= SEC email: set (change...)
+> بريد SEC: مُعيّن (تغيير...)
+
+= The SEC asks programs to say who is asking
+> تطلب SEC من البرامج التعريف بمن يسأل
+
+= <html><div style='width:380px'>The SEC (sec.gov) asks every program to say who it is. 
+> <html><div style='width:380px'>تطلب SEC (sec.gov) من كل برنامج أن يعرّف بنفسه. 
+
+= StockBuddy works without this, but if the SEC data doesn't load, enter your email here. It is only ever sent to sec.gov.</div></html>
+> يعمل StockBuddy دون ذلك، لكن إن لم تُحمَّل بيانات SEC فأدخل بريدك هنا. لا يُرسل إلا إلى sec.gov.</div></html>
+
+= Include world stocks (choose how many on the World Stocks page)
+> تضمين الأسهم العالمية (اختر العدد في صفحة الأسهم العالمية)
+
+= Also analyse the biggest companies of the other 13 big stock markets (refreshing takes a bit longer)
+> حلّل أيضاً أكبر شركات أسواق الأسهم الكبرى الـ 13 الأخرى (يستغرق التحديث وقتاً أطول قليلاً)
+
+= Your files:
+> ملفاتك:
+
+= Keys & settings:
+> المفاتيح والإعدادات:
+
+= This computer:
+> هذا الجهاز:
+
+= Add Reddit posts...
+> إضافة منشورات Reddit...
+
+= Paste post titles you copied from Reddit (works even when Reddit blocks StockBuddy)
+> الصق عناوين منشورات نسختها من Reddit (يعمل حتى لو حظر Reddit برنامج StockBuddy)
+
+= Import Reddit CSV...
+> استيراد ملف CSV لـ Reddit...
+
+= A CSV with a title column (optional: date, subreddit, upvotes)
+> ملف CSV بعمود title (اختياري: date وsubreddit وupvotes)
+
+= Clear my Reddit posts
+> مسح منشورات Reddit الخاصة بي
+
+= Delete the posts you added yourself
+> احذف المنشورات التي أضفتها بنفسك
+
+= Delete all the Reddit posts you added yourself?
+> حذف كل منشورات Reddit التي أضفتها بنفسك؟
+
+= Couldn't delete them: 
+> تعذّر حذفها: 
+
+=    [PRACTICE MODE - made-up data]
+>    [وضع التدريب - بيانات وهمية]
+
+= Getting today's data...
+> جارٍ جلب بيانات اليوم...
+
+= StockBuddy is reading stockanalysis.com, WallStreetZen, Reddit, your Stock Rover file and price charts. This can take a minute.
+> يقرأ StockBuddy موقع stockanalysis.com وWallStreetZen وReddit وملف Stock Rover ورسوم الأسعار. قد يستغرق ذلك دقيقة.
+
+= Every stock you check stays here for %d days, then it is cleared automatically.
+> يبقى كل سهم تتحقق منه هنا %d يوماً، ثم يُمسح تلقائياً.
+
+= %d old stocks were just cleared.
+> مُسح للتو %d من الأسهم القديمة.
+
+= Next clean-up: %s.
+> التنظيف التالي: %s.
+
+= Practice data - made-up numbers.
+> بيانات تدريب - أرقام وهمية.
+
+= Index prices update every minute while StockBuddy is open.
+> تتحدّث أسعار المؤشرات كل دقيقة ما دام StockBuddy مفتوحاً.
+
+= Index prices update every minute (some exchanges are a few minutes delayed). Last update: 
+> تتحدّث أسعار المؤشرات كل دقيقة (بعض البورصات متأخرة بضع دقائق). آخر تحديث: 
+
+= Looking up 
+> جارٍ البحث عن 
+
+= One moment.
+> لحظة واحدة.
+
+= Couldn't find "
+> تعذّر العثور على "
+
+= Practice mode only knows these: 
+> وضع التدريب لا يعرف إلا هذه: 
+
+= Check the spelling, or your internet connection. Tip: US tickers are 1-5 letters, like AAPL or MSFT.
+> تحقّق من الإملاء أو من اتصال الإنترنت. نصيحة: الرموز الأمريكية من 1 إلى 5 حروف، مثل AAPL أو MSFT.
+
+= Something went wrong
+> حدث خطأ ما
+
+= Please wait until the data has finished loading.
+> يرجى الانتظار حتى يكتمل تحميل البيانات.
+
+= Save today's report as:
+> احفظ تقرير اليوم بصيغة:
+
+= \n(only 
+> \n(فقط 
+
+= , the market you picked)
+> ، السوق الذي اخترته)
+
+= Saved your report:\n
+> حُفظ تقريرك:\n
+
+= \n\nOpen it now?
+> \n\nفتحه الآن؟
+
+= Report saved
+> حُفظ التقرير
+
+= Couldn't save or open the report: 
+> تعذّر حفظ التقرير أو فتحه: 
+
+= Choose your 
+> اختر ملف 
+
+=  CSV file
+>  CSV
+
+= CSV files
+> ملفات CSV
+
+= Imported 
+> تم استيراد 
+
+=  stocks from your 
+>  سهماً من ملف 
+
+=  file.\nStockBuddy will now refresh.
+>  .\nسيتم تحديث StockBuddy الآن.
+
+= Couldn't import the file: 
+> تعذّر استيراد الملف: 
+
+= Choose any CSV file with a Ticker or Symbol column
+> اختر ملف CSV فيه عمود Ticker أو Symbol
+
+= This file has no column called Ticker or Symbol in its first line, so StockBuddy can't use it.
+> هذا الملف لا يحوي عمود Ticker أو Symbol في سطره الأول، لذا لا يستطيع StockBuddy استخدامه.
+
+= Added "
+> أُضيف "
+
+= " with 
+> " مع 
+
+=  stocks.\n
+>  سهماً.\n
+
+= Its columns appear on each stock's page. Columns like score, rating, recommendation or target are also used in the score.\nStockBuddy will now refresh.
+> تظهر أعمدته في صفحة كل سهم. الأعمدة مثل النتيجة والتقييم والتوصية والهدف تُستخدم أيضاً في النتيجة.\nسيتم تحديث StockBuddy الآن.
+
+= Couldn't add the file: 
+> تعذّرت إضافة الملف: 
+
+= <html><div style='width:400px'><b>Alpha Vantage</b> adds news sentiment: is the news about a company 
+> <html><div style='width:400px'><b>Alpha Vantage</b> يضيف اتجاه الأخبار: هل الأخبار عن الشركة 
+
+= positive or negative?<br><br>Get a free key at <b>alphavantage.co/support/#api-key</b> and paste it below. It is saved only on this computer. 
+> إيجابية أم سلبية؟<br><br>احصل على مفتاح مجاني من <b>alphavantage.co/support/#api-key</b> والصقه بالأسفل. يُحفظ على هذا الجهاز فقط. 
+
+= The free plan allows about 25 requests a day, so StockBuddy checks your first 
+> تسمح الخطة المجانية بنحو 25 طلباً يومياً، لذا يفحص StockBuddy أول 
+
+=  stocks and remembers the answers all day.<br><br>Leave it empty to turn it off.</div></html>
+>  سهماً لديك ويتذكر الإجابات طوال اليوم.<br><br>اتركه فارغاً لإيقافه.</div></html>
+
+= Alpha Vantage key
+> مفتاح Alpha Vantage
+
+= Your Alpha Vantage key works and is saved. Click Refresh data to use it.
+> مفتاح Alpha Vantage يعمل وتم حفظه. انقر تحديث البيانات لاستخدامه.
+
+= <html><div style='width:420px'><b>Finnhub</b> adds Wall Street analyst recommendations and financial ratios 
+> <html><div style='width:420px'><b>Finnhub</b> يضيف توصيات محللي وول ستريت والنسب المالية 
+
+= (profit margin, debt, beta...).<br><br>1. Get a free key at <b>finnhub.io/register</b> (it's on your dashboard).<br>
+> (هامش الربح، الدين، بيتا...).<br><br>1. احصل على مفتاح مجاني من <b>finnhub.io/register</b> (تجده في لوحة التحكم).<br>
+
+= 2. Paste it below. It is saved only on this computer.<br><br>Leave it empty and click OK to turn Finnhub off.</div></html>
+> 2. الصقه بالأسفل. يُحفظ على هذا الجهاز فقط.<br><br>اتركه فارغاً وانقر OK لإيقاف Finnhub.</div></html>
+
+= Finnhub key
+> مفتاح Finnhub
+
+= Finnhub is turned off.
+> تم إيقاف Finnhub.
+
+= Your Finnhub key works and is saved.\nStockBuddy will now refresh (the first time takes about 2 minutes).
+> مفتاح Finnhub يعمل وتم حفظه.\nسيتم تحديث StockBuddy الآن (تستغرق المرة الأولى نحو دقيقتين).
+
+= \n\nSave the key anyway?
+> \n\nحفظ المفتاح على أي حال؟
+
+= <html><div style='width:460px'><b>How:</b> open the subreddit in your browser, copy the titles of the posts 
+> <html><div style='width:460px'><b>الطريقة:</b> افتح المنتدى الفرعي في متصفحك، وانسخ عناوين المنشورات 
+
+= you find interesting, and paste them below - <b>one post per line</b>. Tickers like <b>$NVDA</b> or <b>NVDA</b> are 
+> التي تهمّك والصقها بالأسفل - <b>منشور واحد في كل سطر</b>. الرموز مثل <b>$NVDA</b> أو <b>NVDA</b> 
+
+= recognised automatically. Your posts are used for 
+> تُكتشف تلقائياً. تُستخدم منشوراتك لمدة 
+
+=  days.<br><br>
+>  يوماً.<br><br>
+
+= Tip: a line can start with the subreddit, e.g. <i>r/options: SPY calls look good</i></div></html>
+> نصيحة: يمكن أن يبدأ السطر باسم المنتدى، مثال: <i>r/options: SPY calls look good</i></div></html>
+
+= Which subreddit are they from?
+> من أي منتدى فرعي هي؟
+
+= Add Reddit posts
+> إضافة منشورات Reddit
+
+= Nothing to add - paste at least one post title.
+> لا شيء لإضافته - الصق عنوان منشور واحداً على الأقل.
+
+= .\nStockBuddy will now refresh to include them.
+> .\nسيتم تحديث StockBuddy لتضمينها.
+
+= Couldn't save the posts: 
+> تعذّر حفظ المنشورات: 
+
+= Choose a CSV file with Reddit posts (needs a 'title' column)
+> اختر ملف CSV بمنشورات Reddit (يحتاج عمود 'title')
+
+= No usable posts found. The file needs a first line with a column called 'title'\n
+> لم يُعثر على منشورات صالحة. يحتاج الملف سطراً أول فيه عمود باسم 'title'\n
+
+= (optional columns: date, subreddit, upvotes). Dates older than 
+> (أعمدة اختيارية: date وsubreddit وupvotes). التواريخ الأقدم من 
+
+=  days are skipped.
+>  يوماً تُتجاهل.
+
+=  Reddit posts (this replaced the posts you had added before).\nStockBuddy will now refresh.
+>  منشوراً من Reddit (حلّت محل ما أضفته سابقاً).\nسيتم تحديث StockBuddy الآن.
+
+= Your StockBuddy folder is:\n
+> مجلد StockBuddy الخاص بك:\n
+
+= Sell all your pretend 
+> بيع كل أسهمك الوهمية من 
+
+=  shares?
+>  ؟
+
+= Start again with $10,000 and delete all pretend trades?
+> البدء من جديد بـ 10,000$ وحذف كل الصفقات الوهمية؟
+
+= United States
+> الولايات المتحدة
+
+= Eurozone
+> منطقة اليورو
+
+= United Kingdom
+> المملكة المتحدة
+
+= Japan
+> اليابان
+
+= China
+> الصين
+
+= Australia
+> أستراليا
+
+= Canada
+> كندا
+
+= Switzerland
+> سويسرا
+
+= New Zealand
+> نيوزيلندا
+
+= Worldwide
+> عالمي
+
+= Inflation report: how fast prices are rising. Higher than expected often pushes stocks down (interest rates may stay high).
+> تقرير التضخم: مدى سرعة ارتفاع الأسعار. إذا جاء أعلى من المتوقع غالباً ما تهبط الأسهم (قد تبقى الفائدة مرتفعة).
+
+= Producer prices: inflation at the factory level - an early hint of future consumer inflation.
+> أسعار المنتجين: التضخم على مستوى المصانع - مؤشر مبكر لتضخم المستهلك.
+
+= Jobs report: how many jobs were created. One of the biggest market movers of the month.
+> تقرير الوظائف: كم وظيفة أُنشئت. من أكثر الأخبار تحريكاً للسوق في الشهر.
+
+= How many people are out of work. A sudden rise can mean the economy is slowing.
+> عدد العاطلين عن العمل. الارتفاع المفاجئ قد يعني تباطؤ الاقتصاد.
+
+= The US central bank (the Fed) on interest rates. Can move every market within seconds.
+> البنك المركزي الأمريكي (الفيدرالي) بشأن الفائدة. قد يحرّك كل الأسواق في ثوانٍ.
+
+= A central bank decides its interest rate. Surprises move currencies and stock markets.
+> بنك مركزي يقرّر سعر الفائدة. المفاجآت تحرّك العملات وأسواق الأسهم.
+
+= GDP: how fast the whole economy is growing (or shrinking).
+> الناتج المحلي الإجمالي: سرعة نمو الاقتصاد كله (أو انكماشه).
+
+= How much people spent in shops - shoppers drive a big part of the economy.
+> كم أنفق الناس في المتاجر - المستهلكون يحرّكون جزءاً كبيراً من الاقتصاد.
+
+= Survey of business managers. Above 50 = business is growing, below 50 = shrinking.
+> استطلاع لمديري الأعمال. فوق 50 = النشاط ينمو، تحت 50 = ينكمش.
+
+= How optimistic people feel about the economy.
+> مدى تفاؤل الناس بالاقتصاد.
+
+= Oil stockpiles - moves oil prices and energy stocks.
+> مخزونات النفط - تحرّك أسعار النفط وأسهم الطاقة.
+
+= An official speaks - hints about future interest rates can move markets.
+> يتحدث مسؤول - التلميحات عن الفائدة المستقبلية قد تحرّك الأسواق.
+
+= Bank holiday - markets in this country may be closed or quiet.
+> عطلة رسمية - قد تكون أسواق هذا البلد مغلقة أو هادئة.
+
+= Checking the world's biggest stock markets...
+> جارٍ فحص أكبر أسواق الأسهم في العالم...
+
+= Reading this week's economic calendar (inflation, jobs, interest rates)...
+> جارٍ قراءة المفكرة الاقتصادية لهذا الأسبوع (التضخم، الوظائف، الفائدة)...
+
+= Reading market news...
+> جارٍ قراءة أخبار السوق...
+
+= Looking at today's biggest movers on stockanalysis.com...
+> جارٍ فحص أكبر المتحركين اليوم على stockanalysis.com...
+
+= Reading hot posts on r/ValueInvesting, r/options and r/wallstreetbets...
+> جارٍ قراءة المنشورات الرائجة في r/ValueInvesting وr/options وr/wallstreetbets...
+
+= Checking today's WallStreetBets sentiment...
+> جارٍ فحص اتجاه WallStreetBets اليوم...
+
+= Downloading prices and ratings for 
+> جارٍ تنزيل الأسعار والتقييمات لـ 
+
+=  stocks (this can take a minute)...
+>  سهماً (قد يستغرق ذلك دقيقة)...
+
+= Asking Finnhub about 
+> جارٍ سؤال Finnhub عن 
+
+=  stocks (the free plan is slow - about 2 minutes the first time)...
+>  سهماً (الخطة المجانية بطيئة - نحو دقيقتين في المرة الأولى)...
+
+= Not set up - export a CSV from Stock Rover to data/stockrover.csv
+> غير مُعدّ - صدّر ملف CSV من Stock Rover إلى data/stockrover.csv
+
+= OK - data for 
+> OK - بيانات لـ 
+
+= Could not read - check your Finnhub key
+> تعذّرت القراءة - تحقّق من مفتاح Finnhub
+
+= Asking Alpha Vantage about today's news...
+> جارٍ سؤال Alpha Vantage عن أخبار اليوم...
+
+= Checking today's minute-by-minute moves for 0DTE ideas...
+> جارٍ فحص تحركات اليوم دقيقة بدقيقة لأفكار 0DTE...
+
+= Checking the biggest companies of the world's largest stock markets...
+> جارٍ فحص أكبر الشركات في أكبر أسواق الأسهم العالمية...
+
+= Type it like: NVDA above 150   or   TSLA below 200   or   AAPL move 5%
+> اكتبه هكذا: NVDA above 150   أو   TSLA below 200   أو   AAPL move 5%
+
+= The number must be more than 0.
+> يجب أن يكون الرقم أكبر من 0.
+
+= For a daily move, use a percentage like 5 (meaning 5%).
+> للحركة اليومية استخدم نسبة مثل 5 (أي 5%).
+
+=  (%+.2f%% today)
+>  (%+.2f%% اليوم)
+
+= StockBuddy widget
+> أداة StockBuddy
+
+= Open StockBuddy window
+> افتح نافذة StockBuddy
+
+= Refreshing...
+> جارٍ التحديث...
+
+= Refresh now
+> حدّث الآن
+
+= Widget skin
+> مظهر الأداة
+
+= Size
+> الحجم
+
+= Full (markets + ideas)
+> كامل (الأسواق + الأفكار)
+
+= Compact (markets only)
+> مضغوط (الأسواق فقط)
+
+= See-through
+> شفاف
+
+= Solid
+> معتم
+
+= % see-through
+> % شفافية
+
+= Always on top of other windows
+> دائماً فوق النوافذ الأخرى
+
+= Show widget when my computer starts
+> أظهر الأداة عند بدء تشغيل الجهاز
+
+= Close widget
+> أغلق الأداة
+
+= PRACTICE DATA
+> بيانات تدريب
+
+= WORLD MARKETS
+> الأسواق العالمية
+
+= TOP BUYS TODAY
+> أفضل مشتريات اليوم
+
+= none today - waiting is fine
+> لا شيء اليوم - الانتظار جيد
+
+= CAREFUL WITH (sell signals)
+> احذر من (إشارات بيع)
+
+= no strong warnings
+> لا تحذيرات قوية
+
+= 0DTE (OPTIONS EXPIRING TODAY)
+> 0DTE (خيارات تنتهي اليوم)
+
+= Not financial advice  ·  right-click for options
+> ليست نصيحة مالية  ·  انقر بالزر الأيمن للخيارات
+
+= good / bad
+> جيد / سيئ
+
+= The price is in an uptrend (above its 50-day and 200-day average prices). 
+> السعر في اتجاه صاعد (فوق متوسطي 50 و200 يوم). 
+
+= The price is in a downtrend (below its 50-day and 200-day average prices). 
+> السعر في اتجاه هابط (تحت متوسطي 50 و200 يوم). 
+
+= The price has no clear direction right now. 
+> لا اتجاه واضح للسعر حالياً. 
+
+= RSI is %.0f, meaning it rose a lot recently and may be due for a pause. 
+> مؤشر RSI عند %.0f، أي أنه ارتفع كثيراً مؤخراً وقد يتوقف قليلاً. 
+
+= RSI is %.0f, meaning it fell a lot recently and could bounce back. 
+> مؤشر RSI عند %.0f، أي أنه هبط كثيراً مؤخراً وقد يرتد. 
+
+= MACD just turned positive - momentum is shifting upward. 
+> تحوّل MACD للتو إلى الإيجابي - الزخم يتجه صعوداً. 
+
+= MACD just turned negative - momentum is shifting downward. 
+> تحوّل MACD للتو إلى السلبي - الزخم يتجه هبوطاً. 
+
+= Its StockCharts Technical Rank is %.0f/99 (higher = stronger than the other stocks we checked).
+> تصنيفه الفني في StockCharts هو %.0f/99 (الأعلى = أقوى من الأسهم الأخرى التي فحصناها).
+
+= Wall Street analysts rate it "
+> يقيّمه محللو وول ستريت "
+
+= Their average price target is $%.2f, which is %+.0f%% from today's price. 
+> متوسط السعر المستهدف لديهم $%.2f، أي %+.0f%% عن سعر اليوم. 
+
+= P/E is %.1f - fairly cheap for what the company earns. 
+> مكرر الربحية %.1f - رخيص نسبياً مقارنة بأرباح الشركة. 
+
+= P/E is %.1f - investors are paying a lot for each $1 of profit. 
+> مكرر الربحية %.1f - المستثمرون يدفعون كثيراً مقابل كل 1$ ربح. 
+
+= P/E is %.1f - a normal price for its profits. 
+> مكرر الربحية %.1f - سعر عادي لأرباحها. 
+
+= Stock Rover's fair value is $%.2f, so the stock looks %s by about %.0f%%. 
+> القيمة العادلة لدى Stock Rover هي $%.2f، لذا يبدو السهم %s بنحو %.0f%%. 
+
+= underpriced (on sale)
+> مقوّم بأقل من قيمته (بسعر مخفّض)
+
+= Its average quality/value/growth score is %.0f out of 100.
+> متوسط نتيجته في الجودة/القيمة/النمو %.0f من 100.
+
+= Zen Score is %.0f/100. 
+> نتيجة Zen هي %.0f/100. 
+
+= Zen Rating is 
+> تقييم Zen هو 
+
+=  (A is best, F is worst).
+>  (A الأفضل، F الأسوأ).
+
+= Of %d analysts, %d say strong buy, %d buy, %d hold, %d sell and %d strong sell%s.
+> من بين %d محللاً، %d يقولون شراء قوي، و%d شراء، و%d احتفاظ، و%d بيع، و%d بيع قوي%s.
+
+= %d comments on r/wallstreetbets today; the overall mood is %s (score %+.2f).
+> %d تعليقاً على r/wallstreetbets اليوم؛ المزاج العام %s (النتيجة %+.2f).
+
+=  It's one of the most-talked-about stocks there - expect big swings.
+>  إنه من أكثر الأسهم نقاشاً هناك - توقّع تقلبات كبيرة.
+
+= In its official yearly report, sales %s %.0f%%. 
+> في تقريرها السنوي الرسمي، المبيعات %s %.0f%%. 
+
+= The company made a profit. 
+> حققت الشركة ربحاً. 
+
+= The company lost money last year. 
+> خسرت الشركة مالاً العام الماضي. 
+
+=  insider-trading reports in 90 days (insiders bought or sold shares). 
+>  تقارير تداول داخلي في 90 يوماً (اشترى المطّلعون أو باعوا أسهماً). 
+
+=  major-event report
+>  تقرير حدث جوهري
+
+=  (8-K) in the last 30 days.
+>  (8-K) في آخر 30 يوماً.
+
+= slightly positive
+> إيجابي قليلاً
+
+= slightly negative
+> سلبي قليلاً
+
+= %d recent news articles; the tone is %s.
+> %d مقالاً حديثاً؛ النبرة %s.
+
+= mostly positive
+> إيجابي غالباً
+
+= mostly negative
+> سلبي غالباً
+
+= Mentioned in %d hot Reddit post%s; the mood is %s.
+> ذُكر في %d منشور%s رائج على Reddit؛ المزاج %s.
+
+=  Careful: lots of hype can mean the price already moved.
+>  انتبه: الضجة الكبيرة قد تعني أن السعر تحرّك بالفعل.
+
+= Most signs are positive. If you believe in the company long term, this could be a reasonable time to buy a small amount. 
+> معظم الإشارات إيجابية. إذا كنت تؤمن بالشركة على المدى الطويل فقد يكون وقتاً معقولاً لشراء كمية صغيرة. 
+
+= Most signs are negative right now. If you're thinking of buying, it may be wiser to wait. If you own it, think about protecting yourself with a stop-loss. 
+> معظم الإشارات سلبية حالياً. إن كنت تفكر في الشراء فالأحكم الانتظار. وإن كنت تملكه ففكّر في حماية نفسك بأمر إيقاف الخسارة. 
+
+= The signs are mixed, so there's no strong reason to buy or sell today. Waiting and watching is fine. 
+> الإشارات متباينة، فلا سبب قوياً للشراء أو البيع اليوم. الانتظار والمراقبة أمر جيد. 
+
+= Note: this stock swings a lot, so only use money you're comfortable seeing go up and down quickly.
+> ملاحظة: هذا السهم يتقلب كثيراً، فاستخدم فقط مالاً تقبل أن تراه يصعد ويهبط بسرعة.
+
+= STRONG BUY signal
+> إشارة شراء قوية
+
+= BUY signal
+> إشارة شراء
+
+= HOLD / WAIT
+> احتفظ / انتظر
+
+= SELL signal
+> إشارة بيع
+
+= STRONG SELL signal
+> إشارة بيع قوية
+
+= Type it like: buy 10 AAPL   or   sell 5 AAPL   or   sell all AAPL
+> اكتبه هكذا: buy 10 AAPL   أو   sell 5 AAPL   أو   sell all AAPL
+
+= Couldn't find a price for 
+> تعذّر العثور على سعر لـ 
+
+= . Check the ticker (US-listed stocks only, e.g. TSM instead of 2330.TW).
+> . تحقّق من الرمز (الأسهم المدرجة في أمريكا فقط، مثل TSM بدل 2330.TW).
+
+= Not enough pretend cash to buy even 1 share.
+> لا يكفي المال الوهمي لشراء سهم واحد حتى.
+
+= You don't own any 
+> أنت لا تملك أي سهم من 
+
+= Not enough pretend cash: %s shares cost $%,.2f but you have $%,.2f.
+> المال الوهمي غير كافٍ: %s سهماً تكلّف $%,.2f ولديك $%,.2f.
+
+= You only own 
+> أنت تملك فقط 
+
+=  shares of 
+>  سهماً من 
+
+= OK - %s %s shares of %s at $%,.2f (pretend money). Cash left: $%,.2f.
+> OK - %s %s سهماً من %s بسعر $%,.2f (مال وهمي). النقد المتبقي: $%,.2f.
+
+= No market data available right now.
+> لا توجد بيانات سوق حالياً.
+
+= Around the world it's %s: %d markets are up, %d are down (average move %+.2f%%).
+> حول العالم إنه %s: %d سوقاً صاعدة و%d هابطة (متوسط الحركة %+.2f%%).
+
+= Starting...
+> جارٍ البدء...
+
+= Loading practice data...
+> جارٍ تحميل بيانات التدريب...
+
+= Collecting today's data from the websites...
+> جارٍ جمع بيانات اليوم من المواقع...
+
+= Couldn't download any stock prices. Check your internet connection, or turn on Practice mode.
+> تعذّر تنزيل أي أسعار. تحقّق من اتصال الإنترنت أو فعّل وضع التدريب.
+
+= Ready - 
+> جاهز - 
+
+=  stocks analysed
+>  سهماً تم تحليلها
+
+=  (PRACTICE DATA - not real)
+>  (بيانات تدريب - غير حقيقية)
+
+= Something went wrong while loading: 
+> حدث خطأ أثناء التحميل: 
+
+= StockBuddy alerts
+> تنبيهات StockBuddy
+
+= StockBuddy price alert
+> تنبيه سعر من StockBuddy
+
+= <html><b>Price alert
+> <html><b>تنبيه سعر
+
+= <br><br><span style='color:gray'>See the Price Alerts page.</span></html>
+> <br><br><span style='color:gray'>انظر صفحة تنبيهات الأسعار.</span></html>
+
+= StockBuddy index prices
+> مؤشرات StockBuddy
+
+= Today's ideas
+> أفكار اليوم
+
+= 0DTE ideas are only for US index options (SPY and QQQ). Choose All markets or a US market to see them.
+> أفكار 0DTE مخصصة لخيارات المؤشرات الأمريكية فقط (SPY وQQQ). اختر كل الأسواق أو سوقاً أمريكياً لرؤيتها.
+
+=  (in this market)
+>  (في هذا السوق)
+
+=  <span class=muted style='font-size:10.5pt'>- outside the US many companies only have chart data, and an idea 
+>  <span class=muted style='font-size:10.5pt'>- خارج أمريكا كثير من الشركات لديها بيانات رسم بياني فقط، والفكرة 
+
+= needs at least two sources, so fewer ideas appear. <a href='sb://page/worldstocks'>See every company's verdict on World Stocks &rarr;</a></span>
+> تحتاج مصدرين على الأقل، لذا تظهر أفكار أقل. <a href='sb://page/worldstocks'>اطّلع على حكم كل شركة في الأسهم العالمية &rarr;</a></span>
+
+= '>Showing only: 
+> '>المعروض فقط: 
+
+= </b> <a href='sb://page/calendar'>See the Economic Calendar &rarr;</a></p>
+> </b> <a href='sb://page/calendar'>اعرض المفكرة الاقتصادية &rarr;</a></p>
+
+=  <span class=warn>(practice data)</span>
+>  <span class=warn>(بيانات تدريب)</span>
+
+= <div class=label>Why</div><ul>
+> <div class=label>لماذا</div><ul>
+
+= <div class=label>How to do it</div><ul>
+> <div class=label>كيف تفعل ذلك</div><ul>
+
+= <p class=warn><b>Risk:</b> 
+> <p class=warn><b>المخاطرة:</b> 
+
+= '>Full explanation and chart for 
+> '>الشرح الكامل والرسم البياني لـ 
+
+= '>&#128276; Set a price alert</a>
+> '>&#128276; ضع تنبيه سعر</a>
+
+= '>Paper-trade it (pretend money)</a>
+> '>تداول وهمياً (مال وهمي)</a>
+
+= <h1>World markets</h1>
+> <h1>الأسواق العالمية</h1>
+
+= <p class=muted style='font-size:10pt'>Index prices update every minute while this page is open (some exchanges are a few minutes delayed). Last update: 
+> <p class=muted style='font-size:10pt'>تتحدّث أسعار المؤشرات كل دقيقة ما دامت هذه الصفحة مفتوحة (بعض البورصات متأخرة بضع دقائق). آخر تحديث: 
+
+= <div class=card><table class=grid><tr><th>Market</th><th class=num>Price</th><th class=num>Today</th><th class=num>Month</th></tr>
+> <div class=card><table class=grid><tr><th>السوق</th><th class=num>السعر</th><th class=num>اليوم</th><th class=num>الشهر</th></tr>
+
+= Tap a market to see all its stocks.
+> المس سوقاً لرؤية كل أسهمه.
+
+= </p><p><a href='sb://page/worldstocks'>The biggest companies of each market, and where to buy them &rarr;</a></p>
+> </p><p><a href='sb://page/worldstocks'>أكبر شركات كل سوق وأين تشتريها &rarr;</a></p>
+
+= <p class=muted>An "index" is a basket of a country's biggest companies. Asian markets open first, then Europe, then the Americas.</p>
+> <p class=muted>"المؤشر" سلة من أكبر شركات بلد ما. تفتح الأسواق الآسيوية أولاً، ثم أوروبا، ثم الأمريكتان.</p>
+
+= <h1>Price alerts</h1><p class=muted>Get told when a stock reaches a price. Type an alert above, for example 
+> <h1>تنبيهات الأسعار</h1><p class=muted>احصل على تنبيه عندما يبلغ سهم سعراً معيناً. اكتب تنبيهاً بالأعلى، مثلاً 
+
+= <b>NVDA above 150</b>, <b>TSLA below 200</b> or <b>AAPL move 5%</b> (a move of 5% up or down in one day). 
+> <b>NVDA above 150</b> أو <b>TSLA below 200</b> أو <b>AAPL move 5%</b> (حركة 5% صعوداً أو هبوطاً في يوم). 
+
+= Alerts are checked on every refresh and every few minutes while StockBuddy runs.</p>
+> تُفحص التنبيهات عند كل تحديث وكل بضع دقائق أثناء تشغيل StockBuddy.</p>
+
+= <div class=card>No alerts yet.</div>
+> <div class=card>لا توجد تنبيهات بعد.</div>
+
+= <div class=card><table class=grid><tr><th>Alert</th><th class=num>Price now</th><th>Status</th><th></th></tr>
+> <div class=card><table class=grid><tr><th>التنبيه</th><th class=num>السعر الآن</th><th>الحالة</th><th></th></tr>
+
+= <span class=muted>Waiting</span>
+> <span class=muted>قيد الانتظار</span>
+
+= '>Remove</a></td></tr>
+> '>إزالة</a></td></tr>
+
+= <p><a href='sb://alertclear'>Remove all triggered alerts</a></p>
+> <p><a href='sb://alertclear'>إزالة كل التنبيهات التي تحققت</a></p>
+
+= <h1>Paper trading</h1><p class=muted>Practise with <b>pretend money</b> - nothing real is bought or sold. 
+> <h1>التداول الوهمي</h1><p class=muted>تدرّب بـ<b>مال وهمي</b> - لا يُشترى ولا يُباع شيء حقيقي. 
+
+= Type a trade above, for example <b>buy 10 AAPL</b>, <b>sell 5 AAPL</b> or <b>sell all AAPL</b>. Trades use today's real prices 
+> اكتب صفقة بالأعلى، مثلاً <b>buy 10 AAPL</b> أو <b>sell 5 AAPL</b> أو <b>sell all AAPL</b>. تستخدم الصفقات أسعار اليوم الحقيقية 
+
+= (US-listed stocks).
+> (أسهم مدرجة في أمريكا).
+
+=  <span class=warn>Practice mode is on: prices are made up.</span>
+>  <span class=warn>وضع التدريب مفعّل: الأسعار وهمية.</span>
+
+= <tr><td class=muted>Total value</td><td class=num><b style='font-size:15pt'>
+> <tr><td class=muted>القيمة الإجمالية</td><td class=num><b style='font-size:15pt'>
+
+= <tr><td class=muted>Since you started (
+> <tr><td class=muted>منذ أن بدأت (
+
+= <tr><td class=muted>Pretend cash</td><td class=num>
+> <tr><td class=muted>النقد الوهمي</td><td class=num>
+
+= <tr><td class=muted>Invested in stocks</td><td class=num>
+> <tr><td class=muted>المستثمر في الأسهم</td><td class=num>
+
+= <tr><td class=muted>The S&amp;P 500 did</td><td class=num>
+> <tr><td class=muted>أداء S&amp;P 500</td><td class=num>
+
+= <b class=good>you're ahead</b>
+> <b class=good>أنت متقدّم</b>
+
+= <b class=warn>you're behind</b>
+> <b class=warn>أنت متأخر</b>
+
+= <h2>What you hold</h2><div class=card><table class=grid><tr><th>Stock</th><th class=num>Shares</th><th class=num>Paid / now</th><th class=num>Profit</th><th></th></tr>
+> <h2>ما تملكه</h2><div class=card><table class=grid><tr><th>السهم</th><th class=num>الأسهم</th><th class=num>المدفوع / الآن</th><th class=num>الربح</th><th></th></tr>
+
+= <span class=muted>refresh</span>
+> <span class=muted>تحديث</span>
+
+= '>Sell all</a></td></tr>
+> '>بِع الكل</a></td></tr>
+
+= <h2>Your trades</h2><div class=card><table class=grid>
+> <h2>صفقاتك</h2><div class=card><table class=grid>
+
+= <p><a href='sb://preset'>Start again with $10,000</a></p>
+> <p><a href='sb://preset'>ابدأ من جديد بـ 10,000$</a></p>
+
+= <h1>Economic calendar</h1>
+> <h1>المفكرة الاقتصادية</h1>
+
+= <p class=muted>Big economic news (inflation, jobs, interest rates) can move whole markets in seconds - especially 
+> <p class=muted>الأخبار الاقتصادية الكبرى (التضخم، الوظائف، الفائدة) قد تحرّك أسواقاً كاملة في ثوانٍ - خاصة الأحداث 
+
+= <b class=bad>high-impact</b> events. Times are shown in your own time zone. Source: ForexFactory
+> <b class=bad>عالية التأثير</b>. الأوقات معروضة بتوقيتك المحلي. المصدر: ForexFactory
+
+= <div class=card>No calendar data right now. Check the Data Sources page.</div>
+> <div class=card>لا توجد بيانات للمفكرة حالياً. راجع صفحة مصادر البيانات.</div>
+
+= <p class=banner><b>&#9888; Big US news today.</b> Be extra careful with short-term trades and 0DTE options around these times.</p>
+> <p class=banner><b>&#9888; أخبار أمريكية كبيرة اليوم.</b> كن حذراً جداً مع الصفقات قصيرة الأجل وخيارات 0DTE في هذه الأوقات.</p>
+
+=  &middot; TODAY
+>  &middot; اليوم
+
+= All day
+> طوال اليوم
+
+= Medium
+> متوسط
+
+= Expected 
+> المتوقع 
+
+= Last time 
+> السابق 
+
+= <b>Actual 
+> <b>الفعلي 
+
+= News about it
+> أخبار عنه
+
+= <p class=muted>Tip: when the actual number is very different from what was expected, prices usually move the most.</p>
+> <p class=muted>نصيحة: عندما يختلف الرقم الفعلي كثيراً عن المتوقع، تتحرك الأسعار عادةً أكثر.</p>
+
+= <h1>World stocks</h1><p class=muted>The biggest companies of the world's largest stock markets, 
+> <h1>الأسهم العالمية</h1><p class=muted>أكبر شركات أكبر أسواق الأسهم في العالم، 
+
+= what StockBuddy thinks of them today, and <b>where you can buy them</b>. Tap a name for the full explanation and chart.
+> ورأي StockBuddy فيها اليوم، و<b>أين يمكنك شراؤها</b>. المس اسماً لرؤية الشرح الكامل والرسم البياني.
+
+= <p><b>Companies per market:</b> &nbsp;
+> <p><b>الشركات لكل سوق:</b> &nbsp;
+
+= '>[ Top 
+> '>[ أفضل 
+
+= '>Top 
+> '>أفضل 
+
+= <a href='sb://wtop/0'>Off</a> &nbsp; <span class=muted>(more companies = slower refresh)</span></p>
+> <a href='sb://wtop/0'>إيقاف</a> &nbsp; <span class=muted>(شركات أكثر = تحديث أبطأ)</span></p>
+
+= <div class=card>World stocks are turned off. Choose 3, 5, 10 or 20 above.</div>
+> <div class=card>الأسهم العالمية متوقفة. اختر 3 أو 5 أو 10 أو 20 بالأعلى.</div>
+
+= <p class=banner>Refresh the data to analyse the companies you just added.</p>
+> <p class=banner>حدّث البيانات لتحليل الشركات التي أضفتها للتو.</p>
+
+=  today &middot; 
+>  اليوم &middot; 
+
+= <b class=good>open now</b>
+> <b class=good>مفتوح الآن</b>
+
+= closed now
+> مغلق الآن
+
+=  &nbsp; <span class=muted>no price data right now</span>
+>  &nbsp; <span class=muted>لا توجد بيانات أسعار حالياً</span>
+
+= <p class=muted>Prices of stocks analysed on their home exchange are in local currency. Buying abroad can add currency-exchange 
+> <p class=muted>أسعار الأسهم المحلَّلة في بورصتها الأصلية بالعملة المحلية. الشراء من الخارج قد يضيف تكاليف صرف العملات 
+
+= costs and different taxes - check with your broker.</p>
+> وضرائب مختلفة - استشر وسيطك.</p>
+
+= Track record
+> سجل الأداء
+
+= Every day StockBuddy remembers its ideas and the price at that moment. 
+> يتذكر StockBuddy كل يوم أفكاره والسعر في تلك اللحظة. 
+
+= Here you can see how they actually did - the honest way to learn how much to trust the signals. It gets more useful the longer you use the app.
+> هنا ترى كيف كان أداؤها فعلاً - الطريقة الصادقة لمعرفة مدى الثقة بالإشارات. يزداد نفعه كلما استخدمت التطبيق أكثر.
+
+= (practice data)
+> (بيانات تدريب)
+
+= Last %d days
+> آخر %d يوماً
+
+= Nothing yet for this period - your ideas are saved every day. Come back in a few days!
+> لا شيء بعد لهذه الفترة - تُحفظ أفكارك كل يوم. عد بعد بضعة أيام!
+
+= Ideas older than today
+> أفكار أقدم من اليوم
+
+= Went the right way
+> سارت في الاتجاه الصحيح
+
+= Average move
+> متوسط الحركة
+
+= Buys (want: up)
+> الشراء (المطلوب: صعود)
+
+= Sells (want: down)
+> البيع (المطلوب: هبوط)
+
+= Calls (want: up)
+> خيارات الشراء (المطلوب: صعود)
+
+= Puts (want: down)
+> خيارات البيع (المطلوب: هبوط)
+
+= About 50% is what you'd expect from a coin flip. A few weeks of data is still very little - 
+> نحو 50% هو ما تتوقعه من رمي عملة. بيانات بضعة أسابيع لا تزال قليلة جداً - 
+
+= markets go through good and bad spells.
+> فالأسواق تمر بفترات جيدة وسيئة.
+
+= Every idea, day by day (last %d days)
+> كل فكرة، يوماً بيوم (آخر %d يوماً)
+
+= B = buy, S = sell, C = call, P = put. The number is how much the price moved since that day: 
+> B = شراء، S = بيع، C = خيار شراء، P = خيار بيع. الرقم هو مقدار تحرّك السعر منذ ذلك اليوم: 
+
+= green = it went the way the idea said, red = it didn't.
+> الأخضر = سار كما قالت الفكرة، الأحمر = لم يسر.
+
+= Stock
+> السهم
+
+= Now
+> الآن
+
+= Showing only:
+> المعروض فقط:
+
+= Show every market
+> عرض كل الأسواق
+
+= Every stock you check stays in this list for %d days, then it is cleared automatically.
+> يبقى كل سهم تتحقق منه في هذه القائمة %d يوماً، ثم يُمسح تلقائياً.
+
+= Tap a ticker for the full explanation.
+> المس رمزاً لرؤية الشرح الكامل.
+
+= Checked today
+> تم التحقق اليوم
+
+= No stock from this market today.
+> لا يوجد سهم من هذا السوق اليوم.
+
+= Checked earlier (last %d days)
+> تم التحقق سابقاً (آخر %d يوماً)
+
+= Price then
+> السعر حينها
+
+= Verdict then
+> الحكم حينها
+
+= My watchlist
+> قائمتي
+
+= These stocks are always checked, plus today's biggest 
+> هذه الأسهم تُفحص دائماً، إضافة إلى أكبر 
+
+= movers and the stocks Reddit talks about most. Type tickers above to add them (saved straight away). Tap a ticker to look it up, or &times; to remove it.
+> المتحركين اليوم والأسهم الأكثر نقاشاً على Reddit. اكتب الرموز بالأعلى لإضافتها (تُحفظ فوراً). المس رمزاً للبحث عنه، أو &times; لإزالته.
+
+= Buy
+> شراء
+
+= Hold / wait
+> احتفظ / انتظر
+
+= Sell
+> بيع
+
+= not analysed yet
+> لم يُحلَّل بعد
+
+= Reset to the default list
+> العودة إلى القائمة الافتراضية
+
+= Tap the refresh button at the top to analyse your changes.
+> المس زر التحديث بالأعلى لتحليل تغييراتك.
+
+= Market news
+> أخبار السوق
+
+= Headlines in %s from the local financial press. Tap a headline to read the original article.
+> عناوين بـ%s من الصحافة المالية المحلية. المس عنواناً لقراءة المقال الأصلي.
+
+= Practice mode has no news - turn it off and refresh to read today's headlines.
+> وضع التدريب بلا أخبار - أوقفه وحدّث لقراءة عناوين اليوم.
+
+= No headlines right now. Check your internet connection and refresh.
+> لا توجد عناوين حالياً. تحقّق من اتصال الإنترنت وحدّث.
+
+= Trusted sources
+> مصادر موثوقة
+
+=  ago</text>
+>  مضت</text>
+
+= ' font-size='13'>today</text></svg>
+> ' font-size='13'>اليوم</text></svg>
+
+= Candles
+> الشموع
+
+= <span class=muted>Chart:</span> 
+> <span class=muted>الرسم:</span> 
+
+=  &nbsp;<span class=muted>Period:</span> 
+>  &nbsp;<span class=muted>الفترة:</span> 
+
+= <br><span class=muted>Lines:</span> 
+> <br><span class=muted>الخطوط:</span> 
+
+= <br><span class=muted>Bottom panel:</span> 
+> <br><span class=muted>اللوحة السفلية:</span> 
+
+= <text x='%d' y='%d' fill='%s' font-size='12'>Volume</text>
+> <text x='%d' y='%d' fill='%s' font-size='12'>الحجم</text>
+
+= <p>Price <b>
+> <p>السعر <b>
+
+= </b> &nbsp; Today 
+> </b> &nbsp; اليوم 
+
+=  &nbsp; 1-year range $
+>  &nbsp; نطاق سنة $
+
+=  &nbsp; 1-year range $%.2f - $%.2f
+>  &nbsp; نطاق سنة $%.2f - $%.2f
+
+= <div class=card><h3>Overall: <span class=
+> <div class=card><h3>الخلاصة: <span class=
+
+= Score %+.0f out of 100 &nbsp;&middot;&nbsp; confidence %s
+> النتيجة %+.0f من 100 &nbsp;&middot;&nbsp; الثقة %s
+
+= '>&#9733; Add 
+> '>&#9733; أضف 
+
+=  to My Watchlist</a>
+>  إلى قائمتي</a>
+
+= '>Paper-trade it</a>
+> '>تداول وهمياً</a>
+
+= <h2>Key statistics</h2><div class=card><table class=grid>
+> <h2>إحصاءات رئيسية</h2><div class=card><table class=grid>
+
+= News in your language
+> أخبار بلغتك
+
+= Search the news about this company
+> ابحث عن أخبار هذه الشركة
+
+= <h2>In the news</h2><ul>
+> <h2>في الأخبار</h2><ul>
+
+= <h2>From your CSV file: 
+> <h2>من ملف CSV الخاص بك: 
+
+= <h2>What each source says</h2>
+> <h2>ما يقوله كل مصدر</h2>
+
+= <p class=muted>Only a few sources had data for this stock, so treat the result with extra caution.</p>
+> <p class=muted>عدد قليل فقط من المصادر لديه بيانات عن هذا السهم، فتعامل مع النتيجة بحذر إضافي.</p>
+
+= <h2>Chart numbers (StockCharts-style)</h2><table>
+> <h2>أرقام الرسم البياني (بأسلوب StockCharts)</h2><table>
+
+=  &nbsp;<span class=warn>rose fast</span>
+>  &nbsp;<span class=warn>ارتفع بسرعة</span>
+
+=  &nbsp;<span class=warn>fell fast</span>
+>  &nbsp;<span class=warn>هبط بسرعة</span>
+
+= <h2>What Reddit is saying</h2><ul>
+> <h2>ماذا يقول Reddit</h2><ul>
+
+= <h1>Beginner's dictionary</h1><p class=muted>Investing words, explained simply.</p>
+> <h1>قاموس المبتدئين</h1><p class=muted>مصطلحات الاستثمار بشرح مبسّط.</p>
+
+= <p>No word matches "
+> <p>لا توجد كلمة تطابق "
+
+= <h1>Where the data comes from</h1>
+> <h1>من أين تأتي البيانات</h1>
+
+= <p class=muted>Green = worked, orange = needs attention. Your files are kept in: 
+> <p class=muted>الأخضر = يعمل، البرتقالي = يحتاج انتباهاً. ملفاتك محفوظة في: 
+
+= <h2>Tips</h2><ul>
+> <h2>نصائح</h2><ul>
+
+= <li><b>Stock Rover</b> needs a paid login, so export a CSV from Stock Rover (with Ticker and Fair Value columns) and click <b>Import Stock Rover CSV</b> below.</li>
+> <li><b>Stock Rover</b> يحتاج اشتراكاً مدفوعاً، لذا صدّر ملف CSV منه (بأعمدة Ticker وFair Value) وانقر <b>استيراد ملف CSV من Stock Rover</b> بالأسفل.</li>
+
+= <li><b>WallStreetZen</b> sometimes blocks programs. You can import a CSV with Ticker, Zen Score and Zen Rating columns instead.</li>
+> <li><b>WallStreetZen</b> يحظر البرامج أحياناً. يمكنك بدلاً من ذلك استيراد CSV بأعمدة Ticker وZen Score وZen Rating.</li>
+
+= <li><b>StockCharts</b> has no public data feed. Its indicators (moving averages, RSI, MACD, SCTR) are calculated by StockBuddy from price history.</li>
+> <li><b>StockCharts</b> ليس لديه بيانات عامة. مؤشراته (المتوسطات المتحركة، RSI، MACD، SCTR) يحسبها StockBuddy من تاريخ الأسعار.</li>
+
+= <li><b>Reddit</b> is read automatically (no account needed). If Reddit blocks it, add posts yourself: copy post titles from 
+> <li><b>Reddit</b> يُقرأ تلقائياً (دون حساب). إذا حظره Reddit فأضف المنشورات بنفسك: انسخ العناوين من 
+
+= Reddit and use <b>Add Reddit posts</b>, or import a CSV with a <i>title</i> column (optional: date, subreddit, upvotes). 
+> Reddit واستخدم <b>إضافة منشورات Reddit</b>، أو استورد CSV بعمود <i>title</i> (اختياري: date وsubreddit وupvotes). 
+
+= Your own posts are used for 
+> تُستخدم منشوراتك لمدة 
+
+=  days.</li></ul>
+>  يوماً.</li></ul>
+
+= Get a free Finnhub key (finnhub.io/register)
+> احصل على مفتاح Finnhub مجاني (finnhub.io/register)
+
+= Get a free Alpha Vantage key
+> احصل على مفتاح Alpha Vantage مجاني
+
+= WallStreetBets sentiment API page (Tradestie)
+> صفحة واجهة اتجاه WallStreetBets (Tradestie)
+
+= Ask Reddit for API access (Reddit developer page)
+> اطلب وصول API من Reddit (صفحة المطورين)
+
+= How the SEC wants programs to identify themselves
+> كيف تريد SEC أن تعرّف البرامج بنفسها
+
+= Open Stock Rover (export a screener as CSV)
+> افتح Stock Rover (صدّر قائمة فرز كملف CSV)
+
+= Open WallStreetZen (Zen Scores)
+> افتح WallStreetZen (نتائج Zen)
+
+= Open stockanalysis.com
+> افتح stockanalysis.com
+
+= Open the ForexFactory calendar
+> افتح مفكرة ForexFactory
+
+= Open Yahoo Finance
+> افتح Yahoo Finance
+
+= Open Google News
+> افتح أخبار Google
+
+= How to add a CSV (README)
+> كيفية إضافة ملف CSV (README)
+
+= <p class=banner><b>Important:</b> StockBuddy is a learning and research helper, not a financial advisor. 
+> <p class=banner><b>مهم:</b> StockBuddy أداة للتعلّم والبحث، وليس مستشاراً مالياً. 
+
+= It can be wrong, data can be late, and you can lose money. Never invest money you can't afford to lose.</p>
+> قد يخطئ، وقد تتأخر البيانات، وقد تخسر مالك. لا تستثمر أبداً مالاً لا تستطيع تحمّل خسارته.</p>
+
+= Tap ↻ to load
+> المس ↻ للتحميل
+
+= PRACTICE DATA - 
+> بيانات تدريب - 
+
+= Not financial advice · tap to open
+> ليست نصيحة مالية · المس للفتح
+
+= '>No data yet. Open StockBuddy once, or tap ↻.</font>
+> '>لا بيانات بعد. افتح StockBuddy مرة واحدة أو المس ↻.</font>
+
+= '>WORLD MARKETS</font></b></small><br>
+> '>الأسواق العالمية</font></b></small><br>
+
+= '>TOP BUYS TODAY</font></b></small><br>
+> '>أفضل مشتريات اليوم</font></b></small><br>
+
+= '>CAREFUL WITH</font></b></small><br>
+> '>احذر من</font></b></small><br>
+
+= '>0DTE (EXPIRING TODAY)</font></b></small><br>
+> '>0DTE (تنتهي اليوم)</font></b></small><br>
+
+= Tip: tap ☰ for all pages, swipe left or right to move between them, ★ for your watchlist.
+> نصيحة: المس ☰ لكل الصفحات، واسحب يميناً أو يساراً للتنقل بينها، و★ لقائمتك.
+
+= All markets ▾
+> كل الأسواق ▾
+
+= PRACTICE MODE - made-up data
+> وضع التدريب - بيانات وهمية
+
+= StockBuddy is reading stockanalysis.com, WallStreetZen, Reddit and price charts. 
+> يقرأ StockBuddy موقع stockanalysis.com وWallStreetZen وReddit ورسوم الأسعار. 
+
+= This can take a minute. Tip: turn on Practice mode in the More menu to learn with made-up data.
+> قد يستغرق ذلك دقيقة. نصيحة: فعّل وضع التدريب من قائمة المزيد للتعلّم ببيانات وهمية.
+
+= Type a ticker above (like AAPL or MSFT) to get a chart and a plain-English explanation. 
+> اكتب رمزاً بالأعلى (مثل AAPL أو MSFT) للحصول على رسم بياني وشرح مبسّط. 
+
+= You can also tap any ticker on the "All stocks" page.
+> يمكنك أيضاً لمس أي رمز في صفحة "كل الأسهم".
+
+= Type a ticker, e.g. AAPL
+> اكتب رمزاً، مثل AAPL
+
+= Explain
+> اشرح
+
+= Add tickers, e.g. AAPL MSFT
+> أضف رموزاً، مثل AAPL MSFT
+
+= e.g. NVDA above 150 / AAPL move 5%
+> مثال: NVDA above 150 / AAPL move 5%
+
+= e.g. buy 10 AAPL / sell all AAPL
+> مثال: buy 10 AAPL / sell all AAPL
+
+= Search a word
+> ابحث عن كلمة
+
+= Check the spelling, or your internet connection. US tickers are 1-5 letters, like AAPL or MSFT.
+> تحقّق من الإملاء أو من اتصال الإنترنت. الرموز الأمريكية من 1 إلى 5 حروف، مثل AAPL أو MSFT.
+
+= Paper-buy 
+> شراء وهمي: 
+
+= How many pretend shares? (Pretend money - nothing real is bought.)
+> كم سهماً وهمياً؟ (مال وهمي - لا يُشترى شيء حقيقي.)
+
+= Cancel
+> إلغاء
+
+= Sell all 
+> بيع الكل: 
+
+= Sell all your pretend shares of 
+> بيع كل أسهمك الوهمية من 
+
+= Start again?
+> البدء من جديد؟
+
+= Start again
+> ابدأ من جديد
+
+= 🎓 Practice mode (made-up data): 
+> 🎓 وضع التدريب (بيانات وهمية): 
+
+= 🌐 World stocks: 
+> 🌐 الأسهم العالمية: 
+
+=  of each market
+>  من كل سوق
+
+= ✍ Add Reddit posts (paste titles)
+> ✍ إضافة منشورات Reddit (لصق العناوين)
+
+= 📥 Import Reddit CSV
+> 📥 استيراد ملف CSV لـ Reddit
+
+= 🗑 Clear my Reddit posts
+> 🗑 مسح منشورات Reddit الخاصة بي
+
+= 📄 Add any CSV as a data source
+> 📄 إضافة أي ملف CSV كمصدر بيانات
+
+= 🗑 Remove my CSV files
+> 🗑 إزالة ملفات CSV الخاصة بي
+
+= 📥 Import Stock Rover CSV
+> 📥 استيراد ملف CSV من Stock Rover
+
+= 📥 Import WallStreetZen CSV
+> 📥 استيراد ملف CSV من WallStreetZen
+
+= 🔑 Finnhub key (
+> 🔑 مفتاح Finnhub (
+
+= not set
+> غير مُعيّن
+
+= 🔑 Alpha Vantage key (
+> 🔑 مفتاح Alpha Vantage (
+
+= ✉ SEC email (optional)
+> ✉ بريد SEC (اختياري)
+
+= ↕ Reset the menu order
+> ↕ إعادة ترتيب القائمة الأصلي
+
+= ❓ How to add the home-screen widget
+> ❓ كيفية إضافة أداة الشاشة الرئيسية
+
+= ℹ About & disclaimer
+> ℹ حول التطبيق وإخلاء المسؤولية
+
+= Delete
+> حذف
+
+= Your CSV files were removed.
+> تمت إزالة ملفات CSV الخاصة بك.
+
+= Menu order reset.
+> تمت إعادة ترتيب القائمة.
+
+= Add the widget to your home screen
+> أضف الأداة إلى شاشتك الرئيسية
+
+= 1. Go to your home screen.\n2. Touch and hold an empty spot.\n3. Tap "Widgets".\n4. Find StockBuddy and drag it onto your home screen.\n\n
+> 1. انتقل إلى شاشتك الرئيسية.\n2. المس مكاناً فارغاً مطولاً.\n3. المس "الأدوات".\n4. ابحث عن StockBuddy واسحبه إلى شاشتك الرئيسية.\n\n
+
+= Tap the widget to open the app, or tap ↻ on it to refresh. Change its colours in ⋮ > Home-screen widget skin.
+> المس الأداة لفتح التطبيق، أو المس ↻ لتحديثها. غيّر ألوانها من ⋮ > مظهر أداة الشاشة الرئيسية.
+
+= About StockBuddy
+> حول StockBuddy
+
+= StockBuddy combines stockanalysis.com, WallStreetZen, Reddit, the WallStreetBets sentiment API, Finnhub, Alpha Vantage, SEC EDGAR, 
+> يجمع StockBuddy بين stockanalysis.com وWallStreetZen وReddit وواجهة اتجاه WallStreetBets وFinnhub وAlpha Vantage وSEC EDGAR 
+
+= the economic calendar, your own CSV files and StockCharts-style chart signals, and explains them in plain English.\n\nIMPORTANT: this is a learning and research helper, 
+> والمفكرة الاقتصادية وملفات CSV الخاصة بك وإشارات الرسم بأسلوب StockCharts، ويشرحها بلغة بسيطة.\n\nمهم: هذه أداة للتعلّم والبحث، 
+
+= NOT a financial advisor. It can be wrong, data can be late, and you can lose money. Never invest money you can't afford to lose.
+> وليست مستشاراً مالياً. قد تخطئ، وقد تتأخر البيانات، وقد تخسر مالك. لا تستثمر أبداً مالاً لا تستطيع تحمّل خسارته.
+
+= ★ My watchlist
+> ★ قائمتي
+
+= SETTINGS & DATA
+> الإعدادات والبيانات
+
+= 💾  Save report (web page, Word, CSV or JSON)
+> 💾  حفظ التقرير (صفحة ويب، Word، CSV أو JSON)
+
+= 🎨  App skin
+> 🎨  مظهر التطبيق
+
+= 🖼  Home-screen widget skin
+> 🖼  مظهر أداة الشاشة الرئيسية
+
+= 👓  Widget see-through
+> 👓  شفافية الأداة
+
+= Show ideas for
+> عرض الأفكار لـ
+
+= Off
+> إيقاف
+
+= Top 3 of each market
+> أفضل 3 من كل سوق
+
+= Top 5
+> أفضل 5
+
+= Top 10
+> أفضل 10
+
+= Top 20 (slower refresh)
+> أفضل 20 (تحديث أبطأ)
+
+= World stocks
+> الأسهم العالمية
+
+= Please wait until the data has loaded.
+> يرجى الانتظار حتى تُحمَّل البيانات.
+
+= Save today's report as
+> احفظ تقرير اليوم بصيغة
+
+= No file saver available on this phone.
+> لا يوجد تطبيق لحفظ الملفات على هذا الهاتف.
+
+= Your Alpha Vantage key
+> مفتاح Alpha Vantage الخاص بك
+
+= Alpha Vantage adds news sentiment (is the news about a company positive or negative?). Get a free key at 
+> يضيف Alpha Vantage اتجاه الأخبار (هل الأخبار عن الشركة إيجابية أم سلبية؟). احصل على مفتاح مجاني من 
+
+= alphavantage.co/support/#api-key. The free plan allows about 25 requests a day, so StockBuddy checks your first 
+> alphavantage.co/support/#api-key. تسمح الخطة المجانية بنحو 25 طلباً يومياً، لذا يفحص StockBuddy أول 
+
+=  stocks and remembers the answers all day. Leave empty to turn it off.
+>  سهماً لديك ويتذكر الإجابات طوال اليوم. اتركه فارغاً لإيقافه.
+
+= Save
+> حفظ
+
+= Alpha Vantage is turned off.
+> تم إيقاف Alpha Vantage.
+
+= Key works and is saved. Tap refresh to use it.
+> المفتاح يعمل وتم حفظه. المس التحديث لاستخدامه.
+
+= you@example.com (optional)
+> you@example.com (اختياري)
+
+= The SEC (sec.gov) asks every program to say who it is. StockBuddy works without this, but if the SEC data doesn't load, 
+> تطلب SEC (sec.gov) من كل برنامج أن يعرّف بنفسه. يعمل StockBuddy دون ذلك، لكن إن لم تُحمَّل بيانات SEC 
+
+= enter your email. It is only ever sent to sec.gov.
+> فأدخل بريدك. لا يُرسل إلا إلى sec.gov.
+
+= Saved.
+> تم الحفظ.
+
+= Finnhub adds Wall Street analyst recommendations and financial ratios. Get a free key at finnhub.io/register 
+> يضيف Finnhub توصيات محللي وول ستريت والنسب المالية. احصل على مفتاح مجاني من finnhub.io/register 
+
+= and paste it below. It is saved only on this phone. Leave it empty to turn Finnhub off.
+> والصقه بالأسفل. يُحفظ على هذا الهاتف فقط. اتركه فارغاً لإيقاف Finnhub.
+
+= Your Finnhub API key
+> مفتاح Finnhub API الخاص بك
+
+= Checking the key...
+> جارٍ التحقق من المفتاح...
+
+= Key works and is saved. Refreshing (about 2 minutes the first time)...
+> المفتاح يعمل وتم حفظه. جارٍ التحديث (نحو دقيقتين في المرة الأولى)...
+
+= Finnhub key saved, but...
+> حُفظ مفتاح Finnhub، لكن...
+
+= Open Reddit, copy the titles of posts you find interesting, and paste them below - one post per line. 
+> افتح Reddit، وانسخ عناوين المنشورات التي تهمّك والصقها بالأسفل - منشور واحد في كل سطر. 
+
+= Tickers like $NVDA or NVDA are recognised automatically. Your posts are used for 
+> الرموز مثل $NVDA أو NVDA تُكتشف تلقائياً. تُستخدم منشوراتك لمدة 
+
+=  days.
+>  يوماً.
+
+= Subreddit, e.g. wallstreetbets
+> المنتدى الفرعي، مثل wallstreetbets
+
+= Paste post titles here, one per line
+> الصق العناوين هنا، واحداً في كل سطر
+
+= . Refreshing...
+> . جارٍ التحديث...
+
+= Home-screen widget skin
+> مظهر أداة الشاشة الرئيسية
+
+= App skin
+> مظهر التطبيق
+
+= Widget skin changed
+> تم تغيير مظهر الأداة
+
+= A little see-through
+> شفاف قليلاً
+
+= Very see-through
+> شفاف جداً
+
+= Mostly transparent
+> شبه شفاف تماماً
+
+= Widget see-through
+> شفافية الأداة
+
+= No file picker available on this phone.
+> لا يوجد منتقي ملفات على هذا الهاتف.
+
+= Report saved.
+> حُفظ التقرير.
+
+= Couldn't save the report: 
+> تعذّر حفظ التقرير: 
+
+=  stocks. Refreshing...
+>  سهماً. جارٍ التحديث...
+
+= Can't use this file
+> لا يمكن استخدام هذا الملف
+
+= The first line needs a column called Ticker or Symbol.
+> يحتاج السطر الأول عموداً باسم Ticker أو Symbol.
+
+=  stocks from your file. Refreshing...
+>  سهماً من ملفك. جارٍ التحديث...
+
+= No usable posts found
+> لم يُعثر على منشورات صالحة
+
+= The file needs a first line with a column called 'title' (optional: date, subreddit, upvotes). 
+> يحتاج الملف سطراً أول فيه عمود باسم 'title' (اختياري: date وsubreddit وupvotes). 
+
+= Dates older than 
+> التواريخ الأقدم من 
+
+=  Reddit posts. Refreshing...
+>  منشوراً من Reddit. جارٍ التحديث...
+
+= Sorry - StockBuddy closed unexpectedly last time
+> عذراً - أُغلق StockBuddy بشكل غير متوقع في المرة السابقة
+
+= Details (useful if you report the problem):\n\n
+> التفاصيل (مفيدة إذا أبلغت عن المشكلة):\n\n
+
+= %d StockBuddy price alerts
+> %d تنبيهات أسعار من StockBuddy
+
+= Couldn't download any stock prices. Check your internet, or turn on Practice mode (More menu).
+> تعذّر تنزيل أي أسعار. تحقّق من الإنترنت أو فعّل وضع التدريب (قائمة المزيد).
+
+= StockBuddy refresh
+> تحديث StockBuddy
+
+= Stock / share
+> السهم / الحصة
+
+= A tiny piece of ownership in a company. If the company does well, the price usually goes up.
+> جزء صغير من ملكية شركة. إذا أبلت الشركة حسناً يرتفع السعر عادةً.
+
+= The short code for a stock, like AAPL for Apple or MSFT for Microsoft.
+> الرمز المختصر للسهم، مثل AAPL لشركة Apple أو MSFT لشركة Microsoft.
+
+= Index
+> المؤشر
+
+= A basket of many stocks that shows how a whole market is doing (e.g. the S&P 500 = 500 big US companies).
+> سلة من أسهم كثيرة تُظهر أداء سوق كامل (مثل S&P 500 = 500 شركة أمريكية كبيرة).
+
+= A fund you can buy like a single stock that holds many stocks at once (SPY holds the whole S&P 500). Great for beginners.
+> صندوق تشتريه كسهم واحد ويضم أسهماً كثيرة معاً (SPY يضم S&P 500 كله). ممتاز للمبتدئين.
+
+= Buying shares because you expect the price to go up over time.
+> شراء الأسهم لأنك تتوقع ارتفاع السعر مع الوقت.
+
+= Selling shares you own - to take a profit or to stop a loss from growing.
+> بيع الأسهم التي تملكها - لجني ربح أو لمنع خسارة من التفاقم.
+
+= Short (short selling)
+> البيع على المكشوف (Short)
+
+= Borrowing shares, selling them, and buying them back later. You win if the price falls, but losses are unlimited if it rises.
+> اقتراض أسهم وبيعها ثم إعادة شرائها لاحقاً. تربح إذا هبط السعر، لكن الخسائر غير محدودة إذا ارتفع.
+
+= Option
+> الخيار
+
+= A contract that lets you bet on a stock's direction for a small price. One contract = 100 shares. It expires on a set date.
+> عقد يتيح لك المراهنة على اتجاه سهم بسعر صغير. العقد = 100 سهم. ينتهي في تاريخ محدد.
+
+= Call option
+> خيار الشراء (Call)
+
+= Makes money if the stock goes UP past the strike price before expiry.
+> يربح إذا ارتفع السهم فوق سعر التنفيذ قبل الانتهاء.
+
+= Put option
+> خيار البيع (Put)
+
+= Makes money if the stock goes DOWN below the strike price before expiry.
+> يربح إذا هبط السهم تحت سعر التنفيذ قبل الانتهاء.
+
+= Strike price
+> سعر التنفيذ
+
+= The price written in the option contract that the stock has to beat.
+> السعر المكتوب في عقد الخيار الذي يجب أن يتجاوزه السهم.
+
+= Expiry / expiration
+> تاريخ الانتهاء
+
+= The last day the option is valid. After that it's worth nothing if it didn't pay off.
+> آخر يوم يكون فيه الخيار صالحاً. بعده لا يساوي شيئاً إن لم يحقق ربحاً.
+
+= Premium
+> العلاوة
+
+= The price you pay for an option. It's the most you can lose when you BUY an option.
+> السعر الذي تدفعه مقابل الخيار. وهو أقصى ما يمكن أن تخسره عند شراء خيار.
+
+= Breakeven
+> نقطة التعادل
+
+= The stock price where your option trade neither makes nor loses money at expiry.
+> سعر السهم الذي لا تربح فيه صفقة الخيار ولا تخسر عند الانتهاء.
+
+= "Zero Days To Expiration": options that expire TODAY. Very cheap, very fast, very risky - like a coin flip with a ticking clock.
+> "صفر يوم حتى الانتهاء": خيارات تنتهي اليوم. رخيصة جداً وسريعة جداً وخطيرة جداً - كرمي عملة مع ساعة تدق.
+
+= Time decay
+> التآكل الزمني
+
+= Options lose a little value every day just from time passing. 0DTE options lose it by the minute.
+> تفقد الخيارات قليلاً من قيمتها كل يوم بمجرد مرور الوقت. وخيارات 0DTE تفقدها كل دقيقة.
+
+= Limit order
+> أمر محدد السعر
+
+= An order that says "buy only at this price or better". Protects you from overpaying.
+> أمر يقول "اشترِ فقط بهذا السعر أو أفضل". يحميك من الدفع الزائد.
+
+= Stop-loss
+> إيقاف الخسارة
+
+= An automatic sell order if the price falls to a level you choose. It limits how much you can lose.
+> أمر بيع تلقائي إذا هبط السعر إلى مستوى تختاره. يحدّ من مقدار خسارتك.
+
+= P/E ratio
+> مكرر الربحية (P/E)
+
+= Price divided by yearly profit per share. P/E 20 = you pay $20 for every $1 the company earns. Lower can mean cheaper.
+> السعر مقسوماً على الربح السنوي للسهم. P/E 20 = تدفع 20$ لكل 1$ تربحه الشركة. الأقل قد يعني أرخص.
+
+= Price target
+> السعر المستهدف
+
+= Where Wall Street analysts think the price will be in about 12 months.
+> السعر الذي يتوقعه محللو وول ستريت بعد نحو 12 شهراً.
+
+= Fair value
+> القيمة العادلة
+
+= Stock Rover's estimate of what the stock is really worth. Price below fair value = possibly "on sale".
+> تقدير Stock Rover لقيمة السهم الحقيقية. السعر تحت القيمة العادلة = ربما "بسعر مخفّض".
+
+= WallStreetZen's 0-100 grade for a company's overall quality (higher = better).
+> درجة WallStreetZen من 0 إلى 100 لجودة الشركة الإجمالية (الأعلى = أفضل).
+
+= Moving average (50-day, 200-day)
+> المتوسط المتحرك (50 يوماً، 200 يوم)
+
+= The average price of the last 50 or 200 days. Price above them = generally an uptrend.
+> متوسط السعر لآخر 50 أو 200 يوم. السعر فوقه = اتجاه صاعد عموماً.
+
+= A 0-100 meter of how fast a price moved recently. Above 70 = maybe "overheated", below 30 = maybe "oversold".
+> مقياس من 0 إلى 100 لسرعة تحرك السعر مؤخراً. فوق 70 = ربما "محموم"، تحت 30 = ربما "مُفرط في البيع".
+
+= A momentum gauge. When it turns positive, the price is speeding up; negative = slowing down.
+> مقياس للزخم. عندما يصبح إيجابياً يتسارع السعر؛ والسلبي = يتباطأ.
+
+= StockCharts Technical Rank: 0-99 score of how strong a stock's chart is compared to others. 90+ = among the strongest.
+> تصنيف StockCharts الفني: درجة من 0 إلى 99 لقوة رسم السهم مقارنة بغيره. 90+ = من الأقوى.
+
+= Candlestick chart
+> الرسم البياني بالشموع
+
+= Each day is drawn as a 'candle': the thick body goes from the opening to the closing price (green = it rose that day, red = it fell), and the thin wicks show the day's high and low.
+> يُرسم كل يوم كـ"شمعة": الجسم السميك من سعر الافتتاح إلى سعر الإغلاق (أخضر = ارتفع ذلك اليوم، أحمر = هبط)، والفتائل الرفيعة تُظهر أعلى وأدنى سعر في اليوم.
+
+= SMA / EMA
+> SMA / EMA
+
+= Simple / Exponential Moving Average: the average price of the last N days drawn as a smooth line. The EMA gives recent days more weight, so it reacts faster.
+> المتوسط المتحرك البسيط / الأسي: متوسط السعر لآخر N يوم مرسوماً كخط ناعم. يعطي EMA وزناً أكبر للأيام الأخيرة فيتفاعل أسرع.
+
+= Bollinger Bands
+> نطاقات بولينجر
+
+= A band drawn 2 'standard deviations' above and below the 20-day average. Price near the top band = it rose fast lately; near the bottom = it fell fast lately.
+> نطاق مرسوم على بُعد "انحرافين معياريين" فوق متوسط 20 يوماً وتحته. السعر قرب النطاق العلوي = ارتفع بسرعة؛ قرب السفلي = هبط بسرعة.
+
+= Market cap
+> القيمة السوقية
+
+= Market capitalisation: share price x number of shares = what the whole company is worth on the stock market.
+> القيمة السوقية: سعر السهم × عدد الأسهم = قيمة الشركة كلها في السوق.
+
+= Beta
+> بيتا
+
+= How much a stock swings compared with the whole market. Beta 1 = moves like the market, 2 = twice as much, 0.5 = half as much.
+> مدى تقلب السهم مقارنة بالسوق كله. بيتا 1 = يتحرك مثل السوق، 2 = ضعفه، 0.5 = نصفه.
+
+= Earnings Per Share: the company's profit divided by its number of shares.
+> ربحية السهم: ربح الشركة مقسوماً على عدد أسهمها.
+
+= Dividend yield
+> عائد التوزيعات
+
+= The cash a company pays its shareholders each year, as a % of the share price.
+> النقد الذي تدفعه الشركة لمساهميها كل عام، كنسبة % من سعر السهم.
+
+= Debt / equity
+> الدين / حقوق الملكية
+
+= How much the company has borrowed compared with what its owners have put in. Lower usually means safer.
+> ما اقترضته الشركة مقارنة بما وضعه مالكوها. الأقل يعني غالباً أكثر أماناً.
+
+= Volume
+> الحجم
+
+= How many shares were bought and sold. A big move on high volume is taken more seriously than one on low volume.
+> عدد الأسهم التي بيعت واشتريت. الحركة الكبيرة بحجم مرتفع تؤخذ بجدية أكبر من حركة بحجم منخفض.
+
+= Volume-Weighted Average Price: the average price everyone paid today. Day traders use it as a line in the sand.
+> متوسط السعر المرجّح بالحجم: متوسط ما دفعه الجميع اليوم. يستخدمه المتداولون اليوميون كخط فاصل.
+
+= Volatility
+> التقلب
+
+= How much a price jumps around. High volatility = bigger gains AND bigger losses.
+> مدى قفز السعر صعوداً وهبوطاً. التقلب المرتفع = أرباح أكبر وخسائر أكبر.
+
+= Bullish / Bearish
+> متفائل (صاعد) / متشائم (هابط)
+
+= Bullish = expecting prices to go up. Bearish = expecting prices to go down.
+> المتفائل = يتوقع ارتفاع الأسعار. المتشائم = يتوقع هبوطها.
+
+= Bull market / Bear market
+> سوق صاعدة / سوق هابطة
+
+= A bull market is a long period of rising prices (usually +20% or more). A bear market is a long fall of 20% or more.
+> السوق الصاعدة فترة طويلة من ارتفاع الأسعار (عادة +20% أو أكثر). والسوق الهابطة هبوط طويل بنسبة 20% أو أكثر.
+
+= Correction
+> التصحيح
+
+= A drop of about 10% from a recent high. Corrections are normal and happen often.
+> هبوط بنحو 10% من قمة حديثة. التصحيحات طبيعية وتحدث كثيراً.
+
+= Recession
+> الركود
+
+= When a country's economy shrinks for a while (often two quarters in a row). Company profits and stock prices usually suffer.
+> عندما ينكمش اقتصاد بلد لفترة (غالباً ربعين متتاليين). تتضرر عادةً أرباح الشركات وأسعار الأسهم.
+
+= Inflation
+> التضخم
+
+= Prices of everyday things rising over time. High inflation usually leads central banks to raise interest rates.
+> ارتفاع أسعار الأشياء اليومية مع الوقت. التضخم المرتفع يدفع البنوك المركزية عادة لرفع الفائدة.
+
+= Interest rate
+> سعر الفائدة
+
+= The price of borrowing money. When central banks raise rates, borrowing costs more and stocks often fall.
+> ثمن اقتراض المال. عندما ترفع البنوك المركزية الفائدة يصبح الاقتراض أغلى وغالباً تهبط الأسهم.
+
+= Central bank
+> البنك المركزي
+
+= The bank that runs a country's money, like the Fed (US), the ECB (Eurozone), the Bank of Japan. It sets the main interest rate.
+> البنك الذي يدير نقود بلد ما، مثل الاحتياطي الفيدرالي (أمريكا) والبنك المركزي الأوروبي وبنك اليابان. يحدد سعر الفائدة الرئيسي.
+
+= Bond
+> السند
+
+= A loan you give to a government or company. They pay you interest and give the money back at the end.
+> قرض تقدمه لحكومة أو شركة. يدفعون لك فائدة ويعيدون المال في النهاية.
+
+= Yield
+> العائد
+
+= How much income an investment pays each year, as a % of its price (for example a bond's interest or a stock's dividend).
+> الدخل الذي يدرّه الاستثمار سنوياً كنسبة % من سعره (مثل فائدة السند أو توزيعات السهم).
+
+= Blue chip
+> الأسهم القيادية
+
+= A big, well-known, financially strong company - usually considered safer.
+> شركة كبيرة ومعروفة وقوية مالياً - تُعدّ عادةً أكثر أماناً.
+
+= Penny stock
+> أسهم البنس
+
+= A very cheap stock (often under $5) of a small company. Very risky and easy to manipulate.
+> سهم رخيص جداً (غالباً أقل من 5$) لشركة صغيرة. خطير جداً وسهل التلاعب.
+
+= Sector
+> القطاع
+
+= A group of companies in the same business, like technology, banks, energy or health care.
+> مجموعة شركات في النشاط نفسه، مثل التقنية والبنوك والطاقة والرعاية الصحية.
+
+= Index fund
+> صندوق المؤشر
+
+= A fund that simply copies an index (like the S&P 500). Low cost and a good start for beginners.
+> صندوق ينسخ مؤشراً ببساطة (مثل S&P 500). تكلفته منخفضة وبداية جيدة للمبتدئين.
+
+= Portfolio
+> المحفظة
+
+= All the investments you own together.
+> كل الاستثمارات التي تملكها معاً.
+
+= Dollar-cost averaging (DCA)
+> متوسط التكلفة الدوري (DCA)
+
+= Investing the same amount regularly (for example every month), whatever the price. It smooths out ups and downs.
+> استثمار المبلغ نفسه بانتظام (كل شهر مثلاً) أياً كان السعر. يخفف أثر الصعود والهبوط.
+
+= Rebalancing
+> إعادة التوازن
+
+= Bringing your portfolio back to the mix you planned, by selling a bit of what grew and buying what fell.
+> إعادة محفظتك إلى التوزيع الذي خططت له ببيع جزء مما ارتفع وشراء ما انخفض.
+
+= Bid / Ask / Spread
+> سعر الطلب / العرض / الفارق
+
+= Bid = the highest price buyers offer, Ask = the lowest price sellers want. The spread is the gap between them - a hidden cost.
+> سعر الطلب = أعلى سعر يعرضه المشترون، وسعر العرض = أدنى سعر يريده البائعون. الفارق هو الفجوة بينهما - تكلفة خفية.
+
+= Market order
+> أمر السوق
+
+= An order to buy or sell right now at whatever the price is. Fast, but the price can surprise you.
+> أمر شراء أو بيع فوري بأي سعر متاح. سريع، لكن السعر قد يفاجئك.
+
+= Stop-limit order
+> أمر إيقاف محدد السعر
+
+= Like a stop-loss, but it only sells at your limit price or better - so it might not sell in a fast fall.
+> مثل إيقاف الخسارة، لكنه لا يبيع إلا بسعرك المحدد أو أفضل - فقد لا يبيع في هبوط سريع.
+
+= Margin
+> الهامش
+
+= Money borrowed from your broker to invest. It makes gains and losses bigger - risky for beginners.
+> مال مقترض من وسيطك للاستثمار. يضخّم الأرباح والخسائر - خطير للمبتدئين.
+
+= Leverage
+> الرافعة المالية
+
+= Using borrowed money (or options) so a small price move makes a big gain or loss.
+> استخدام مال مقترض (أو خيارات) بحيث تُحدث حركة سعرية صغيرة ربحاً أو خسارة كبيرة.
+
+= Liquidity
+> السيولة
+
+= How easily you can buy or sell something quickly at a fair price. Big stocks are very liquid.
+> سهولة بيع شيء أو شرائه بسرعة وبسعر عادل. الأسهم الكبيرة عالية السيولة.
+
+= Short squeeze
+> الضغط على البائعين على المكشوف
+
+= When a stock that many people bet against rises fast, forcing them to buy it back, which pushes the price up even more.
+> عندما يرتفع بسرعة سهمٌ راهن كثيرون على هبوطه، فيُجبرون على إعادة شرائه، مما يرفع السعر أكثر.
+
+= Earnings
+> الأرباح
+
+= A company's profit. Companies report earnings every 3 months - prices often jump or fall that day.
+> ربح الشركة. تعلن الشركات أرباحها كل 3 أشهر - وغالباً تقفز الأسعار أو تهبط في ذلك اليوم.
+
+= Guidance
+> التوقعات المستقبلية
+
+= What a company says it expects for the next months. Disappointing guidance often hurts the price more than past results.
+> ما تقول الشركة إنها تتوقعه للأشهر القادمة. التوقعات المخيبة تضر السعر غالباً أكثر من النتائج السابقة.
+
+= Stock split
+> تجزئة الأسهم
+
+= Cutting each share into several cheaper ones (for example 1 into 10). It doesn't change what your shares are worth.
+> تقسيم كل سهم إلى عدة أسهم أرخص (مثلاً 1 إلى 10). لا يغيّر قيمة أسهمك.
+
+= Buyback
+> إعادة شراء الأسهم
+
+= When a company buys its own shares. Fewer shares left usually supports the price.
+> عندما تشتري الشركة أسهمها. قلة الأسهم المتبقية تدعم السعر عادةً.
+
+= Ex-dividend date
+> تاريخ استحقاق التوزيعات
+
+= You must own the stock BEFORE this date to receive the next dividend.
+> يجب أن تملك السهم قبل هذا التاريخ لتحصل على التوزيعات القادمة.
+
+= Implied volatility (IV)
+> التقلب الضمني (IV)
+
+= How big a move the options market expects. High IV makes options more expensive.
+> حجم الحركة التي يتوقعها سوق الخيارات. ارتفاع IV يجعل الخيارات أغلى.
+
+= Delta / Theta (the Greeks)
+> دلتا / ثيتا (الإغريقيات)
+
+= Delta: how much an option's price moves when the stock moves $1. Theta: how much value it loses each day from time decay.
+> دلتا: مقدار تحرك سعر الخيار عندما يتحرك السهم 1$. ثيتا: القيمة التي يفقدها كل يوم بسبب مرور الوقت.
+
+= In / out of the money
+> داخل / خارج نطاق الربح
+
+= A call is "in the money" when the stock is above the strike (a put: below). "Out of the money" options are cheaper but riskier.
+> يكون خيار الشراء "داخل نطاق الربح" عندما يكون السهم فوق سعر التنفيذ (وخيار البيع: تحته). الخيارات "خارج نطاق الربح" أرخص لكنها أخطر.
+
+= Covered call
+> خيار شراء مغطى
+
+= Owning 100 shares and selling a call on them to earn extra income. You give up big gains above the strike.
+> امتلاك 100 سهم وبيع خيار شراء عليها لكسب دخل إضافي. تتخلى عن الأرباح الكبيرة فوق سعر التنفيذ.
+
+= Hedge
+> التحوّط
+
+= An investment that protects you against losses on another one - like insurance.
+> استثمار يحميك من خسائر استثمار آخر - مثل التأمين.
+
+= Risk / reward
+> المخاطرة / العائد
+
+= How much you could lose compared with how much you could win. Good trades risk little to win a lot.
+> مقدار ما قد تخسره مقارنة بما قد تربحه. الصفقات الجيدة تخاطر بالقليل لتربح الكثير.
+
+= American Depositary Receipt: a foreign company's shares traded in the US, in dollars (for example TSM for TSMC).
+> إيصال إيداع أمريكي: أسهم شركة أجنبية تُتداول في أمريكا بالدولار (مثل TSM لشركة TSMC).
+
+= All-Time High: the highest price a stock has ever reached.
+> أعلى مستوى تاريخي: أعلى سعر بلغه السهم على الإطلاق.
+
+= Assets Under Management: how much money a fund manages.
+> الأصول المُدارة: حجم المال الذي يديره صندوق.
+
+= Compound Annual Growth Rate: the average yearly growth over several years, including compounding.
+> معدل النمو السنوي المركب: متوسط النمو السنوي على عدة سنوات مع احتساب التراكم.
+
+= Discounted Cash Flow: a way to estimate what a company is worth from the cash it should make in future.
+> التدفقات النقدية المخصومة: طريقة لتقدير قيمة الشركة من النقد الذي يُتوقع أن تجنيه مستقبلاً.
+
+= Earnings Before Interest, Taxes, Depreciation and Amortization - a rough measure of a company's operating profit.
+> الأرباح قبل الفوائد والضرائب والإهلاك والاستهلاك - مقياس تقريبي لربح الشركة التشغيلي.
+
+= Free Cash Flow: the cash a company has left after paying for its operations and investments.
+> التدفق النقدي الحر: النقد المتبقي للشركة بعد دفع تكاليف عملياتها واستثماراتها.
+
+= Federal Open Market Committee: the group at the US Fed that decides interest rates, 8 times a year.
+> لجنة السوق المفتوحة الفيدرالية: المجموعة في الاحتياطي الفيدرالي الأمريكي التي تقرر الفائدة 8 مرات سنوياً.
+
+= Consumer Price Index: the main measure of inflation (how fast everyday prices rise).
+> مؤشر أسعار المستهلك: المقياس الرئيسي للتضخم (سرعة ارتفاع الأسعار اليومية).
+
+= Gross Domestic Product: the total value of everything a country produces - the size of its economy.
+> الناتج المحلي الإجمالي: القيمة الكلية لكل ما ينتجه بلد ما - حجم اقتصاده.
+
+= Initial Public Offering: when a company sells shares to the public for the first time.
+> الطرح العام الأولي: عندما تبيع شركة أسهمها للجمهور لأول مرة.
+
+= Mergers and Acquisitions: companies joining or buying each other.
+> الاندماج والاستحواذ: شركات تتحد أو تشتري بعضها.
+
+= Net Asset Value: what one share of a fund is worth, based on everything it owns.
+> صافي قيمة الأصول: قيمة حصة واحدة في صندوق بناءً على كل ما يملكه.
+
+= P/B ratio
+> نسبة السعر إلى القيمة الدفترية
+
+= Price-to-Book: the share price divided by what the company's assets are worth on paper. Below 1 can mean cheap.
+> السعر إلى القيمة الدفترية: سعر السهم مقسوماً على قيمة أصول الشركة على الورق. أقل من 1 قد يعني رخيصاً.
+
+= P/S ratio
+> نسبة السعر إلى المبيعات
+
+= Price-to-Sales: the company's value divided by its yearly sales. Useful for companies with no profit yet.
+> السعر إلى المبيعات: قيمة الشركة مقسومة على مبيعاتها السنوية. مفيد للشركات التي لم تربح بعد.
+
+= PEG ratio
+> نسبة PEG
+
+= P/E divided by the expected profit growth. Around 1 or below can mean a fair price for a growing company.
+> مكرر الربحية مقسوماً على نمو الأرباح المتوقع. حول 1 أو أقل قد يعني سعراً عادلاً لشركة نامية.
+
+= ROE / ROA
+> العائد على حقوق الملكية / الأصول
+
+= Return on Equity / on Assets: how much profit the company makes with its owners' money / with everything it owns.
+> العائد على حقوق الملكية / على الأصول: مقدار ربح الشركة بأموال مالكيها / بكل ما تملكه.
+
+= Return on Investment: how much you gained or lost compared with what you put in.
+> العائد على الاستثمار: مقدار ما ربحته أو خسرته مقارنة بما وضعته.
+
+= Year To Date: since January 1st of this year.
+> منذ بداية العام: منذ 1 يناير من هذا العام.
+
+= YoY / QoQ
+> سنوي / ربع سنوي
+
+= Year over Year / Quarter over Quarter: compared with the same period last year / the previous 3 months.
+> على أساس سنوي / ربع سنوي: مقارنة بالفترة نفسها من العام الماضي / بالأشهر الثلاثة السابقة.
+
+= Over The Counter: shares traded outside the big exchanges - often foreign or small companies.
+> التداول خارج البورصة (OTC): أسهم تُتداول خارج البورصات الكبرى - غالباً لشركات أجنبية أو صغيرة.
+
+= Securities and Exchange Commission: the US authority that oversees the stock market and company reports.
+> هيئة الأوراق المالية والبورصات الأمريكية: الجهة التي تراقب سوق الأسهم وتقارير الشركات.
+
+= Practising with fake money in a broker's simulator. The best way to learn options safely.
+> التدرّب بمال وهمي في محاكي لدى وسيط. أفضل طريقة لتعلّم الخيارات بأمان.
+
+= Diversification
+> التنويع
+
+= Spreading money across many stocks so one bad one doesn't sink you.
+> توزيع المال على أسهم كثيرة حتى لا يُغرقك سهم سيئ واحد.
+
+= Previous close
+> الإغلاق السابق
+
+= Open
+> الافتتاح
+
+= Day's range
+> نطاق اليوم
+
+= 52-week range
+> نطاق 52 أسبوعاً
+
+= Avg. volume (3 months)
+> متوسط الحجم (3 أشهر)
+
+= Beta (5Y monthly)
+> بيتا (5 سنوات، شهري)
+
+= P/E ratio (TTM)
+> مكرر الربحية (آخر 12 شهراً)
+
+= Forward P/E
+> مكرر الربحية المستقبلي
+
+= EPS (TTM)
+> ربحية السهم (آخر 12 شهراً)
+
+= Earnings date
+> تاريخ إعلان الأرباح
+
+= Dividend & yield
+> التوزيعات والعائد
+
+= 1y target estimate
+> السعر المستهدف لسنة
+
+= Analyst rating
+> تقييم المحللين
+
+= Revenue (TTM)
+> الإيرادات (12 شهراً)
+
+= Net income (TTM)
+> صافي الدخل (12 شهراً)
+
+= Shares outstanding
+> الأسهم القائمة
+
+= Profit margin
+> هامش الربح
+
+= Return on equity
+> العائد على حقوق الملكية
+
+= Revenue growth (YoY)
+> نمو الإيرادات (سنوي)
+
+= Current ratio
+> نسبة التداول
+
+= The price when the market closed last time.
+> السعر عند آخر إغلاق للسوق.
+
+= Today's lowest and highest price.
+> أدنى وأعلى سعر اليوم.
+
+= The lowest and highest price in the past year.
+> أدنى وأعلى سعر في السنة الماضية.
+
+= How many shares changed hands today.
+> عدد الأسهم التي تم تداولها اليوم.
+
+= How many shares usually change hands in a day.
+> عدد الأسهم التي تُتداول عادة في اليوم.
+
+= What the whole company is worth on the stock market.
+> قيمة الشركة كلها في سوق الأسهم.
+
+= How much the stock swings compared with the whole market. 1 = same, 2 = twice as much.
+> مدى تقلب السهم مقارنة بالسوق كله. 1 = مثله، 2 = ضعفه.
+
+= Price divided by the last 12 months' profit per share. Lower can mean cheaper.
+> السعر مقسوماً على ربح السهم في آخر 12 شهراً. الأقل قد يعني أرخص.
+
+= Like P/E, but using next year's expected profit.
+> مثل مكرر الربحية لكن باستخدام ربح العام القادم المتوقع.
+
+= Profit per share over the last 12 months.
+> ربح السهم خلال آخر 12 شهراً.
+
+= When the company next reports its results - prices often jump that day.
+> موعد إعلان الشركة نتائجها القادمة - غالباً تقفز الأسعار ذلك اليوم.
+
+= Cash paid to shareholders each year, and as a % of the price.
+> النقد المدفوع للمساهمين سنوياً، وكنسبة % من السعر.
+
+= Where analysts think the price will be in a year.
+> السعر الذي يتوقعه المحللون بعد سنة.
+
+= How many cents of every $1 of sales the company keeps as profit.
+> كم سنتاً من كل 1$ مبيعات تحتفظ به الشركة كربح.
+
+= How much profit the company makes with its owners' money.
+> مقدار الربح الذي تحققه الشركة بأموال مالكيها.
+
+= How much the company borrowed compared with what it owns. Lower is safer.
+> ما اقترضته الشركة مقارنة بما تملكه. الأقل أكثر أماناً.
+
+= Can it pay its bills this year? Above 1 is usually fine.
+> هل تستطيع دفع فواتيرها هذا العام؟ فوق 1 يكون جيداً عادة.
+
+= Line
+> خطي
+
+= Area
+> مساحي
+
+= Nothing
+> لا شيء
+
+= Best Buys
+> أفضل المشتريات
+
+= Sells & Shorts
+> البيع والبيع على المكشوف
+
+= Best Calls
+> أفضل خيارات الشراء
+
+= Best Puts
+> أفضل خيارات البيع
+
+= 0DTE (today)
+> 0DTE (اليوم)
+
+= Best buys today
+> أفضل مشتريات اليوم
+
+= Stocks where most sources see good signs. [+] = a source likes it, [-] = a source sees a problem. More stars = sources agree more.
+> أسهم ترى فيها معظم المصادر إشارات جيدة. [+] = مصدر يحبه، [-] = مصدر يرى مشكلة. نجوم أكثر = اتفاق أكبر بين المصادر.
+
+= No stock had enough good signals today. That's OK - waiting is a strategy too.
+> لم يكن لدى أي سهم إشارات جيدة كافية اليوم. لا بأس - الانتظار استراتيجية أيضاً.
+
+= Sells & shorts
+> البيع والبيع على المكشوف
+
+= Stocks where most sources see warning signs. If you own one, think about selling or protecting it; if you don't, this means "don't buy right now". 
+> أسهم ترى فيها معظم المصادر إشارات تحذير. إن كنت تملك أحدها ففكّر في بيعه أو حمايته؛ وإن لم تكن، فهذا يعني "لا تشترِ الآن". 
+
+= Ideas marked SHORT are also in a clear downtrend - shorting is for advanced traders only.
+> الأفكار الموسومة SHORT في اتجاه هابط واضح أيضاً - البيع على المكشوف للمتداولين المتقدمين فقط.
+
+= No stock had strong sell signals today.
+> لم يكن لدى أي سهم إشارات بيع قوية اليوم.
+
+= Best calls (bet on up, 1-2 months)
+> أفضل خيارات الشراء (مراهنة على الصعود، 1-2 شهر)
+
+= Call options on stocks with strong, clear good signals and a rising price. Costs are estimates - check your broker.
+> خيارات شراء على أسهم ذات إشارات جيدة قوية وواضحة وسعر صاعد. التكاليف تقديرية - تحقّق لدى وسيطك.
+
+= No stock had signals strong and clear enough for a call today.
+> لم يكن لدى أي سهم إشارات قوية وواضحة بما يكفي لخيار شراء اليوم.
+
+= Best puts (bet on down, 1-2 months)
+> أفضل خيارات البيع (مراهنة على الهبوط، 1-2 شهر)
+
+= Put options on stocks with strong warning signs and a falling price. A put is the beginner-safer way to bet on a fall: you can't lose more than you paid.
+> خيارات بيع على أسهم ذات إشارات تحذير قوية وسعر هابط. خيار البيع هو الطريقة الأكثر أماناً للمبتدئ للمراهنة على الهبوط: لا يمكنك خسارة أكثر مما دفعت.
+
+= No stock had signals strong and clear enough for a put today.
+> لم يكن لدى أي سهم إشارات قوية وواضحة بما يكفي لخيار بيع اليوم.
+
+= 0DTE ideas (expire today)
+> أفكار 0DTE (تنتهي اليوم)
+
+= Options on SPY and QQQ that expire at today's close. Extremely risky - often the best idea is to sit out.
+> خيارات على SPY وQQQ تنتهي عند إغلاق اليوم. خطيرة للغاية - غالباً أفضل فكرة هي البقاء خارج السوق.
+
+= Today's Ideas
+> أفكار اليوم
+
+= World Markets
+> الأسواق العالمية
+
+= World Stocks
+> الأسهم العالمية
+
+= Economic Calendar
+> المفكرة الاقتصادية
+
+= Look Up a Stock
+> ابحث عن سهم
+
+= All Stocks
+> كل الأسهم
+
+= Market News
+> أخبار السوق
+
+= Price Alerts
+> تنبيهات الأسعار
+
+= Paper Trading
+> التداول الوهمي
+
+= Track Record
+> سجل الأداء
+
+= Dictionary
+> القاموس
+
+= My Watchlist
+> قائمتي
+
+= Data Sources
+> مصادر البيانات
+
+= Buys, sells, options, shorts and 0DTE
+> شراء، بيع، خيارات، بيع على المكشوف و0DTE
+
+= The 16 biggest stock markets
+> أكبر 16 سوق أسهم
+
+= Big companies abroad + where to buy
+> شركات أجنبية كبرى + أين تشتريها
+
+= Big news this week
+> أهم أخبار الأسبوع
+
+= Full explanation and chart
+> الشرح الكامل والرسم البياني
+
+= Every stock checked (30 days)
+> كل الأسهم التي فحصتها (30 يوماً)
+
+= Headlines in your language
+> عناوين بلغتك
+
+= Get told when a price is reached
+> تنبيه عند بلوغ سعر معيّن
+
+= Practise with pretend money
+> تدرّب بمال وهمي
+
+= How past ideas turned out
+> كيف كانت نتائج الأفكار السابقة
+
+= Investing words made simple
+> مصطلحات الاستثمار ببساطة
+
+= Stocks you always want checked
+> أسهم تريد فحصها دائماً
+
+= Which websites worked
+> أي المواقع عملت
+
+= World markets
+> الأسواق العالمية
+
+= Economic calendar
+> المفكرة الاقتصادية
+
+= All stocks
+> كل الأسهم
+
+= Price alerts
+> تنبيهات الأسعار
+
+= Data sources
+> مصادر البيانات
+
+= S&P 500 (500 biggest US companies)
+> S&P 500 (أكبر 500 شركة أمريكية)
+
+= Nasdaq (US tech-heavy)
+> ناسداك (يغلب عليه قطاع التقنية الأمريكي)
+
+= Dow Jones (30 big US companies)
+> داو جونز (30 شركة أمريكية كبيرة)
+
+= TSX (Canada)
+> TSX (كندا)
+
+= Bovespa (Brazil)
+> بوفيسبا (البرازيل)
+
+= Brazil
+> البرازيل
+
+= FTSE 100 (UK)
+> فوتسي 100 (المملكة المتحدة)
+
+= DAX (Germany)
+> داكس (ألمانيا)
+
+= Germany
+> ألمانيا
+
+= CAC 40 (France)
+> كاك 40 (فرنسا)
+
+= France
+> فرنسا
+
+= Euro Stoxx 50 (Eurozone)
+> يورو ستوكس 50 (منطقة اليورو)
+
+= Europe
+> أوروبا
+
+= Nikkei 225 (Japan)
+> نيكاي 225 (اليابان)
+
+= Shanghai Composite (China)
+> مؤشر شنغهاي المركب (الصين)
+
+= Hang Seng (Hong Kong)
+> هانغ سنغ (هونغ كونغ)
+
+= Hong Kong
+> هونغ كونغ
+
+= Sensex (India)
+> سينسكس (الهند)
+
+= India
+> الهند
+
+= KOSPI (South Korea)
+> كوسبي (كوريا الجنوبية)
+
+= South Korea
+> كوريا الجنوبية
+
+= TAIEX (Taiwan)
+> تايكس (تايوان)
+
+= Taiwan
+> تايوان
+
+= ASX 200 (Australia)
+> ASX 200 (أستراليا)
+
+= Your CSV files
+> ملفات CSV الخاصة بك
+
+= World markets (Yahoo Finance)
+> الأسواق العالمية (Yahoo Finance)
+
+= Economic calendar (ForexFactory)
+> المفكرة الاقتصادية (ForexFactory)
+
+= Market news (Google News)
+> أخبار السوق (أخبار Google)
+
+= WallStreetBets sentiment (WSB API)
+> اتجاه WallStreetBets (واجهة WSB)
+
+= StockCharts-style technicals
+> مؤشرات فنية بأسلوب StockCharts
+
+= SEC EDGAR (official filings)
+> SEC EDGAR (الإفصاحات الرسمية)
+
+= News sentiment (Alpha Vantage)
+> اتجاه الأخبار (Alpha Vantage)
+
+= World stocks (16 biggest markets)
+> الأسهم العالمية (أكبر 16 سوقاً)
+
+= PRACTICE MODE
+> وضع التدريب
+
+= Skin:
+> المظهر:
+
+= Market:
+> السوق:
+
+= Trade:
+> صفقة:
+
+= Chart:
+> الرسم:
+
+= Period:
+> الفترة:
+
+= Lines:
+> الخطوط:
+
+=  days
+>  يوماً
+
+= Reddit:
+> Reddit:
+
+= today
+> اليوم
+
+= OPEN
+> مفتوح
+
+= closed
+> مغلق
+
+=  post
+>  منشور
+
+= updated 
+> حُدّث 
+
+= a strong, happy day
+> يوماً قوياً وسعيداً
+
+= a mildly positive day
+> يوماً إيجابياً قليلاً
+
+= a quiet, mixed day
+> يوماً هادئاً ومتبايناً
+
+= a mildly negative day
+> يوماً سلبياً قليلاً
+
+= a rough day
+> يوماً صعباً
+
+=  at 
+>  عند 
+
+= Source:
+> المصدر:
+
+= Show:
+> عرض:
+
+= top 
+> أفضل 
+
+= bullish
+> متفائل
+
+= bearish
+> متشائم
+
+= neutral
+> محايد
+
+= StockCharts-style chart analysis
+> تحليل الرسم بأسلوب StockCharts
+
+= stockanalysis.com (company numbers & analysts)
+> stockanalysis.com (أرقام الشركة والمحللون)
+
+= Stock Rover (fair value & scores)
+> Stock Rover (القيمة العادلة والنتائج)
+
+= Finnhub (analyst recommendations)
+> Finnhub (توصيات المحللين)
+
+= SEC EDGAR (official company reports)
+> SEC EDGAR (التقارير الرسمية للشركات)
+
+= Reddit (r/ValueInvesting, r/options, r/wallstreetbets)
+> Reddit (r/ValueInvesting وr/options وr/wallstreetbets)
+
+= overpriced
+> مقوّم بأعلى من قيمته
+
+= Where to buy: 
+> أين تشتري: 
+
+= In your broker app, search 
+> في تطبيق وسيطك، ابحث عن 
+
+= , choose "Buy", and use a LIMIT order near 
+> ، واختر "شراء"، واستخدم أمراً محدد السعر قرب 
+
+=  so you don't overpay.
+>  كي لا تدفع أكثر من اللازم.
+
+= Only put in money you can leave alone for months; don't put everything into one stock.
+> استثمر فقط مالاً يمكنك تركه لأشهر؛ ولا تضع كل شيء في سهم واحد.
+
+= If you own 
+> إذا كنت تملك 
+
+= , you could sell part (for example half) to lower your risk, or set a stop-loss just below today's price.
+> ، يمكنك بيع جزء منه (النصف مثلاً) لتقليل المخاطرة، أو وضع أمر إيقاف خسارة تحت سعر اليوم بقليل.
+
+= If you don't own it: this just means "don't buy it right now".
+> إذا لم تكن تملكه: هذا يعني ببساطة "لا تشترِه الآن".
+
+= SHORT (advanced): "shorting" means borrowing shares, selling them now and buying them back later - you profit if the price FALLS. You need a margin account.
+> البيع على المكشوف (متقدم): يعني اقتراض أسهم وبيعها الآن ثم إعادة شرائها لاحقاً - تربح إذا هبط السعر. تحتاج حساب هامش.
+
+= A CALL gains value if the stock goes UP. It gives you the right to buy 100 shares at the strike price.
+> خيار CALL تزيد قيمته إذا ارتفع السهم. يمنحك الحق في شراء 100 سهم بسعر التنفيذ.
+
+= above
+> فوق
+
+= below
+> تحت
+
+= Many traders take profit at +50% and cut losses at -50% instead of waiting until expiry.
+> كثير من المتداولين يجنون الربح عند +50% ويقطعون الخسارة عند -50% بدل انتظار الانتهاء.
+
+= The US market is closed (it's open 9:30am-4:00pm New York time, Monday-Friday; it's 
+> السوق الأمريكية مغلقة (تفتح من 9:30 صباحاً إلى 4:00 مساءً بتوقيت نيويورك، من الاثنين إلى الجمعة؛ الساعة هناك الآن 
+
+= Run the program again during market hours. The first 30 minutes are very jumpy, so most people wait until about 10:00am.
+> شغّل البرنامج مجدداً خلال ساعات التداول. أول 30 دقيقة متقلبة جداً، لذا ينتظر معظم الناس حتى نحو العاشرة صباحاً.
+
+= ABOVE
+> فوق
+
+= BELOW
+> تحت
+
+= The signals disagree, and with no clear direction 0DTE options usually just lose value. Not trading is a valid choice!
+> الإشارات متعارضة، ومن دون اتجاه واضح تفقد خيارات 0DTE قيمتها عادةً. عدم التداول خيار صحيح!
+
+= Check again later in the day if a clear trend shows up.
+> تحقّق مجدداً لاحقاً اليوم إن ظهر اتجاه واضح.
+
+= Price is rising steadily and staying above VWAP: buyers are in control right now.
+> السعر يرتفع باستمرار ويبقى فوق VWAP: المشترون يسيطرون الآن.
+
+= Decide your exit BEFORE buying: e.g. sell at +30% profit or -30% loss, and always close before 3:45pm.
+> حدّد خروجك قبل الشراء: مثلاً بِع عند ربح +30% أو خسارة -30%، وأغلق دائماً قبل 3:45 مساءً.
+
+= Less than 1 hour left: prices move extremely fast now. Even more caution needed.
+> تبقّى أقل من ساعة: الأسعار تتحرك بسرعة كبيرة الآن. يلزم حذر أكبر.
+
+= Seen on 
+> شوهد على 
+
+= MEDIUM
+> متوسط
+
+= a big move in Asia overnight often affects how Europe and the US start the day.</html>
+> الحركة الكبيرة في آسيا ليلاً تؤثر غالباً في بداية يوم أوروبا وأمريكا.</html>
+
+=  rises above 
+>  يرتفع فوق 
+
+=  falls below 
+>  يهبط تحت 
+
+=  moves more than 
+>  يتحرك أكثر من 
+
+= % in a day (up or down)
+> % في يوم (صعوداً أو هبوطاً)
+
+=  - now 
+>  - الآن 
+
+= Buy 
+> اشترِ 
+
+=  in almost any broker app - it trades on the 
+>  من أي تطبيق وساطة تقريباً - يُتداول في 
+
+=  in US dollars.
+>  بالدولار الأمريكي.
+
+= Simplest way to own the 500 biggest US companies at once: an S&P 500 ETF such as SPY or VOO.
+> أبسط طريقة لامتلاك أكبر 500 شركة أمريكية دفعة واحدة: صندوق ETF لمؤشر S&P 500 مثل SPY أو VOO.
+
+= Easiest: buy 
+> الأسهل: اشترِ 
+
+=  on the 
+>  في 
+
+=  - almost every broker app has it, priced in US dollars.
+>  - تجده في كل تطبيقات الوساطة تقريباً، بالدولار الأمريكي.
+
+= In the US: 
+> في أمريكا: 
+
+=  on the OTC market. Some broker apps allow it (Schwab, Fidelity, Interactive Brokers...); prices can be less smooth.
+>  في سوق OTC. بعض التطبيقات تسمح بذلك (Schwab وFidelity وInteractive Brokers...)؛ قد تكون الأسعار أقل سلاسة.
+
+= At home: 
+> في بلده: 
+
+= . Needs a broker with international trading 
+> . تحتاج وسيطاً يتيح التداول الدولي 
+
+= (for example Interactive Brokers or Saxo - check what is offered in your country).
+> (مثل Interactive Brokers أو Saxo - تحقّق مما هو متاح في بلدك).
+
+= Mainland China shares are usually bought by foreigners through Hong Kong's "Stock Connect" (international brokers), or via a China ETF.
+> يشتري الأجانب عادةً أسهم الصين القارية عبر "Stock Connect" في هونغ كونغ (وسطاء دوليون) أو عبر صندوق ETF للصين.
+
+= Indian shares are hard for foreigners to buy directly - an India ETF is the practical way.
+> يصعب على الأجانب شراء الأسهم الهندية مباشرة - صندوق ETF للهند هو الطريقة العملية.
+
+= Simplest way to own the whole market: the ETF 
+> أبسط طريقة لامتلاك السوق كله: صندوق ETF 
+
+=  (a basket of this country's big companies, sold in US broker apps).
+>  (سلة من كبرى شركات هذا البلد، متاحة في تطبيقات الوساطة الأمريكية).
+
+= grew
+> نمت بنسبة
+
+= shrank
+> انخفضت بنسبة
+
+= positive
+> إيجابي
+
+= negative
+> سلبي
+
+= mixed
+> متباين
+
+= USA
+> الولايات المتحدة
+
+= UK
+> المملكة المتحدة
+
+= ~OK - data for 
+> OK - بيانات لـ 
+
+= ~ stocks
+>  سهماً
+
+= ~Could not connect
+> تعذّر الاتصال
+
+= ~Not set up - add your free key from finnhub.io (optional)
+> غير مُعدّ - أضف مفتاحك المجاني من finnhub.io (اختياري)
+
+= ~Not set up - add your free key from alphavantage.co (optional)
+> غير مُعدّ - أضف مفتاحك المجاني من alphavantage.co (اختياري)
+
+= ~Not set up - export a CSV from Stock Rover to data/stockrover.csv
+> غير مُعدّ - صدّر ملف CSV من Stock Rover إلى data/stockrover.csv
+
+= ~Could not read - check your Finnhub key
+> تعذّرت القراءة - تحقّق من مفتاح Finnhub
+
+= ~Could not read (site may block programs; you can use data/wallstreetzen.csv)
+> تعذّرت القراءة (قد يحظر الموقع البرامج؛ يمكنك استخدام data/wallstreetzen.csv)
+
+= ~Calculated from price history (StockCharts has no public data feed)
+> محسوب من تاريخ الأسعار (لا توجد بيانات عامة لدى StockCharts)
+
+= ~ stocks from data/stockrover.csv
+>  سهماً من data/stockrover.csv
+
+= ~OK - news sentiment for 
+> OK - اتجاه الأخبار لـ 
+
+= ~ (remembered from earlier today)
+>  (محفوظ من وقت سابق اليوم)
+
+= ~ events this week (
+>  حدثاً هذا الأسبوع (
+
+= ~ high-impact)
+>  عالية التأثير)
+
+= ~Could not connect to the economic calendar (ForexFactory)
+> تعذّر الاتصال بالمفكرة الاقتصادية (ForexFactory)
+
+= ~Not loaded yet
+> لم يُحمَّل بعد
+
+= ~practice data
+> بيانات تدريب
+
+= ~practice posts
+> منشورات تدريب
+
+= ~calculated from practice prices
+> محسوب من أسعار التدريب
+
+= ~All data below is MADE UP for learning - not real prices!
+> كل البيانات أدناه وهمية للتعلّم - ليست أسعاراً حقيقية!
+
+= ~Could not connect to the news feed
+> تعذّر الاتصال بموجز الأخبار
+
+= ~ headlines in 
+>  عنواناً بـ 
+
+= ~ posts read from 
+>  منشوراً مقروءاً من 
+
+= ~, plus 
+> ، إضافة إلى 
+
+= ~OK - using 
+> OK - باستخدام 
+
+= ~ (Reddit itself could not be reached)
+>  (تعذّر الوصول إلى Reddit نفسه)
+
+= ~Could not connect - you can add posts yourself (Data Sources: "Add Reddit posts")
+> تعذّر الاتصال - يمكنك إضافة المنشورات بنفسك (مصادر البيانات: "إضافة منشورات Reddit")
+
+= ~OK - official filings for 
+> OK - إفصاحات رسمية لـ 
+
+= ~ US stocks
+>  سهماً أمريكياً
+
+= ~Could not get data from sec.gov - check your internet; if it keeps failing, add your email (Data Sources) so the SEC knows who is asking
+> تعذّر جلب البيانات من sec.gov - تحقّق من الإنترنت؛ وإن استمر الفشل أضف بريدك (مصادر البيانات) لتعرف SEC من يسأل
+
+= ~ stocks discussed on r/wallstreetbets today
+>  سهماً نوقشت اليوم على r/wallstreetbets
+
+= ~Could not connect to the WallStreetBets sentiment service
+> تعذّر الاتصال بخدمة اتجاه WallStreetBets
+
+= ~ markets
+>  سوقاً
+
+= ~OK - top 
+> OK - أفضل 
+
+= ~ companies of each market (
+>  شركات من كل سوق (
+
+= ~ with prices)
+>  بأسعار)
+
+= ~Could not download their prices
+> تعذّر تنزيل أسعارها
+
+= ~Not set up
+> غير مُعدّ
+
+= ~None yet - you can add any CSV with a Ticker or Symbol column (optional)
+> لا شيء بعد - يمكنك إضافة أي ملف CSV فيه عمود Ticker أو Symbol (اختياري)
+
+= Scroll to zoom in or out, drag to move through time, double-click to reset
+> مرّر للتكبير أو التصغير، واسحب للتنقل عبر الزمن، وانقر نقراً مزدوجاً لإعادة الضبط
+
+= Look up a stock to see its price chart here.
+> ابحث عن سهم لترى رسمه البياني هنا.
+
+= %d days ago
+> قبل %d يوماً
+
+= %s ago
+> قبل %s
+
+= Zoomed - double-click to reset
+> مكبّر - انقر نقراً مزدوجاً لإعادة الضبط
+
+= Scroll to zoom, drag to move
+> مرّر للتكبير، واسحب للتنقل
+
+= 1 day ago
+> قبل يوم واحد
+
+=    Open %,.2f   High %,.2f   Low %,.2f   Close %,.2f
+>    افتتاح %,.2f   أعلى %,.2f   أدنى %,.2f   إغلاق %,.2f
+
+=    Close %,.2f
+>    إغلاق %,.2f
+
+= No volume data
+> لا توجد بيانات حجم
+

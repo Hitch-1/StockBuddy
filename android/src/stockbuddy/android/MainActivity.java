@@ -44,6 +44,7 @@ import stockbuddy.Analyzer;
 import stockbuddy.AppPaths;
 import stockbuddy.Csv;
 import stockbuddy.HtmlView;
+import stockbuddy.I18n;
 import stockbuddy.Palette;
 import stockbuddy.Settings;
 import stockbuddy.Stock;
@@ -59,7 +60,7 @@ public class MainActivity extends Activity implements Droid.Listener {
     /** The pages in the menu: id, icon, name. Their order can be changed by dragging (saved in settings). */
     private static final String[][] PAGES = {
             {"ideas", "\uD83D\uDCA1", "Today's ideas"}, {"markets", "\uD83C\uDF0D", "World markets"}, {"worldstocks", "\uD83C\uDFE6", "World stocks"},
-            {"calendar", "\uD83D\uDCC5", "Economic calendar"}, {"lookup", "\uD83D\uDD0D", "Look up a stock"}, {"all", "\uD83D\uDCCB", "All stocks"},
+            {"calendar", "\uD83D\uDCC5", "Economic calendar"}, {"news", "\uD83D\uDCF0", "Market news"}, {"lookup", "\uD83D\uDD0D", "Look up a stock"}, {"all", "\uD83D\uDCCB", "All stocks"},
             {"alerts", "\uD83D\uDD14", "Price alerts"}, {"paper", "\uD83D\uDCBC", "Paper trading"}, {"track", "\uD83D\uDCC8", "Track record"},
             {"dictionary", "\uD83D\uDCD6", "Dictionary"}, {"sources", "\uD83D\uDD0C", "Data sources"}};
 
@@ -89,6 +90,22 @@ public class MainActivity extends Activity implements Droid.Listener {
     private Button inputBtn;
     private TextWatcher filterWatcher;
     private final Handler ticker = new Handler(Looper.getMainLooper());
+    /** While the app is open: check price alerts every 5 minutes and show a notification when one fires. */
+    private final Runnable alertTick = new Runnable() {
+        @Override public void run() {
+            final Analyzer a = Droid.analyzer;
+            if (stockbuddy.Alerts.anyWaiting() && !Droid.demo()) {
+                new Thread(() -> {
+                    java.util.List<String> fired = stockbuddy.Alerts.check(stockbuddy.Alerts.prices(a, true));
+                    if (!fired.isEmpty()) {
+                        Notifier.alerts(MainActivity.this, fired);
+                        runOnUiThread(() -> { if (page.equals("alerts")) render(); });
+                    }
+                }).start();
+            }
+            ticker.postDelayed(this, 5 * 60_000);
+        }
+    };
     private volatile boolean marketsLoading;
     /** Every minute: refresh the world index prices while the Markets page is open. */
     private final Runnable marketTick = new Runnable() {
@@ -126,7 +143,7 @@ public class MainActivity extends Activity implements Droid.Listener {
         Notifier.scheduleAlertJob(this);
         if (!Settings.getBool("hint.menu", false)) {
             Settings.set("hint.menu", true);
-            Toast.makeText(this, "Tip: tap \u2630 for all pages, swipe left or right to move between them, \u2605 for your watchlist.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, I18n.tr("Tip: tap \u2630 for all pages, swipe left or right to move between them, \u2605 for your watchlist."), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -151,11 +168,14 @@ public class MainActivity extends Activity implements Droid.Listener {
         render();
         ticker.removeCallbacks(marketTick);
         ticker.postDelayed(marketTick, 60_000);
+        ticker.removeCallbacks(alertTick);
+        ticker.postDelayed(alertTick, 5 * 60_000);
     }
 
     @Override
     protected void onPause() {
         ticker.removeCallbacks(marketTick);
+        ticker.removeCallbacks(alertTick);
         super.onPause();
     }
 
@@ -186,6 +206,7 @@ public class MainActivity extends Activity implements Droid.Listener {
         getWindow().setStatusBarColor(c(k.panel()));
         getWindow().setNavigationBarColor(c(k.panel()));
         getWindow().getDecorView().setSystemUiVisibility(k.dark() ? 0 : View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().getDecorView().setLayoutDirection(I18n.rtl() ? View.LAYOUT_DIRECTION_RTL : View.LAYOUT_DIRECTION_LTR);
 
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
@@ -263,12 +284,12 @@ public class MainActivity extends Activity implements Droid.Listener {
         chipScroll.setHorizontalScrollBarEnabled(false);
         LinearLayout chipRow = new LinearLayout(this);
         chipRow.setPadding(dp(10), dp(8), dp(10), dp(4));
-        marketChip = pillButton("All markets \u25BE");
+        marketChip = pillButton(I18n.tr("All markets \u25BE"));
         marketChip.setOnClickListener(v -> chooseMarket());
         chipRow.addView(marketChip);
         for (int i = 0; i < IDEA_TABS.length; i++) {
             final int idx = i;
-            TextView t = pillButton(IDEA_TABS[i]);
+            TextView t = pillButton(I18n.tr(IDEA_TABS[i]));
             t.setOnClickListener(v -> { ideaTab = idx; render(); });
             chips.add(t);
             chipRow.addView(t);
@@ -349,7 +370,7 @@ public class MainActivity extends Activity implements Droid.Listener {
         drawer.setBackgroundColor(c(k.panel()));
         drawer.setElevation(dp(16));
         drawer.setClickable(true);
-        drawer.setTranslationX(-w);
+        drawer.setTranslationX(I18n.rtl() ? w : -w);   // Arabic: the menu slides in from the right
         drawer.setVisibility(View.INVISIBLE);
         buildDrawer();
         frame.addView(drawer, new android.widget.FrameLayout.LayoutParams(w, ViewGroup.LayoutParams.MATCH_PARENT, Gravity.START));
@@ -397,7 +418,7 @@ public class MainActivity extends Activity implements Droid.Listener {
         Analyzer a = Droid.analyzer;
         Advisor.Plan plan = Droid.plan;
         boolean demo = Droid.demo();
-        subtitle.setText(demo ? "PRACTICE MODE - made-up data" : "Your friendly daily stock helper");
+        subtitle.setText(demo ? I18n.tr("PRACTICE MODE - made-up data") : I18n.tr("Your friendly daily stock helper"));
         subtitle.setTextColor(c(demo ? k.warn() : k.muted()));
         statusText.setText(Droid.status);
         progress.setVisibility(Droid.loading ? View.VISIBLE : View.GONE);
@@ -407,31 +428,32 @@ public class MainActivity extends Activity implements Droid.Listener {
         bindSlots();
         chipScroll.setVisibility(page.equals("ideas") ? View.VISIBLE : View.GONE);
         String market = Settings.get("ideas.market", "all");
-        marketChip.setText((market.equals("all") ? "All markets" : stockbuddy.WorldStocks.marketName(market).replaceAll(" \\(.*\\)$", "")) + " \u25BE");
+        marketChip.setText((market.equals("all") ? I18n.tr("All markets") : stockbuddy.WorldStocks.marketName(market).replaceAll(" \\(.*\\)$", "")) + I18n.tr(" \u25BE"));
         if (plan != null && a != null && !market.equals("all")) plan = stockbuddy.Advisor.build(a, market);
         for (int i = 0; i < chips.size(); i++) {
             boolean on = i == ideaTab;
             String count = plan == null || i == 4 ? "" : "  " + lists(plan).get(i).size();
-            chips.get(i).setText(IDEA_TABS[i] + count);
-            chips.get(i).setTextColor(c(on ? (k.dark() ? k.bg() : "#ffffff") : k.text()));
+            chips.get(i).setText(I18n.tr(IDEA_TABS[i]) + count);
+            chips.get(i).setTextColor(c(on ? (k.dark() ? k.bg() : I18n.tr("#ffffff")) : k.text()));
             chips.get(i).setBackground(on ? rounded(k.accent(), k.accent(), 18) : rounded(k.panel(), k.line(), 18));
         }
         setupInput();
 
         String html;
         if (plan == null || a == null) {
-            html = HtmlView.message(k, "Getting today's data...", "StockBuddy is reading stockanalysis.com, WallStreetZen, Reddit and price charts. "
-                    + "This can take a minute. Tip: turn on Practice mode in the More menu to learn with made-up data.");
+            html = HtmlView.message(k, I18n.tr("Getting today's data..."), I18n.tr("StockBuddy is reading stockanalysis.com, WallStreetZen, Reddit and price charts. ")
+                    + I18n.tr("This can take a minute. Tip: turn on Practice mode in the More menu to learn with made-up data."));
         } else switch (page) {
             case "markets": html = HtmlView.markets(k, a); break;
             case "lookup":
                 html = lookedUp != null ? HtmlView.stockWithChart(k, lookedUp)
-                        : HtmlView.message(k, "Look up a stock", "Type a ticker above (like AAPL or MSFT) to get a chart and a plain-English explanation. "
-                        + "You can also tap any ticker on the \"All stocks\" page.");
+                        : HtmlView.message(k, I18n.tr("Look up a stock"), I18n.tr("Type a ticker above (like AAPL or MSFT) to get a chart and a plain-English explanation. ")
+                        + I18n.tr("You can also tap any ticker on the \"All stocks\" page."));
                 break;
             case "all": html = HtmlView.ranking(k, a); break;
             case "dictionary": html = HtmlView.glossary(k, filter); break;
-            case "watchlist": html = HtmlView.watchlist(k, Analyzer.readWatchlist()); break;
+            case "watchlist": html = HtmlView.watchlist(k, Analyzer.readWatchlist(), a); break;
+            case "news": html = HtmlView.news(k, a); break;
             case "sources": html = HtmlView.sources(k, a); break;
             case "calendar": html = HtmlView.calendar(k, a); break;
             case "worldstocks": html = HtmlView.worldStocks(k, a); break;
@@ -455,31 +477,31 @@ public class MainActivity extends Activity implements Droid.Listener {
         boolean visible = true;
         switch (page) {
             case "lookup":
-                input.setHint("Type a ticker, e.g. AAPL");
+                input.setHint(I18n.tr("Type a ticker, e.g. AAPL"));
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
-                inputBtn.setText("Explain");
+                inputBtn.setText(I18n.tr("Explain"));
                 inputBtn.setVisibility(View.VISIBLE);
                 break;
             case "watchlist":
-                input.setHint("Add tickers, e.g. AAPL MSFT");
+                input.setHint(I18n.tr("Add tickers, e.g. AAPL MSFT"));
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
-                inputBtn.setText("Add");
+                inputBtn.setText(I18n.tr("Add"));
                 inputBtn.setVisibility(View.VISIBLE);
                 break;
             case "alerts":
-                input.setHint("e.g. NVDA above 150 / AAPL move 5%");
+                input.setHint(I18n.tr("e.g. NVDA above 150 / AAPL move 5%"));
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
-                inputBtn.setText("Add alert");
+                inputBtn.setText(I18n.tr("Add alert"));
                 inputBtn.setVisibility(View.VISIBLE);
                 break;
             case "paper":
-                input.setHint("e.g. buy 10 AAPL / sell all AAPL");
+                input.setHint(I18n.tr("e.g. buy 10 AAPL / sell all AAPL"));
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
-                inputBtn.setText("Do it");
+                inputBtn.setText(I18n.tr("Do it"));
                 inputBtn.setVisibility(View.VISIBLE);
                 break;
             case "dictionary":
-                input.setHint("Search a word");
+                input.setHint(I18n.tr("Search a word"));
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 inputBtn.setVisibility(View.GONE);
                 filterWatcher = new TextWatcher() {
@@ -531,7 +553,7 @@ public class MainActivity extends Activity implements Droid.Listener {
         if (a == null) return;
         page = "lookup";
         lookupTicker = ticker;
-        web.loadDataWithBaseURL("https://stockbuddy.local/", HtmlView.message(k, "Looking up " + ticker + "...", "One moment."), "text/html", "utf-8", null);
+        web.loadDataWithBaseURL("https://stockbuddy.local/", HtmlView.message(k, I18n.tr("Looking up ") + ticker + "...", I18n.tr("One moment.")), "text/html", "utf-8", null);
         new Thread(() -> {
             Stock s = null;
             try { s = a.lookup(ticker); } catch (Throwable ignored) {}
@@ -540,9 +562,9 @@ public class MainActivity extends Activity implements Droid.Listener {
                 lookedUp = found;
                 if (found == null) {
                     render();
-                    web.loadDataWithBaseURL("https://stockbuddy.local/", HtmlView.message(k, "Couldn't find \"" + ticker + "\"",
-                            a.demo ? "Practice mode only knows these: " + String.join(", ", a.stocks.keySet())
-                                    : "Check the spelling, or your internet connection. US tickers are 1-5 letters, like AAPL or MSFT."), "text/html", "utf-8", null);
+                    web.loadDataWithBaseURL("https://stockbuddy.local/", HtmlView.message(k, I18n.tr("Couldn't find \"") + ticker + "\"",
+                            a.demo ? I18n.tr("Practice mode only knows these: ") + String.join(", ", a.stocks.keySet())
+                                    : I18n.tr("Check the spelling, or your internet connection. US tickers are 1-5 letters, like AAPL or MSFT.")), "text/html", "utf-8", null);
                 } else render();
             });
         }).start();
@@ -564,20 +586,30 @@ public class MainActivity extends Activity implements Droid.Listener {
             final EditText qty = new EditText(this);
             qty.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             qty.setText("10");
-            new AlertDialog.Builder(this).setTitle("Paper-buy " + tk).setMessage("How many pretend shares? (Pretend money - nothing real is bought.)")
-                    .setView(qty).setPositiveButton("Buy", (d, w) -> paperCommand("buy " + qty.getText().toString().trim() + " " + tk))
-                    .setNegativeButton("Cancel", null).show();
+            new AlertDialog.Builder(this).setTitle(I18n.tr("Paper-buy ") + tk).setMessage(I18n.tr("How many pretend shares? (Pretend money - nothing real is bought.)"))
+                    .setView(qty).setPositiveButton(I18n.tr("Buy"), (d, w) -> paperCommand("buy " + qty.getText().toString().trim() + " " + tk))
+                    .setNegativeButton(I18n.tr("Cancel"), null).show();
             return;
         }
         if (url.startsWith("sb://psell/")) {
             final String tk = url.substring("sb://psell/".length());
-            new AlertDialog.Builder(this).setTitle("Sell all " + tk + "?").setMessage("Sell all your pretend shares of " + tk + "?")
-                    .setPositiveButton("Sell", (d, w) -> paperCommand("sell all " + tk)).setNegativeButton("Cancel", null).show();
+            new AlertDialog.Builder(this).setTitle(I18n.tr("Sell all ") + tk + "?").setMessage(I18n.tr("Sell all your pretend shares of ") + tk + "?")
+                    .setPositiveButton(I18n.tr("Sell"), (d, w) -> paperCommand("sell all " + tk)).setNegativeButton(I18n.tr("Cancel"), null).show();
             return;
         }
         if (url.equals("sb://preset")) {
-            new AlertDialog.Builder(this).setTitle("Start again?").setMessage("Start again with $10,000 and delete all pretend trades?")
-                    .setPositiveButton("Start again", (d, w) -> { stockbuddy.PaperPortfolio.reset(); render(); }).setNegativeButton("Cancel", null).show();
+            new AlertDialog.Builder(this).setTitle(I18n.tr("Start again?")).setMessage(I18n.tr("Start again with $10,000 and delete all pretend trades?"))
+                    .setPositiveButton(I18n.tr("Start again"), (d, w) -> { stockbuddy.PaperPortfolio.reset(); render(); }).setNegativeButton(I18n.tr("Cancel"), null).show();
+            return;
+        }
+        if (url.startsWith("sb://trackdays/")) {
+            Settings.set("track.days", Integer.parseInt(url.substring("sb://trackdays/".length())));
+            render();
+            return;
+        }
+        if (url.startsWith("sb://market/") || url.startsWith("sb://allmarket/")) {
+            Settings.set("allstocks.market", url.substring(url.lastIndexOf('/') + 1));
+            show("all");
             return;
         }
         if (url.startsWith("sb://wtop/")) {
@@ -597,8 +629,8 @@ public class MainActivity extends Activity implements Droid.Listener {
         if (url.startsWith("sb://watch/")) {
             String t = url.substring("sb://watch/".length());
             List<String> w = new ArrayList<>(Analyzer.readWatchlist());
-            if (w.contains(t)) toast(t + " is already in your watchlist.");
-            else { w.add(t); saveWatchlist(w); toast("Added " + t + " to your watchlist."); }
+            if (w.contains(t)) toast(t + I18n.tr(" is already in your watchlist."));
+            else { w.add(t); saveWatchlist(w); toast(I18n.tr("Added ") + t + I18n.tr(" to your watchlist.")); }
             return;
         }
         if (url.startsWith("sb://stock/")) {
@@ -622,7 +654,7 @@ public class MainActivity extends Activity implements Droid.Listener {
             Analyzer.saveWatchlist(w);
             render();
         } catch (Exception e) {
-            toast("Couldn't save: " + e.getMessage());
+            toast(I18n.tr("Couldn't save: ") + e.getMessage());
         }
     }
 
@@ -630,21 +662,21 @@ public class MainActivity extends Activity implements Droid.Listener {
     /** Settings & data actions shown at the bottom of the menu: {label, action}. */
     private String[][] settingsItems() {
         return new String[][]{
-                {"\uD83C\uDF93 Practice mode (made-up data): " + (Droid.demo() ? "ON" : "OFF"), "practice"},
-                {"\uD83C\uDF10 World stocks: " + (stockbuddy.WorldStocks.top() == 0 ? "off" : "top " + stockbuddy.WorldStocks.top() + " of each market"), "worldtoggle"},
-                {"\u270D Add Reddit posts (paste titles)", "redditadd"},
-                {"\uD83D\uDCE5 Import Reddit CSV", "redditcsv"},
-                {"\uD83D\uDDD1 Clear my Reddit posts", "redditclear"},
-                {"\uD83D\uDCC4 Add any CSV as a data source", "anycsv"},
-                {"\uD83D\uDDD1 Remove my CSV files", "nocsv"},
-                {"\uD83D\uDCE5 Import Stock Rover CSV", "rover"},
-                {"\uD83D\uDCE5 Import WallStreetZen CSV", "zen"},
-                {"\uD83D\uDD11 Finnhub key (" + (stockbuddy.FinnhubSource.enabled() ? "set" : "not set") + ")", "finnhub"},
-                {"\uD83D\uDD11 Alpha Vantage key (" + (stockbuddy.AlphaVantage.enabled() ? "set" : "not set") + ")", "alpha"},
-                {"\u2709 SEC email (optional)", "sec"},
-                {"\u2195 Reset the menu order", "resetorder"},
-                {"\u2753 How to add the home-screen widget", "widgethelp"},
-                {"\u2139 About & disclaimer", "about"}};
+                {I18n.tr("\uD83C\uDF93 Practice mode (made-up data): ") + (Droid.demo() ? "ON" : "OFF"), "practice"},
+                {I18n.tr("\uD83C\uDF10 World stocks: ") + (stockbuddy.WorldStocks.top() == 0 ? "off" : I18n.tr("top ") + stockbuddy.WorldStocks.top() + I18n.tr(" of each market")), "worldtoggle"},
+                {I18n.tr("\u270D Add Reddit posts (paste titles)"), "redditadd"},
+                {I18n.tr("\uD83D\uDCE5 Import Reddit CSV"), "redditcsv"},
+                {I18n.tr("\uD83D\uDDD1 Clear my Reddit posts"), "redditclear"},
+                {I18n.tr("\uD83D\uDCC4 Add any CSV as a data source"), "anycsv"},
+                {I18n.tr("\uD83D\uDDD1 Remove my CSV files"), "nocsv"},
+                {I18n.tr("\uD83D\uDCE5 Import Stock Rover CSV"), "rover"},
+                {I18n.tr("\uD83D\uDCE5 Import WallStreetZen CSV"), "zen"},
+                {I18n.tr("\uD83D\uDD11 Finnhub key (") + (stockbuddy.FinnhubSource.enabled() ? "set" : I18n.tr("not set")) + ")", "finnhub"},
+                {I18n.tr("\uD83D\uDD11 Alpha Vantage key (") + (stockbuddy.AlphaVantage.enabled() ? "set" : I18n.tr("not set")) + ")", "alpha"},
+                {I18n.tr("\u2709 SEC email (optional)"), "sec"},
+                {I18n.tr("\u2195 Reset the menu order"), "resetorder"},
+                {I18n.tr("\u2753 How to add the home-screen widget"), "widgethelp"},
+                {I18n.tr("\u2139 About & disclaimer"), "about"}};
     }
 
     private void runAction(String action) {
@@ -657,21 +689,22 @@ public class MainActivity extends Activity implements Droid.Listener {
             case "skin": chooseSkin(false); break;
             case "wskin": chooseSkin(true); break;
             case "opacity": chooseOpacity(); break;
+            case "language": chooseLanguage(); break;
             case "redditadd": addRedditPosts(); break;
             case "redditcsv": pickFile(PICK_REDDIT); break;
             case "redditclear":
-                new AlertDialog.Builder(this).setTitle("Clear my Reddit posts")
-                        .setMessage("Delete all the Reddit posts you added yourself?")
-                        .setPositiveButton("Delete", (dd, w) -> {
+                new AlertDialog.Builder(this).setTitle(I18n.tr("Clear my Reddit posts"))
+                        .setMessage(I18n.tr("Delete all the Reddit posts you added yourself?"))
+                        .setPositiveButton(I18n.tr("Delete"), (dd, w) -> {
                             try { stockbuddy.RedditSource.clearManualPosts(); Droid.refresh(this, null); }
-                            catch (Exception e) { toast("Couldn't delete them: " + e.getMessage()); }
+                            catch (Exception e) { toast(I18n.tr("Couldn't delete them: ") + e.getMessage()); }
                         })
-                        .setNegativeButton("Cancel", null).show();
+                        .setNegativeButton(I18n.tr("Cancel"), null).show();
                 break;
             case "anycsv": pickFile(PICK_CSV); break;
             case "nocsv":
-                try { stockbuddy.CustomCsv.removeAll(); toast("Your CSV files were removed."); Droid.refresh(this, null); }
-                catch (Exception e) { toast("Couldn't remove them: " + e.getMessage()); }
+                try { stockbuddy.CustomCsv.removeAll(); toast(I18n.tr("Your CSV files were removed.")); Droid.refresh(this, null); }
+                catch (Exception e) { toast(I18n.tr("Couldn't remove them: ") + e.getMessage()); }
                 break;
             case "rover": pickFile(PICK_ROVER); break;
             case "zen": pickFile(PICK_ZEN); break;
@@ -683,15 +716,15 @@ public class MainActivity extends Activity implements Droid.Listener {
                 Settings.set("menu.order", "");
                 menuOrder = null;
                 bindSlots();
-                toast("Menu order reset.");
+                toast(I18n.tr("Menu order reset."));
                 break;
-            case "widgethelp": info("Add the widget to your home screen",
-                    "1. Go to your home screen.\n2. Touch and hold an empty spot.\n3. Tap \"Widgets\".\n4. Find StockBuddy and drag it onto your home screen.\n\n"
-                            + "Tap the widget to open the app, or tap \u21BB on it to refresh. Change its colours in \u22EE > Home-screen widget skin."); break;
-            case "about": info("About StockBuddy",
-                    "StockBuddy combines stockanalysis.com, WallStreetZen, Reddit, the WallStreetBets sentiment API, Finnhub, Alpha Vantage, SEC EDGAR, "
-                            + "the economic calendar, your own CSV files and StockCharts-style chart signals, and explains them in plain English.\n\nIMPORTANT: this is a learning and research helper, "
-                            + "NOT a financial advisor. It can be wrong, data can be late, and you can lose money. Never invest money you can't afford to lose."); break;
+            case "widgethelp": info(I18n.tr("Add the widget to your home screen"),
+                    I18n.tr("1. Go to your home screen.\n2. Touch and hold an empty spot.\n3. Tap \"Widgets\".\n4. Find StockBuddy and drag it onto your home screen.\n\n")
+                            + I18n.tr("Tap the widget to open the app, or tap \u21BB on it to refresh. Change its colours in \u22EE > Home-screen widget skin.")); break;
+            case "about": info(I18n.tr("About StockBuddy"),
+                    I18n.tr("StockBuddy combines stockanalysis.com, WallStreetZen, Reddit, the WallStreetBets sentiment API, Finnhub, Alpha Vantage, SEC EDGAR, ")
+                            + I18n.tr("the economic calendar, your own CSV files and StockCharts-style chart signals, and explains them in plain English.\n\nIMPORTANT: this is a learning and research helper, ")
+                            + I18n.tr("NOT a financial advisor. It can be wrong, data can be late, and you can lose money. Never invest money you can't afford to lose.")); break;
             default: break;
         }
     }
@@ -712,9 +745,9 @@ public class MainActivity extends Activity implements Droid.Listener {
     }
 
     private static String pageName(String id) {
-        if (id.equals("watchlist")) return "\u2605 My watchlist";
+        if (id.equals("watchlist")) return I18n.tr("\u2605 My watchlist");
         int i = pageIndex(id);
-        return i < 0 ? "StockBuddy" : PAGES[i][1] + " " + PAGES[i][2];
+        return i < 0 ? "StockBuddy" : PAGES[i][1] + " " + I18n.tr(PAGES[i][2]);
     }
 
     /** Swipe left = next page, swipe right = previous page (in your menu order). */
@@ -775,7 +808,7 @@ public class MainActivity extends Activity implements Droid.Listener {
             pageRows.addView(row, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
         list.addView(pageRows);
-        list.addView(sectionLabel("SETTINGS & DATA"));
+        list.addView(sectionLabel(I18n.tr("SETTINGS & DATA")));
         for (final String[] item : settingsItems()) {
             TextView row = text(item[0], 14, k.text(), false);
             row.setPadding(dp(18), dp(11), dp(18), dp(11));
@@ -870,16 +903,17 @@ public class MainActivity extends Activity implements Droid.Listener {
     private void closeDrawer() {
         if (drawer.getVisibility() != View.VISIBLE) return;
         dim.animate().alpha(0f).setDuration(180).withEndAction(() -> dim.setVisibility(View.GONE)).start();
-        drawer.animate().translationX(-drawer.getWidth()).setDuration(200).withEndAction(() -> drawer.setVisibility(View.INVISIBLE)).start();
+        drawer.animate().translationX(I18n.rtl() ? drawer.getWidth() : -drawer.getWidth()).setDuration(200).withEndAction(() -> drawer.setVisibility(View.INVISIBLE)).start();
     }
 
     // ---------------------------------------------------------------- three dots (top right)
     private void dotsMenu(View anchor) {
         String[][] items = {
-                {"\uD83D\uDCBE  Save report (web page, Word, CSV or JSON)", "report"},
-                {"\uD83C\uDFA8  App skin", "skin"},
-                {"\uD83D\uDDBC  Home-screen widget skin", "wskin"},
-                {"\uD83D\uDC53  Widget see-through", "opacity"}};
+                {I18n.tr("\uD83D\uDCBE  Save report (web page, Word, CSV or JSON)"), "report"},
+                {I18n.tr("\uD83C\uDFA8  App skin"), "skin"},
+                {I18n.tr("\uD83D\uDDBC  Home-screen widget skin"), "wskin"},
+                {I18n.tr("\uD83D\uDC53  Widget see-through"), "opacity"},
+                {"\uD83C\uDF10  " + I18n.tr("Language") + ": " + I18n.name(I18n.lang()), "language"}};
         LinearLayout box = new LinearLayout(this);
         box.setOrientation(LinearLayout.VERTICAL);
         box.setPadding(0, dp(6), 0, dp(6));
@@ -927,38 +961,38 @@ public class MainActivity extends Activity implements Droid.Listener {
         String[] labels = new String[options.size()];
         int sel = 0;
         for (int i = 0; i < labels.length; i++) { labels[i] = options.get(i)[1]; if (options.get(i)[0].equals(cur)) sel = i; }
-        new AlertDialog.Builder(this).setTitle("Show ideas for").setSingleChoiceItems(labels, sel, (d, w) -> {
+        new AlertDialog.Builder(this).setTitle(I18n.tr("Show ideas for")).setSingleChoiceItems(labels, sel, (d, w) -> {
             d.dismiss();
             Settings.set("ideas.market", options.get(w)[0]);
             render();
-        }).setNegativeButton("Cancel", null).show();
+        }).setNegativeButton(I18n.tr("Cancel"), null).show();
     }
 
     private void chooseWorldTop() {
         final int[] values = {0, 3, 5, 10, 20};
-        String[] labels = {"Off", "Top 3 of each market", "Top 5", "Top 10", "Top 20 (slower refresh)"};
+        String[] labels = {I18n.tr("Off"), I18n.tr("Top 3 of each market"), I18n.tr("Top 5"), I18n.tr("Top 10"), I18n.tr("Top 20 (slower refresh)")};
         int cur = stockbuddy.WorldStocks.top(), sel = 1;
         for (int i = 0; i < values.length; i++) if (values[i] == cur) sel = i;
-        new AlertDialog.Builder(this).setTitle("World stocks").setSingleChoiceItems(labels, sel, (d, w) -> {
+        new AlertDialog.Builder(this).setTitle(I18n.tr("World stocks")).setSingleChoiceItems(labels, sel, (d, w) -> {
             d.dismiss();
             stockbuddy.WorldStocks.setTop(values[w]);
-            toast("Refreshing...");
+            toast(I18n.tr("Refreshing..."));
             Droid.refresh(this, null);
-        }).setNegativeButton("Cancel", null).show();
+        }).setNegativeButton(I18n.tr("Cancel"), null).show();
     }
 
     private void saveReport() {
-        if (Droid.plan == null) { toast("Please wait until the data has loaded."); return; }
+        if (Droid.plan == null) { toast(I18n.tr("Please wait until the data has loaded.")); return; }
         final stockbuddy.ReportWriter.Format[] formats = stockbuddy.ReportWriter.Format.values();
         String[] labels = new String[formats.length];
         for (int i = 0; i < formats.length; i++) labels[i] = formats[i].label;
-        new AlertDialog.Builder(this).setTitle("Save today's report as").setItems(labels, (d, w) -> {
+        new AlertDialog.Builder(this).setTitle(I18n.tr("Save today's report as")).setItems(labels, (d, w) -> {
             pendingFormat = formats[w];
             Intent i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
             i.addCategory(Intent.CATEGORY_OPENABLE);
             i.setType(pendingFormat.mime);
             i.putExtra(Intent.EXTRA_TITLE, stockbuddy.ReportWriter.fileName(pendingFormat, shownPlan()));
-            try { startActivityForResult(i, SAVE_REPORT); } catch (Exception e) { toast("No file saver available on this phone."); }
+            try { startActivityForResult(i, SAVE_REPORT); } catch (Exception e) { toast(I18n.tr("No file saver available on this phone.")); }
         }).show();
     }
 
@@ -971,45 +1005,45 @@ public class MainActivity extends Activity implements Droid.Listener {
         final EditText f = new EditText(this);
         f.setSingleLine(true);
         f.setText(stockbuddy.AlphaVantage.key());
-        f.setHint("Your Alpha Vantage key");
+        f.setHint(I18n.tr("Your Alpha Vantage key"));
         LinearLayout box = new LinearLayout(this);
         box.setOrientation(LinearLayout.VERTICAL);
         box.setPadding(dp(20), dp(8), dp(20), 0);
         TextView help = new TextView(this);
-        help.setText("Alpha Vantage adds news sentiment (is the news about a company positive or negative?). Get a free key at "
-                + "alphavantage.co/support/#api-key. The free plan allows about 25 requests a day, so StockBuddy checks your first "
-                + stockbuddy.AlphaVantage.DEFAULT_PER_DAY + " stocks and remembers the answers all day. Leave empty to turn it off.");
+        help.setText(I18n.tr("Alpha Vantage adds news sentiment (is the news about a company positive or negative?). Get a free key at ")
+                + I18n.tr("alphavantage.co/support/#api-key. The free plan allows about 25 requests a day, so StockBuddy checks your first ")
+                + stockbuddy.AlphaVantage.DEFAULT_PER_DAY + I18n.tr(" stocks and remembers the answers all day. Leave empty to turn it off."));
         box.addView(help);
         box.addView(f);
-        new AlertDialog.Builder(this).setTitle("Alpha Vantage key").setView(box)
-                .setPositiveButton("Save", (d, w) -> {
+        new AlertDialog.Builder(this).setTitle(I18n.tr("Alpha Vantage key")).setView(box)
+                .setPositiveButton(I18n.tr("Save"), (d, w) -> {
                     final String key = f.getText().toString().trim();
                     stockbuddy.AlphaVantage.setKey(key);
-                    if (key.isEmpty()) { toast("Alpha Vantage is turned off."); return; }
+                    if (key.isEmpty()) { toast(I18n.tr("Alpha Vantage is turned off.")); return; }
                     new Thread(() -> {
                         final String err = stockbuddy.AlphaVantage.test(key);
-                        runOnUiThread(() -> { if (err == null) toast("Key works and is saved. Tap refresh to use it."); else info("Alpha Vantage", err); });
+                        runOnUiThread(() -> { if (err == null) toast(I18n.tr("Key works and is saved. Tap refresh to use it.")); else info(I18n.tr("Alpha Vantage"), err); });
                     }).start();
                 })
-                .setNegativeButton("Cancel", null).show();
+                .setNegativeButton(I18n.tr("Cancel"), null).show();
     }
 
     private void askSecEmail() {
         final EditText f = new EditText(this);
         f.setSingleLine(true);
         f.setText(stockbuddy.SecEdgar.email());
-        f.setHint("you@example.com (optional)");
+        f.setHint(I18n.tr("you@example.com (optional)"));
         LinearLayout box = new LinearLayout(this);
         box.setOrientation(LinearLayout.VERTICAL);
         box.setPadding(dp(20), dp(8), dp(20), 0);
         TextView help = new TextView(this);
-        help.setText("The SEC (sec.gov) asks every program to say who it is. StockBuddy works without this, but if the SEC data doesn't load, "
-                + "enter your email. It is only ever sent to sec.gov.");
+        help.setText(I18n.tr("The SEC (sec.gov) asks every program to say who it is. StockBuddy works without this, but if the SEC data doesn't load, ")
+                + I18n.tr("enter your email. It is only ever sent to sec.gov."));
         box.addView(help);
         box.addView(f);
-        new AlertDialog.Builder(this).setTitle("SEC EDGAR").setView(box)
-                .setPositiveButton("Save", (d, w) -> { stockbuddy.SecEdgar.setEmail(f.getText().toString()); toast("Saved."); })
-                .setNegativeButton("Cancel", null).show();
+        new AlertDialog.Builder(this).setTitle(I18n.tr("SEC EDGAR")).setView(box)
+                .setPositiveButton(I18n.tr("Save"), (d, w) -> { stockbuddy.SecEdgar.setEmail(f.getText().toString()); toast(I18n.tr("Saved.")); })
+                .setNegativeButton(I18n.tr("Cancel"), null).show();
     }
 
     /** Free Finnhub key: analyst recommendations + financial ratios. Saved on this phone only. */
@@ -1018,29 +1052,29 @@ public class MainActivity extends Activity implements Droid.Listener {
         box.setOrientation(LinearLayout.VERTICAL);
         box.setPadding(dp(20), dp(8), dp(20), 0);
         TextView help = new TextView(this);
-        help.setText("Finnhub adds Wall Street analyst recommendations and financial ratios. Get a free key at finnhub.io/register "
-                + "and paste it below. It is saved only on this phone. Leave it empty to turn Finnhub off.");
+        help.setText(I18n.tr("Finnhub adds Wall Street analyst recommendations and financial ratios. Get a free key at finnhub.io/register ")
+                + I18n.tr("and paste it below. It is saved only on this phone. Leave it empty to turn Finnhub off."));
         box.addView(help);
         final EditText f = new EditText(this);
         f.setSingleLine(true);
         f.setText(stockbuddy.FinnhubSource.key());
-        f.setHint("Your Finnhub API key");
+        f.setHint(I18n.tr("Your Finnhub API key"));
         box.addView(f);
-        new AlertDialog.Builder(this).setTitle("Finnhub key").setView(box)
-                .setPositiveButton("Save", (d, w) -> {
+        new AlertDialog.Builder(this).setTitle(I18n.tr("Finnhub key")).setView(box)
+                .setPositiveButton(I18n.tr("Save"), (d, w) -> {
                     final String key = f.getText().toString().trim();
-                    if (key.isEmpty()) { stockbuddy.FinnhubSource.setKey(""); toast("Finnhub is turned off."); return; }
-                    toast("Checking the key...");
+                    if (key.isEmpty()) { stockbuddy.FinnhubSource.setKey(""); toast(I18n.tr("Finnhub is turned off.")); return; }
+                    toast(I18n.tr("Checking the key..."));
                     new Thread(() -> {
                         final String err = stockbuddy.FinnhubSource.test(key);
                         runOnUiThread(() -> {
                             stockbuddy.FinnhubSource.setKey(key);
-                            if (err == null) { toast("Key works and is saved. Refreshing (about 2 minutes the first time)..."); Droid.refresh(this, null); }
-                            else info("Finnhub key saved, but...", err);
+                            if (err == null) { toast(I18n.tr("Key works and is saved. Refreshing (about 2 minutes the first time)...")); Droid.refresh(this, null); }
+                            else info(I18n.tr("Finnhub key saved, but..."), err);
                         });
                     }).start();
                 })
-                .setNegativeButton("Cancel", null).show();
+                .setNegativeButton(I18n.tr("Cancel"), null).show();
     }
 
     /** Paste Reddit post titles yourself - works even when Reddit blocks automatic reading. */
@@ -1049,33 +1083,33 @@ public class MainActivity extends Activity implements Droid.Listener {
         box.setOrientation(LinearLayout.VERTICAL);
         box.setPadding(dp(20), dp(8), dp(20), 0);
         TextView help = new TextView(this);
-        help.setText("Open Reddit, copy the titles of posts you find interesting, and paste them below - one post per line. "
-                + "Tickers like $NVDA or NVDA are recognised automatically. Your posts are used for "
-                + stockbuddy.RedditSource.MANUAL_DAYS + " days.");
+        help.setText(I18n.tr("Open Reddit, copy the titles of posts you find interesting, and paste them below - one post per line. ")
+                + I18n.tr("Tickers like $NVDA or NVDA are recognised automatically. Your posts are used for ")
+                + stockbuddy.RedditSource.MANUAL_DAYS + I18n.tr(" days."));
         box.addView(help);
         final EditText sub = new EditText(this);
         sub.setSingleLine(true);
-        sub.setHint("Subreddit, e.g. wallstreetbets");
+        sub.setHint(I18n.tr("Subreddit, e.g. wallstreetbets"));
         sub.setText("wallstreetbets");
         box.addView(sub);
         final EditText posts = new EditText(this);
-        posts.setHint("Paste post titles here, one per line");
+        posts.setHint(I18n.tr("Paste post titles here, one per line"));
         posts.setMinLines(5);
         posts.setGravity(Gravity.TOP);
         posts.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         box.addView(posts);
-        new AlertDialog.Builder(this).setTitle("Add Reddit posts").setView(box)
-                .setPositiveButton("Add", (d, w) -> {
+        new AlertDialog.Builder(this).setTitle(I18n.tr("Add Reddit posts")).setView(box)
+                .setPositiveButton(I18n.tr("Add"), (d, w) -> {
                     try {
                         int n = stockbuddy.RedditSource.addManualPosts(sub.getText().toString(), posts.getText().toString());
-                        if (n == 0) { toast("Nothing to add - paste at least one post title."); return; }
-                        toast("Added " + n + " post" + (n == 1 ? "" : "s") + ". Refreshing...");
+                        if (n == 0) { toast(I18n.tr("Nothing to add - paste at least one post title.")); return; }
+                        toast(I18n.tr("Added ") + n + I18n.tr(" post") + (n == 1 ? "" : "s") + I18n.tr(". Refreshing..."));
                         Droid.refresh(this, null);
                     } catch (Exception e) {
-                        toast("Couldn't save the posts: " + e.getMessage());
+                        toast(I18n.tr("Couldn't save the posts: ") + e.getMessage());
                     }
                 })
-                .setNegativeButton("Cancel", null).show();
+                .setNegativeButton(I18n.tr("Cancel"), null).show();
     }
 
     private void chooseSkin(boolean widget) {
@@ -1084,13 +1118,13 @@ public class MainActivity extends Activity implements Droid.Listener {
         for (Palette p : Palette.ALL) names.add(p.name());
         String current = widget ? Settings.get("widget.skin", "Same as app") : k.name();
         new AlertDialog.Builder(this)
-                .setTitle(widget ? "Home-screen widget skin" : "App skin")
+                .setTitle(widget ? I18n.tr("Home-screen widget skin") : I18n.tr("App skin"))
                 .setSingleChoiceItems(names.toArray(new String[0]), Math.max(0, names.indexOf(current)), (d, which) -> {
                     d.dismiss();
                     if (widget) {
                         Settings.set("widget.skin", names.get(which));
                         StockWidget.updateAll(this);
-                        toast("Widget skin changed");
+                        toast(I18n.tr("Widget skin changed"));
                     } else {
                         Settings.set("skin", names.get(which));
                         build();
@@ -1098,21 +1132,36 @@ public class MainActivity extends Activity implements Droid.Listener {
                         StockWidget.updateAll(this);
                     }
                 })
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(I18n.tr("Cancel"), null)
                 .show();
+    }
+
+    private void chooseLanguage() {
+        String[] names = new String[I18n.LANGS.length];
+        int sel = 0;
+        for (int i = 0; i < names.length; i++) { names[i] = I18n.LANGS[i][1]; if (I18n.LANGS[i][0].equals(I18n.lang())) sel = i; }
+        new AlertDialog.Builder(this).setTitle(I18n.tr("Language")).setSingleChoiceItems(names, sel, (d, w) -> {
+            d.dismiss();
+            I18n.setLang(I18n.LANGS[w][0]);
+            Droid.relocalize();
+            build();
+            render();
+            StockWidget.updateAll(this);
+            if (!Droid.demo()) Droid.refresh(this, null);   // also fetch the news in the new language
+        }).setNegativeButton(I18n.tr("Cancel"), null).show();
     }
 
     private void chooseOpacity() {
         final int[] values = {100, 92, 80, 65, 50};
-        String[] labels = {"Solid", "A little see-through", "See-through", "Very see-through", "Mostly transparent"};
+        String[] labels = {I18n.tr("Solid"), I18n.tr("A little see-through"), I18n.tr("See-through"), I18n.tr("Very see-through"), I18n.tr("Mostly transparent")};
         int cur = Settings.getInt("widget.opacity", 92), idx = 1;
         for (int i = 0; i < values.length; i++) if (values[i] == cur) idx = i;
-        new AlertDialog.Builder(this).setTitle("Widget see-through")
+        new AlertDialog.Builder(this).setTitle(I18n.tr("Widget see-through"))
                 .setSingleChoiceItems(labels, idx, (d, which) -> {
                     d.dismiss();
                     Settings.set("widget.opacity", values[which]);
                     StockWidget.updateAll(this);
-                }).setNegativeButton("Cancel", null).show();
+                }).setNegativeButton(I18n.tr("Cancel"), null).show();
     }
 
     private void info(String title, String msg) {
@@ -1131,7 +1180,7 @@ public class MainActivity extends Activity implements Droid.Listener {
         Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         i.addCategory(Intent.CATEGORY_OPENABLE);
         i.setType("*/*");
-        try { startActivityForResult(i, code); } catch (Exception e) { toast("No file picker available on this phone."); }
+        try { startActivityForResult(i, code); } catch (Exception e) { toast(I18n.tr("No file picker available on this phone.")); }
     }
 
     @Override
@@ -1148,8 +1197,8 @@ public class MainActivity extends Activity implements Droid.Listener {
                 String msg;
                 try (java.io.OutputStream out = getContentResolver().openOutputStream(uri)) {
                     out.write(stockbuddy.ReportWriter.build(f, Droid.analyzer, plan));
-                    msg = "Report saved.";
-                } catch (Exception e) { msg = "Couldn't save the report: " + e.getMessage(); }
+                    msg = I18n.tr("Report saved.");
+                } catch (Exception e) { msg = I18n.tr("Couldn't save the report: ") + e.getMessage(); }
                 final String m = msg;
                 runOnUiThread(() -> toast(m));
             }).start();
@@ -1163,10 +1212,10 @@ public class MainActivity extends Activity implements Droid.Listener {
             int rows = Csv.readByTicker(dest).size();
             StockRoverSource.reload();
             WallStreetZenSource.reload();
-            toast("Imported " + rows + " stocks. Refreshing...");
+            toast(I18n.tr("Imported ") + rows + I18n.tr(" stocks. Refreshing..."));
             Droid.refresh(this, null);
         } catch (Exception e) {
-            toast("Couldn't import the file: " + e.getMessage());
+            toast(I18n.tr("Couldn't import the file: ") + e.getMessage());
         }
     }
 
@@ -1178,11 +1227,11 @@ public class MainActivity extends Activity implements Droid.Listener {
             String name = uri.getLastPathSegment() == null ? "my-data" : uri.getLastPathSegment().replaceAll(".*[/:]", "");
             int n = stockbuddy.CustomCsv.add(tmp, name);
             Files.deleteIfExists(tmp);
-            if (n == 0) { info("Can't use this file", "The first line needs a column called Ticker or Symbol."); return; }
-            toast("Added " + n + " stocks from your file. Refreshing...");
+            if (n == 0) { info(I18n.tr("Can't use this file"), I18n.tr("The first line needs a column called Ticker or Symbol.")); return; }
+            toast(I18n.tr("Added ") + n + I18n.tr(" stocks from your file. Refreshing..."));
             Droid.refresh(this, null);
         } catch (Exception e) {
-            toast("Couldn't add the file: " + e.getMessage());
+            toast(I18n.tr("Couldn't add the file: ") + e.getMessage());
         }
     }
 
@@ -1196,14 +1245,14 @@ public class MainActivity extends Activity implements Droid.Listener {
             int n = stockbuddy.RedditSource.manualPosts().size();
             if (n == 0) {
                 if (Files.exists(backup)) Files.copy(backup, dest, StandardCopyOption.REPLACE_EXISTING); else Files.deleteIfExists(dest);
-                info("No usable posts found", "The file needs a first line with a column called 'title' (optional: date, subreddit, upvotes). "
-                        + "Dates older than " + stockbuddy.RedditSource.MANUAL_DAYS + " days are skipped.");
+                info(I18n.tr("No usable posts found"), I18n.tr("The file needs a first line with a column called 'title' (optional: date, subreddit, upvotes). ")
+                        + I18n.tr("Dates older than ") + stockbuddy.RedditSource.MANUAL_DAYS + I18n.tr(" days are skipped."));
                 return;
             }
-            toast("Imported " + n + " Reddit posts. Refreshing...");
+            toast(I18n.tr("Imported ") + n + I18n.tr(" Reddit posts. Refreshing..."));
             Droid.refresh(this, null);
         } catch (Exception e) {
-            toast("Couldn't import the file: " + e.getMessage());
+            toast(I18n.tr("Couldn't import the file: ") + e.getMessage());
         }
     }
 
@@ -1233,8 +1282,8 @@ public class MainActivity extends Activity implements Droid.Listener {
         try {
             String txt = new String(Files.readAllBytes(p), StandardCharsets.UTF_8);
             Files.delete(p);
-            new AlertDialog.Builder(this).setTitle("Sorry - StockBuddy closed unexpectedly last time")
-                    .setMessage("Details (useful if you report the problem):\n\n" + (txt.length() > 1500 ? txt.substring(0, 1500) + "..." : txt))
+            new AlertDialog.Builder(this).setTitle(I18n.tr("Sorry - StockBuddy closed unexpectedly last time"))
+                    .setMessage(I18n.tr("Details (useful if you report the problem):\n\n") + (txt.length() > 1500 ? txt.substring(0, 1500) + "..." : txt))
                     .setPositiveButton("OK", null).show();
         } catch (Exception ignored) {}
     }

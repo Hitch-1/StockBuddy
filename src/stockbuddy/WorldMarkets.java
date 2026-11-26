@@ -127,10 +127,10 @@ public final class WorldMarkets {
             n++; avg += m.changePct;
             if (m.changePct > 0.15) up++; else if (m.changePct < -0.15) down++;
         }
-        if (n == 0) return "No market data available right now.";
+        if (n == 0) return I18n.tr("No market data available right now.");
         avg /= n;
-        String feel = avg > 0.8 ? "a strong, happy day" : avg > 0.2 ? "a mildly positive day" : avg > -0.2 ? "a quiet, mixed day"
-                : avg > -0.8 ? "a mildly negative day" : "a rough day";
-        return String.format("Around the world it's %s: %d markets are up, %d are down (average move %+.2f%%).", feel, up, down, avg);
+        String feel = avg > 0.8 ? I18n.tr("a strong, happy day") : avg > 0.2 ? I18n.tr("a mildly positive day") : avg > -0.2 ? I18n.tr("a quiet, mixed day")
+                : avg > -0.8 ? I18n.tr("a mildly negative day") : I18n.tr("a rough day");
+        return I18n.trf("Around the world it's %s: %d markets are up, %d are down (average move %+.2f%%).", feel, up, down, avg);
     }
 }

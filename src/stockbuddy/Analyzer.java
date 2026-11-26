@@ -22,6 +22,7 @@ public class Analyzer {
     public final Map<String, String> sourceStatus = new LinkedHashMap<>();
     public List<EconomicCalendar.Event> events = new ArrayList<>();
     public Map<String, WsbSentiment.Row> wsb = new LinkedHashMap<>();
+    public List<LocalNews.Item> news = new ArrayList<>();
     public long finishedAt;
 
     public Analyzer(boolean demo) { this.demo = demo; }
@@ -39,6 +40,7 @@ public class Analyzer {
         stocks.values().removeIf(s -> s.tech == null);
         Scorer.rankSctr(stocks.values());
         for (Stock s : stocks.values()) Scorer.score(s);
+        if (!demo) CheckedHistory.record(stocks.values());   // "every stock I checked" (kept 30 days)
         finishedAt = System.currentTimeMillis();
     }
 
@@ -47,30 +49,33 @@ public class Analyzer {
         FinnhubSource.resetCounts();
         SecEdgar.resetCounts();
         CustomCsv.reload();
-        progress.accept("Checking the world's biggest stock markets...");
+        progress.accept(I18n.tr("Checking the world's biggest stock markets..."));
         int mk = WorldMarkets.load(markets);
         sourceStatus.put("World markets (Yahoo Finance)", mk > 0 ? "OK - " + mk + " markets" : "Could not connect");
-        progress.accept("Reading this week's economic calendar (inflation, jobs, interest rates)...");
+        progress.accept(I18n.tr("Reading this week's economic calendar (inflation, jobs, interest rates)..."));
         events = EconomicCalendar.load();
         sourceStatus.put("Economic calendar (ForexFactory)", EconomicCalendar.lastStatus);
+        progress.accept(I18n.tr("Reading market news..."));
+        news = LocalNews.market(25);
+        sourceStatus.put("Market news (Google News)", LocalNews.lastStatus);
 
         Set<String> universe = new LinkedHashSet<>(readWatchlist());
         for (String t : PaperPortfolio.load().positions.keySet()) universe.add(t);   // so your paper portfolio has today's prices
         for (String t : Alerts.waitingTickers()) universe.add(t);                    // ...and your alerts too
-        progress.accept("Looking at today's biggest movers on stockanalysis.com...");
+        progress.accept(I18n.tr("Looking at today's biggest movers on stockanalysis.com..."));
         Set<String> movers = StockAnalysisSource.todaysMovers(6);
         universe.addAll(movers);
 
         if (StockRoverSource.available()) universe.addAll(StockRoverSource.tickers());
 
-        progress.accept("Reading hot posts on r/ValueInvesting, r/options and r/wallstreetbets...");
+        progress.accept(I18n.tr("Reading hot posts on r/ValueInvesting, r/options and r/wallstreetbets..."));
         posts = RedditSource.fetchHot(60);
         sourceStatus.put("Reddit", RedditSource.lastStatus);
         int extra = 0;
         for (String t : RedditSource.findTickers(posts, universe)) {
             if (!universe.contains(t) && extra++ < 10) universe.add(t);
         }
-        progress.accept("Checking today's WallStreetBets sentiment...");
+        progress.accept(I18n.tr("Checking today's WallStreetBets sentiment..."));
         wsb = WsbSentiment.load();
         sourceStatus.put("WallStreetBets sentiment (WSB API)", WsbSentiment.lastStatus);
         int wsbExtra = 0;
@@ -79,7 +84,7 @@ public class Analyzer {
         for (String t : CustomCsv.tickers()) if (!universe.contains(t) && csvExtra++ < 15) universe.add(t);
 
         List<String> list = new ArrayList<>(universe).subList(0, Math.min(MAX_STOCKS, universe.size()));
-        progress.accept("Downloading prices and ratings for " + list.size() + " stocks (this can take a minute)...");
+        progress.accept(I18n.tr("Downloading prices and ratings for ") + list.size() + I18n.tr(" stocks (this can take a minute)..."));
         int[] fund = {0}, zen = {0}, rover = {0};
         ExecutorService pool = Executors.newFixedThreadPool(6);
         List<Future<?>> jobs = new ArrayList<>();
@@ -95,7 +100,7 @@ public class Analyzer {
                 SecEdgar.load(s);
             }));
         }
-        if (FinnhubSource.enabled()) progress.accept("Asking Finnhub about " + list.size() + " stocks (the free plan is slow - about 2 minutes the first time)...");
+        if (FinnhubSource.enabled()) progress.accept(I18n.tr("Asking Finnhub about ") + list.size() + I18n.tr(" stocks (the free plan is slow - about 2 minutes the first time)..."));
         long deadline = System.currentTimeMillis() + (FinnhubSource.enabled() ? 240_000 : 120_000);
         for (Future<?> f : jobs) {
             try { f.get(Math.max(1, deadline - System.currentTimeMillis()), TimeUnit.MILLISECONDS); } catch (Exception ignored) {}
@@ -117,14 +122,14 @@ public class Analyzer {
         for (Stock s : stocks.values()) WsbSentiment.apply(wsb, s);
         List<Stock> withPrices = new ArrayList<>();
         for (Stock s : stocks.values()) if (s.hasPrices()) withPrices.add(s);
-        if (AlphaVantage.enabled()) progress.accept("Asking Alpha Vantage about today's news...");
+        if (AlphaVantage.enabled()) progress.accept(I18n.tr("Asking Alpha Vantage about today's news..."));
         AlphaVantage.load(withPrices, Settings.getInt("alphavantage.perDay", AlphaVantage.DEFAULT_PER_DAY));
         sourceStatus.put("News sentiment (Alpha Vantage)", AlphaVantage.lastStatus);
 
         RedditSource.score(posts, stocks);
         TrackRecord.fetchMissingPrices(this);
 
-        progress.accept("Checking today's minute-by-minute moves for 0DTE ideas...");
+        progress.accept(I18n.tr("Checking today's minute-by-minute moves for 0DTE ideas..."));
         for (String t : new String[]{"SPY", "QQQ"}) {
             List<List<Double>> d = PriceSource.loadIntraday(t);
             if (d != null) intraday.put(t, d);
@@ -133,7 +138,7 @@ public class Analyzer {
 
     /** The biggest companies of the other world markets: prices + chart analysis (+ company numbers when listed in the US). */
     private void loadWorldStocks(Consumer<String> progress) {
-        progress.accept("Checking the biggest companies of the world's largest stock markets...");
+        progress.accept(I18n.tr("Checking the biggest companies of the world's largest stock markets..."));
         ExecutorService pool = Executors.newFixedThreadPool(6);
         List<Future<?>> jobs = new ArrayList<>();
         int ok = 0;
@@ -208,6 +213,10 @@ public class Analyzer {
         long below = stocks.values().stream().filter(o -> o.tech.sctrRaw < found.tech.sctrRaw).count();
         found.tech.sctr = stocks.isEmpty() ? Double.NaN : 99.0 * below / stocks.size();
         Scorer.score(found);
+        if (!demo) {
+            try { found.localNews.addAll(LocalNews.about(found, 6)); } catch (Exception ignored) {}
+            CheckedHistory.record(java.util.Collections.singletonList(found));
+        }
         return found;
     }
 }

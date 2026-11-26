@@ -110,12 +110,12 @@ public final class PaperPortfolio {
         if (m.find()) { side = m.group(1); qty = m.group(2); ticker = m.group(3); }
         else {
             Matcher m2 = CMD2.matcher(cmd);
-            if (!m2.find()) return "Type it like: buy 10 AAPL   or   sell 5 AAPL   or   sell all AAPL";
+            if (!m2.find()) return I18n.tr("Type it like: buy 10 AAPL   or   sell 5 AAPL   or   sell all AAPL");
             side = m2.group(1); ticker = m2.group(2); qty = m2.group(3);
         }
         ticker = ticker.toUpperCase(Locale.US);
         double[] p = price(ticker, a);
-        if (p == null) return "Couldn't find a price for " + ticker + ". Check the ticker (US-listed stocks only, e.g. TSM instead of 2330.TW).";
+        if (p == null) return I18n.tr("Couldn't find a price for ") + ticker + I18n.tr(". Check the ticker (US-listed stocks only, e.g. TSM instead of 2330.TW).");
         double price = p[0];
         boolean buy = side.equalsIgnoreCase("buy");
         Position pos = positions.get(ticker);
@@ -124,18 +124,18 @@ public final class PaperPortfolio {
             if (buy) shares = Math.floor(cash / price);
             else shares = pos == null ? 0 : pos.shares;
         } else shares = Double.parseDouble(qty.replace(',', '.'));
-        if (shares <= 0) return buy ? "Not enough pretend cash to buy even 1 share." : "You don't own any " + ticker + ".";
+        if (shares <= 0) return buy ? I18n.tr("Not enough pretend cash to buy even 1 share.") : I18n.tr("You don't own any ") + ticker + ".";
         if (buy && shares * price > cash + 1e-6)
-            return String.format(Locale.US, "Not enough pretend cash: %s shares cost $%,.2f but you have $%,.2f.", fmt(shares), shares * price, cash);
+            return String.format(Locale.US, I18n.tr("Not enough pretend cash: %s shares cost $%,.2f but you have $%,.2f."), fmt(shares), shares * price, cash);
         if (!buy && (pos == null || shares > pos.shares + 1e-9))
-            return "You only own " + (pos == null ? "0" : fmt(pos.shares)) + " shares of " + ticker + ".";
+            return I18n.tr("You only own ") + (pos == null ? "0" : fmt(pos.shares)) + I18n.tr(" shares of ") + ticker + ".";
         if (Double.isNaN(spxAtStart) && a != null) {
             for (WorldMarkets.Market mk : a.markets) if (mk.symbol.equals("^GSPC") && !Double.isNaN(mk.price) && !a.demo) spxAtStart = mk.price;
         }
         trades.add(new Trade(LocalDate.now().toString(), buy ? "BUY" : "SELL", ticker, shares, price));
         replay();
         save();
-        return String.format(Locale.US, "OK - %s %s shares of %s at $%,.2f (pretend money). Cash left: $%,.2f.",
+        return String.format(Locale.US, I18n.tr("OK - %s %s shares of %s at $%,.2f (pretend money). Cash left: $%,.2f."),
                 buy ? "bought" : "sold", fmt(shares), ticker, price, cash);
     }
 

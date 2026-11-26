@@ -36,22 +36,22 @@ public final class WorldStocks {
         public List<String> howToBuy() {
             List<String> out = new ArrayList<>();
             if (WorldMarkets.isUs(market)) {
-                out.add("Buy " + usTicker + " in almost any broker app - it trades on the " + usVenue + " in US dollars.");
-                out.add("Simplest way to own the 500 biggest US companies at once: an S&P 500 ETF such as SPY or VOO.");
+                out.add(I18n.tr("Buy ") + usTicker + I18n.tr(" in almost any broker app - it trades on the ") + usVenue + I18n.tr(" in US dollars."));
+                out.add(I18n.tr("Simplest way to own the 500 biggest US companies at once: an S&P 500 ETF such as SPY or VOO."));
                 return out;
             }
             if (hasMainUsListing())
-                out.add("Easiest: buy " + usTicker + " on the " + usVenue + " - almost every broker app has it, priced in US dollars.");
+                out.add(I18n.tr("Easiest: buy ") + usTicker + I18n.tr(" on the ") + usVenue + I18n.tr(" - almost every broker app has it, priced in US dollars."));
             else if (usTicker != null)
-                out.add("In the US: " + usTicker + " on the OTC market. Some broker apps allow it (Schwab, Fidelity, Interactive Brokers...); prices can be less smooth.");
-            out.add("At home: " + homeTicker.replaceAll("\\.[A-Z]+$", "") + " on the " + homeExchange + ". Needs a broker with international trading "
-                    + "(for example Interactive Brokers or Saxo - check what is offered in your country).");
+                out.add(I18n.tr("In the US: ") + usTicker + I18n.tr(" on the OTC market. Some broker apps allow it (Schwab, Fidelity, Interactive Brokers...); prices can be less smooth."));
+            out.add(I18n.tr("At home: ") + homeTicker.replaceAll("\\.[A-Z]+$", "") + I18n.tr(" on the ") + homeExchange + I18n.tr(". Needs a broker with international trading ")
+                    + I18n.tr("(for example Interactive Brokers or Saxo - check what is offered in your country)."));
             if (homeTicker.endsWith(".SS"))
-                out.add("Mainland China shares are usually bought by foreigners through Hong Kong's \"Stock Connect\" (international brokers), or via a China ETF.");
+                out.add(I18n.tr("Mainland China shares are usually bought by foreigners through Hong Kong's \"Stock Connect\" (international brokers), or via a China ETF."));
             if (homeTicker.endsWith(".NS") && usTicker == null)
-                out.add("Indian shares are hard for foreigners to buy directly - an India ETF is the practical way.");
+                out.add(I18n.tr("Indian shares are hard for foreigners to buy directly - an India ETF is the practical way."));
             if (countryEtf != null)
-                out.add("Simplest way to own the whole market: the ETF " + countryEtf + " (a basket of this country's big companies, sold in US broker apps).");
+                out.add(I18n.tr("Simplest way to own the whole market: the ETF ") + countryEtf + I18n.tr(" (a basket of this country's big companies, sold in US broker apps)."));
             return out;
         }
     }

@@ -33,7 +33,7 @@ public class DesktopWidget extends JFrame {
     private final boolean rounded;
 
     public DesktopWidget() {
-        super("StockBuddy widget");
+        super(I18n.tr("StockBuddy widget"));
         setIconImages(App.icons());
         setUndecorated(true);
         setType(Type.UTILITY); // keeps it out of the taskbar
@@ -123,14 +123,14 @@ public class DesktopWidget extends JFrame {
     // ------------------------------------------------------------------ right-click menu
     private void menu(MouseEvent e) {
         JPopupMenu m = new JPopupMenu();
-        JMenuItem open = new JMenuItem("Open StockBuddy window");
+        JMenuItem open = new JMenuItem(I18n.tr("Open StockBuddy window"));
         open.addActionListener(a -> App.showMain(null));
-        JMenuItem refresh = new JMenuItem(App.loading ? "Refreshing..." : "Refresh now");
+        JMenuItem refresh = new JMenuItem(App.loading ? I18n.tr("Refreshing...") : I18n.tr("Refresh now"));
         refresh.setEnabled(!App.loading);
         refresh.addActionListener(a -> App.refresh());
         m.add(open); m.add(refresh); m.addSeparator();
 
-        JMenu skins = new JMenu("Widget skin");
+        JMenu skins = new JMenu(I18n.tr("Widget skin"));
         ButtonGroup g = new ButtonGroup();
         List<String> names = new ArrayList<>(List.of("Same as app"));
         Skin.ALL.forEach(s -> names.add(s.name()));
@@ -142,36 +142,36 @@ public class DesktopWidget extends JFrame {
         }
         m.add(skins);
 
-        JMenu size = new JMenu("Size");
+        JMenu size = new JMenu(I18n.tr("Size"));
         ButtonGroup sg = new ButtonGroup();
-        for (String[] s : new String[][]{{"full", "Full (markets + ideas)"}, {"compact", "Compact (markets only)"}}) {
+        for (String[] s : new String[][]{{"full", I18n.tr("Full (markets + ideas)")}, {"compact", I18n.tr("Compact (markets only)")}}) {
             JRadioButtonMenuItem it = new JRadioButtonMenuItem(s[1], Settings.get("widget.size", "full").equals(s[0]));
             it.addActionListener(a -> { Settings.set("widget.size", s[0]); relayout(); });
             sg.add(it); size.add(it);
         }
         m.add(size);
 
-        JMenu op = new JMenu("See-through");
+        JMenu op = new JMenu(I18n.tr("See-through"));
         ButtonGroup og = new ButtonGroup();
         int curOp = Settings.getInt("widget.opacity", 95);
         for (int v : new int[]{100, 95, 85, 75, 60}) {
-            JRadioButtonMenuItem it = new JRadioButtonMenuItem(v == 100 ? "Solid" : (100 - v) + "% see-through", v == curOp);
+            JRadioButtonMenuItem it = new JRadioButtonMenuItem(v == 100 ? I18n.tr("Solid") : (100 - v) + I18n.tr("% see-through"), v == curOp);
             it.addActionListener(a -> { Settings.set("widget.opacity", v); applyOpacity(); });
             og.add(it); op.add(it);
         }
         m.add(op);
 
-        JCheckBoxMenuItem top = new JCheckBoxMenuItem("Always on top of other windows", isAlwaysOnTop());
+        JCheckBoxMenuItem top = new JCheckBoxMenuItem(I18n.tr("Always on top of other windows"), isAlwaysOnTop());
         top.addActionListener(a -> { setAlwaysOnTop(top.isSelected()); Settings.set("widget.onTop", top.isSelected()); });
         m.add(top);
-        JCheckBoxMenuItem auto = new JCheckBoxMenuItem("Show widget when my computer starts", Autostart.isEnabled());
+        JCheckBoxMenuItem auto = new JCheckBoxMenuItem(I18n.tr("Show widget when my computer starts"), Autostart.isEnabled());
         auto.addActionListener(a -> {
             String err = Autostart.set(auto.isSelected());
             if (err != null) JOptionPane.showMessageDialog(this, err);
         });
         m.add(auto);
         m.addSeparator();
-        JMenuItem close = new JMenuItem("Close widget");
+        JMenuItem close = new JMenuItem(I18n.tr("Close widget"));
         close.addActionListener(a -> close());
         m.add(close);
         m.show(panel, e.getX(), e.getY());
@@ -200,11 +200,11 @@ public class DesktopWidget extends JFrame {
             g.drawImage(App.icons().get(1), 14, 12, 22, 22, null);
             g.setColor(k.text());
             g.setFont(k.font(Font.BOLD, 16));
-            g.drawString("StockBuddy", 44, 29);
+            g.drawString(I18n.tr("StockBuddy"), 44, 29);
             g.setFont(k.font(Font.PLAIN, 11));
             g.setColor(k.muted());
-            String sub = App.loading ? "updating..." : updatedAt.isEmpty() ? "" : "updated " + updatedAt;
-            if (App.demo) sub = "PRACTICE DATA" + (sub.isEmpty() ? "" : " - " + sub);
+            String sub = App.loading ? "updating..." : updatedAt.isEmpty() ? "" : I18n.tr("updated ") + updatedAt;
+            if (App.demo) sub = I18n.tr("PRACTICE DATA") + (sub.isEmpty() ? "" : " - " + sub);
             g.drawString(sub, 44, 43);
             Rectangle mb = menuBox(), cb = closeBox();
             g.setColor(k.muted());
@@ -217,7 +217,7 @@ public class DesktopWidget extends JFrame {
             if (App.plan == null) {
                 g.setFont(k.font(Font.PLAIN, 13));
                 g.setColor(k.muted());
-                g.drawString("Getting today's data...", 16, y + 20);
+                g.drawString(I18n.tr("Getting today's data..."), 16, y + 20);
                 g.dispose();
                 return;
             }
@@ -231,7 +231,7 @@ public class DesktopWidget extends JFrame {
             y += 6;
 
             // markets
-            header(g, k, "WORLD MARKETS", y); y += 18;
+            header(g, k, I18n.tr("WORLD MARKETS"), y); y += 18;
             int rows = full() ? SHOWN.size() : 8;
             for (String sym : SHOWN.subList(0, rows)) {
                 WorldMarkets.Market m = a.markets.stream().filter(x -> x.symbol.equals(sym)).findFirst().orElse(null);
@@ -251,13 +251,13 @@ public class DesktopWidget extends JFrame {
             if (!full()) { fit(y + 22); footer(g, k, h); g.dispose(); return; }
 
             y += 6;
-            header(g, k, "TOP BUYS TODAY", y); y += 8;
-            y = chips(g, k, App.plan.buys, k.good(), y, "none today - waiting is fine");
+            header(g, k, I18n.tr("TOP BUYS TODAY"), y); y += 8;
+            y = chips(g, k, App.plan.buys, k.good(), y, I18n.tr("none today - waiting is fine"));
             y += 8;
-            header(g, k, "CAREFUL WITH (sell signals)", y); y += 8;
-            y = chips(g, k, App.plan.sells, k.bad(), y, "no strong warnings");
+            header(g, k, I18n.tr("CAREFUL WITH (sell signals)"), y); y += 8;
+            y = chips(g, k, App.plan.sells, k.bad(), y, I18n.tr("no strong warnings"));
             y += 8;
-            header(g, k, "0DTE (OPTIONS EXPIRING TODAY)", y); y += 18;
+            header(g, k, I18n.tr("0DTE (OPTIONS EXPIRING TODAY)"), y); y += 18;
             g.setFont(k.font(Font.PLAIN, 12));
             for (Advisor.Idea i : App.plan.zeroDte) {
                 String t = i.headline.replace(" (tracks the S&P 500)", "").replace(" (tracks the Nasdaq 100)", "")
@@ -326,7 +326,7 @@ public class DesktopWidget extends JFrame {
         private void footer(Graphics2D g, Skin k, int h) {
             g.setFont(k.font(Font.PLAIN, 10));
             g.setColor(k.muted());
-            g.drawString("Not financial advice  ·  right-click for options", 16, h - 12);
+            g.drawString(I18n.tr("Not financial advice  ·  right-click for options"), 16, h - 12);
         }
     }
 }

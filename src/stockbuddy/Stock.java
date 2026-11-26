@@ -55,6 +55,9 @@ public class Stock {
     // Set for the big companies of the other world markets (see WorldStocks)
     public WorldStocks.Entry world;
 
+    // News about this company in your language (filled when you look it up)
+    public final List<LocalNews.Item> localNews = new ArrayList<>();
+
     // Any CSV files you added (file name -> column -> value)
     public final java.util.Map<String, java.util.Map<String, String>> customData = new java.util.LinkedHashMap<>();
 

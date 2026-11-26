@@ -28,9 +28,9 @@ public final class Alerts {
 
         public String describe() {
             switch (type) {
-                case "above": return ticker + " rises above " + num(value);
-                case "below": return ticker + " falls below " + num(value);
-                default: return ticker + " moves more than " + num(value) + "% in a day (up or down)";
+                case "above": return ticker + I18n.tr(" rises above ") + num(value);
+                case "below": return ticker + I18n.tr(" falls below ") + num(value);
+                default: return ticker + I18n.tr(" moves more than ") + num(value) + I18n.tr("% in a day (up or down)");
             }
         }
 
@@ -87,12 +87,12 @@ public final class Alerts {
      */
     public static String add(String text) {
         Matcher m = RULE.matcher(text == null ? "" : text.trim());
-        if (!m.find()) return "Type it like: NVDA above 150   or   TSLA below 200   or   AAPL move 5%";
+        if (!m.find()) return I18n.tr("Type it like: NVDA above 150   or   TSLA below 200   or   AAPL move 5%");
         String w = m.group(2).toLowerCase(Locale.US);
         String type = w.equals("above") || w.equals("over") || w.equals(">") ? "above" : w.equals("below") || w.equals("under") || w.equals("<") ? "below" : "move";
         double v = Double.parseDouble(m.group(3).replace(',', '.'));
-        if (v <= 0) return "The number must be more than 0.";
-        if (type.equals("move") && v > 50) return "For a daily move, use a percentage like 5 (meaning 5%).";
+        if (v <= 0) return I18n.tr("The number must be more than 0.");
+        if (type.equals("move") && v > 50) return I18n.tr("For a daily move, use a percentage like 5 (meaning 5%).");
         List<Alert> list = load();
         list.add(new Alert(Long.toString(System.currentTimeMillis(), 36), m.group(1).toUpperCase(Locale.US), type, v));
         save(list);
@@ -138,7 +138,7 @@ public final class Alerts {
             if (a.hit(p[0], p[1])) {
                 a.triggeredAt = now;
                 a.triggeredPrice = p[0];
-                fired.add(a.describe() + " - now " + num(p[0]) + (Double.isNaN(p[1]) ? "" : String.format(Locale.US, " (%+.2f%% today)", p[1])));
+                fired.add(a.describe() + I18n.tr(" - now ") + num(p[0]) + (Double.isNaN(p[1]) ? "" : String.format(Locale.US, I18n.tr(" (%+.2f%% today)"), p[1])));
             }
         }
         if (!fired.isEmpty()) save(list);

@@ -88,6 +88,12 @@ public final class Main {
         System.out.println();
         analyzer.run(msg -> System.out.println(Ui.DIM + "  ... " + msg + Ui.RESET));
         plan = Advisor.build(analyzer);
+        List<String> fired = Alerts.check(Alerts.prices(analyzer, false));
+        if (!fired.isEmpty()) {
+            Ui.section("PRICE ALERTS", Ui.YELLOW);
+            for (String f : fired) Ui.bullet(f, "  ");
+            DesktopNotify.show("StockBuddy price alert", fired);
+        }
         if (analyzer.stocks.isEmpty()) {
             System.out.println(Ui.RED + "  I couldn't download any stock prices. Check your internet connection, or start with --demo to practise." + Ui.RESET);
         } else {

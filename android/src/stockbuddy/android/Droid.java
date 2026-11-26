@@ -22,6 +22,7 @@ import stockbuddy.Advisor;
 import stockbuddy.Analyzer;
 import stockbuddy.AppPaths;
 import stockbuddy.Http;
+import stockbuddy.I18n;
 import stockbuddy.Palette;
 import stockbuddy.Settings;
 import stockbuddy.Stock;
@@ -37,7 +38,7 @@ public final class Droid {
     public static volatile Analyzer analyzer;
     public static volatile Advisor.Plan plan;
     public static volatile boolean loading;
-    public static volatile String status = "Starting...";
+    public static volatile String status = I18n.tr("Starting...");
     public static volatile Listener listener;
 
     private static final Handler MAIN = new Handler(Looper.getMainLooper());
@@ -45,6 +46,15 @@ public final class Droid {
     private static final List<String> WIDGET_MARKETS = java.util.Arrays.asList("^GSPC", "^IXIC", "^DJI", "^FTSE", "^GDAXI", "^N225", "^HSI", "^BSESN");
 
     private Droid() {}
+
+    /** Re-writes every explanation in the newly chosen language (no download needed). */
+    public static void relocalize() {
+        Analyzer a = analyzer;
+        if (a == null) return;
+        for (stockbuddy.Stock s : a.stocks.values()) if (s.tech != null) stockbuddy.Scorer.score(s);
+        if (plan != null) plan = Advisor.build(a);
+        saveSnapshot(a, plan);
+    }
 
     /** Must run before anything reads settings or files: tells the shared code where to keep its files. */
     public static void init(Context c) {
@@ -70,7 +80,7 @@ public final class Droid {
             loading = true;
         }
         final boolean demo = demo();
-        setStatus(demo ? "Loading practice data..." : "Collecting today's data from the websites...");
+        setStatus(demo ? I18n.tr("Loading practice data...") : I18n.tr("Collecting today's data from the websites..."));
         new Thread(() -> {
             try {
                 Http.clearCache();
@@ -82,10 +92,10 @@ public final class Droid {
                 saveSnapshot(a, p);
                 Notifier.alerts(app, stockbuddy.Alerts.check(stockbuddy.Alerts.prices(a, false)));
                 status = a.stocks.isEmpty()
-                        ? "Couldn't download any stock prices. Check your internet, or turn on Practice mode (More menu)."
-                        : "Ready - " + a.stocks.size() + " stocks analysed" + (demo ? " (PRACTICE DATA - not real)" : "") + ".";
+                        ? I18n.tr("Couldn't download any stock prices. Check your internet, or turn on Practice mode (More menu).")
+                        : I18n.tr("Ready - ") + a.stocks.size() + I18n.tr(" stocks analysed") + (demo ? I18n.tr(" (PRACTICE DATA - not real)") : "") + ".";
             } catch (Throwable t) {
-                status = "Something went wrong while loading: " + t;
+                status = I18n.tr("Something went wrong while loading: ") + t;
             }
             MAIN.post(() -> {
                 List<Runnable> todo;
@@ -99,7 +109,7 @@ public final class Droid {
                 StockWidget.updateAll(app);
                 for (Runnable r : todo) r.run();
             });
-        }, "StockBuddy refresh").start();
+        }, I18n.tr("StockBuddy refresh")).start();
         Listener l = listener;
         if (l != null) l.onDone(); // shows the "loading" state
     }
@@ -127,27 +137,27 @@ public final class Droid {
     static void saveSnapshot(Analyzer a, Advisor.Plan p) {
         Properties s = new Properties();
         s.setProperty("time", String.valueOf(System.currentTimeMillis()));
-        s.setProperty("updated", new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
+        s.setProperty("updated", new SimpleDateFormat(I18n.tr("HH:mm"), Locale.getDefault()).format(new Date()));
         s.setProperty("demo", String.valueOf(a.demo));
         s.setProperty("mood", WorldMarkets.mood(a.markets).replace("Around the world it's ", "World: "));
         StringBuilder m = new StringBuilder();
         for (WorldMarkets.Market mk : a.markets) {
             if (!WIDGET_MARKETS.contains(mk.symbol)) continue;
-            m.append(mk.symbol).append('|').append(Double.isNaN(mk.changePct) ? "NaN" : String.valueOf(mk.changePct))
-             .append('|').append(Double.isNaN(mk.price) ? "NaN" : String.valueOf(mk.price)).append('\n');
+            m.append(mk.symbol).append('|').append(Double.isNaN(mk.changePct) ? I18n.tr("NaN") : String.valueOf(mk.changePct))
+             .append('|').append(Double.isNaN(mk.price) ? I18n.tr("NaN") : String.valueOf(mk.price)).append('\n');
         }
         s.setProperty("markets", m.toString());
         s.setProperty("buys", tickers(p.buys));
         s.setProperty("sells", tickers(p.sells));
         StringBuilder z = new StringBuilder();
         for (Advisor.Idea i : p.zeroDte) {
-            z.append(i.headline.replace(" (tracks the S&P 500)", "").replace(" (tracks the Nasdaq 100)", "")
-                    .replace(" expiring TODAY", "").replace(" - no clear direction today", "")).append('\n');
+            z.append(i.tone > 0 ? "+" : i.tone < 0 ? "-" : "0").append('|')
+             .append(i.stock == null ? "" : i.stock.ticker).append(": ").append(i.action == null ? i.headline : i.action).append('\n');
         }
         s.setProperty("zdte", z.toString());
         try {
             Files.createDirectories(snapshotFile().getParent());
-            try (Writer w = Files.newBufferedWriter(snapshotFile())) { s.store(w, "StockBuddy widget"); }
+            try (Writer w = Files.newBufferedWriter(snapshotFile())) { s.store(w, I18n.tr("StockBuddy widget")); }
         } catch (Exception ignored) {}
     }
 
@@ -155,7 +165,7 @@ public final class Droid {
         StringBuilder b = new StringBuilder();
         for (Advisor.Idea i : ideas) {
             Stock s = i.stock;
-            b.append(s.ticker).append('|').append(Double.isNaN(s.changePct) ? "NaN" : String.valueOf(s.changePct)).append('\n');
+            b.append(s.ticker).append('|').append(Double.isNaN(s.changePct) ? I18n.tr("NaN") : String.valueOf(s.changePct)).append('\n');
         }
         return b.toString();
     }

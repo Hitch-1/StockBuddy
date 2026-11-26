@@ -52,13 +52,13 @@ public final class Advisor {
         // ---------- BUYS ----------
         all.stream().filter(s -> s.score >= 0.2 && !s.tech.downtrend(s.price) && s.signals.size() >= 2).sorted(best).limit(5).forEach(s -> {
             Idea i = new Idea(Kind.BUY, s);
-            name(i, s, +1, String.format("BUY at about %s  -  %s  -  confidence %s", money(s), Scorer.verdict(s.score), Scorer.stars(s.confidence)));
+            name(i, s, +1, String.format(I18n.tr("BUY at about %s  -  %s  -  confidence %s"), money(s), Scorer.verdict(s.score), Scorer.stars(s.confidence)));
             addReasons(i, s, true);
-            if (s.world != null) for (String w : s.world.howToBuy()) i.howTo.add("Where to buy: " + w);
+            if (s.world != null) for (String w : s.world.howToBuy()) i.howTo.add(I18n.tr("Where to buy: ") + w);
             double stop = s.price * 0.92;
-            i.howTo.add("In your broker app, search " + s.ticker + ", choose \"Buy\", and use a LIMIT order near " + money(s) + " so you don't overpay.");
-            i.howTo.add(String.format("Consider a \"stop-loss\" around %s (8%% below) - it sells automatically if things go wrong.", money(s, stop)));
-            i.howTo.add("Only put in money you can leave alone for months; don't put everything into one stock.");
+            i.howTo.add(I18n.tr("In your broker app, search ") + s.ticker + I18n.tr(", choose \"Buy\", and use a LIMIT order near ") + money(s) + I18n.tr(" so you don't overpay."));
+            i.howTo.add(String.format(I18n.tr("Consider a \"stop-loss\" around %s (8%% below) - it sells automatically if things go wrong."), money(s, stop)));
+            i.howTo.add(I18n.tr("Only put in money you can leave alone for months; don't put everything into one stock."));
             i.risk = riskLine(s);
             p.buys.add(i);
         });
@@ -69,18 +69,18 @@ public final class Advisor {
                     && !(s.redditMentions >= 8 && s.redditSentiment > 0);   // avoid crowd "short squeeze" names
             Idea i = new Idea(Kind.SELL, s);
             i.alsoShort = shortable;
-            name(i, s, -1, String.format("SELL if you own it%s  -  %s  -  confidence %s",
-                    shortable ? "  +  SHORT idea (advanced)" : "", Scorer.verdict(s.score), Scorer.stars(s.confidence)));
+            name(i, s, -1, String.format(I18n.tr("SELL if you own it%s  -  %s  -  confidence %s"),
+                    shortable ? I18n.tr("  +  SHORT idea (advanced)") : "", Scorer.verdict(s.score), Scorer.stars(s.confidence)));
             addReasons(i, s, false);
-            if (shortable) i.why.add(String.format("The price (%s) is below its 20-, 50- and 200-day averages - a falling staircase.", money(s)));
-            i.howTo.add("If you own " + s.ticker + ", you could sell part (for example half) to lower your risk, or set a stop-loss just below today's price.");
-            i.howTo.add("If you don't own it: this just means \"don't buy it right now\".");
+            if (shortable) i.why.add(String.format(I18n.tr("The price (%s) is below its 20-, 50- and 200-day averages - a falling staircase."), money(s)));
+            i.howTo.add(I18n.tr("If you own ") + s.ticker + I18n.tr(", you could sell part (for example half) to lower your risk, or set a stop-loss just below today's price."));
+            i.howTo.add(I18n.tr("If you don't own it: this just means \"don't buy it right now\"."));
             if (shortable) {
-                i.howTo.add("SHORT (advanced): \"shorting\" means borrowing shares, selling them now and buying them back later - you profit if the price FALLS. You need a margin account.");
-                i.howTo.add(String.format("If you short, set a buy-stop around $%.2f (6%% above) to cap the loss. A simpler, safer way to bet on a fall: buy a PUT (see Best Puts).", s.price * 1.06));
-                i.risk = "Selling locks in your gain or loss (and a profit can mean tax). DANGER: when shorting, losses have NO limit if the price rises - not for beginners.";
+                i.howTo.add(I18n.tr("SHORT (advanced): \"shorting\" means borrowing shares, selling them now and buying them back later - you profit if the price FALLS. You need a margin account."));
+                i.howTo.add(String.format(I18n.tr("If you short, set a buy-stop around $%.2f (6%% above) to cap the loss. A simpler, safer way to bet on a fall: buy a PUT (see Best Puts)."), s.price * 1.06));
+                i.risk = I18n.tr("Selling locks in your gain or loss (and a profit can mean tax). DANGER: when shorting, losses have NO limit if the price rises - not for beginners.");
             } else {
-                i.risk = "Selling locks in your gain or loss, and in many countries a profit means tax. Stocks with bad signals can still bounce.";
+                i.risk = I18n.tr("Selling locks in your gain or loss, and in many countries a profit means tax. Stocks with bad signals can still bounce.");
             }
             p.sells.add(i);
         });
@@ -100,9 +100,9 @@ public final class Advisor {
         if (!big.isEmpty()) {
             List<String> parts = new ArrayList<>();
             for (EconomicCalendar.Event e : big)
-                parts.add((e.time == null ? "" : e.time.withZoneSameInstant(ZoneId.of("America/New_York")).toLocalTime() + " New York time: ") + e.title);
-            p.newsWarning = "Big news day in the US: " + String.join("; ", parts)
-                    + ". Prices can jump suddenly around these times - consider waiting until after the news, and keep positions small.";
+                parts.add((e.time == null ? "" : e.time.withZoneSameInstant(ZoneId.of("America/New_York")).toLocalTime() + I18n.tr(" New York time: ")) + e.title);
+            p.newsWarning = I18n.tr("Big news day in the US: ") + String.join("; ", parts)
+                    + I18n.tr(". Prices can jump suddenly around these times - consider waiting until after the news, and keep positions small.");
         }
         for (String t : new String[]{"SPY", "QQQ"}) {
             if (market != null && !WorldMarkets.isUs(market)) break;   // 0DTE is about US index options
@@ -123,17 +123,17 @@ public final class Advisor {
         double prem = Options.blackScholes(call, s.price, strike, days / 365.0, vol);
         double breakeven = call ? strike + prem : strike - prem;
         Idea i = new Idea(call ? Kind.CALL : Kind.PUT, s);
-        name(i, s, call ? +1 : -1, String.format("BUY a %s  -  $%s strike, expires %s (%d days)  -  about $%.0f per contract",
-                call ? "CALL (bet on up)" : "PUT (bet on down)", fmtStrike(strike), exp.format(NICE), days, prem * 100));
+        name(i, s, call ? +1 : -1, String.format(I18n.tr("BUY a %s  -  $%s strike, expires %s (%d days)  -  about $%.0f per contract"),
+                call ? I18n.tr("CALL (bet on up)") : I18n.tr("PUT (bet on down)"), fmtStrike(strike), exp.format(NICE), days, prem * 100));
         addReasons(i, s, call);
         if (s.optionsTalkCalls + s.optionsTalkPuts > 0)
-            i.why.add(String.format("Options traders on Reddit mentioned calls %d times and puts %d times.", s.optionsTalkCalls, s.optionsTalkPuts));
-        i.howTo.add(call ? "A CALL gains value if the stock goes UP. It gives you the right to buy 100 shares at the strike price."
-                : "A PUT gains value if the stock goes DOWN. It gives you the right to sell 100 shares at the strike price.");
-        i.howTo.add(String.format("Estimated cost: about $%.2f per share = about $%.0f for one contract (100 shares). Check the real price in your broker.", prem, prem * 100));
-        i.howTo.add(String.format("At expiry the stock needs to be %s $%.2f for you to make money (your \"breakeven\").", call ? "above" : "below", breakeven));
-        i.howTo.add("Many traders take profit at +50% and cut losses at -50% instead of waiting until expiry.");
-        i.risk = "You can lose 100% of what you pay for an option. Options lose value every day (\"time decay\"). Start with 1 contract.";
+            i.why.add(String.format(I18n.tr("Options traders on Reddit mentioned calls %d times and puts %d times."), s.optionsTalkCalls, s.optionsTalkPuts));
+        i.howTo.add(call ? I18n.tr("A CALL gains value if the stock goes UP. It gives you the right to buy 100 shares at the strike price.")
+                : I18n.tr("A PUT gains value if the stock goes DOWN. It gives you the right to sell 100 shares at the strike price."));
+        i.howTo.add(String.format(I18n.tr("Estimated cost: about $%.2f per share = about $%.0f for one contract (100 shares). Check the real price in your broker."), prem, prem * 100));
+        i.howTo.add(String.format(I18n.tr("At expiry the stock needs to be %s $%.2f for you to make money (your \"breakeven\")."), call ? I18n.tr("above") : I18n.tr("below"), breakeven));
+        i.howTo.add(I18n.tr("Many traders take profit at +50% and cut losses at -50% instead of waiting until expiry."));
+        i.risk = I18n.tr("You can lose 100% of what you pay for an option. Options lose value every day (\"time decay\"). Start with 1 contract.");
         return i;
     }
 
@@ -147,19 +147,19 @@ public final class Advisor {
 
     private static Idea zeroDte(Analyzer a, String t) {
         Idea i = new Idea(Kind.ZERO_DTE, a.stocks.get(t));
-        String nice = t.equals("SPY") ? "SPY (tracks the S&P 500)" : "QQQ (tracks the Nasdaq 100)";
+        String nice = t.equals("SPY") ? I18n.tr("SPY (tracks the S&P 500)") : I18n.tr("QQQ (tracks the Nasdaq 100)");
         ZonedDateTime ny = ZonedDateTime.now(ZoneId.of("America/New_York"));
         boolean weekday = ny.getDayOfWeek().getValue() <= 5;
         LocalTime now = ny.toLocalTime();
         boolean open = a.demo || (weekday && !now.isBefore(LocalTime.of(9, 30)) && now.isBefore(LocalTime.of(16, 0)));
         List<List<Double>> d = a.intraday.get(t);
-        i.risk = "0DTE options can go to ZERO within minutes. Most beginners lose money with them. Practise with tiny amounts or paper trading first.";
+        i.risk = I18n.tr("0DTE options can go to ZERO within minutes. Most beginners lose money with them. Practise with tiny amounts or paper trading first.");
         if (!open || d == null) {
-            i.headline = nice + ": no 0DTE idea right now";
-            i.title = nice; i.action = "No 0DTE idea right now"; i.tone = 0;
-            i.why.add(!open ? "The US market is closed (it's open 9:30am-4:00pm New York time, Monday-Friday; it's "
-                    + now.withSecond(0).withNano(0) + " there now)." : "Today's minute-by-minute prices couldn't be downloaded.");
-            i.howTo.add("Run the program again during market hours. The first 30 minutes are very jumpy, so most people wait until about 10:00am.");
+            i.headline = nice + I18n.tr(": no 0DTE idea right now");
+            i.title = nice; i.action = I18n.tr("No 0DTE idea right now"); i.tone = 0;
+            i.why.add(!open ? I18n.tr("The US market is closed (it's open 9:30am-4:00pm New York time, Monday-Friday; it's ")
+                    + now.withSecond(0).withNano(0) + I18n.tr(" there now).") : I18n.tr("Today's minute-by-minute prices couldn't be downloaded."));
+            i.howTo.add(I18n.tr("Run the program again during market hours. The first 30 minutes are very jumpy, so most people wait until about 10:00am."));
             return i;
         }
         List<Double> c = d.get(0), v = d.get(1);
@@ -173,29 +173,29 @@ public final class Advisor {
         int minutesLeft = a.demo ? 180 : (int) ChronoUnit.MINUTES.between(now, LocalTime.of(16, 0));
         boolean bull = last > vwap && slope > 0.05 && move > 0.2;
         boolean bear = last < vwap && slope < -0.05 && move < -0.2;
-        i.why.add(String.format("%s is %+.2f%% since the open and %+.2f%% in the last 30 minutes.", t, move, slope));
-        i.why.add(String.format("It's trading %s its average price of the day (VWAP $%.2f) - big traders watch this line.", last > vwap ? "ABOVE" : "BELOW", vwap));
+        i.why.add(String.format(I18n.tr("%s is %+.2f%% since the open and %+.2f%% in the last 30 minutes."), t, move, slope));
+        i.why.add(String.format(I18n.tr("It's trading %s its average price of the day (VWAP $%.2f) - big traders watch this line."), last > vwap ? I18n.tr("ABOVE") : I18n.tr("BELOW"), vwap));
         if (!bull && !bear) {
-            i.headline = nice + ": SIT OUT - no clear direction today";
-            i.title = nice; i.action = "SIT OUT - no clear direction today"; i.tone = 0;
-            i.why.add("The signals disagree, and with no clear direction 0DTE options usually just lose value. Not trading is a valid choice!");
-            i.howTo.add("Check again later in the day if a clear trend shows up.");
+            i.headline = nice + I18n.tr(": SIT OUT - no clear direction today");
+            i.title = nice; i.action = I18n.tr("SIT OUT - no clear direction today"); i.tone = 0;
+            i.why.add(I18n.tr("The signals disagree, and with no clear direction 0DTE options usually just lose value. Not trading is a valid choice!"));
+            i.howTo.add(I18n.tr("Check again later in the day if a clear trend shows up."));
             return i;
         }
         boolean call = bull;
         double strike = call ? Math.ceil(last) : Math.floor(last);
         double years = Math.max(5, minutesLeft) / (252.0 * 390.0);
         double prem = Options.blackScholes(call, last, strike, years, 0.16);
-        i.headline = String.format("%s: lean %s - $%s strike expiring TODAY", nice, call ? "CALL (bet on up)" : "PUT (bet on down)", fmtStrike(strike));
+        i.headline = String.format(I18n.tr("%s: lean %s - $%s strike expiring TODAY"), nice, call ? I18n.tr("CALL (bet on up)") : I18n.tr("PUT (bet on down)"), fmtStrike(strike));
         i.title = nice;
-        i.action = String.format("Lean %s  -  $%s strike expiring TODAY", call ? "CALL (bet on up)" : "PUT (bet on down)", fmtStrike(strike));
+        i.action = String.format(I18n.tr("Lean %s  -  $%s strike expiring TODAY"), call ? I18n.tr("CALL (bet on up)") : I18n.tr("PUT (bet on down)"), fmtStrike(strike));
         i.tone = call ? 1 : -1;
-        i.why.add(call ? "Price is rising steadily and staying above VWAP: buyers are in control right now."
-                : "Price is falling steadily and staying below VWAP: sellers are in control right now.");
-        i.howTo.add(String.format("Estimated cost: about $%.2f per share (~$%.0f per contract). %d minutes of trading left.", prem, prem * 100, minutesLeft));
-        i.howTo.add("Decide your exit BEFORE buying: e.g. sell at +30% profit or -30% loss, and always close before 3:45pm.");
-        i.howTo.add(String.format("If %s crosses back %s VWAP ($%.2f), the idea is wrong - get out.", t, call ? "below" : "above", vwap));
-        if (minutesLeft < 60) i.howTo.add("Less than 1 hour left: prices move extremely fast now. Even more caution needed.");
+        i.why.add(call ? I18n.tr("Price is rising steadily and staying above VWAP: buyers are in control right now.")
+                : I18n.tr("Price is falling steadily and staying below VWAP: sellers are in control right now."));
+        i.howTo.add(String.format(I18n.tr("Estimated cost: about $%.2f per share (~$%.0f per contract). %d minutes of trading left."), prem, prem * 100, minutesLeft));
+        i.howTo.add(I18n.tr("Decide your exit BEFORE buying: e.g. sell at +30% profit or -30% loss, and always close before 3:45pm."));
+        i.howTo.add(String.format(I18n.tr("If %s crosses back %s VWAP ($%.2f), the idea is wrong - get out."), t, call ? I18n.tr("below") : I18n.tr("above"), vwap));
+        if (minutesLeft < 60) i.howTo.add(I18n.tr("Less than 1 hour left: prices move extremely fast now. Even more caution needed."));
         return i;
     }
 
@@ -203,9 +203,9 @@ public final class Advisor {
         // Put the signals that support the idea first.
         s.signals.stream()
                 .sorted(Comparator.comparingDouble((Signal g) -> bullish ? -g.score() : g.score()))
-                .forEach(g -> i.why.add(tag(g) + g.source() + ": " + g.reason()));
-        if (!Double.isNaN(s.changePct)) i.why.add(String.format("Today it moved %+.2f%%.", s.changePct));
-        for (String q : s.redditQuotes) i.why.add("Seen on " + q);
+                .forEach(g -> i.why.add(tag(g) + I18n.tr(g.source()) + ": " + g.reason()));
+        if (!Double.isNaN(s.changePct)) i.why.add(String.format(I18n.tr("Today it moved %+.2f%%."), s.changePct));
+        for (String q : s.redditQuotes) i.why.add(I18n.tr("Seen on ") + q);
     }
 
     private static String tag(Signal g) {
@@ -214,8 +214,8 @@ public final class Advisor {
 
     private static String riskLine(Stock s) {
         double v = s.tech.volatility * 100;
-        String lvl = v < 20 ? "LOW (a calm stock)" : v < 40 ? "MEDIUM" : v < 70 ? "HIGH (big daily swings)" : "VERY HIGH (wild swings)";
-        return String.format("Risk level: %s - it typically moves about %.0f%% up or down in a year. Past results don't guarantee future ones.", lvl, v);
+        String lvl = v < 20 ? I18n.tr("LOW (a calm stock)") : v < 40 ? I18n.tr("MEDIUM") : v < 70 ? I18n.tr("HIGH (big daily swings)") : I18n.tr("VERY HIGH (wild swings)");
+        return String.format(I18n.tr("Risk level: %s - it typically moves about %.0f%% up or down in a year. Past results don't guarantee future ones."), lvl, v);
     }
 
     static String money(Stock s, double v) {

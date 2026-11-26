@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import com.stockbuddy.app.R;
+import stockbuddy.I18n;
 import stockbuddy.Palette;
 import stockbuddy.Settings;
 
@@ -76,11 +77,11 @@ public class StockWidget extends AppWidgetProvider {
         v.setTextColor(R.id.w_footer, Palette.argb(k.muted()));
 
         String updated = s.getProperty("updated");
-        String sub = updating || Droid.loading ? "updating..." : updated == null ? "Tap ↻ to load" : "updated " + updated;
-        if ("true".equals(s.getProperty("demo"))) sub = "PRACTICE DATA - " + sub;
+        String sub = updating || Droid.loading ? "updating..." : updated == null ? I18n.tr("Tap ↻ to load") : I18n.tr("updated ") + updated;
+        if ("true".equals(s.getProperty("demo"))) sub = I18n.tr("PRACTICE DATA - ") + sub;
         v.setTextViewText(R.id.w_updated, sub);
         v.setTextViewText(R.id.w_body, Html.fromHtml(body(k, s)));
-        v.setTextViewText(R.id.w_footer, "Not financial advice · tap to open");
+        v.setTextViewText(R.id.w_footer, I18n.tr("Not financial advice · tap to open"));
 
         Intent open = new Intent(ctx, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         v.setOnClickPendingIntent(R.id.w_root, PendingIntent.getActivity(ctx, 0, open, PendingIntent.FLAG_UPDATE_CURRENT | FLAG_IMMUTABLE));
@@ -90,29 +91,31 @@ public class StockWidget extends AppWidgetProvider {
     }
 
     private static String body(Palette k, Properties s) {
-        if (s.getProperty("time") == null) return "<font color='" + k.muted() + "'>No data yet. Open StockBuddy once, or tap ↻.</font>";
+        if (s.getProperty("time") == null) return I18n.tr("<font color='") + k.muted() + I18n.tr("'>No data yet. Open StockBuddy once, or tap ↻.</font>");
         StringBuilder b = new StringBuilder();
-        b.append("<font color='").append(k.accent()).append("'>").append(esc(s.getProperty("mood", ""))).append("</font><br><br>");
-        b.append("<small><b><font color='").append(k.muted()).append("'>WORLD MARKETS</font></b></small><br>");
+        b.append(I18n.tr("<font color='")).append(k.accent()).append("'>").append(esc(s.getProperty("mood", ""))).append(I18n.tr("</font><br><br>"));
+        b.append(I18n.tr("<small><b><font color='")).append(k.muted()).append(I18n.tr("'>WORLD MARKETS</font></b></small><br>"));
         for (String line : s.getProperty("markets", "").split("\n")) {
             String[] p = line.split("\\|");
             if (p.length < 2) continue;
             b.append(SHORT.containsKey(p[0]) ? SHORT.get(p[0]) : esc(p[0]));
             if (p.length > 2 && !p[2].equals("NaN")) {
-                try { b.append(" &nbsp;<font color='").append(k.muted()).append("'>").append(stockbuddy.WorldMarkets.price(Double.parseDouble(p[2]))).append("</font>"); }
+                try { b.append(I18n.tr(" &nbsp;<font color='")).append(k.muted()).append("'>").append(stockbuddy.WorldMarkets.price(Double.parseDouble(p[2]))).append(I18n.tr("</font>")); }
                 catch (NumberFormatException ignored) {}
             }
-            b.append(" &nbsp; ").append(pct(k, p[1])).append("<br>");
+            b.append(I18n.tr(" &nbsp; ")).append(pct(k, p[1])).append(I18n.tr("<br>"));
         }
-        b.append("<br><small><b><font color='").append(k.muted()).append("'>TOP BUYS TODAY</font></b></small><br>");
-        b.append(chips(k, s.getProperty("buys", ""), k.good(), "none today - waiting is fine"));
-        b.append("<br><small><b><font color='").append(k.muted()).append("'>CAREFUL WITH</font></b></small><br>");
-        b.append(chips(k, s.getProperty("sells", ""), k.bad(), "no strong warnings"));
-        b.append("<br><small><b><font color='").append(k.muted()).append("'>0DTE (EXPIRING TODAY)</font></b></small><br>");
+        b.append(I18n.tr("<br><small><b><font color='")).append(k.muted()).append(I18n.tr("'>TOP BUYS TODAY</font></b></small><br>"));
+        b.append(chips(k, s.getProperty("buys", ""), k.good(), I18n.tr("none today - waiting is fine")));
+        b.append(I18n.tr("<br><small><b><font color='")).append(k.muted()).append(I18n.tr("'>CAREFUL WITH</font></b></small><br>"));
+        b.append(chips(k, s.getProperty("sells", ""), k.bad(), I18n.tr("no strong warnings")));
+        b.append(I18n.tr("<br><small><b><font color='")).append(k.muted()).append(I18n.tr("'>0DTE (EXPIRING TODAY)</font></b></small><br>"));
         for (String z : s.getProperty("zdte", "").split("\n")) {
             if (z.trim().isEmpty()) continue;
-            String c = z.contains("CALL") ? k.good() : z.contains("PUT") ? k.bad() : k.muted();
-            b.append("<font color='").append(c).append("'>").append(esc(z)).append("</font><br>");
+            String tone = z.length() > 1 && z.charAt(1) == '|' ? z.substring(0, 1) : "0";
+            String txt = z.length() > 1 && z.charAt(1) == '|' ? z.substring(2) : z;
+            String c = tone.equals("+") ? k.good() : tone.equals("-") ? k.bad() : k.muted();
+            b.append(I18n.tr("<font color='")).append(c).append("'>").append(esc(txt)).append(I18n.tr("</font><br>"));
         }
         return b.toString();
     }
@@ -122,18 +125,18 @@ public class StockWidget extends AppWidgetProvider {
         for (String line : data.split("\n")) {
             String[] p = line.split("\\|");
             if (p.length < 2) continue;
-            if (b.length() > 0) b.append(" &nbsp;·&nbsp; ");
-            b.append("<b><font color='").append(color).append("'>").append(esc(p[0])).append("</font></b> ").append(pct(k, p[1]));
+            if (b.length() > 0) b.append(I18n.tr(" &nbsp;·&nbsp; "));
+            b.append(I18n.tr("<b><font color='")).append(color).append("'>").append(esc(p[0])).append(I18n.tr("</font></b> ")).append(pct(k, p[1]));
         }
-        return b.length() == 0 ? "<font color='" + k.muted() + "'>" + empty + "</font><br>" : b + "<br>";
+        return b.length() == 0 ? I18n.tr("<font color='") + k.muted() + "'>" + empty + I18n.tr("</font><br>") : b + I18n.tr("<br>");
     }
 
     private static String pct(Palette k, String v) {
         double d;
         try { d = Double.parseDouble(v); } catch (Exception e) { d = Double.NaN; }
-        if (Double.isNaN(d)) return "<font color='" + k.muted() + "'>n/a</font>";
+        if (Double.isNaN(d)) return I18n.tr("<font color='") + k.muted() + I18n.tr("'>n/a</font>");
         String c = d > 0.05 ? k.good() : d < -0.05 ? k.bad() : k.warn();
-        return "<font color='" + c + "'>" + String.format(Locale.US, "%+.2f%%", d) + "</font>";
+        return I18n.tr("<font color='") + c + "'>" + String.format(Locale.US, "%+.2f%%", d) + I18n.tr("</font>");
     }
 
     private static long parseLong(String s) {

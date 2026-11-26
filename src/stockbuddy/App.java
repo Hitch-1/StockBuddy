@@ -19,12 +19,11 @@ public final class App {
     public static Advisor.Plan plan;
     public static boolean demo;
     public static volatile boolean loading;
-    public static String status = "Starting...";
+    public static String status = I18n.tr("Starting...");
 
     private static final List<Runnable> dataListeners = new ArrayList<>();
     private static final List<Runnable> marketListeners = new ArrayList<>();
     private static Timer marketTimer, alertTimer;
-    private static java.awt.TrayIcon tray;
     private static volatile boolean marketsLoading;
     private static final List<Runnable> skinListeners = new ArrayList<>();
     private static final List<Consumer<String>> statusListeners = new ArrayList<>();
@@ -89,7 +88,7 @@ public final class App {
         if (loading) return;
         loading = true;
         Analyzer next = new Analyzer(demo);
-        setStatus(demo ? "Loading practice data..." : "Collecting today's data from the websites...");
+        setStatus(demo ? I18n.tr("Loading practice data...") : I18n.tr("Collecting today's data from the websites..."));
         new SwingWorker<Advisor.Plan, String>() {
             List<String> firedAlerts;
             @Override protected Advisor.Plan doInBackground() {
@@ -106,10 +105,10 @@ public final class App {
                     analyzer = next;
                     notifyAlerts(firedAlerts);
                     setStatus(next.stocks.isEmpty()
-                            ? "Couldn't download any stock prices. Check your internet connection, or turn on Practice mode."
-                            : "Ready - " + next.stocks.size() + " stocks analysed" + (demo ? " (PRACTICE DATA - not real)" : "") + ".");
+                            ? I18n.tr("Couldn't download any stock prices. Check your internet connection, or turn on Practice mode.")
+                            : I18n.tr("Ready - ") + next.stocks.size() + I18n.tr(" stocks analysed") + (demo ? I18n.tr(" (PRACTICE DATA - not real)") : "") + ".");
                 } catch (Exception e) {
-                    setStatus("Something went wrong while loading: " + e.getMessage());
+                    setStatus(I18n.tr("Something went wrong while loading: ") + e.getMessage());
                 }
                 dataListeners.forEach(Runnable::run);
             }
@@ -122,6 +121,16 @@ public final class App {
         demo = on;
         Settings.set("practiceMode", on);
         refresh();
+    }
+
+    /** Switches language: explanations are re-written (no new download), then every window is rebuilt. */
+    public static void setLanguage(String code) {
+        I18n.setLang(code);
+        for (Stock s : analyzer.stocks.values()) if (s.tech != null) Scorer.score(s);
+        if (plan != null) plan = Advisor.build(analyzer);
+        for (Window w : Window.getWindows()) if (w.isDisplayable()) w.applyComponentOrientation(I18n.rtl() ? ComponentOrientation.RIGHT_TO_LEFT : ComponentOrientation.LEFT_TO_RIGHT);
+        new ArrayList<>(skinListeners).forEach(Runnable::run);
+        new ArrayList<>(dataListeners).forEach(Runnable::run);
     }
 
     public static void setSkin(Skin s) {
@@ -149,27 +158,17 @@ public final class App {
                 notifyAlerts(fired);
                 for (Window w : Window.getWindows()) if (w instanceof MainWindow && w.isDisplayable()) ((MainWindow) w).refreshAlertsAndPaper();
             });
-        }, "StockBuddy alerts").start();
+        }, I18n.tr("StockBuddy alerts")).start();
     }
 
-    /** Desktop notification (system tray) + a small window that doesn't block the app. */
+    /** Desktop notification (system tray / notify-send / macOS) + a small window that doesn't block the app. */
     static void notifyAlerts(List<String> fired) {
         if (fired == null || fired.isEmpty()) return;
-        String text = String.join("\n", fired);
-        try {
-            if (java.awt.SystemTray.isSupported()) {
-                if (tray == null) {
-                    tray = new java.awt.TrayIcon(icons().get(1), "StockBuddy");
-                    tray.setImageAutoSize(true);
-                    java.awt.SystemTray.getSystemTray().add(tray);
-                }
-                tray.displayMessage("StockBuddy price alert", text, java.awt.TrayIcon.MessageType.INFO);
-            }
-        } catch (Exception ignored) { /* no tray on this computer - the window below is enough */ }
+        DesktopNotify.show(I18n.tr("StockBuddy price alert"), fired);
         Toolkit.getDefaultToolkit().beep();
-        JOptionPane pane = new JOptionPane("<html><b>Price alert" + (fired.size() > 1 ? "s" : "") + "</b><br>" + String.join("<br>", fired)
-                + "<br><br><span style='color:gray'>See the Price Alerts page.</span></html>", JOptionPane.INFORMATION_MESSAGE);
-        JDialog d = pane.createDialog(null, "StockBuddy price alert");
+        JOptionPane pane = new JOptionPane(I18n.tr("<html><b>Price alert") + (fired.size() > 1 ? "s" : "") + I18n.tr("</b><br>") + String.join("<br>", fired)
+                + I18n.tr("<br><br><span style='color:gray'>See the Price Alerts page.</span></html>"), JOptionPane.INFORMATION_MESSAGE);
+        JDialog d = pane.createDialog(null, I18n.tr("StockBuddy price alert"));
         d.setModal(false);
         d.setAlwaysOnTop(true);
         d.setIconImages(icons());
@@ -188,7 +187,7 @@ public final class App {
                 marketsLoading = false;
                 SwingUtilities.invokeLater(() -> new ArrayList<>(marketListeners).forEach(Runnable::run));
             }
-        }, "StockBuddy index prices").start();
+        }, I18n.tr("StockBuddy index prices")).start();
     }
     public static void onSkin(Runnable r) { skinListeners.add(r); }
     public static void onStatus(Consumer<String> c) { statusListeners.add(c); }

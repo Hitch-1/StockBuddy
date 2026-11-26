@@ -3,7 +3,7 @@
 # Run on Linux x86_64 with JDK 17+. The Android app must be built and signed first
 # (android/build-android.sh, then android/sign-android.sh) - otherwise it is left out.
 set -euo pipefail
-VERSION="${VERSION:-1.4}"
+VERSION="${VERSION:-1.5}"
 P="$(cd "$(dirname "$0")" && pwd)"
 ROOT="$(dirname "$P")"
 B="$ROOT/build/release"
@@ -20,6 +20,7 @@ rm -rf "$B"
 mkdir -p "$B/classes" "$OUT"
 echo "1/5 Compiling the desktop app..."
 javac -Xlint:none --release 17 -encoding UTF-8 -d "$B/classes" "$ROOT"/src/stockbuddy/*.java
+mkdir -p "$B/classes/stockbuddy/i18n" && cp "$ROOT"/src/stockbuddy/i18n/*.txt "$B/classes/stockbuddy/i18n/"
 jar --create --file "$B/StockBuddy.jar" --main-class stockbuddy.Main -C "$B/classes" .
 
 echo "2/5 Making a small built-in Java for Linux..."

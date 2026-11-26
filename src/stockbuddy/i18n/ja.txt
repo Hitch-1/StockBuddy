@@ -1,0 +1,3224 @@
+# StockBuddy translations (ja). Format: "= English" then "> translation". \n means a new line.
+
+= BUY at about %s  -  %s  -  confidence %s
+> 約%sで買い  -  %s  -  信頼度 %s
+
+= Consider a "stop-loss" around %s (8%% below) - it sells automatically if things go wrong.
+> %s付近（8%%下）に「損切り注文」を置くことを検討しましょう。うまくいかない時に自動で売ってくれます。
+
+= SELL if you own it%s  -  %s  -  confidence %s
+> 保有していれば売り%s  -  %s  -  信頼度 %s
+
+=   +  SHORT idea (advanced)
+>   +  空売りのアイデア（上級者向け）
+
+= The price (%s) is below its 20-, 50- and 200-day averages - a falling staircase.
+> 株価（%s）は20日・50日・200日平均を下回っています。下りの階段です。
+
+= If you short, set a buy-stop around $%.2f (6%% above) to cap the loss. A simpler, safer way to bet on a fall: buy a PUT (see Best Puts).
+> 空売りするなら、損失を抑えるため$%.2f付近（6%%上）に買い戻しの逆指値を置きましょう。下落に賭けるもっと簡単で安全な方法はプットの購入です（「ベストプット」参照）。
+
+= Selling locks in your gain or loss (and a profit can mean tax). DANGER: when shorting, losses have NO limit if the price rises - not for beginners.
+> 売ると損益が確定します（利益には税金がかかることも）。危険：空売りでは株価が上がると損失に上限がありません。初心者向けではありません。
+
+= Selling locks in your gain or loss, and in many countries a profit means tax. Stocks with bad signals can still bounce.
+> 売ると損益が確定し、多くの国では利益に税金がかかります。悪いシグナルの株でも反発することはあります。
+
+=  New York time: 
+>  ニューヨーク時間： 
+
+= Big news day in the US: 
+> 米国の重要発表日： 
+
+= . Prices can jump suddenly around these times - consider waiting until after the news, and keep positions small.
+> 。この時間帯は価格が急変することがあります。発表後まで待ち、ポジションは小さくしましょう。
+
+= BUY a %s  -  $%s strike, expires %s (%d days)  -  about $%.0f per contract
+> %sを買う  -  権利行使価格 $%s、満期 %s（%d日）  -  1枚あたり約$%.0f
+
+= CALL (bet on up)
+> コール（上昇に賭ける）
+
+= PUT (bet on down)
+> プット（下落に賭ける）
+
+= Options traders on Reddit mentioned calls %d times and puts %d times.
+> Redditのオプショントレーダーはコールに%d回、プットに%d回言及しました。
+
+= A PUT gains value if the stock goes DOWN. It gives you the right to sell 100 shares at the strike price.
+> プットは株価が下がると価値が上がります。権利行使価格で100株を売る権利です。
+
+= Estimated cost: about $%.2f per share = about $%.0f for one contract (100 shares). Check the real price in your broker.
+> 推定コスト：1株あたり約$%.2f＝1枚（100株）で約$%.0f。実際の価格は証券会社で確認してください。
+
+= At expiry the stock needs to be %s $%.2f for you to make money (your "breakeven").
+> 満期時に株価が$%2$.2fより%1$sである必要があります（「損益分岐点」）。
+
+= You can lose 100% of what you pay for an option. Options lose value every day ("time decay"). Start with 1 contract.
+> オプションは支払った額の100%を失う可能性があります。毎日価値が減ります（「時間的価値の減少」）。まずは1枚から。
+
+= SPY (tracks the S&P 500)
+> SPY（S&P 500に連動）
+
+= QQQ (tracks the Nasdaq 100)
+> QQQ（ナスダック100に連動）
+
+= 0DTE options can go to ZERO within minutes. Most beginners lose money with them. Practise with tiny amounts or paper trading first.
+> 0DTEオプションは数分でゼロになることがあります。初心者の多くは損をします。まずは少額か仮想取引で練習しましょう。
+
+= : no 0DTE idea right now
+> ：今は0DTEのアイデアなし
+
+= No 0DTE idea right now
+> 今は0DTEのアイデアはありません
+
+=  there now).
+>  現在）。
+
+= Today's minute-by-minute prices couldn't be downloaded.
+> 今日の1分ごとの価格をダウンロードできませんでした。
+
+= %s is %+.2f%% since the open and %+.2f%% in the last 30 minutes.
+> %sは寄り付きから%+.2f%%、直近30分で%+.2f%%です。
+
+= It's trading %s its average price of the day (VWAP $%.2f) - big traders watch this line.
+> 当日の平均価格（VWAP $%2$.2f）の%1$sで取引されています。大口トレーダーが注目する線です。
+
+= : SIT OUT - no clear direction today
+> ：見送り - 今日は方向感なし
+
+= SIT OUT - no clear direction today
+> 見送り - 今日は方向感なし
+
+= %s: lean %s - $%s strike expiring TODAY
+> %s：%s寄り - 本日満期の権利行使価格$%s
+
+= Lean %s  -  $%s strike expiring TODAY
+> %s寄り  -  本日満期の権利行使価格$%s
+
+= Price is falling steadily and staying below VWAP: sellers are in control right now.
+> 価格は着実に下がりVWAPを下回ったままです。今は売り手が主導しています。
+
+= Estimated cost: about $%.2f per share (~$%.0f per contract). %d minutes of trading left.
+> 推定コスト：1株あたり約$%.2f（1枚約$%.0f）。取引終了まで残り%d分。
+
+= If %s crosses back %s VWAP ($%.2f), the idea is wrong - get out.
+> %1$sがVWAP（$%3$.2f）の%2$sに戻ったら、アイデアは外れです。撤退しましょう。
+
+= Today it moved %+.2f%%.
+> 今日は%+.2f%%動きました。
+
+= LOW (a calm stock)
+> 低い（穏やかな株）
+
+= HIGH (big daily swings)
+> 高い（日々の値動きが大きい）
+
+= VERY HIGH (wild swings)
+> 非常に高い（激しい値動き）
+
+= Risk level: %s - it typically moves about %.0f%% up or down in a year. Past results don't guarantee future ones.
+> リスク水準：%s - 1年で通常約%.0f%%上下します。過去の結果は将来を保証しません。
+
+= StockBuddy - your friendly daily stock helper
+> StockBuddy - 毎日の頼れる株アシスタント
+
+= Your friendly daily stock helper
+> 毎日の頼れる株アシスタント
+
+= Refresh data
+> データを更新
+
+= Download the latest data from all websites
+> すべてのサイトから最新データを取得
+
+= Practice mode
+> 練習モード
+
+= Use made-up data to learn safely (works without internet)
+> 架空のデータで安全に学ぶ（ネット不要）
+
+= Change the colours of StockBuddy
+> StockBuddyの色を変更
+
+= Desktop widget
+> デスクトップウィジェット
+
+= Show a small always-visible StockBuddy panel on your desktop
+> デスクトップに常に表示される小さなStockBuddyパネル
+
+= Save report
+> レポートを保存
+
+= Save today's ideas as a web page you can open any time
+> 今日のアイデアをいつでも開けるWebページとして保存
+
+= Language
+> 言語
+
+= <html><div style='width:190px'><b>Not financial advice.</b> StockBuddy can be wrong. 
+> <html><div style='width:190px'><b>投資助言ではありません。</b>StockBuddyは間違うこともあります。 
+
+= Never invest money you can't afford to lose.</div></html>
+> 失っても困らないお金だけで投資しましょう。</div></html>
+
+= Market: ...
+> 市場：...
+
+= Show ideas for one market only
+> 1つの市場のアイデアだけを表示
+
+= All markets
+> すべての市場
+
+= The world's biggest stock markets
+> 世界最大の株式市場
+
+= Market
+> 市場
+
+= Index price
+> 指数
+
+= Today
+> 今日
+
+= Last month
+> 先月
+
+= Status
+> 状態
+
+= Local time
+> 現地時間
+
+= Country
+> 国
+
+= Double-click a market to see all its stocks
+> 市場をダブルクリックするとその銘柄一覧を表示
+
+= <html>An "index" is a basket of a country's biggest companies. Asian markets open first, then Europe, then the Americas - 
+> <html>「指数」とは国の大企業をまとめたものです。最初にアジア、次に欧州、最後に米州の市場が開きます。 
+
+= Type a ticker (like AAPL) or pick one:
+> ティッカー（例：AAPL）を入力するか選択：
+
+= Explain this stock
+> この株を解説
+
+= ★ Add to My Watchlist
+> ★ ウォッチリストに追加
+
+= Always check this stock from now on
+> 今後この株を常にチェック
+
+= Look up a stock
+> 株を調べる
+
+= Type a ticker above and press Enter. You'll get a chart and a plain-English explanation of what every source says.
+> 上にティッカーを入力してEnterを押すと、チャートと各情報源のわかりやすい解説が表示されます。
+
+= type a command
+> コマンドを入力
+
+= New alert:
+> 新しいアラート：
+
+= For example: NVDA above 150   TSLA below 200   AAPL move 5%
+> 例：NVDA above 150   TSLA below 200   AAPL move 5%
+
+= For example: buy 10 AAPL   sell 5 AAPL   sell all AAPL
+> 例：buy 10 AAPL   sell 5 AAPL   sell all AAPL
+
+= Add alert
+> アラートを追加
+
+= Do it
+> 実行
+
+= e.g.  NVDA above 150  ·  TSLA below 200  ·  AAPL move 5%
+> 例  NVDA above 150  ·  TSLA below 200  ·  AAPL move 5%
+
+= e.g.  buy 10 AAPL  ·  sell 5 AAPL  ·  sell all AAPL
+> 例  buy 10 AAPL  ·  sell 5 AAPL  ·  sell all AAPL
+
+= Check now
+> 今すぐ確認
+
+= Check all alerts with fresh prices
+> 最新価格ですべてのアラートを確認
+
+= How many pretend shares of 
+> 仮想で買う株数（ 
+
+=  do you want to buy?\n(Pretend money - nothing real is bought.)
+>  ）を入力してください。\n（仮想のお金です。実際には何も買いません。）
+
+= Paper trading
+> 仮想取引
+
+= A band around the price: touching the top = expensive lately, the bottom = cheap lately
+> 価格を囲む帯：上限に触れる＝最近割高、下限＝最近割安
+
+= The average price of the last 
+> 直近の平均価格： 
+
+=  (recent days count more)
+>  （最近の日ほど重視）
+
+= Bottom panel:
+> 下段パネル：
+
+= Every stock I checked
+> チェックしたすべての株
+
+= Show the stocks of one market only
+> 1つの市場の株だけを表示
+
+= Ticker
+> ティッカー
+
+= Name
+> 銘柄名
+
+= Price
+> 価格
+
+= Verdict
+> 判定
+
+= Score
+> スコア
+
+= Confidence
+> 信頼度
+
+= Checked
+> 確認日
+
+= Tip: double-click a row to see the full explanation. Click a column title to sort.
+> ヒント：行をダブルクリックで詳しい解説。列の見出しをクリックで並べ替え。
+
+= Search a word:
+> 用語を検索：
+
+= <html><b style='font-size:16pt'>My watchlist</b><br>These stocks are always checked - plus today's biggest movers 
+> <html><b style='font-size:16pt'>ウォッチリスト</b><br>これらの株は常にチェックされます。今日の値動きの大きい株や 
+
+= and the stocks Reddit talks about most. <b>Double-click a stock</b> to see its full explanation and chart.</html>
+> Redditで話題の株も加わります。<b>株をダブルクリック</b>すると詳しい解説とチャートが見られます。</html>
+
+= Add ticker(s):
+> ティッカーを追加：
+
+= For example: AAPL  or several at once: AAPL MSFT NVDA
+> 例：AAPL  または複数：AAPL MSFT NVDA
+
+= Add
+> 追加
+
+= Add the ticker(s) - saved straight away
+> ティッカーを追加（すぐに保存）
+
+= Look up selected
+> 選択した株を調べる
+
+= See the full explanation and chart
+> 詳しい解説とチャートを見る
+
+= Remove selected
+> 選択を削除
+
+= Removed straight away
+> すぐに削除されます
+
+= Reset to default list
+> 初期リストに戻す
+
+= Analyse my list now
+> リストを今すぐ分析
+
+= Download fresh data for your watchlist
+> ウォッチリストの最新データを取得
+
+= Type a ticker like AAPL (letters, 1-6 characters).
+> AAPLのようなティッカーを入力してください（英字1〜6文字）。
+
+= Added 
+> 追加しました： 
+
+=  - saved. Click "Analyse my list now" to check it.
+>  （保存済み）。「リストを今すぐ分析」をクリックして確認しましょう。
+
+= Removed 
+> 削除しました： 
+
+= Replace your watchlist with the default list?
+> ウォッチリストを初期リストに置き換えますか？
+
+= Reset watchlist
+> リストをリセット
+
+= Couldn't save the watchlist: 
+> ウォッチリストを保存できませんでした： 
+
+= Add to My Watchlist
+> ウォッチリストに追加
+
+= Look up a stock first, then add it.
+> まず株を調べてから追加してください。
+
+=  is already in your watchlist.
+>  はすでにウォッチリストにあります。
+
+= " doesn't look like a ticker.
+> 」はティッカーではないようです。
+
+=  to your watchlist.
+>  をウォッチリストに追加しました。
+
+= Couldn't save: 
+> 保存できませんでした： 
+
+= Import Stock Rover CSV...
+> Stock RoverのCSVを取り込む...
+
+= Choose the CSV file you exported from Stock Rover
+> Stock RoverからエクスポートしたCSVを選択
+
+= Import WallStreetZen CSV...
+> WallStreetZenのCSVを取り込む...
+
+= A CSV with Ticker, Zen Score and Zen Rating columns
+> Ticker・Zen Score・Zen Rating列を含むCSV
+
+= Open my StockBuddy folder
+> StockBuddyフォルダを開く
+
+= Where your watchlist, CSV files and reports are kept
+> ウォッチリスト・CSV・レポートの保存場所
+
+= Don't start widget with computer
+> PC起動時にウィジェットを開始しない
+
+= Start widget when computer starts
+> PC起動時にウィジェットを開始
+
+= Finnhub key: set (change...)
+> Finnhubキー：設定済み（変更...）
+
+= Add Finnhub key...
+> Finnhubキーを追加...
+
+= Free key from finnhub.io: adds analyst recommendations and financial ratios
+> finnhub.ioの無料キー：アナリスト推奨と財務指標を追加
+
+= Add any CSV...
+> 任意のCSVを追加...
+
+= Any CSV with a Ticker or Symbol column becomes a data source
+> Ticker列かSymbol列のあるCSVはデータソースになります
+
+= Remove my CSV files
+> 自分のCSVファイルを削除
+
+= Remove all the CSV files you added with "Add any CSV"?
+> 「任意のCSVを追加」で追加したCSVをすべて削除しますか？
+
+= Remove CSV files
+> CSVファイルを削除
+
+= Couldn't remove them: 
+> 削除できませんでした： 
+
+= Alpha Vantage key: set (change...)
+> Alpha Vantageキー：設定済み（変更...）
+
+= Add Alpha Vantage key...
+> Alpha Vantageキーを追加...
+
+= Free key from alphavantage.co: news sentiment
+> alphavantage.coの無料キー：ニュースのセンチメント
+
+= SEC email (optional)...
+> SEC用メール（任意）...
+
+= SEC email: set (change...)
+> SEC用メール：設定済み（変更...）
+
+= The SEC asks programs to say who is asking
+> SECはプログラムに利用者の明示を求めています
+
+= <html><div style='width:380px'>The SEC (sec.gov) asks every program to say who it is. 
+> <html><div style='width:380px'>SEC（sec.gov）はすべてのプログラムに身元の明示を求めています。 
+
+= StockBuddy works without this, but if the SEC data doesn't load, enter your email here. It is only ever sent to sec.gov.</div></html>
+> なくても動きますが、SECのデータが読み込めない場合はここにメールを入力してください。sec.gov以外には送信されません。</div></html>
+
+= Include world stocks (choose how many on the World Stocks page)
+> 世界の株を含める（数は「世界の株」ページで選択）
+
+= Also analyse the biggest companies of the other 13 big stock markets (refreshing takes a bit longer)
+> 他の13の主要市場の大企業も分析（更新に少し時間がかかります）
+
+= Your files:
+> あなたのファイル：
+
+= Keys & settings:
+> キーと設定：
+
+= This computer:
+> このPC：
+
+= Add Reddit posts...
+> Redditの投稿を追加...
+
+= Paste post titles you copied from Reddit (works even when Reddit blocks StockBuddy)
+> Redditからコピーした投稿タイトルを貼り付け（RedditがStockBuddyをブロックしても使えます）
+
+= Import Reddit CSV...
+> RedditのCSVを取り込む...
+
+= A CSV with a title column (optional: date, subreddit, upvotes)
+> title列のあるCSV（任意：date、subreddit、upvotes）
+
+= Clear my Reddit posts
+> 自分のReddit投稿を消去
+
+= Delete the posts you added yourself
+> 自分で追加した投稿を削除
+
+= Delete all the Reddit posts you added yourself?
+> 自分で追加したReddit投稿をすべて削除しますか？
+
+= Couldn't delete them: 
+> 削除できませんでした： 
+
+=    [PRACTICE MODE - made-up data]
+>    [練習モード - 架空のデータ]
+
+= Getting today's data...
+> 今日のデータを取得中...
+
+= StockBuddy is reading stockanalysis.com, WallStreetZen, Reddit, your Stock Rover file and price charts. This can take a minute.
+> StockBuddyはstockanalysis.com、WallStreetZen、Reddit、Stock Roverファイル、価格チャートを読み込んでいます。1分ほどかかることがあります。
+
+= Every stock you check stays here for %d days, then it is cleared automatically.
+> チェックした株はここに%d日間残り、その後自動的に消去されます。
+
+= %d old stocks were just cleared.
+> 古い株%d件を消去しました。
+
+= Next clean-up: %s.
+> 次回の消去：%s。
+
+= Practice data - made-up numbers.
+> 練習用データ - 架空の数字です。
+
+= Index prices update every minute while StockBuddy is open.
+> StockBuddyを開いている間、指数は毎分更新されます。
+
+= Index prices update every minute (some exchanges are a few minutes delayed). Last update: 
+> 指数は毎分更新されます（一部の取引所は数分遅れ）。最終更新： 
+
+= Looking up 
+> 検索中： 
+
+= One moment.
+> 少々お待ちください。
+
+= Couldn't find "
+> 見つかりませんでした：「
+
+= Practice mode only knows these: 
+> 練習モードで使えるのはこれだけです： 
+
+= Check the spelling, or your internet connection. Tip: US tickers are 1-5 letters, like AAPL or MSFT.
+> スペルかネット接続を確認してください。ヒント：米国のティッカーはAAPLやMSFTのように1〜5文字です。
+
+= Something went wrong
+> 問題が発生しました
+
+= Please wait until the data has finished loading.
+> データの読み込みが終わるまでお待ちください。
+
+= Save today's report as:
+> 今日のレポートの保存形式：
+
+= \n(only 
+> \n（ 
+
+= , the market you picked)
+> 、選んだ市場のみ）
+
+= Saved your report:\n
+> レポートを保存しました：\n
+
+= \n\nOpen it now?
+> \n\n今すぐ開きますか？
+
+= Report saved
+> レポートを保存しました
+
+= Couldn't save or open the report: 
+> レポートを保存または開けませんでした： 
+
+= Choose your 
+> ファイルを選択： 
+
+=  CSV file
+>  CSV
+
+= CSV files
+> CSVファイル
+
+= Imported 
+> 取り込み完了： 
+
+=  stocks from your 
+>  銘柄（ファイル： 
+
+=  file.\nStockBuddy will now refresh.
+>  ）。\nStockBuddyを更新します。
+
+= Couldn't import the file: 
+> ファイルを取り込めませんでした： 
+
+= Choose any CSV file with a Ticker or Symbol column
+> Ticker列かSymbol列のあるCSVを選択
+
+= This file has no column called Ticker or Symbol in its first line, so StockBuddy can't use it.
+> このファイルの1行目にTickerまたはSymbol列がないため、StockBuddyでは使えません。
+
+= Added "
+> 追加しました：「
+
+= " with 
+> 」（ 
+
+=  stocks.\n
+>  銘柄）\n
+
+= Its columns appear on each stock's page. Columns like score, rating, recommendation or target are also used in the score.\nStockBuddy will now refresh.
+> 列は各銘柄のページに表示されます。score、rating、recommendation、targetのような列はスコアにも使われます。\nStockBuddyを更新します。
+
+= Couldn't add the file: 
+> ファイルを追加できませんでした： 
+
+= <html><div style='width:400px'><b>Alpha Vantage</b> adds news sentiment: is the news about a company 
+> <html><div style='width:400px'><b>Alpha Vantage</b>はニュースのセンチメントを追加します：企業のニュースは 
+
+= positive or negative?<br><br>Get a free key at <b>alphavantage.co/support/#api-key</b> and paste it below. It is saved only on this computer. 
+> 良い内容か悪い内容か？<br><br><b>alphavantage.co/support/#api-key</b>で無料キーを取得して下に貼り付けてください。このPCにのみ保存されます。 
+
+= The free plan allows about 25 requests a day, so StockBuddy checks your first 
+> 無料プランは1日約25回までなので、StockBuddyは最初の 
+
+=  stocks and remembers the answers all day.<br><br>Leave it empty to turn it off.</div></html>
+>  銘柄を確認し、結果を1日中覚えています。<br><br>空欄にするとオフになります。</div></html>
+
+= Alpha Vantage key
+> Alpha Vantageキー
+
+= Your Alpha Vantage key works and is saved. Click Refresh data to use it.
+> Alpha Vantageキーは有効で保存されました。「データを更新」で使えます。
+
+= <html><div style='width:420px'><b>Finnhub</b> adds Wall Street analyst recommendations and financial ratios 
+> <html><div style='width:420px'><b>Finnhub</b>はウォール街のアナリスト推奨と財務指標を追加します 
+
+= (profit margin, debt, beta...).<br><br>1. Get a free key at <b>finnhub.io/register</b> (it's on your dashboard).<br>
+> （利益率、負債、ベータなど）。<br><br>1. <b>finnhub.io/register</b>で無料キーを取得します（ダッシュボードに表示されます）。<br>
+
+= 2. Paste it below. It is saved only on this computer.<br><br>Leave it empty and click OK to turn Finnhub off.</div></html>
+> 2. 下に貼り付けます。このPCにのみ保存されます。<br><br>空欄のままOKを押すとFinnhubはオフになります。</div></html>
+
+= Finnhub key
+> Finnhubキー
+
+= Finnhub is turned off.
+> Finnhubはオフです。
+
+= Your Finnhub key works and is saved.\nStockBuddy will now refresh (the first time takes about 2 minutes).
+> Finnhubキーは有効で保存されました。\nStockBuddyを更新します（初回は約2分かかります）。
+
+= \n\nSave the key anyway?
+> \n\nそれでもキーを保存しますか？
+
+= <html><div style='width:460px'><b>How:</b> open the subreddit in your browser, copy the titles of the posts 
+> <html><div style='width:460px'><b>方法：</b>ブラウザでサブレディットを開き、 
+
+= you find interesting, and paste them below - <b>one post per line</b>. Tickers like <b>$NVDA</b> or <b>NVDA</b> are 
+> 気になる投稿のタイトルをコピーして下に貼り付けてください（<b>1行に1投稿</b>）。<b>$NVDA</b>や<b>NVDA</b>のようなティッカーは 
+
+= recognised automatically. Your posts are used for 
+> 自動で認識されます。投稿は次の期間使われます： 
+
+=  days.<br><br>
+>  日間。<br><br>
+
+= Tip: a line can start with the subreddit, e.g. <i>r/options: SPY calls look good</i></div></html>
+> ヒント：行の先頭にサブレディットを書けます。例：<i>r/options: SPY calls look good</i></div></html>
+
+= Which subreddit are they from?
+> どのサブレディットの投稿ですか？
+
+= Add Reddit posts
+> Redditの投稿を追加
+
+= Nothing to add - paste at least one post title.
+> 追加するものがありません。投稿タイトルを1つ以上貼り付けてください。
+
+= .\nStockBuddy will now refresh to include them.
+> 。\nStockBuddyを更新して反映します。
+
+= Couldn't save the posts: 
+> 投稿を保存できませんでした： 
+
+= Choose a CSV file with Reddit posts (needs a 'title' column)
+> Reddit投稿のCSVを選択（'title'列が必要）
+
+= No usable posts found. The file needs a first line with a column called 'title'\n
+> 使える投稿がありません。1行目に'title'という列が必要です\n
+
+= (optional columns: date, subreddit, upvotes). Dates older than 
+> （任意の列：date、subreddit、upvotes）。次より古い日付はスキップ： 
+
+=  days are skipped.
+>  日
+
+=  Reddit posts (this replaced the posts you had added before).\nStockBuddy will now refresh.
+>  件のReddit投稿（以前の投稿は置き換えられました）。\nStockBuddyを更新します。
+
+= Your StockBuddy folder is:\n
+> StockBuddyフォルダ：\n
+
+= Sell all your pretend 
+> 仮想保有の 
+
+=  shares?
+>  をすべて売りますか？
+
+= Start again with $10,000 and delete all pretend trades?
+> $10,000から再スタートし、仮想取引をすべて削除しますか？
+
+= United States
+> 米国
+
+= Eurozone
+> ユーロ圏
+
+= United Kingdom
+> 英国
+
+= Japan
+> 日本
+
+= China
+> 中国
+
+= Australia
+> オーストラリア
+
+= Canada
+> カナダ
+
+= Switzerland
+> スイス
+
+= New Zealand
+> ニュージーランド
+
+= Worldwide
+> 世界
+
+= Inflation report: how fast prices are rising. Higher than expected often pushes stocks down (interest rates may stay high).
+> インフレ指標：物価上昇の速さ。予想より高いと株が下がりやすい（金利が高止まりする可能性）。
+
+= Producer prices: inflation at the factory level - an early hint of future consumer inflation.
+> 生産者物価：工場レベルのインフレ。将来の消費者物価の先行指標です。
+
+= Jobs report: how many jobs were created. One of the biggest market movers of the month.
+> 雇用統計：何人の雇用が生まれたか。月で最も相場を動かす指標の一つ。
+
+= How many people are out of work. A sudden rise can mean the economy is slowing.
+> 失業者の数。急に増えると景気減速のサインかもしれません。
+
+= The US central bank (the Fed) on interest rates. Can move every market within seconds.
+> 米国の中央銀行（FRB）の金利決定。数秒で全市場が動くことも。
+
+= A central bank decides its interest rate. Surprises move currencies and stock markets.
+> 中央銀行が政策金利を決定します。サプライズは為替と株式市場を動かします。
+
+= GDP: how fast the whole economy is growing (or shrinking).
+> GDP：経済全体の成長（または縮小）の速さ。
+
+= How much people spent in shops - shoppers drive a big part of the economy.
+> 小売売上高：消費者は経済の大きな部分を動かします。
+
+= Survey of business managers. Above 50 = business is growing, below 50 = shrinking.
+> 企業担当者への調査。50超＝拡大、50未満＝縮小。
+
+= How optimistic people feel about the economy.
+> 人々が経済をどれだけ楽観しているか。
+
+= Oil stockpiles - moves oil prices and energy stocks.
+> 原油在庫：原油価格とエネルギー株を動かします。
+
+= An official speaks - hints about future interest rates can move markets.
+> 要人発言：将来の金利についての示唆が相場を動かすことがあります。
+
+= Bank holiday - markets in this country may be closed or quiet.
+> 祝日：この国の市場は休場か閑散の可能性があります。
+
+= Checking the world's biggest stock markets...
+> 世界の主要株式市場を確認中...
+
+= Reading this week's economic calendar (inflation, jobs, interest rates)...
+> 今週の経済指標カレンダーを読み込み中（インフレ、雇用、金利）...
+
+= Reading market news...
+> 市場ニュースを読み込み中...
+
+= Looking at today's biggest movers on stockanalysis.com...
+> stockanalysis.comで今日の値動き上位を確認中...
+
+= Reading hot posts on r/ValueInvesting, r/options and r/wallstreetbets...
+> r/ValueInvesting、r/options、r/wallstreetbetsの人気投稿を読み込み中...
+
+= Checking today's WallStreetBets sentiment...
+> 今日のWallStreetBetsのセンチメントを確認中...
+
+= Downloading prices and ratings for 
+> 価格と評価をダウンロード中： 
+
+=  stocks (this can take a minute)...
+>  銘柄（1分ほどかかることがあります）...
+
+= Asking Finnhub about 
+> Finnhubに問い合わせ中： 
+
+=  stocks (the free plan is slow - about 2 minutes the first time)...
+>  銘柄（無料プランは遅く、初回は約2分）...
+
+= Not set up - export a CSV from Stock Rover to data/stockrover.csv
+> 未設定 - Stock RoverからCSVをdata/stockrover.csvにエクスポートしてください
+
+= OK - data for 
+> OK - データ取得： 
+
+= Could not read - check your Finnhub key
+> 読み込めません - Finnhubキーを確認してください
+
+= Asking Alpha Vantage about today's news...
+> Alpha Vantageに今日のニュースを問い合わせ中...
+
+= Checking today's minute-by-minute moves for 0DTE ideas...
+> 0DTEアイデアのため今日の1分足を確認中...
+
+= Checking the biggest companies of the world's largest stock markets...
+> 世界の主要市場の大企業を確認中...
+
+= Type it like: NVDA above 150   or   TSLA below 200   or   AAPL move 5%
+> 次のように入力：NVDA above 150   または   TSLA below 200   または   AAPL move 5%
+
+= The number must be more than 0.
+> 数値は0より大きくしてください。
+
+= For a daily move, use a percentage like 5 (meaning 5%).
+> 1日の値動きは5（＝5%）のように割合で指定してください。
+
+=  (%+.2f%% today)
+>  （本日%+.2f%%）
+
+= StockBuddy widget
+> StockBuddyウィジェット
+
+= Open StockBuddy window
+> StockBuddyのウィンドウを開く
+
+= Refreshing...
+> 更新中...
+
+= Refresh now
+> 今すぐ更新
+
+= Widget skin
+> ウィジェットのスキン
+
+= Size
+> サイズ
+
+= Full (markets + ideas)
+> フル（市場＋アイデア）
+
+= Compact (markets only)
+> コンパクト（市場のみ）
+
+= See-through
+> 透過
+
+= Solid
+> 不透明
+
+= % see-through
+> % 透過
+
+= Always on top of other windows
+> 常に他のウィンドウより手前に表示
+
+= Show widget when my computer starts
+> PC起動時にウィジェットを表示
+
+= Close widget
+> ウィジェットを閉じる
+
+= PRACTICE DATA
+> 練習用データ
+
+= WORLD MARKETS
+> 世界の市場
+
+= TOP BUYS TODAY
+> 今日の買い候補
+
+= none today - waiting is fine
+> 今日はなし - 待つのも戦略です
+
+= CAREFUL WITH (sell signals)
+> 注意（売りシグナル）
+
+= no strong warnings
+> 強い警告なし
+
+= 0DTE (OPTIONS EXPIRING TODAY)
+> 0DTE（本日満期のオプション）
+
+= Not financial advice  ·  right-click for options
+> 投資助言ではありません  ·  右クリックで設定
+
+= good / bad
+> 良い / 悪い
+
+= The price is in an uptrend (above its 50-day and 200-day average prices). 
+> 株価は上昇トレンドです（50日・200日平均線の上）。 
+
+= The price is in a downtrend (below its 50-day and 200-day average prices). 
+> 株価は下降トレンドです（50日・200日平均線の下）。 
+
+= The price has no clear direction right now. 
+> 株価は今のところ方向感がありません。 
+
+= RSI is %.0f, meaning it rose a lot recently and may be due for a pause. 
+> RSIは%.0fで、最近大きく上がったため一服するかもしれません。 
+
+= RSI is %.0f, meaning it fell a lot recently and could bounce back. 
+> RSIは%.0fで、最近大きく下がったため反発するかもしれません。 
+
+= MACD just turned positive - momentum is shifting upward. 
+> MACDがプラスに転じました。勢いが上向いています。 
+
+= MACD just turned negative - momentum is shifting downward. 
+> MACDがマイナスに転じました。勢いが下向いています。 
+
+= Its StockCharts Technical Rank is %.0f/99 (higher = stronger than the other stocks we checked).
+> StockChartsテクニカルランクは%.0f/99です（高いほど他の銘柄より強い）。
+
+= Wall Street analysts rate it "
+> ウォール街のアナリストの評価：「
+
+= Their average price target is $%.2f, which is %+.0f%% from today's price. 
+> 平均目標株価は$%.2fで、現在値から%+.0f%%です。 
+
+= P/E is %.1f - fairly cheap for what the company earns. 
+> PERは%.1fで、利益に対して割安です。 
+
+= P/E is %.1f - investors are paying a lot for each $1 of profit. 
+> PERは%.1fで、投資家は利益1ドルに高い値段を払っています。 
+
+= P/E is %.1f - a normal price for its profits. 
+> PERは%.1fで、利益に対して普通の水準です。 
+
+= Stock Rover's fair value is $%.2f, so the stock looks %s by about %.0f%%. 
+> Stock Roverの適正価格は$%.2fで、株価は%s（約%.0f%%）に見えます。 
+
+= underpriced (on sale)
+> 割安（バーゲン）
+
+= Its average quality/value/growth score is %.0f out of 100.
+> 品質・バリュー・成長の平均スコアは100点中%.0fです。
+
+= Zen Score is %.0f/100. 
+> Zen Scoreは%.0f/100です。 
+
+= Zen Rating is 
+> Zen Ratingは 
+
+=  (A is best, F is worst).
+>  （Aが最高、Fが最低）。
+
+= Of %d analysts, %d say strong buy, %d buy, %d hold, %d sell and %d strong sell%s.
+> アナリスト%d人中、強い買い%d、買い%d、中立%d、売り%d、強い売り%d%s。
+
+= %d comments on r/wallstreetbets today; the overall mood is %s (score %+.2f).
+> 今日のr/wallstreetbetsのコメントは%d件。全体の雰囲気は%s（スコア%+.2f）。
+
+=  It's one of the most-talked-about stocks there - expect big swings.
+>  そこで最も話題の銘柄の一つです。大きな値動きに注意。
+
+= In its official yearly report, sales %s %.0f%%. 
+> 公式の年次報告書では、売上が%s（%.0f%%）。 
+
+= The company made a profit. 
+> 会社は黒字でした。 
+
+= The company lost money last year. 
+> 会社は昨年赤字でした。 
+
+=  insider-trading reports in 90 days (insiders bought or sold shares). 
+>  件のインサイダー取引報告（90日間、役員が株を売買）。 
+
+=  major-event report
+>  件の重要事象報告
+
+=  (8-K) in the last 30 days.
+>  （8-K、過去30日）。
+
+= slightly positive
+> やや前向き
+
+= slightly negative
+> やや後ろ向き
+
+= %d recent news articles; the tone is %s.
+> 最近の記事%d件。論調は%s。
+
+= mostly positive
+> おおむね前向き
+
+= mostly negative
+> おおむね後ろ向き
+
+= Mentioned in %d hot Reddit post%s; the mood is %s.
+> Redditの人気投稿%d件%sで言及。雰囲気は%s。
+
+=  Careful: lots of hype can mean the price already moved.
+>  注意：盛り上がりすぎは、すでに株価が動いたサインかもしれません。
+
+= Most signs are positive. If you believe in the company long term, this could be a reasonable time to buy a small amount. 
+> ほとんどのシグナルは良好です。長期的にこの会社を信じるなら、少し買うのに妥当なタイミングかもしれません。 
+
+= Most signs are negative right now. If you're thinking of buying, it may be wiser to wait. If you own it, think about protecting yourself with a stop-loss. 
+> 今はほとんどのシグナルが悪いです。買うつもりなら待つ方が賢明かもしれません。保有中なら損切り注文での保護を検討しましょう。 
+
+= The signs are mixed, so there's no strong reason to buy or sell today. Waiting and watching is fine. 
+> シグナルはまちまちで、今日売買する強い理由はありません。様子見で大丈夫です。 
+
+= Note: this stock swings a lot, so only use money you're comfortable seeing go up and down quickly.
+> 注：この株は値動きが大きいので、短期間で上下しても平気なお金だけを使いましょう。
+
+= STRONG BUY signal
+> 強い買いシグナル
+
+= BUY signal
+> 買いシグナル
+
+= HOLD / WAIT
+> 保有 / 様子見
+
+= SELL signal
+> 売りシグナル
+
+= STRONG SELL signal
+> 強い売りシグナル
+
+= Type it like: buy 10 AAPL   or   sell 5 AAPL   or   sell all AAPL
+> 次のように入力：buy 10 AAPL   または   sell 5 AAPL   または   sell all AAPL
+
+= Couldn't find a price for 
+> 価格が見つかりません： 
+
+= . Check the ticker (US-listed stocks only, e.g. TSM instead of 2330.TW).
+> 。ティッカーを確認してください（米国上場株のみ。例：2330.TWではなくTSM）。
+
+= Not enough pretend cash to buy even 1 share.
+> 1株買う仮想資金もありません。
+
+= You don't own any 
+> 保有していません： 
+
+= Not enough pretend cash: %s shares cost $%,.2f but you have $%,.2f.
+> 仮想資金が足りません：%s株は$%,.2fですが、残高は$%,.2fです。
+
+= You only own 
+> 保有しているのは 
+
+=  shares of 
+>  株： 
+
+= OK - %s %s shares of %s at $%,.2f (pretend money). Cash left: $%,.2f.
+> OK - %s：%s株（%s）を$%,.2fで（仮想資金）。残りの現金：$%,.2f。
+
+= No market data available right now.
+> 現在、市場データはありません。
+
+= Around the world it's %s: %d markets are up, %d are down (average move %+.2f%%).
+> 世界は%s：上昇%d市場、下落%d市場（平均%+.2f%%）。
+
+= Starting...
+> 起動中...
+
+= Loading practice data...
+> 練習用データを読み込み中...
+
+= Collecting today's data from the websites...
+> 各サイトから今日のデータを収集中...
+
+= Couldn't download any stock prices. Check your internet connection, or turn on Practice mode.
+> 株価をダウンロードできませんでした。ネット接続を確認するか練習モードをオンにしてください。
+
+= Ready - 
+> 準備完了 - 
+
+=  stocks analysed
+>  銘柄を分析
+
+=  (PRACTICE DATA - not real)
+>  （練習用データ - 実際のものではありません）
+
+= Something went wrong while loading: 
+> 読み込み中に問題が発生しました： 
+
+= StockBuddy alerts
+> StockBuddyアラート
+
+= StockBuddy price alert
+> StockBuddy価格アラート
+
+= <html><b>Price alert
+> <html><b>価格アラート
+
+= <br><br><span style='color:gray'>See the Price Alerts page.</span></html>
+> <br><br><span style='color:gray'>「価格アラート」ページをご覧ください。</span></html>
+
+= StockBuddy index prices
+> StockBuddy指数
+
+= Today's ideas
+> 今日のアイデア
+
+= 0DTE ideas are only for US index options (SPY and QQQ). Choose All markets or a US market to see them.
+> 0DTEアイデアは米国指数オプション（SPYとQQQ）だけです。「すべての市場」か米国市場を選ぶと表示されます。
+
+=  (in this market)
+>  （この市場）
+
+=  <span class=muted style='font-size:10.5pt'>- outside the US many companies only have chart data, and an idea 
+>  <span class=muted style='font-size:10.5pt'>- 米国外の多くの企業はチャートデータしかなく、アイデアには 
+
+= needs at least two sources, so fewer ideas appear. <a href='sb://page/worldstocks'>See every company's verdict on World Stocks &rarr;</a></span>
+> 2つ以上の情報源が必要なため、アイデアは少なめです。<a href='sb://page/worldstocks'>「世界の株」で各社の判定を見る &rarr;</a></span>
+
+= '>Showing only: 
+> '>表示中： 
+
+= </b> <a href='sb://page/calendar'>See the Economic Calendar &rarr;</a></p>
+> </b> <a href='sb://page/calendar'>経済指標カレンダーを見る &rarr;</a></p>
+
+=  <span class=warn>(practice data)</span>
+>  <span class=warn>（練習用データ）</span>
+
+= <div class=label>Why</div><ul>
+> <div class=label>理由</div><ul>
+
+= <div class=label>How to do it</div><ul>
+> <div class=label>やり方</div><ul>
+
+= <p class=warn><b>Risk:</b> 
+> <p class=warn><b>リスク：</b> 
+
+= '>Full explanation and chart for 
+> '>詳しい解説とチャート： 
+
+= '>&#128276; Set a price alert</a>
+> '>&#128276; 価格アラートを設定</a>
+
+= '>Paper-trade it (pretend money)</a>
+> '>仮想取引する（仮想のお金）</a>
+
+= <h1>World markets</h1>
+> <h1>世界の市場</h1>
+
+= <p class=muted style='font-size:10pt'>Index prices update every minute while this page is open (some exchanges are a few minutes delayed). Last update: 
+> <p class=muted style='font-size:10pt'>このページを開いている間、指数は毎分更新されます（一部の取引所は数分遅れ）。最終更新： 
+
+= <div class=card><table class=grid><tr><th>Market</th><th class=num>Price</th><th class=num>Today</th><th class=num>Month</th></tr>
+> <div class=card><table class=grid><tr><th>市場</th><th class=num>価格</th><th class=num>今日</th><th class=num>1か月</th></tr>
+
+= Tap a market to see all its stocks.
+> 市場をタップするとその銘柄一覧を表示します。
+
+= </p><p><a href='sb://page/worldstocks'>The biggest companies of each market, and where to buy them &rarr;</a></p>
+> </p><p><a href='sb://page/worldstocks'>各市場の大企業と購入できる場所 &rarr;</a></p>
+
+= <p class=muted>An "index" is a basket of a country's biggest companies. Asian markets open first, then Europe, then the Americas.</p>
+> <p class=muted>「指数」とは国の大企業をまとめたものです。最初にアジア、次に欧州、最後に米州の市場が開きます。</p>
+
+= <h1>Price alerts</h1><p class=muted>Get told when a stock reaches a price. Type an alert above, for example 
+> <h1>価格アラート</h1><p class=muted>株価が指定の価格に達したらお知らせします。上にアラートを入力してください。例： 
+
+= <b>NVDA above 150</b>, <b>TSLA below 200</b> or <b>AAPL move 5%</b> (a move of 5% up or down in one day). 
+> <b>NVDA above 150</b>、<b>TSLA below 200</b>、<b>AAPL move 5%</b>（1日で5%上下する動き）。 
+
+= Alerts are checked on every refresh and every few minutes while StockBuddy runs.</p>
+> アラートは更新のたびと、StockBuddy起動中は数分ごとに確認されます。</p>
+
+= <div class=card>No alerts yet.</div>
+> <div class=card>アラートはまだありません。</div>
+
+= <div class=card><table class=grid><tr><th>Alert</th><th class=num>Price now</th><th>Status</th><th></th></tr>
+> <div class=card><table class=grid><tr><th>アラート</th><th class=num>現在値</th><th>状態</th><th></th></tr>
+
+= <span class=muted>Waiting</span>
+> <span class=muted>待機中</span>
+
+= '>Remove</a></td></tr>
+> '>削除</a></td></tr>
+
+= <p><a href='sb://alertclear'>Remove all triggered alerts</a></p>
+> <p><a href='sb://alertclear'>発動したアラートをすべて削除</a></p>
+
+= <h1>Paper trading</h1><p class=muted>Practise with <b>pretend money</b> - nothing real is bought or sold. 
+> <h1>仮想取引</h1><p class=muted><b>仮想のお金</b>で練習しましょう。実際には何も売買されません。 
+
+= Type a trade above, for example <b>buy 10 AAPL</b>, <b>sell 5 AAPL</b> or <b>sell all AAPL</b>. Trades use today's real prices 
+> 上に取引を入力してください。例：<b>buy 10 AAPL</b>、<b>sell 5 AAPL</b>、<b>sell all AAPL</b>。取引には今日の実際の価格を使います 
+
+= (US-listed stocks).
+> （米国上場株）。
+
+=  <span class=warn>Practice mode is on: prices are made up.</span>
+>  <span class=warn>練習モード中：価格は架空です。</span>
+
+= <tr><td class=muted>Total value</td><td class=num><b style='font-size:15pt'>
+> <tr><td class=muted>評価額合計</td><td class=num><b style='font-size:15pt'>
+
+= <tr><td class=muted>Since you started (
+> <tr><td class=muted>開始以来（
+
+= <tr><td class=muted>Pretend cash</td><td class=num>
+> <tr><td class=muted>仮想の現金</td><td class=num>
+
+= <tr><td class=muted>Invested in stocks</td><td class=num>
+> <tr><td class=muted>株式に投資中</td><td class=num>
+
+= <tr><td class=muted>The S&amp;P 500 did</td><td class=num>
+> <tr><td class=muted>S&amp;P 500の成績</td><td class=num>
+
+= <b class=good>you're ahead</b>
+> <b class=good>上回っています</b>
+
+= <b class=warn>you're behind</b>
+> <b class=warn>下回っています</b>
+
+= <h2>What you hold</h2><div class=card><table class=grid><tr><th>Stock</th><th class=num>Shares</th><th class=num>Paid / now</th><th class=num>Profit</th><th></th></tr>
+> <h2>保有銘柄</h2><div class=card><table class=grid><tr><th>銘柄</th><th class=num>株数</th><th class=num>取得 / 現在</th><th class=num>損益</th><th></th></tr>
+
+= <span class=muted>refresh</span>
+> <span class=muted>更新</span>
+
+= '>Sell all</a></td></tr>
+> '>すべて売る</a></td></tr>
+
+= <h2>Your trades</h2><div class=card><table class=grid>
+> <h2>取引履歴</h2><div class=card><table class=grid>
+
+= <p><a href='sb://preset'>Start again with $10,000</a></p>
+> <p><a href='sb://preset'>$10,000から再スタート</a></p>
+
+= <h1>Economic calendar</h1>
+> <h1>経済指標カレンダー</h1>
+
+= <p class=muted>Big economic news (inflation, jobs, interest rates) can move whole markets in seconds - especially 
+> <p class=muted>重要な経済ニュース（インフレ、雇用、金利）は数秒で市場全体を動かすことがあります。特に 
+
+= <b class=bad>high-impact</b> events. Times are shown in your own time zone. Source: ForexFactory
+> <b class=bad>重要度の高い</b>イベントに注意。時刻はあなたのタイムゾーンで表示。出典：ForexFactory
+
+= <div class=card>No calendar data right now. Check the Data Sources page.</div>
+> <div class=card>現在カレンダーのデータがありません。「データソース」ページを確認してください。</div>
+
+= <p class=banner><b>&#9888; Big US news today.</b> Be extra careful with short-term trades and 0DTE options around these times.</p>
+> <p class=banner><b>&#9888; 今日は米国の重要発表があります。</b>この時間帯の短期売買と0DTEオプションには特に注意してください。</p>
+
+=  &middot; TODAY
+>  &middot; 今日
+
+= All day
+> 終日
+
+= Medium
+> 中
+
+= Expected 
+> 予想 
+
+= Last time 
+> 前回 
+
+= <b>Actual 
+> <b>結果 
+
+= News about it
+> 関連ニュース
+
+= <p class=muted>Tip: when the actual number is very different from what was expected, prices usually move the most.</p>
+> <p class=muted>ヒント：結果が予想と大きく違うと、価格が最も大きく動きやすくなります。</p>
+
+= <h1>World stocks</h1><p class=muted>The biggest companies of the world's largest stock markets, 
+> <h1>世界の株</h1><p class=muted>世界の主要株式市場の大企業と、 
+
+= what StockBuddy thinks of them today, and <b>where you can buy them</b>. Tap a name for the full explanation and chart.
+> 今日のStockBuddyの評価、そして<b>購入できる場所</b>。名前をタップすると詳しい解説とチャートを表示します。
+
+= <p><b>Companies per market:</b> &nbsp;
+> <p><b>市場ごとの企業数：</b> &nbsp;
+
+= '>[ Top 
+> '>[ 上位 
+
+= '>Top 
+> '>上位 
+
+= <a href='sb://wtop/0'>Off</a> &nbsp; <span class=muted>(more companies = slower refresh)</span></p>
+> <a href='sb://wtop/0'>オフ</a> &nbsp; <span class=muted>（企業が多いほど更新が遅くなります）</span></p>
+
+= <div class=card>World stocks are turned off. Choose 3, 5, 10 or 20 above.</div>
+> <div class=card>世界の株はオフです。上で3、5、10、20から選んでください。</div>
+
+= <p class=banner>Refresh the data to analyse the companies you just added.</p>
+> <p class=banner>追加した企業を分析するにはデータを更新してください。</p>
+
+=  today &middot; 
+>  今日 &middot; 
+
+= <b class=good>open now</b>
+> <b class=good>取引中</b>
+
+= closed now
+> 取引時間外
+
+=  &nbsp; <span class=muted>no price data right now</span>
+>  &nbsp; <span class=muted>現在価格データなし</span>
+
+= <p class=muted>Prices of stocks analysed on their home exchange are in local currency. Buying abroad can add currency-exchange 
+> <p class=muted>本国の取引所で分析した株の価格は現地通貨です。海外での購入には為替手数料や 
+
+= costs and different taxes - check with your broker.</p>
+> 異なる税金がかかることがあります。証券会社に確認してください。</p>
+
+= Track record
+> 実績
+
+= Every day StockBuddy remembers its ideas and the price at that moment. 
+> StockBuddyは毎日、アイデアとその時の価格を記録します。 
+
+= Here you can see how they actually did - the honest way to learn how much to trust the signals. It gets more useful the longer you use the app.
+> ここで実際の結果を確認できます。シグナルをどれだけ信頼できるかを知る正直な方法です。長く使うほど役立ちます。
+
+= (practice data)
+> （練習用データ）
+
+= Last %d days
+> 過去%d日
+
+= Nothing yet for this period - your ideas are saved every day. Come back in a few days!
+> この期間のデータはまだありません。アイデアは毎日保存されます。数日後にまた見てください！
+
+= Ideas older than today
+> 今日より前のアイデア
+
+= Went the right way
+> 予想通りに動いた
+
+= Average move
+> 平均変動
+
+= Buys (want: up)
+> 買い（期待：上昇）
+
+= Sells (want: down)
+> 売り（期待：下落）
+
+= Calls (want: up)
+> コール（期待：上昇）
+
+= Puts (want: down)
+> プット（期待：下落）
+
+= About 50% is what you'd expect from a coin flip. A few weeks of data is still very little - 
+> 約50%はコイン投げと同じです。数週間のデータはまだとても少なく、 
+
+= markets go through good and bad spells.
+> 市場には良い時期も悪い時期もあります。
+
+= Every idea, day by day (last %d days)
+> すべてのアイデアを日ごとに（過去%d日）
+
+= B = buy, S = sell, C = call, P = put. The number is how much the price moved since that day: 
+> B＝買い、S＝売り、C＝コール、P＝プット。数字はその日からの値動きです： 
+
+= green = it went the way the idea said, red = it didn't.
+> 緑＝アイデア通り、赤＝外れ。
+
+= Stock
+> 銘柄
+
+= Now
+> 現在
+
+= Showing only:
+> 表示中：
+
+= Show every market
+> すべての市場を表示
+
+= Every stock you check stays in this list for %d days, then it is cleared automatically.
+> チェックした株はこのリストに%d日間残り、その後自動的に消去されます。
+
+= Tap a ticker for the full explanation.
+> ティッカーをタップすると詳しい解説を表示します。
+
+= Checked today
+> 今日チェック
+
+= No stock from this market today.
+> 今日はこの市場の株はありません。
+
+= Checked earlier (last %d days)
+> 以前にチェック（過去%d日）
+
+= Price then
+> 当時の価格
+
+= Verdict then
+> 当時の判定
+
+= My watchlist
+> ウォッチリスト
+
+= These stocks are always checked, plus today's biggest 
+> これらの株は常にチェックされます。今日の値動き上位の株や 
+
+= movers and the stocks Reddit talks about most. Type tickers above to add them (saved straight away). Tap a ticker to look it up, or &times; to remove it.
+> Redditで話題の株も加わります。上にティッカーを入力して追加（すぐ保存）。ティッカーをタップで調べる、&times;で削除。
+
+= Buy
+> 買い
+
+= Hold / wait
+> 保有 / 様子見
+
+= Sell
+> 売り
+
+= not analysed yet
+> 未分析
+
+= Reset to the default list
+> 初期リストに戻す
+
+= Tap the refresh button at the top to analyse your changes.
+> 上の更新ボタンをタップして変更を分析しましょう。
+
+= Market news
+> 市場ニュース
+
+= Headlines in %s from the local financial press. Tap a headline to read the original article.
+> 地元の経済メディアの%sの見出し。見出しをタップすると元の記事を読めます。
+
+= Practice mode has no news - turn it off and refresh to read today's headlines.
+> 練習モードではニュースはありません。オフにして更新すると今日の見出しが読めます。
+
+= No headlines right now. Check your internet connection and refresh.
+> 現在見出しはありません。ネット接続を確認して更新してください。
+
+= Trusted sources
+> 信頼できる情報源
+
+=  ago</text>
+>  前</text>
+
+= ' font-size='13'>today</text></svg>
+> ' font-size='13'>今日</text></svg>
+
+= Candles
+> ローソク足
+
+= <span class=muted>Chart:</span> 
+> <span class=muted>チャート：</span> 
+
+=  &nbsp;<span class=muted>Period:</span> 
+>  &nbsp;<span class=muted>期間：</span> 
+
+= <br><span class=muted>Lines:</span> 
+> <br><span class=muted>ライン：</span> 
+
+= <br><span class=muted>Bottom panel:</span> 
+> <br><span class=muted>下段パネル：</span> 
+
+= <text x='%d' y='%d' fill='%s' font-size='12'>Volume</text>
+> <text x='%d' y='%d' fill='%s' font-size='12'>出来高</text>
+
+= <p>Price <b>
+> <p>価格 <b>
+
+= </b> &nbsp; Today 
+> </b> &nbsp; 今日 
+
+=  &nbsp; 1-year range $
+>  &nbsp; 1年のレンジ $
+
+=  &nbsp; 1-year range $%.2f - $%.2f
+>  &nbsp; 1年のレンジ $%.2f - $%.2f
+
+= <div class=card><h3>Overall: <span class=
+> <div class=card><h3>総合判定：<span class=
+
+= Score %+.0f out of 100 &nbsp;&middot;&nbsp; confidence %s
+> スコア %+.0f／100 &nbsp;&middot;&nbsp; 信頼度 %s
+
+= '>&#9733; Add 
+> '>&#9733; 
+
+=  to My Watchlist</a>
+>  をウォッチリストに追加</a>
+
+= '>Paper-trade it</a>
+> '>仮想取引する</a>
+
+= <h2>Key statistics</h2><div class=card><table class=grid>
+> <h2>主要指標</h2><div class=card><table class=grid>
+
+= News in your language
+> あなたの言語のニュース
+
+= Search the news about this company
+> この企業のニュースを検索
+
+= <h2>In the news</h2><ul>
+> <h2>ニュース</h2><ul>
+
+= <h2>From your CSV file: 
+> <h2>あなたのCSVファイルから： 
+
+= <h2>What each source says</h2>
+> <h2>各情報源の見解</h2>
+
+= <p class=muted>Only a few sources had data for this stock, so treat the result with extra caution.</p>
+> <p class=muted>この株のデータがある情報源は少ないため、結果は特に慎重に扱ってください。</p>
+
+= <h2>Chart numbers (StockCharts-style)</h2><table>
+> <h2>チャート指標（StockChartsスタイル）</h2><table>
+
+=  &nbsp;<span class=warn>rose fast</span>
+>  &nbsp;<span class=warn>急上昇</span>
+
+=  &nbsp;<span class=warn>fell fast</span>
+>  &nbsp;<span class=warn>急落</span>
+
+= <h2>What Reddit is saying</h2><ul>
+> <h2>Redditの声</h2><ul>
+
+= <h1>Beginner's dictionary</h1><p class=muted>Investing words, explained simply.</p>
+> <h1>初心者用語集</h1><p class=muted>投資の言葉をやさしく解説。</p>
+
+= <p>No word matches "
+> <p>一致する用語がありません：「
+
+= <h1>Where the data comes from</h1>
+> <h1>データの出どころ</h1>
+
+= <p class=muted>Green = worked, orange = needs attention. Your files are kept in: 
+> <p class=muted>緑＝正常、オレンジ＝要対応。ファイルの保存場所： 
+
+= <h2>Tips</h2><ul>
+> <h2>ヒント</h2><ul>
+
+= <li><b>Stock Rover</b> needs a paid login, so export a CSV from Stock Rover (with Ticker and Fair Value columns) and click <b>Import Stock Rover CSV</b> below.</li>
+> <li><b>Stock Rover</b>は有料ログインが必要です。Stock RoverからCSV（TickerとFair Value列）をエクスポートし、下の<b>Stock RoverのCSVを取り込む</b>をクリックしてください。</li>
+
+= <li><b>WallStreetZen</b> sometimes blocks programs. You can import a CSV with Ticker, Zen Score and Zen Rating columns instead.</li>
+> <li><b>WallStreetZen</b>はプログラムをブロックすることがあります。代わりにTicker・Zen Score・Zen Rating列のCSVを取り込めます。</li>
+
+= <li><b>StockCharts</b> has no public data feed. Its indicators (moving averages, RSI, MACD, SCTR) are calculated by StockBuddy from price history.</li>
+> <li><b>StockCharts</b>には公開データがありません。指標（移動平均、RSI、MACD、SCTR）はStockBuddyが価格履歴から計算します。</li>
+
+= <li><b>Reddit</b> is read automatically (no account needed). If Reddit blocks it, add posts yourself: copy post titles from 
+> <li><b>Reddit</b>は自動で読み込まれます（アカウント不要）。ブロックされた場合は自分で投稿を追加できます： 
+
+= Reddit and use <b>Add Reddit posts</b>, or import a CSV with a <i>title</i> column (optional: date, subreddit, upvotes). 
+> Redditから投稿タイトルをコピーして<b>Redditの投稿を追加</b>を使うか、<i>title</i>列のCSVを取り込みます（任意：date、subreddit、upvotes）。 
+
+= Your own posts are used for 
+> 自分で追加した投稿は次の期間使われます： 
+
+=  days.</li></ul>
+>  日間。</li></ul>
+
+= Get a free Finnhub key (finnhub.io/register)
+> Finnhubの無料キーを取得（finnhub.io/register）
+
+= Get a free Alpha Vantage key
+> Alpha Vantageの無料キーを取得
+
+= WallStreetBets sentiment API page (Tradestie)
+> WallStreetBetsセンチメントAPIのページ（Tradestie）
+
+= Ask Reddit for API access (Reddit developer page)
+> RedditにAPIアクセスを申請（開発者ページ）
+
+= How the SEC wants programs to identify themselves
+> SECが求めるプログラムの身元表示方法
+
+= Open Stock Rover (export a screener as CSV)
+> Stock Roverを開く（スクリーナーをCSVでエクスポート）
+
+= Open WallStreetZen (Zen Scores)
+> WallStreetZenを開く（Zen Score）
+
+= Open stockanalysis.com
+> stockanalysis.comを開く
+
+= Open the ForexFactory calendar
+> ForexFactoryのカレンダーを開く
+
+= Open Yahoo Finance
+> Yahoo!ファイナンスを開く
+
+= Open Google News
+> Googleニュースを開く
+
+= How to add a CSV (README)
+> CSVの追加方法（README）
+
+= <p class=banner><b>Important:</b> StockBuddy is a learning and research helper, not a financial advisor. 
+> <p class=banner><b>重要：</b>StockBuddyは学習と調査のための道具で、投資アドバイザーではありません。 
+
+= It can be wrong, data can be late, and you can lose money. Never invest money you can't afford to lose.</p>
+> 間違うこともあり、データが遅れることもあり、損をする可能性もあります。失っても困らないお金だけで投資しましょう。</p>
+
+= Tap ↻ to load
+> ↻をタップして読み込み
+
+= PRACTICE DATA - 
+> 練習用データ - 
+
+= Not financial advice · tap to open
+> 投資助言ではありません · タップで開く
+
+= '>No data yet. Open StockBuddy once, or tap ↻.</font>
+> '>データがまだありません。StockBuddyを一度開くか↻をタップ。</font>
+
+= '>WORLD MARKETS</font></b></small><br>
+> '>世界の市場</font></b></small><br>
+
+= '>TOP BUYS TODAY</font></b></small><br>
+> '>今日の買い候補</font></b></small><br>
+
+= '>CAREFUL WITH</font></b></small><br>
+> '>注意</font></b></small><br>
+
+= '>0DTE (EXPIRING TODAY)</font></b></small><br>
+> '>0DTE（本日満期）</font></b></small><br>
+
+= Tip: tap ☰ for all pages, swipe left or right to move between them, ★ for your watchlist.
+> ヒント：☰で全ページ、左右スワイプでページ移動、★でウォッチリスト。
+
+= All markets ▾
+> すべての市場 ▾
+
+= PRACTICE MODE - made-up data
+> 練習モード - 架空のデータ
+
+= StockBuddy is reading stockanalysis.com, WallStreetZen, Reddit and price charts. 
+> StockBuddyはstockanalysis.com、WallStreetZen、Reddit、価格チャートを読み込んでいます。 
+
+= This can take a minute. Tip: turn on Practice mode in the More menu to learn with made-up data.
+> 1分ほどかかることがあります。ヒント：メニューで練習モードをオンにすると架空のデータで学べます。
+
+= Type a ticker above (like AAPL or MSFT) to get a chart and a plain-English explanation. 
+> 上にティッカー（AAPLやMSFTなど）を入力すると、チャートとわかりやすい解説が表示されます。 
+
+= You can also tap any ticker on the "All stocks" page.
+> 「すべての株」ページのティッカーをタップしても見られます。
+
+= Type a ticker, e.g. AAPL
+> ティッカーを入力（例：AAPL）
+
+= Explain
+> 解説
+
+= Add tickers, e.g. AAPL MSFT
+> ティッカーを追加（例：AAPL MSFT）
+
+= e.g. NVDA above 150 / AAPL move 5%
+> 例：NVDA above 150 / AAPL move 5%
+
+= e.g. buy 10 AAPL / sell all AAPL
+> 例：buy 10 AAPL / sell all AAPL
+
+= Search a word
+> 用語を検索
+
+= Check the spelling, or your internet connection. US tickers are 1-5 letters, like AAPL or MSFT.
+> スペルかネット接続を確認してください。米国のティッカーはAAPLやMSFTのように1〜5文字です。
+
+= Paper-buy 
+> 仮想購入： 
+
+= How many pretend shares? (Pretend money - nothing real is bought.)
+> 何株買いますか？（仮想のお金です。実際には何も買いません。）
+
+= Cancel
+> キャンセル
+
+= Sell all 
+> すべて売る： 
+
+= Sell all your pretend shares of 
+> 仮想保有をすべて売りますか： 
+
+= Start again?
+> 最初からやり直しますか？
+
+= Start again
+> やり直す
+
+= 🎓 Practice mode (made-up data): 
+> 🎓 練習モード（架空のデータ）： 
+
+= 🌐 World stocks: 
+> 🌐 世界の株： 
+
+=  of each market
+>  （各市場）
+
+= ✍ Add Reddit posts (paste titles)
+> ✍ Redditの投稿を追加（タイトルを貼り付け）
+
+= 📥 Import Reddit CSV
+> 📥 RedditのCSVを取り込む
+
+= 🗑 Clear my Reddit posts
+> 🗑 自分のReddit投稿を消去
+
+= 📄 Add any CSV as a data source
+> 📄 任意のCSVをデータソースとして追加
+
+= 🗑 Remove my CSV files
+> 🗑 自分のCSVファイルを削除
+
+= 📥 Import Stock Rover CSV
+> 📥 Stock RoverのCSVを取り込む
+
+= 📥 Import WallStreetZen CSV
+> 📥 WallStreetZenのCSVを取り込む
+
+= 🔑 Finnhub key (
+> 🔑 Finnhubキー（
+
+= not set
+> 未設定
+
+= 🔑 Alpha Vantage key (
+> 🔑 Alpha Vantageキー（
+
+= ✉ SEC email (optional)
+> ✉ SEC用メール（任意）
+
+= ↕ Reset the menu order
+> ↕ メニューの並び順をリセット
+
+= ❓ How to add the home-screen widget
+> ❓ ホーム画面ウィジェットの追加方法
+
+= ℹ About & disclaimer
+> ℹ アプリについて・免責事項
+
+= Delete
+> 削除
+
+= Your CSV files were removed.
+> CSVファイルを削除しました。
+
+= Menu order reset.
+> メニューの並び順をリセットしました。
+
+= Add the widget to your home screen
+> ホーム画面にウィジェットを追加
+
+= 1. Go to your home screen.\n2. Touch and hold an empty spot.\n3. Tap "Widgets".\n4. Find StockBuddy and drag it onto your home screen.\n\n
+> 1. ホーム画面を開きます。\n2. 空いている場所を長押しします。\n3.「ウィジェット」をタップします。\n4. StockBuddyを探してホーム画面にドラッグします。\n\n
+
+= Tap the widget to open the app, or tap ↻ on it to refresh. Change its colours in ⋮ > Home-screen widget skin.
+> ウィジェットをタップでアプリを開き、↻で更新します。色は ⋮ > ホーム画面ウィジェットのスキン で変更できます。
+
+= About StockBuddy
+> StockBuddyについて
+
+= StockBuddy combines stockanalysis.com, WallStreetZen, Reddit, the WallStreetBets sentiment API, Finnhub, Alpha Vantage, SEC EDGAR, 
+> StockBuddyはstockanalysis.com、WallStreetZen、Reddit、WallStreetBetsセンチメントAPI、Finnhub、Alpha Vantage、SEC EDGAR、 
+
+= the economic calendar, your own CSV files and StockCharts-style chart signals, and explains them in plain English.\n\nIMPORTANT: this is a learning and research helper, 
+> 経済指標カレンダー、あなたのCSV、StockChartsスタイルのチャートシグナルを組み合わせ、わかりやすく解説します。\n\n重要：これは学習と調査のための道具で、 
+
+= NOT a financial advisor. It can be wrong, data can be late, and you can lose money. Never invest money you can't afford to lose.
+> 投資アドバイザーではありません。間違うこともあり、データが遅れることもあり、損をする可能性もあります。失っても困らないお金だけで投資しましょう。
+
+= ★ My watchlist
+> ★ ウォッチリスト
+
+= SETTINGS & DATA
+> 設定とデータ
+
+= 💾  Save report (web page, Word, CSV or JSON)
+> 💾  レポートを保存（Webページ、Word、CSV、JSON）
+
+= 🎨  App skin
+> 🎨  アプリのスキン
+
+= 🖼  Home-screen widget skin
+> 🖼  ホーム画面ウィジェットのスキン
+
+= 👓  Widget see-through
+> 👓  ウィジェットの透過
+
+= Show ideas for
+> アイデアを表示する市場
+
+= Off
+> オフ
+
+= Top 3 of each market
+> 各市場の上位3社
+
+= Top 5
+> 上位5社
+
+= Top 10
+> 上位10社
+
+= Top 20 (slower refresh)
+> 上位20社（更新が遅くなります）
+
+= World stocks
+> 世界の株
+
+= Please wait until the data has loaded.
+> データの読み込みが終わるまでお待ちください。
+
+= Save today's report as
+> 今日のレポートの保存形式
+
+= No file saver available on this phone.
+> この端末にはファイル保存アプリがありません。
+
+= Your Alpha Vantage key
+> あなたのAlpha Vantageキー
+
+= Alpha Vantage adds news sentiment (is the news about a company positive or negative?). Get a free key at 
+> Alpha Vantageはニュースのセンチメント（企業のニュースが良いか悪いか）を追加します。無料キーの取得先： 
+
+= alphavantage.co/support/#api-key. The free plan allows about 25 requests a day, so StockBuddy checks your first 
+> alphavantage.co/support/#api-key。無料プランは1日約25回までなので、StockBuddyは最初の 
+
+=  stocks and remembers the answers all day. Leave empty to turn it off.
+>  銘柄を確認し、結果を1日中覚えています。空欄にするとオフになります。
+
+= Save
+> 保存
+
+= Alpha Vantage is turned off.
+> Alpha Vantageはオフです。
+
+= Key works and is saved. Tap refresh to use it.
+> キーは有効で保存されました。更新をタップして使えます。
+
+= you@example.com (optional)
+> you@example.com（任意）
+
+= The SEC (sec.gov) asks every program to say who it is. StockBuddy works without this, but if the SEC data doesn't load, 
+> SEC（sec.gov）はすべてのプログラムに身元の明示を求めています。なくても動きますが、SECのデータが読み込めない場合は 
+
+= enter your email. It is only ever sent to sec.gov.
+> メールを入力してください。sec.gov以外には送信されません。
+
+= Saved.
+> 保存しました。
+
+= Finnhub adds Wall Street analyst recommendations and financial ratios. Get a free key at finnhub.io/register 
+> Finnhubはウォール街のアナリスト推奨と財務指標を追加します。finnhub.io/registerで無料キーを取得し、 
+
+= and paste it below. It is saved only on this phone. Leave it empty to turn Finnhub off.
+> 下に貼り付けてください。この端末にのみ保存されます。空欄にするとFinnhubはオフになります。
+
+= Your Finnhub API key
+> あなたのFinnhub APIキー
+
+= Checking the key...
+> キーを確認中...
+
+= Key works and is saved. Refreshing (about 2 minutes the first time)...
+> キーは有効で保存されました。更新中（初回は約2分）...
+
+= Finnhub key saved, but...
+> Finnhubキーは保存されましたが...
+
+= Open Reddit, copy the titles of posts you find interesting, and paste them below - one post per line. 
+> Redditを開き、気になる投稿のタイトルをコピーして下に貼り付けてください（1行に1投稿）。 
+
+= Tickers like $NVDA or NVDA are recognised automatically. Your posts are used for 
+> $NVDAやNVDAのようなティッカーは自動で認識されます。投稿は次の期間使われます： 
+
+=  days.
+>  日間。
+
+= Subreddit, e.g. wallstreetbets
+> サブレディット（例：wallstreetbets）
+
+= Paste post titles here, one per line
+> ここに投稿タイトルを1行に1つずつ貼り付け
+
+= . Refreshing...
+> 。更新中...
+
+= Home-screen widget skin
+> ホーム画面ウィジェットのスキン
+
+= App skin
+> アプリのスキン
+
+= Widget skin changed
+> ウィジェットのスキンを変更しました
+
+= A little see-through
+> 少し透過
+
+= Very see-through
+> かなり透過
+
+= Mostly transparent
+> ほぼ透明
+
+= Widget see-through
+> ウィジェットの透過
+
+= No file picker available on this phone.
+> この端末にはファイル選択アプリがありません。
+
+= Report saved.
+> レポートを保存しました。
+
+= Couldn't save the report: 
+> レポートを保存できませんでした： 
+
+=  stocks. Refreshing...
+>  銘柄。更新中...
+
+= Can't use this file
+> このファイルは使えません
+
+= The first line needs a column called Ticker or Symbol.
+> 1行目にTickerまたはSymbol列が必要です。
+
+=  stocks from your file. Refreshing...
+>  銘柄をファイルから取り込みました。更新中...
+
+= No usable posts found
+> 使える投稿がありません
+
+= The file needs a first line with a column called 'title' (optional: date, subreddit, upvotes). 
+> 1行目に'title'という列が必要です（任意：date、subreddit、upvotes）。 
+
+= Dates older than 
+> 次より古い日付はスキップ： 
+
+=  Reddit posts. Refreshing...
+>  件のReddit投稿。更新中...
+
+= Sorry - StockBuddy closed unexpectedly last time
+> 申し訳ありません。前回StockBuddyが予期せず終了しました
+
+= Details (useful if you report the problem):\n\n
+> 詳細（問題を報告する際に役立ちます）：\n\n
+
+= %d StockBuddy price alerts
+> StockBuddy価格アラート%d件
+
+= Couldn't download any stock prices. Check your internet, or turn on Practice mode (More menu).
+> 株価をダウンロードできませんでした。ネット接続を確認するか、練習モード（メニュー）をオンにしてください。
+
+= StockBuddy refresh
+> StockBuddyの更新
+
+= Stock / share
+> 株式 / 株
+
+= A tiny piece of ownership in a company. If the company does well, the price usually goes up.
+> 会社の所有権のごく一部。会社が好調なら株価は通常上がります。
+
+= The short code for a stock, like AAPL for Apple or MSFT for Microsoft.
+> 株の短いコード。例：AppleはAAPL、MicrosoftはMSFT。
+
+= Index
+> 指数
+
+= A basket of many stocks that shows how a whole market is doing (e.g. the S&P 500 = 500 big US companies).
+> 多くの株をまとめたもので、市場全体の調子を示します（例：S&P 500＝米国の大企業500社）。
+
+= A fund you can buy like a single stock that holds many stocks at once (SPY holds the whole S&P 500). Great for beginners.
+> 1つの株のように買えて、多くの株をまとめて持てるファンド（SPYはS&P 500全体）。初心者に最適。
+
+= Buying shares because you expect the price to go up over time.
+> 時間とともに株価が上がると考えて株を買うこと。
+
+= Selling shares you own - to take a profit or to stop a loss from growing.
+> 保有株を売ること。利益確定や損失拡大を防ぐため。
+
+= Short (short selling)
+> 空売り（ショート）
+
+= Borrowing shares, selling them, and buying them back later. You win if the price falls, but losses are unlimited if it rises.
+> 株を借りて売り、後で買い戻すこと。株価が下がれば利益ですが、上がると損失は無限です。
+
+= Option
+> オプション
+
+= A contract that lets you bet on a stock's direction for a small price. One contract = 100 shares. It expires on a set date.
+> 少ない金額で株の方向に賭けられる契約。1枚＝100株。決められた日に満期を迎えます。
+
+= Call option
+> コールオプション
+
+= Makes money if the stock goes UP past the strike price before expiry.
+> 満期前に株価が権利行使価格を上回れば利益になります。
+
+= Put option
+> プットオプション
+
+= Makes money if the stock goes DOWN below the strike price before expiry.
+> 満期前に株価が権利行使価格を下回れば利益になります。
+
+= Strike price
+> 権利行使価格
+
+= The price written in the option contract that the stock has to beat.
+> オプション契約に書かれた、株価が超えるべき価格。
+
+= Expiry / expiration
+> 満期
+
+= The last day the option is valid. After that it's worth nothing if it didn't pay off.
+> オプションが有効な最終日。利益が出ていなければ、その後は無価値になります。
+
+= Premium
+> プレミアム
+
+= The price you pay for an option. It's the most you can lose when you BUY an option.
+> オプションに払う価格。オプションを買う場合の最大損失です。
+
+= Breakeven
+> 損益分岐点
+
+= The stock price where your option trade neither makes nor loses money at expiry.
+> 満期時にオプション取引が損も得もしない株価。
+
+= "Zero Days To Expiration": options that expire TODAY. Very cheap, very fast, very risky - like a coin flip with a ticking clock.
+> 「満期まで0日」：本日満期のオプション。とても安く、とても速く、とても危険。時計付きのコイン投げのようなものです。
+
+= Time decay
+> 時間的価値の減少
+
+= Options lose a little value every day just from time passing. 0DTE options lose it by the minute.
+> オプションは時間が経つだけで毎日少しずつ価値が減ります。0DTEは分単位で減ります。
+
+= Limit order
+> 指値注文
+
+= An order that says "buy only at this price or better". Protects you from overpaying.
+> 「この価格かそれより有利な価格でだけ買う」という注文。高値づかみを防ぎます。
+
+= Stop-loss
+> 損切り注文（ストップロス）
+
+= An automatic sell order if the price falls to a level you choose. It limits how much you can lose.
+> 株価が指定した水準まで下がったら自動で売る注文。損失を限定します。
+
+= P/E ratio
+> PER（株価収益率）
+
+= Price divided by yearly profit per share. P/E 20 = you pay $20 for every $1 the company earns. Lower can mean cheaper.
+> 株価を1株あたりの年間利益で割ったもの。PER 20＝会社が1ドル稼ぐごとに20ドル払う。低いほど割安の可能性。
+
+= Price target
+> 目標株価
+
+= Where Wall Street analysts think the price will be in about 12 months.
+> ウォール街のアナリストが約12か月後に予想する株価。
+
+= Fair value
+> 適正価格
+
+= Stock Rover's estimate of what the stock is really worth. Price below fair value = possibly "on sale".
+> 株の本当の価値についてのStock Roverの推定。株価が適正価格を下回る＝「バーゲン」の可能性。
+
+= WallStreetZen's 0-100 grade for a company's overall quality (higher = better).
+> WallStreetZenによる企業の総合的な質の0〜100の評価（高いほど良い）。
+
+= Moving average (50-day, 200-day)
+> 移動平均（50日、200日）
+
+= The average price of the last 50 or 200 days. Price above them = generally an uptrend.
+> 直近50日または200日の平均価格。株価がその上なら概ね上昇トレンド。
+
+= A 0-100 meter of how fast a price moved recently. Above 70 = maybe "overheated", below 30 = maybe "oversold".
+> 最近の値動きの速さを示す0〜100の指標。70超＝「過熱」かも、30未満＝「売られすぎ」かも。
+
+= A momentum gauge. When it turns positive, the price is speeding up; negative = slowing down.
+> 勢いを測る指標。プラスに転じると上昇加速、マイナスなら減速。
+
+= StockCharts Technical Rank: 0-99 score of how strong a stock's chart is compared to others. 90+ = among the strongest.
+> StockChartsテクニカルランク：他の銘柄と比べたチャートの強さを0〜99で評価。90以上＝最強クラス。
+
+= Candlestick chart
+> ローソク足チャート
+
+= Each day is drawn as a 'candle': the thick body goes from the opening to the closing price (green = it rose that day, red = it fell), and the thin wicks show the day's high and low.
+> 1日を「ローソク」で表します。太い胴体は始値から終値まで（緑＝その日上昇、赤＝下落）、細いヒゲはその日の高値と安値です。
+
+= SMA / EMA
+> SMA / EMA（単純・指数移動平均）
+
+= Simple / Exponential Moving Average: the average price of the last N days drawn as a smooth line. The EMA gives recent days more weight, so it reacts faster.
+> 単純／指数移動平均：直近N日の平均価格をなめらかな線で表したもの。EMAは最近の日を重視するため反応が速い。
+
+= Bollinger Bands
+> ボリンジャーバンド
+
+= A band drawn 2 'standard deviations' above and below the 20-day average. Price near the top band = it rose fast lately; near the bottom = it fell fast lately.
+> 20日平均の上下2「標準偏差」に引いた帯。上のバンド付近＝最近急上昇、下のバンド付近＝最近急落。
+
+= Market cap
+> 時価総額
+
+= Market capitalisation: share price x number of shares = what the whole company is worth on the stock market.
+> 時価総額：株価×株数＝株式市場での会社全体の価値。
+
+= Beta
+> ベータ
+
+= How much a stock swings compared with the whole market. Beta 1 = moves like the market, 2 = twice as much, 0.5 = half as much.
+> 市場全体と比べた株の値動きの大きさ。ベータ1＝市場と同じ、2＝2倍、0.5＝半分。
+
+= Earnings Per Share: the company's profit divided by its number of shares.
+> 1株あたり利益：会社の利益を株数で割ったもの。
+
+= Dividend yield
+> 配当利回り
+
+= The cash a company pays its shareholders each year, as a % of the share price.
+> 会社が毎年株主に支払う現金を株価に対する%で表したもの。
+
+= Debt / equity
+> 負債資本倍率
+
+= How much the company has borrowed compared with what its owners have put in. Lower usually means safer.
+> 会社が借りたお金と、株主が出したお金の比率。低いほど一般に安全。
+
+= Volume
+> 出来高
+
+= How many shares were bought and sold. A big move on high volume is taken more seriously than one on low volume.
+> 売買された株数。出来高を伴う大きな動きは、薄商いの動きより重視されます。
+
+= Volume-Weighted Average Price: the average price everyone paid today. Day traders use it as a line in the sand.
+> 出来高加重平均価格：今日みんなが払った平均価格。デイトレーダーが重要な目安にしています。
+
+= Volatility
+> ボラティリティ
+
+= How much a price jumps around. High volatility = bigger gains AND bigger losses.
+> 価格の振れ幅の大きさ。ボラティリティが高い＝利益も損失も大きい。
+
+= Bullish / Bearish
+> 強気 / 弱気
+
+= Bullish = expecting prices to go up. Bearish = expecting prices to go down.
+> 強気＝値上がりを予想。弱気＝値下がりを予想。
+
+= Bull market / Bear market
+> 強気相場 / 弱気相場
+
+= A bull market is a long period of rising prices (usually +20% or more). A bear market is a long fall of 20% or more.
+> 強気相場は長期の上昇（通常20%以上）、弱気相場は20%以上の長期下落です。
+
+= Correction
+> 調整
+
+= A drop of about 10% from a recent high. Corrections are normal and happen often.
+> 最近の高値から約10%の下落。調整はよくある普通のことです。
+
+= Recession
+> 景気後退（リセッション）
+
+= When a country's economy shrinks for a while (often two quarters in a row). Company profits and stock prices usually suffer.
+> 国の経済がしばらく縮小すること（2四半期連続が多い）。企業利益と株価は通常悪化します。
+
+= Inflation
+> インフレ
+
+= Prices of everyday things rising over time. High inflation usually leads central banks to raise interest rates.
+> 日用品の値段が時間とともに上がること。インフレが高いと中央銀行は通常利上げします。
+
+= Interest rate
+> 金利
+
+= The price of borrowing money. When central banks raise rates, borrowing costs more and stocks often fall.
+> お金を借りるコスト。中央銀行が利上げすると借入コストが上がり、株は下がりやすくなります。
+
+= Central bank
+> 中央銀行
+
+= The bank that runs a country's money, like the Fed (US), the ECB (Eurozone), the Bank of Japan. It sets the main interest rate.
+> 国のお金を管理する銀行。FRB（米国）、ECB（ユーロ圏）、日本銀行など。政策金利を決めます。
+
+= Bond
+> 債券
+
+= A loan you give to a government or company. They pay you interest and give the money back at the end.
+> 国や企業にお金を貸すこと。利息を受け取り、最後に元本が返ってきます。
+
+= Yield
+> 利回り
+
+= How much income an investment pays each year, as a % of its price (for example a bond's interest or a stock's dividend).
+> 投資が毎年生む収入を価格に対する%で表したもの（債券の利息や株の配当など）。
+
+= Blue chip
+> 優良株（ブルーチップ）
+
+= A big, well-known, financially strong company - usually considered safer.
+> 大きく有名で財務が強固な企業。一般に比較的安全とされます。
+
+= Penny stock
+> 低位株（ペニー株）
+
+= A very cheap stock (often under $5) of a small company. Very risky and easy to manipulate.
+> 小さな会社のとても安い株（多くは5ドル未満）。非常に危険で操作されやすい。
+
+= Sector
+> セクター
+
+= A group of companies in the same business, like technology, banks, energy or health care.
+> 同じ業種の企業のグループ。テクノロジー、銀行、エネルギー、ヘルスケアなど。
+
+= Index fund
+> インデックスファンド
+
+= A fund that simply copies an index (like the S&P 500). Low cost and a good start for beginners.
+> 指数（S&P 500など）にそのまま連動するファンド。低コストで初心者の第一歩に最適。
+
+= Portfolio
+> ポートフォリオ
+
+= All the investments you own together.
+> 保有する投資全体。
+
+= Dollar-cost averaging (DCA)
+> ドルコスト平均法（DCA）
+
+= Investing the same amount regularly (for example every month), whatever the price. It smooths out ups and downs.
+> 価格に関係なく、毎月など定期的に同じ金額を投資すること。値動きの影響をならします。
+
+= Rebalancing
+> リバランス
+
+= Bringing your portfolio back to the mix you planned, by selling a bit of what grew and buying what fell.
+> 値上がりした分を少し売り、値下がりした分を買って、計画した配分に戻すこと。
+
+= Bid / Ask / Spread
+> 買い気配 / 売り気配 / スプレッド
+
+= Bid = the highest price buyers offer, Ask = the lowest price sellers want. The spread is the gap between them - a hidden cost.
+> Bid＝買い手の最高提示価格、Ask＝売り手の最低希望価格。スプレッドはその差で、隠れたコストです。
+
+= Market order
+> 成行注文
+
+= An order to buy or sell right now at whatever the price is. Fast, but the price can surprise you.
+> 価格を指定せず今すぐ売買する注文。速いですが、価格に驚くことも。
+
+= Stop-limit order
+> 逆指値指値注文
+
+= Like a stop-loss, but it only sells at your limit price or better - so it might not sell in a fast fall.
+> 損切り注文に似ていますが、指値かそれより有利な価格でしか売りません。急落時には売れないことも。
+
+= Margin
+> 信用取引
+
+= Money borrowed from your broker to invest. It makes gains and losses bigger - risky for beginners.
+> 証券会社から借りて投資するお金。利益も損失も大きくなり、初心者には危険です。
+
+= Leverage
+> レバレッジ
+
+= Using borrowed money (or options) so a small price move makes a big gain or loss.
+> 借りたお金（やオプション）を使い、小さな値動きで大きな損益を出すこと。
+
+= Liquidity
+> 流動性
+
+= How easily you can buy or sell something quickly at a fair price. Big stocks are very liquid.
+> 公正な価格ですばやく売買できるかどうか。大型株は流動性が高い。
+
+= Short squeeze
+> ショートスクイーズ（踏み上げ）
+
+= When a stock that many people bet against rises fast, forcing them to buy it back, which pushes the price up even more.
+> 多くの人が下落に賭けた株が急騰し、買い戻しを迫られて、さらに株価が上がる現象。
+
+= Earnings
+> 決算（利益）
+
+= A company's profit. Companies report earnings every 3 months - prices often jump or fall that day.
+> 企業の利益。企業は3か月ごとに決算を発表し、その日は株価が大きく動きがちです。
+
+= Guidance
+> 業績見通し（ガイダンス）
+
+= What a company says it expects for the next months. Disappointing guidance often hurts the price more than past results.
+> 企業が今後数か月について示す見通し。期待外れの見通しは過去の結果より株価に響くことが多い。
+
+= Stock split
+> 株式分割
+
+= Cutting each share into several cheaper ones (for example 1 into 10). It doesn't change what your shares are worth.
+> 1株を複数の安い株に分けること（例：1株→10株）。保有株の価値は変わりません。
+
+= Buyback
+> 自社株買い
+
+= When a company buys its own shares. Fewer shares left usually supports the price.
+> 企業が自社の株を買うこと。株数が減ると通常株価の支えになります。
+
+= Ex-dividend date
+> 権利落ち日
+
+= You must own the stock BEFORE this date to receive the next dividend.
+> 次の配当を受け取るには、この日より前に株を持っている必要があります。
+
+= Implied volatility (IV)
+> インプライド・ボラティリティ（IV）
+
+= How big a move the options market expects. High IV makes options more expensive.
+> オプション市場が予想する値動きの大きさ。IVが高いとオプションは高くなります。
+
+= Delta / Theta (the Greeks)
+> デルタ / シータ（グリークス）
+
+= Delta: how much an option's price moves when the stock moves $1. Theta: how much value it loses each day from time decay.
+> デルタ：株価が1ドル動いたときのオプション価格の変化。シータ：時間の経過で毎日失う価値。
+
+= In / out of the money
+> イン・ザ・マネー / アウト・オブ・ザ・マネー
+
+= A call is "in the money" when the stock is above the strike (a put: below). "Out of the money" options are cheaper but riskier.
+> コールは株価が権利行使価格より上で「イン・ザ・マネー」（プットは下）。「アウト・オブ・ザ・マネー」は安いがリスクが高い。
+
+= Covered call
+> カバードコール
+
+= Owning 100 shares and selling a call on them to earn extra income. You give up big gains above the strike.
+> 100株を保有し、それに対してコールを売って追加収入を得ること。権利行使価格を超える大きな利益は諦めます。
+
+= Hedge
+> ヘッジ
+
+= An investment that protects you against losses on another one - like insurance.
+> 別の投資の損失から守ってくれる投資。保険のようなもの。
+
+= Risk / reward
+> リスク / リワード
+
+= How much you could lose compared with how much you could win. Good trades risk little to win a lot.
+> 失う可能性と得る可能性の比較。良い取引は小さなリスクで大きく狙います。
+
+= American Depositary Receipt: a foreign company's shares traded in the US, in dollars (for example TSM for TSMC).
+> 米国預託証券：外国企業の株を米国でドル建てで取引するもの（例：TSMCのTSM）。
+
+= All-Time High: the highest price a stock has ever reached.
+> 史上最高値：株がこれまでに付けた最も高い価格。
+
+= Assets Under Management: how much money a fund manages.
+> 運用資産残高：ファンドが運用するお金の額。
+
+= Compound Annual Growth Rate: the average yearly growth over several years, including compounding.
+> 年平均成長率：複利を含めた数年間の平均的な年成長率。
+
+= Discounted Cash Flow: a way to estimate what a company is worth from the cash it should make in future.
+> 割引キャッシュフロー：将来稼ぐと見込まれる現金から企業価値を見積もる方法。
+
+= Earnings Before Interest, Taxes, Depreciation and Amortization - a rough measure of a company's operating profit.
+> 利払い・税金・減価償却前利益。企業の営業利益の大まかな目安。
+
+= Free Cash Flow: the cash a company has left after paying for its operations and investments.
+> フリーキャッシュフロー：営業と投資の支払い後に会社に残る現金。
+
+= Federal Open Market Committee: the group at the US Fed that decides interest rates, 8 times a year.
+> 連邦公開市場委員会：米FRBで年8回金利を決める会合。
+
+= Consumer Price Index: the main measure of inflation (how fast everyday prices rise).
+> 消費者物価指数：インフレ（日常の物価上昇の速さ）を測る主な指標。
+
+= Gross Domestic Product: the total value of everything a country produces - the size of its economy.
+> 国内総生産：国が生み出すすべての価値の合計。経済の規模です。
+
+= Initial Public Offering: when a company sells shares to the public for the first time.
+> 新規株式公開：企業が初めて一般に株を売り出すこと。
+
+= Mergers and Acquisitions: companies joining or buying each other.
+> 合併・買収：企業同士が統合したり買収したりすること。
+
+= Net Asset Value: what one share of a fund is worth, based on everything it owns.
+> 基準価額：ファンドが保有する資産から計算した1口の価値。
+
+= P/B ratio
+> PBR（株価純資産倍率）
+
+= Price-to-Book: the share price divided by what the company's assets are worth on paper. Below 1 can mean cheap.
+> 株価純資産倍率：株価を帳簿上の資産価値で割ったもの。1未満は割安の可能性。
+
+= P/S ratio
+> PSR（株価売上高倍率）
+
+= Price-to-Sales: the company's value divided by its yearly sales. Useful for companies with no profit yet.
+> 株価売上高倍率：企業価値を年間売上で割ったもの。まだ利益のない企業に便利。
+
+= PEG ratio
+> PEGレシオ
+
+= P/E divided by the expected profit growth. Around 1 or below can mean a fair price for a growing company.
+> PERを予想利益成長率で割ったもの。1前後以下なら成長企業として妥当な価格の可能性。
+
+= ROE / ROA
+> ROE / ROA
+
+= Return on Equity / on Assets: how much profit the company makes with its owners' money / with everything it owns.
+> 自己資本利益率／総資産利益率：株主のお金／保有するすべての資産でどれだけ利益を上げたか。
+
+= Return on Investment: how much you gained or lost compared with what you put in.
+> 投資収益率：投資した額に対してどれだけ得たか失ったか。
+
+= Year To Date: since January 1st of this year.
+> 年初来：今年の1月1日から。
+
+= YoY / QoQ
+> 前年比 / 前期比
+
+= Year over Year / Quarter over Quarter: compared with the same period last year / the previous 3 months.
+> 前年比／前期比：昨年の同じ期間／直前の3か月との比較。
+
+= Over The Counter: shares traded outside the big exchanges - often foreign or small companies.
+> 店頭取引：大きな取引所の外で取引される株。外国企業や小さな企業が多い。
+
+= Securities and Exchange Commission: the US authority that oversees the stock market and company reports.
+> 米国証券取引委員会：株式市場と企業の報告を監督する米国の当局（日本では金融庁・証券取引等監視委員会）。
+
+= Practising with fake money in a broker's simulator. The best way to learn options safely.
+> 証券会社のシミュレーターで仮想のお金を使って練習すること。オプションを安全に学ぶ最良の方法。
+
+= Diversification
+> 分散投資
+
+= Spreading money across many stocks so one bad one doesn't sink you.
+> お金を多くの株に分けて、1つが悪くても大きな痛手にならないようにすること。
+
+= Previous close
+> 前日終値
+
+= Open
+> 始値
+
+= Day's range
+> 当日の値幅
+
+= 52-week range
+> 52週の値幅
+
+= Avg. volume (3 months)
+> 平均出来高（3か月）
+
+= Beta (5Y monthly)
+> ベータ（5年・月次）
+
+= P/E ratio (TTM)
+> PER（直近12か月）
+
+= Forward P/E
+> 予想PER
+
+= EPS (TTM)
+> EPS（直近12か月）
+
+= Earnings date
+> 決算発表日
+
+= Dividend & yield
+> 配当と利回り
+
+= 1y target estimate
+> 1年後の目標株価
+
+= Analyst rating
+> アナリスト評価
+
+= Revenue (TTM)
+> 売上高（直近12か月）
+
+= Net income (TTM)
+> 純利益（直近12か月）
+
+= Shares outstanding
+> 発行済株式数
+
+= Profit margin
+> 利益率
+
+= Return on equity
+> 自己資本利益率（ROE）
+
+= Revenue growth (YoY)
+> 売上成長率（前年比）
+
+= Current ratio
+> 流動比率
+
+= The price when the market closed last time.
+> 前回の取引終了時の価格。
+
+= Today's lowest and highest price.
+> 今日の安値と高値。
+
+= The lowest and highest price in the past year.
+> 過去1年の安値と高値。
+
+= How many shares changed hands today.
+> 今日売買された株数。
+
+= How many shares usually change hands in a day.
+> 1日に通常売買される株数。
+
+= What the whole company is worth on the stock market.
+> 株式市場での会社全体の価値。
+
+= How much the stock swings compared with the whole market. 1 = same, 2 = twice as much.
+> 市場全体と比べた値動きの大きさ。1＝同じ、2＝2倍。
+
+= Price divided by the last 12 months' profit per share. Lower can mean cheaper.
+> 株価を直近12か月の1株利益で割ったもの。低いほど割安の可能性。
+
+= Like P/E, but using next year's expected profit.
+> PERと同じですが、来年の予想利益を使います。
+
+= Profit per share over the last 12 months.
+> 直近12か月の1株あたり利益。
+
+= When the company next reports its results - prices often jump that day.
+> 次回の決算発表日。その日は株価が大きく動きがちです。
+
+= Cash paid to shareholders each year, and as a % of the price.
+> 毎年株主に支払われる現金と、株価に対する%。
+
+= Where analysts think the price will be in a year.
+> アナリストが1年後に予想する株価。
+
+= How many cents of every $1 of sales the company keeps as profit.
+> 売上1ドルあたり何セントが利益として残るか。
+
+= How much profit the company makes with its owners' money.
+> 株主のお金でどれだけ利益を上げているか。
+
+= How much the company borrowed compared with what it owns. Lower is safer.
+> 会社が保有する資産に対してどれだけ借りているか。低いほど安全。
+
+= Can it pay its bills this year? Above 1 is usually fine.
+> 今年の支払いができるか？1を超えていれば通常は問題ありません。
+
+= Line
+> 折れ線
+
+= Area
+> エリア
+
+= Nothing
+> なし
+
+= Best Buys
+> ベスト買い
+
+= Sells & Shorts
+> 売りと空売り
+
+= Best Calls
+> ベストコール
+
+= Best Puts
+> ベストプット
+
+= 0DTE (today)
+> 0DTE（本日）
+
+= Best buys today
+> 今日のベスト買い
+
+= Stocks where most sources see good signs. [+] = a source likes it, [-] = a source sees a problem. More stars = sources agree more.
+> ほとんどの情報源が良いサインと見る株。[+]＝その情報源は好評価、[-]＝問題あり。星が多いほど情報源の意見が一致。
+
+= No stock had enough good signals today. That's OK - waiting is a strategy too.
+> 今日は十分に良いシグナルの株がありませんでした。大丈夫、待つのも戦略です。
+
+= Sells & shorts
+> 売りと空売り
+
+= Stocks where most sources see warning signs. If you own one, think about selling or protecting it; if you don't, this means "don't buy right now". 
+> ほとんどの情報源が警告サインを示す株。保有中なら売却か保護を検討、未保有なら「今は買わない」という意味です。 
+
+= Ideas marked SHORT are also in a clear downtrend - shorting is for advanced traders only.
+> SHORTと表示されたアイデアは明確な下降トレンドでもあります。空売りは上級者だけのものです。
+
+= No stock had strong sell signals today.
+> 今日は強い売りシグナルの株はありませんでした。
+
+= Best calls (bet on up, 1-2 months)
+> ベストコール（上昇に賭ける、1〜2か月）
+
+= Call options on stocks with strong, clear good signals and a rising price. Costs are estimates - check your broker.
+> 強く明確な良いシグナルがあり株価が上昇中の株のコールオプション。コストは推定値です。証券会社で確認してください。
+
+= No stock had signals strong and clear enough for a call today.
+> 今日はコールに十分な強く明確なシグナルの株はありませんでした。
+
+= Best puts (bet on down, 1-2 months)
+> ベストプット（下落に賭ける、1〜2か月）
+
+= Put options on stocks with strong warning signs and a falling price. A put is the beginner-safer way to bet on a fall: you can't lose more than you paid.
+> 強い警告サインがあり株価が下落中の株のプットオプション。プットは初心者にとって下落に賭ける比較的安全な方法で、支払った額以上は失いません。
+
+= No stock had signals strong and clear enough for a put today.
+> 今日はプットに十分な強く明確なシグナルの株はありませんでした。
+
+= 0DTE ideas (expire today)
+> 0DTEアイデア（本日満期）
+
+= Options on SPY and QQQ that expire at today's close. Extremely risky - often the best idea is to sit out.
+> 本日の取引終了で満期となるSPYとQQQのオプション。極めて危険で、見送るのが最善のことも多いです。
+
+= Today's Ideas
+> 今日のアイデア
+
+= World Markets
+> 世界の市場
+
+= World Stocks
+> 世界の株
+
+= Economic Calendar
+> 経済指標カレンダー
+
+= Look Up a Stock
+> 株を調べる
+
+= All Stocks
+> すべての株
+
+= Market News
+> 市場ニュース
+
+= Price Alerts
+> 価格アラート
+
+= Paper Trading
+> 仮想取引
+
+= Track Record
+> 実績
+
+= Dictionary
+> 用語集
+
+= My Watchlist
+> ウォッチリスト
+
+= Data Sources
+> データソース
+
+= Buys, sells, options, shorts and 0DTE
+> 買い・売り・オプション・空売り・0DTE
+
+= The 16 biggest stock markets
+> 世界16大株式市場
+
+= Big companies abroad + where to buy
+> 海外の大企業＋購入先
+
+= Big news this week
+> 今週の重要イベント
+
+= Full explanation and chart
+> 詳しい解説とチャート
+
+= Every stock checked (30 days)
+> チェックした全銘柄（30日間）
+
+= Headlines in your language
+> あなたの言語の見出し
+
+= Get told when a price is reached
+> 価格到達をお知らせ
+
+= Practise with pretend money
+> 仮想のお金で練習
+
+= How past ideas turned out
+> 過去のアイデアの結果
+
+= Investing words made simple
+> 投資用語をやさしく
+
+= Stocks you always want checked
+> いつもチェックしたい株
+
+= Which websites worked
+> どのサイトが使えたか
+
+= World markets
+> 世界の市場
+
+= Economic calendar
+> 経済指標カレンダー
+
+= All stocks
+> すべての株
+
+= Price alerts
+> 価格アラート
+
+= Data sources
+> データソース
+
+= S&P 500 (500 biggest US companies)
+> S&P 500（米国大企業500社）
+
+= Nasdaq (US tech-heavy)
+> ナスダック（米国のハイテク中心）
+
+= Dow Jones (30 big US companies)
+> ダウ平均（米国大企業30社）
+
+= TSX (Canada)
+> TSX（カナダ）
+
+= Bovespa (Brazil)
+> ボベスパ（ブラジル）
+
+= Brazil
+> ブラジル
+
+= FTSE 100 (UK)
+> FTSE 100（英国）
+
+= DAX (Germany)
+> DAX（ドイツ）
+
+= Germany
+> ドイツ
+
+= CAC 40 (France)
+> CAC 40（フランス）
+
+= France
+> フランス
+
+= Euro Stoxx 50 (Eurozone)
+> ユーロ・ストックス50（ユーロ圏）
+
+= Europe
+> 欧州
+
+= Nikkei 225 (Japan)
+> 日経平均225（日本）
+
+= Shanghai Composite (China)
+> 上海総合指数（中国）
+
+= Hang Seng (Hong Kong)
+> ハンセン指数（香港）
+
+= Hong Kong
+> 香港
+
+= Sensex (India)
+> SENSEX（インド）
+
+= India
+> インド
+
+= KOSPI (South Korea)
+> KOSPI（韓国）
+
+= South Korea
+> 韓国
+
+= TAIEX (Taiwan)
+> 加権指数（台湾）
+
+= Taiwan
+> 台湾
+
+= ASX 200 (Australia)
+> ASX 200（オーストラリア）
+
+= Your CSV files
+> あなたのCSVファイル
+
+= World markets (Yahoo Finance)
+> 世界の市場（Yahoo!ファイナンス）
+
+= Economic calendar (ForexFactory)
+> 経済指標カレンダー（ForexFactory）
+
+= Market news (Google News)
+> 市場ニュース（Googleニュース）
+
+= WallStreetBets sentiment (WSB API)
+> WallStreetBetsセンチメント（WSB API）
+
+= StockCharts-style technicals
+> StockChartsスタイルのテクニカル指標
+
+= SEC EDGAR (official filings)
+> SEC EDGAR（公式提出書類）
+
+= News sentiment (Alpha Vantage)
+> ニュースのセンチメント（Alpha Vantage）
+
+= World stocks (16 biggest markets)
+> 世界の株（16大市場）
+
+= PRACTICE MODE
+> 練習モード
+
+= Skin:
+> スキン：
+
+= Market:
+> 市場：
+
+= Trade:
+> 取引：
+
+= Chart:
+> チャート：
+
+= Period:
+> 期間：
+
+= Lines:
+> ライン：
+
+=  days
+>  日
+
+= Reddit:
+> Reddit：
+
+= today
+> 今日
+
+= OPEN
+> 取引中
+
+= closed
+> 取引時間外
+
+=  post
+>  件の投稿
+
+= updated 
+> 更新 
+
+= a strong, happy day
+> 力強く明るい日
+
+= a mildly positive day
+> やや上向きの日
+
+= a quiet, mixed day
+> 静かでまちまちな日
+
+= a mildly negative day
+> やや下向きの日
+
+= a rough day
+> 厳しい日
+
+=  at 
+>  ／ 
+
+= Source:
+> 出典：
+
+= Show:
+> 表示：
+
+= top 
+> 上位 
+
+= bullish
+> 強気
+
+= bearish
+> 弱気
+
+= neutral
+> 中立
+
+= StockCharts-style chart analysis
+> StockChartsスタイルのチャート分析
+
+= stockanalysis.com (company numbers & analysts)
+> stockanalysis.com（企業の数字とアナリスト）
+
+= Stock Rover (fair value & scores)
+> Stock Rover（適正価格とスコア）
+
+= Finnhub (analyst recommendations)
+> Finnhub（アナリスト推奨）
+
+= SEC EDGAR (official company reports)
+> SEC EDGAR（企業の公式報告書）
+
+= Reddit (r/ValueInvesting, r/options, r/wallstreetbets)
+> Reddit（r/ValueInvesting、r/options、r/wallstreetbets）
+
+= overpriced
+> 割高
+
+= Where to buy: 
+> 購入先： 
+
+= In your broker app, search 
+> 証券会社のアプリで 
+
+= , choose "Buy", and use a LIMIT order near 
+> を検索し、「買い」を選んで、指値注文を次の価格付近に： 
+
+=  so you don't overpay.
+>  （高値づかみを防げます）。
+
+= Only put in money you can leave alone for months; don't put everything into one stock.
+> 数か月そのままにしておけるお金だけを投資し、1つの株に全部を入れないようにしましょう。
+
+= If you own 
+>  
+
+= , you could sell part (for example half) to lower your risk, or set a stop-loss just below today's price.
+> を保有しているなら、一部（例：半分）を売ってリスクを下げるか、今日の価格のすぐ下に損切り注文を置けます。
+
+= If you don't own it: this just means "don't buy it right now".
+> 保有していない場合：「今は買わない」という意味です。
+
+= SHORT (advanced): "shorting" means borrowing shares, selling them now and buying them back later - you profit if the price FALLS. You need a margin account.
+> 空売り（上級者向け）：株を借りて今売り、後で買い戻すこと。株価が下がれば利益になります。信用取引口座が必要です。
+
+= A CALL gains value if the stock goes UP. It gives you the right to buy 100 shares at the strike price.
+> コールは株価が上がると価値が上がります。権利行使価格で100株を買う権利です。
+
+= above
+> 上
+
+= below
+> 下
+
+= Many traders take profit at +50% and cut losses at -50% instead of waiting until expiry.
+> 多くのトレーダーは満期を待たずに+50%で利益確定、-50%で損切りします。
+
+= The US market is closed (it's open 9:30am-4:00pm New York time, Monday-Friday; it's 
+> 米国市場は閉まっています（ニューヨーク時間の月〜金9:30〜16:00に開場。現地は今 
+
+= Run the program again during market hours. The first 30 minutes are very jumpy, so most people wait until about 10:00am.
+> 取引時間中にもう一度実行してください。最初の30分は値動きが激しいので、多くの人は10時頃まで待ちます。
+
+= ABOVE
+> 上
+
+= BELOW
+> 下
+
+= The signals disagree, and with no clear direction 0DTE options usually just lose value. Not trading is a valid choice!
+> シグナルが食い違っています。方向感がないと0DTEオプションは通常価値を失うだけです。取引しないのも立派な選択です！
+
+= Check again later in the day if a clear trend shows up.
+> 明確なトレンドが出てくるか、後でもう一度確認しましょう。
+
+= Price is rising steadily and staying above VWAP: buyers are in control right now.
+> 価格は着実に上がりVWAPを上回ったままです。今は買い手が主導しています。
+
+= Decide your exit BEFORE buying: e.g. sell at +30% profit or -30% loss, and always close before 3:45pm.
+> 買う前に出口を決めましょう：例えば+30%で利確、-30%で損切り、そして必ず15:45までに決済。
+
+= Less than 1 hour left: prices move extremely fast now. Even more caution needed.
+> 残り1時間未満：今は値動きが非常に速いです。さらに注意してください。
+
+= Seen on 
+> 見かけた投稿： 
+
+= MEDIUM
+> 中程度
+
+= a big move in Asia overnight often affects how Europe and the US start the day.</html>
+> 夜間のアジアの大きな動きは、欧米の始まり方に影響することがよくあります。</html>
+
+=  rises above 
+>  が次を上回る： 
+
+=  falls below 
+>  が次を下回る： 
+
+=  moves more than 
+>  が1日で次以上動く： 
+
+= % in a day (up or down)
+> %（上下どちらでも）
+
+=  - now 
+>  - 現在 
+
+= Buy 
+>  
+
+=  in almost any broker app - it trades on the 
+>  はほぼどの証券アプリでも買えます。取引所： 
+
+=  in US dollars.
+>  （米ドル建て）。
+
+= Simplest way to own the 500 biggest US companies at once: an S&P 500 ETF such as SPY or VOO.
+> 米国の大企業500社をまとめて持つ一番簡単な方法：SPYやVOOなどのS&P 500 ETF。
+
+= Easiest: buy 
+> 一番簡単： 
+
+=  on the 
+>  （取引所： 
+
+=  - almost every broker app has it, priced in US dollars.
+>  ）。ほぼすべての証券アプリにあり、米ドル建てです。
+
+= In the US: 
+> 米国では： 
+
+=  on the OTC market. Some broker apps allow it (Schwab, Fidelity, Interactive Brokers...); prices can be less smooth.
+>  を店頭（OTC）市場で。一部の証券アプリで可能（Schwab、Fidelity、Interactive Brokersなど）。価格の動きは滑らかでないことも。
+
+= At home: 
+> 現地では： 
+
+= . Needs a broker with international trading 
+> 。海外取引ができる証券会社が必要です 
+
+= (for example Interactive Brokers or Saxo - check what is offered in your country).
+> （例：Interactive BrokersやSaxo。お住まいの国で使えるか確認してください）。
+
+= Mainland China shares are usually bought by foreigners through Hong Kong's "Stock Connect" (international brokers), or via a China ETF.
+> 中国本土株は通常、香港の「ストックコネクト」（海外の証券会社）か中国ETFを通じて購入します。
+
+= Indian shares are hard for foreigners to buy directly - an India ETF is the practical way.
+> インド株は外国人が直接買うのは難しいため、インドETFが現実的です。
+
+= Simplest way to own the whole market: the ETF 
+> 市場全体を持つ一番簡単な方法：ETF 
+
+=  (a basket of this country's big companies, sold in US broker apps).
+>  （この国の大企業をまとめたもので、米国の証券アプリで買えます）。
+
+= grew
+> 増加
+
+= shrank
+> 減少
+
+= positive
+> 前向き
+
+= negative
+> 後ろ向き
+
+= mixed
+> まちまち
+
+= USA
+> 米国
+
+= UK
+> 英国
+
+= ~OK - data for 
+> OK - データ取得： 
+
+= ~ stocks
+>  銘柄
+
+= ~Could not connect
+> 接続できませんでした
+
+= ~Not set up - add your free key from finnhub.io (optional)
+> 未設定 - finnhub.ioの無料キーを追加（任意）
+
+= ~Not set up - add your free key from alphavantage.co (optional)
+> 未設定 - alphavantage.coの無料キーを追加（任意）
+
+= ~Not set up - export a CSV from Stock Rover to data/stockrover.csv
+> 未設定 - Stock RoverからCSVをdata/stockrover.csvにエクスポート
+
+= ~Could not read - check your Finnhub key
+> 読み込めません - Finnhubキーを確認
+
+= ~Could not read (site may block programs; you can use data/wallstreetzen.csv)
+> 読み込めません（サイトがプログラムをブロックしている可能性。data/wallstreetzen.csvを使えます）
+
+= ~Calculated from price history (StockCharts has no public data feed)
+> 価格履歴から計算（StockChartsには公開データがありません）
+
+= ~ stocks from data/stockrover.csv
+>  銘柄（data/stockrover.csvから）
+
+= ~OK - news sentiment for 
+> OK - ニュースのセンチメント： 
+
+= ~ (remembered from earlier today)
+>  （今日の取得分を再利用）
+
+= ~ events this week (
+>  件の今週のイベント（
+
+= ~ high-impact)
+>  件が重要）
+
+= ~Could not connect to the economic calendar (ForexFactory)
+> 経済指標カレンダー（ForexFactory）に接続できませんでした
+
+= ~Not loaded yet
+> まだ読み込まれていません
+
+= ~practice data
+> 練習用データ
+
+= ~practice posts
+> 練習用の投稿
+
+= ~calculated from practice prices
+> 練習用の価格から計算
+
+= ~All data below is MADE UP for learning - not real prices!
+> 以下のデータはすべて学習用の架空のものです。実際の価格ではありません！
+
+= ~Could not connect to the news feed
+> ニュースフィードに接続できませんでした
+
+= ~ headlines in 
+>  件の見出し： 
+
+= ~ posts read from 
+>  件の投稿を取得： 
+
+= ~, plus 
+> 、さらに 
+
+= ~OK - using 
+> OK - 使用中： 
+
+= ~ (Reddit itself could not be reached)
+>  （Reddit自体には接続できませんでした）
+
+= ~Could not connect - you can add posts yourself (Data Sources: "Add Reddit posts")
+> 接続できません - 自分で投稿を追加できます（データソース：「Redditの投稿を追加」）
+
+= ~OK - official filings for 
+> OK - 公式提出書類： 
+
+= ~ US stocks
+>  銘柄（米国）
+
+= ~Could not get data from sec.gov - check your internet; if it keeps failing, add your email (Data Sources) so the SEC knows who is asking
+> sec.govからデータを取得できません - ネットを確認してください。続く場合はメールを追加してください（データソース）
+
+= ~ stocks discussed on r/wallstreetbets today
+>  銘柄が今日r/wallstreetbetsで話題
+
+= ~Could not connect to the WallStreetBets sentiment service
+> WallStreetBetsセンチメントサービスに接続できませんでした
+
+= ~ markets
+>  市場
+
+= ~OK - top 
+> OK - 上位 
+
+= ~ companies of each market (
+>  社（各市場）（
+
+= ~ with prices)
+>  社に価格あり）
+
+= ~Could not download their prices
+> 価格をダウンロードできませんでした
+
+= ~Not set up
+> 未設定
+
+= ~None yet - you can add any CSV with a Ticker or Symbol column (optional)
+> まだありません - Ticker列かSymbol列のあるCSVを追加できます（任意）
+
+= Scroll to zoom in or out, drag to move through time, double-click to reset
+> スクロールで拡大縮小、ドラッグで期間を移動、ダブルクリックでリセット
+
+= Look up a stock to see its price chart here.
+> 株を調べると、ここに価格チャートが表示されます。
+
+= %d days ago
+> %d日前
+
+= %s ago
+> %s前
+
+= Zoomed - double-click to reset
+> 拡大中 - ダブルクリックでリセット
+
+= Scroll to zoom, drag to move
+> スクロールで拡大、ドラッグで移動
+
+= 1 day ago
+> 1日前
+
+=    Open %,.2f   High %,.2f   Low %,.2f   Close %,.2f
+>    始値 %,.2f   高値 %,.2f   安値 %,.2f   終値 %,.2f
+
+=    Close %,.2f
+>    終値 %,.2f
+
+= No volume data
+> 出来高データなし
+

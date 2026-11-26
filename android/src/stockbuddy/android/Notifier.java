@@ -42,7 +42,7 @@ public final class Notifier {
             String text = String.join("\n", fired);
             Intent open = new Intent(ctx, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("page", "alerts");
             b.setSmallIcon(R.drawable.icon)
-                    .setContentTitle(fired.size() == 1 ? "StockBuddy price alert" : fired.size() + " StockBuddy price alerts")
+                    .setContentTitle(fired.size() == 1 ? stockbuddy.I18n.tr("StockBuddy price alert") : stockbuddy.I18n.trf("%d StockBuddy price alerts", fired.size()))
                     .setContentText(fired.get(0))
                     .setStyle(new Notification.BigTextStyle().bigText(text))
                     .setAutoCancel(true)

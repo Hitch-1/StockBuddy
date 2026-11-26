@@ -11,6 +11,8 @@ StockBuddy collects information from several investing websites, mixes it togeth
 
 For every idea it explains **why**, **how to do it**, and **how risky it is**.
 
+**Languages:** English, Français, Español, 日本語, Italiano and العربية (Arabic, shown right-to-left). Pick one with the language button at the top (desktop) or **⋮ → Language** (Android). The whole app switches, including the dictionary, and the **Market News** page reads headlines from the financial press in that language (Google News: e.g. Les Echos/Boursorama in French, Expansión/Cinco Días in Spanish, Nikkei in Japanese, Il Sole 24 Ore in Italian, Argaam/Al Arabiya in Arabic) with links to trusted local sources and regulators. Translations live in `src/stockbuddy/i18n/<code>.txt` (anything not translated stays in English). Investing commands such as `NVDA above 150` or `buy 10 AAPL` are typed in English in every language.
+
 > ⚠️ **This is a learning and research tool, not a financial advisor.** It can be wrong, the data can be late, and you can lose money. Never invest money you can't afford to lose.
 
 ---
@@ -18,10 +20,10 @@ For every idea it explains **why**, **how to do it**, and **how risky it is**.
 
 ## Download
 
-- **Android (8.0 or newer):** [**StockBuddy.apk**](https://github.com/Hitch-1/StockBuddy/raw/main/downloads/StockBuddy.apk), version 1.4.
+- **Android (8.0 or newer):** [**StockBuddy.apk**](https://github.com/Hitch-1/StockBuddy/raw/main/downloads/StockBuddy.apk), version 1.5.
   Open the link on your phone, tap the downloaded file, and allow "Install unknown apps" when asked.
   The step-by-step guide is in [`packaging/android/How to install on Android.txt`](packaging/android/How%20to%20install%20on%20Android.txt).
-  SHA-256: `925d89579894a8b8427ca79b1098099f1792b5be42fc1081aea145d1a669f7e9`
+  SHA-256: `2c74d3d4f781080b1e9645e47725ca0458b68e6c052aad40151302cd42afa8b8`
 - **Windows / Linux:** download the latest `StockBuddy-x.y.zip` from the [Releases page](https://github.com/Hitch-1/StockBuddy/releases), or build it yourself with `packaging/make-release.sh`.
 
 Your own files (watchlist, imported CSVs, settings, keys, alerts, paper portfolio, track record) are kept on your device in the `data` folder and are never uploaded here. The `data/*.sample.csv` files show the formats StockBuddy understands.
@@ -40,17 +42,18 @@ A window opens with a menu on the left:
 | Page | What it shows |
 |---|---|
 | **Today's Ideas** | Tabs for **Best Buys**, **Sells & Shorts**, **Best Calls**, **Best Puts** and **0DTE**. Each idea shows the company name, with the recommended action underneath. It says *why*, *how to do it*, and *how risky it is*. Sells that are also short candidates are marked **SHORT**. Use **Market: ...** to show ideas for just one of the 16 markets (S&P 500, Nasdaq, Dow, Canada, Brazil, UK, Germany, France, Eurozone, Japan, China, Hong Kong, India, Korea, Taiwan, Australia) |
-| **World Markets** | The 16 biggest stock markets with their **index price**, updated every minute (some exchanges are a few minutes delayed). Also whether each is open right now, and how it's doing today and over the last month |
+| **World Markets** | **Double-click a market** (tap it on Android) to see all its stocks. The 16 biggest stock markets with their **index price**, updated every minute (some exchanges are a few minutes delayed). Also whether each is open right now, and how it's doing today and over the last month |
 | **World Stocks** | The biggest companies of every big market (choose the **top 3, 5, 10 or 20** of each). This covers the US and the other 13 markets (Canada, Brazil, UK, Germany, France, Eurozone, Japan, China, Hong Kong, India, Korea, Taiwan, Australia), today's verdict, and **where you can buy them**: a US listing (easiest), the home exchange (needs an international broker), or a whole-country ETF. Turn this off with **Data Sources → Include world stocks** to refresh faster |
-| **Economic Calendar** | This week's big economic news (inflation, jobs reports, interest-rate decisions...) from the ForexFactory calendar, with what each event means. On days with big US news, the ideas and 0DTE show a warning |
+| **Economic Calendar** | This week's big economic news (inflation, jobs reports, interest-rate decisions...) from the ForexFactory calendar, with what each event means. Each event links to its **official source** (BLS, the Fed, BEA, ECB, Bank of England, Bank of Japan...) and to **news about it**. On days with big US news, the ideas and 0DTE show a warning |
+| **Market News** | Today's market headlines in your language, each linked to the original article |
 | **Look Up a Stock** | A chart you can customise (see below), **key statistics** like on Yahoo Finance (day's range, market cap, beta, P/E, EPS, dividend, earnings date…), and a plain-English explanation of what every source says. Includes a **★ Add to My Watchlist** button |
 | **Price Alerts** | Type an alert like **NVDA above 150**, **TSLA below 200** or **AAPL move 5%**. Alerts are checked on every refresh and every 5 minutes, and you get a desktop notification. On Android they're checked about every 30 minutes even when the app is closed, and arrive as phone notifications |
 | **Paper Trading** | Practise with **$10,000 of pretend money**: type **buy 10 AAPL**, **sell 5 AAPL** or **sell all AAPL**, or use "Paper-trade it" on any idea. Shows your positions, profit and trades, and how you compare with the S&P 500. US-listed stocks only |
-| **Track Record** | How StockBuddy's past ideas actually turned out: every day's buys, sells, calls and puts are remembered with their price, so you can see what share went the right way |
-| **All Stocks** | Every stock checked, with its verdict. Click a column title to sort; double-click a row for details |
-| **Dictionary** | Investing words explained simply, with a search box |
-| **My Watchlist** | Add or remove the stocks that are always checked. Changes are saved straight away. **Double-click** a stock to look it up |
-| **Data Sources** | Which websites worked, plus buttons to import your Stock Rover / WallStreetZen / Reddit CSV files and to add your free Finnhub key |
+| **Track Record** | How StockBuddy's past ideas actually turned out. Choose the **last 10, 30 or 60 days**; a table shows every idea with the stocks in rows and the days in columns (green = went the right way, red = didn't) |
+| **All Stocks** | Every stock you checked in the **last 30 days**, with its verdict. Older ones are cleared automatically and the page tells you when. Pick a market to see only its stocks. Click a column title to sort; double-click a row for details |
+| **Dictionary** | Over 90 investing words and acronyms (ETF, P/E, EPS, CAGR, EBITDA, FOMC, CPI, IPO, ROE...) explained simply, in every language, with a search box |
+| **My Watchlist** | Add or remove the stocks that are always checked. Each one is coloured by today's verdict: **green = buy**, **orange = hold / wait**, **red = sell**. Changes are saved straight away. **Double-click** a stock to look it up |
+| **Data Sources** | Which websites worked. Sources in orange show a link to where you get the free key or API they need. Plus buttons to import your Stock Rover / WallStreetZen / Reddit CSV files and to add your free Finnhub key |
 
 Along the top:
 

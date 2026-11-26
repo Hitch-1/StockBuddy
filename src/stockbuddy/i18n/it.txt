@@ -1,0 +1,3224 @@
+# StockBuddy translations (it). Format: "= English" then "> translation". \n means a new line.
+
+= BUY at about %s  -  %s  -  confidence %s
+> COMPRARE a circa %s  -  %s  -  fiducia %s
+
+= Consider a "stop-loss" around %s (8%% below) - it sells automatically if things go wrong.
+> Valuta uno "stop-loss" intorno a %s (8%% sotto): vende automaticamente se le cose vanno male.
+
+= SELL if you own it%s  -  %s  -  confidence %s
+> VENDERE se lo possiedi%s  -  %s  -  fiducia %s
+
+=   +  SHORT idea (advanced)
+>   +  idea di VENDITA ALLO SCOPERTO (avanzato)
+
+= The price (%s) is below its 20-, 50- and 200-day averages - a falling staircase.
+> Il prezzo (%s) è sotto le medie a 20, 50 e 200 giorni: una scala che scende.
+
+= If you short, set a buy-stop around $%.2f (6%% above) to cap the loss. A simpler, safer way to bet on a fall: buy a PUT (see Best Puts).
+> Se vendi allo scoperto, metti uno stop di acquisto intorno a $%.2f (6%% sopra) per limitare la perdita. Un modo più semplice e sicuro per puntare sul ribasso: comprare una PUT (vedi Migliori put).
+
+= Selling locks in your gain or loss (and a profit can mean tax). DANGER: when shorting, losses have NO limit if the price rises - not for beginners.
+> Vendere fissa il guadagno o la perdita (e un guadagno può essere tassato). PERICOLO: allo scoperto le perdite NON hanno limite se il prezzo sale - non per principianti.
+
+= Selling locks in your gain or loss, and in many countries a profit means tax. Stocks with bad signals can still bounce.
+> Vendere fissa il guadagno o la perdita, e in molti paesi un guadagno è tassato. Le azioni con segnali negativi possono comunque rimbalzare.
+
+=  New York time: 
+>  ora di New York: 
+
+= Big news day in the US: 
+> Giornata di grandi notizie negli USA: 
+
+= . Prices can jump suddenly around these times - consider waiting until after the news, and keep positions small.
+> . I prezzi possono saltare all'improvviso in questi orari: valuta di aspettare la notizia e tieni posizioni piccole.
+
+= BUY a %s  -  $%s strike, expires %s (%d days)  -  about $%.0f per contract
+> COMPRARE una %s  -  strike $%s, scadenza %s (%d giorni)  -  circa $%.0f per contratto
+
+= CALL (bet on up)
+> CALL (scommessa sul rialzo)
+
+= PUT (bet on down)
+> PUT (scommessa sul ribasso)
+
+= Options traders on Reddit mentioned calls %d times and puts %d times.
+> I trader di opzioni su Reddit hanno citato le call %d volte e le put %d volte.
+
+= A PUT gains value if the stock goes DOWN. It gives you the right to sell 100 shares at the strike price.
+> Una PUT guadagna valore se l'azione SCENDE. Ti dà il diritto di vendere 100 azioni al prezzo di esercizio.
+
+= Estimated cost: about $%.2f per share = about $%.0f for one contract (100 shares). Check the real price in your broker.
+> Costo stimato: circa $%.2f per azione = circa $%.0f per un contratto (100 azioni). Controlla il prezzo reale dal tuo broker.
+
+= At expiry the stock needs to be %s $%.2f for you to make money (your "breakeven").
+> Alla scadenza l'azione deve essere %s $%.2f perché tu guadagni (il tuo "punto di pareggio").
+
+= You can lose 100% of what you pay for an option. Options lose value every day ("time decay"). Start with 1 contract.
+> Puoi perdere il 100% di quanto paghi per un'opzione. Le opzioni perdono valore ogni giorno ("decadimento temporale"). Inizia con 1 contratto.
+
+= SPY (tracks the S&P 500)
+> SPY (replica l'S&P 500)
+
+= QQQ (tracks the Nasdaq 100)
+> QQQ (replica il Nasdaq 100)
+
+= 0DTE options can go to ZERO within minutes. Most beginners lose money with them. Practise with tiny amounts or paper trading first.
+> Le opzioni 0DTE possono andare a ZERO in pochi minuti. La maggior parte dei principianti ci perde. Esercitati prima con importi minimi o con il trading simulato.
+
+= : no 0DTE idea right now
+> : nessuna idea 0DTE per ora
+
+= No 0DTE idea right now
+> Nessuna idea 0DTE per ora
+
+=  there now).
+>  ora).
+
+= Today's minute-by-minute prices couldn't be downloaded.
+> Non è stato possibile scaricare i prezzi minuto per minuto di oggi.
+
+= %s is %+.2f%% since the open and %+.2f%% in the last 30 minutes.
+> %s è a %+.2f%% dall'apertura e %+.2f%% negli ultimi 30 minuti.
+
+= It's trading %s its average price of the day (VWAP $%.2f) - big traders watch this line.
+> Scambia %s il suo prezzo medio del giorno (VWAP $%.2f) - i grandi trader guardano questa linea.
+
+= : SIT OUT - no clear direction today
+> : STAI FUORI - nessuna direzione chiara oggi
+
+= SIT OUT - no clear direction today
+> STAI FUORI - nessuna direzione chiara oggi
+
+= %s: lean %s - $%s strike expiring TODAY
+> %s: propendere %s - strike $%s in scadenza OGGI
+
+= Lean %s  -  $%s strike expiring TODAY
+> Propendere %s  -  strike $%s in scadenza OGGI
+
+= Price is falling steadily and staying below VWAP: sellers are in control right now.
+> Il prezzo scende costantemente e resta sotto il VWAP: ora comandano i venditori.
+
+= Estimated cost: about $%.2f per share (~$%.0f per contract). %d minutes of trading left.
+> Costo stimato: circa $%.2f per azione (~$%.0f per contratto). Restano %d minuti di contrattazione.
+
+= If %s crosses back %s VWAP ($%.2f), the idea is wrong - get out.
+> Se %s torna %s il VWAP ($%.2f), l'idea è sbagliata: esci.
+
+= Today it moved %+.2f%%.
+> Oggi si è mosso del %+.2f%%.
+
+= LOW (a calm stock)
+> BASSO (un titolo tranquillo)
+
+= HIGH (big daily swings)
+> ALTO (grandi oscillazioni giornaliere)
+
+= VERY HIGH (wild swings)
+> MOLTO ALTO (oscillazioni selvagge)
+
+= Risk level: %s - it typically moves about %.0f%% up or down in a year. Past results don't guarantee future ones.
+> Livello di rischio: %s - di solito si muove di circa il %.0f%% su o giù in un anno. I risultati passati non garantiscono quelli futuri.
+
+= StockBuddy - your friendly daily stock helper
+> StockBuddy - il tuo assistente quotidiano per la borsa
+
+= Your friendly daily stock helper
+> Il tuo assistente quotidiano per la borsa
+
+= Refresh data
+> Aggiorna dati
+
+= Download the latest data from all websites
+> Scarica i dati più recenti da tutti i siti
+
+= Practice mode
+> Modalità pratica
+
+= Use made-up data to learn safely (works without internet)
+> Usa dati inventati per imparare in sicurezza (funziona senza internet)
+
+= Change the colours of StockBuddy
+> Cambia i colori di StockBuddy
+
+= Desktop widget
+> Widget del desktop
+
+= Show a small always-visible StockBuddy panel on your desktop
+> Mostra un piccolo pannello StockBuddy sempre visibile sul desktop
+
+= Save report
+> Salva report
+
+= Save today's ideas as a web page you can open any time
+> Salva le idee di oggi come pagina web da aprire quando vuoi
+
+= Language
+> Lingua
+
+= <html><div style='width:190px'><b>Not financial advice.</b> StockBuddy can be wrong. 
+> <html><div style='width:190px'><b>Non è una consulenza finanziaria.</b> StockBuddy può sbagliare. 
+
+= Never invest money you can't afford to lose.</div></html>
+> Non investire mai denaro che non puoi permetterti di perdere.</div></html>
+
+= Market: ...
+> Mercato: ...
+
+= Show ideas for one market only
+> Mostra le idee di un solo mercato
+
+= All markets
+> Tutti i mercati
+
+= The world's biggest stock markets
+> Le più grandi borse del mondo
+
+= Market
+> Mercato
+
+= Index price
+> Valore dell'indice
+
+= Today
+> Oggi
+
+= Last month
+> Ultimo mese
+
+= Status
+> Stato
+
+= Local time
+> Ora locale
+
+= Country
+> Paese
+
+= Double-click a market to see all its stocks
+> Fai doppio clic su un mercato per vedere tutte le sue azioni
+
+= <html>An "index" is a basket of a country's biggest companies. Asian markets open first, then Europe, then the Americas - 
+> <html>Un "indice" è un paniere delle maggiori aziende di un paese. Aprono prima i mercati asiatici, poi l'Europa, poi le Americhe - 
+
+= Type a ticker (like AAPL) or pick one:
+> Scrivi un ticker (come AAPL) o scegline uno:
+
+= Explain this stock
+> Spiega questo titolo
+
+= ★ Add to My Watchlist
+> ★ Aggiungi alla mia lista
+
+= Always check this stock from now on
+> Controlla sempre questo titolo d'ora in poi
+
+= Look up a stock
+> Cerca un titolo
+
+= Type a ticker above and press Enter. You'll get a chart and a plain-English explanation of what every source says.
+> Scrivi un ticker sopra e premi Invio. Avrai un grafico e una spiegazione semplice di cosa dice ogni fonte.
+
+= type a command
+> scrivi un comando
+
+= New alert:
+> Nuovo avviso:
+
+= For example: NVDA above 150   TSLA below 200   AAPL move 5%
+> Per esempio: NVDA above 150   TSLA below 200   AAPL move 5%
+
+= For example: buy 10 AAPL   sell 5 AAPL   sell all AAPL
+> Per esempio: buy 10 AAPL   sell 5 AAPL   sell all AAPL
+
+= Add alert
+> Aggiungi avviso
+
+= Do it
+> Esegui
+
+= e.g.  NVDA above 150  ·  TSLA below 200  ·  AAPL move 5%
+> es.  NVDA above 150  ·  TSLA below 200  ·  AAPL move 5%
+
+= e.g.  buy 10 AAPL  ·  sell 5 AAPL  ·  sell all AAPL
+> es.  buy 10 AAPL  ·  sell 5 AAPL  ·  sell all AAPL
+
+= Check now
+> Controlla ora
+
+= Check all alerts with fresh prices
+> Controlla tutti gli avvisi con prezzi aggiornati
+
+= How many pretend shares of 
+> Quante azioni fittizie di 
+
+=  do you want to buy?\n(Pretend money - nothing real is bought.)
+>  vuoi comprare?\n(Denaro fittizio - non si compra nulla di reale.)
+
+= Paper trading
+> Trading simulato
+
+= A band around the price: touching the top = expensive lately, the bottom = cheap lately
+> Una banda attorno al prezzo: toccare il bordo alto = caro di recente, quello basso = economico di recente
+
+= The average price of the last 
+> Il prezzo medio degli ultimi 
+
+=  (recent days count more)
+>  (i giorni recenti contano di più)
+
+= Bottom panel:
+> Pannello inferiore:
+
+= Every stock I checked
+> Ogni titolo che ho controllato
+
+= Show the stocks of one market only
+> Mostra i titoli di un solo mercato
+
+= Ticker
+> Ticker
+
+= Name
+> Nome
+
+= Price
+> Prezzo
+
+= Verdict
+> Verdetto
+
+= Score
+> Punteggio
+
+= Confidence
+> Fiducia
+
+= Checked
+> Controllato
+
+= Tip: double-click a row to see the full explanation. Click a column title to sort.
+> Suggerimento: doppio clic su una riga per la spiegazione completa. Clic sul titolo di una colonna per ordinare.
+
+= Search a word:
+> Cerca una parola:
+
+= <html><b style='font-size:16pt'>My watchlist</b><br>These stocks are always checked - plus today's biggest movers 
+> <html><b style='font-size:16pt'>La mia lista</b><br>Questi titoli sono sempre controllati - più i maggiori movimenti di oggi 
+
+= and the stocks Reddit talks about most. <b>Double-click a stock</b> to see its full explanation and chart.</html>
+> e i titoli di cui Reddit parla di più. <b>Fai doppio clic su un titolo</b> per vedere spiegazione completa e grafico.</html>
+
+= Add ticker(s):
+> Aggiungi ticker:
+
+= For example: AAPL  or several at once: AAPL MSFT NVDA
+> Per esempio: AAPL  o più insieme: AAPL MSFT NVDA
+
+= Add
+> Aggiungi
+
+= Add the ticker(s) - saved straight away
+> Aggiungi i ticker - salvati subito
+
+= Look up selected
+> Cerca selezionato
+
+= See the full explanation and chart
+> Vedi spiegazione completa e grafico
+
+= Remove selected
+> Rimuovi selezionati
+
+= Removed straight away
+> Rimosso subito
+
+= Reset to default list
+> Ripristina lista predefinita
+
+= Analyse my list now
+> Analizza ora la mia lista
+
+= Download fresh data for your watchlist
+> Scarica dati aggiornati per la tua lista
+
+= Type a ticker like AAPL (letters, 1-6 characters).
+> Scrivi un ticker come AAPL (lettere, da 1 a 6 caratteri).
+
+= Added 
+> Aggiunto 
+
+=  - saved. Click "Analyse my list now" to check it.
+>  - salvato. Clicca "Analizza ora la mia lista" per controllarlo.
+
+= Removed 
+> Rimosso 
+
+= Replace your watchlist with the default list?
+> Sostituire la tua lista con quella predefinita?
+
+= Reset watchlist
+> Ripristina lista
+
+= Couldn't save the watchlist: 
+> Impossibile salvare la lista: 
+
+= Add to My Watchlist
+> Aggiungi alla mia lista
+
+= Look up a stock first, then add it.
+> Prima cerca un titolo, poi aggiungilo.
+
+=  is already in your watchlist.
+>  è già nella tua lista.
+
+= " doesn't look like a ticker.
+> " non sembra un ticker.
+
+=  to your watchlist.
+>  alla tua lista.
+
+= Couldn't save: 
+> Impossibile salvare: 
+
+= Import Stock Rover CSV...
+> Importa CSV di Stock Rover...
+
+= Choose the CSV file you exported from Stock Rover
+> Scegli il file CSV esportato da Stock Rover
+
+= Import WallStreetZen CSV...
+> Importa CSV di WallStreetZen...
+
+= A CSV with Ticker, Zen Score and Zen Rating columns
+> Un CSV con le colonne Ticker, Zen Score e Zen Rating
+
+= Open my StockBuddy folder
+> Apri la mia cartella StockBuddy
+
+= Where your watchlist, CSV files and reports are kept
+> Dove sono salvati lista, file CSV e report
+
+= Don't start widget with computer
+> Non avviare il widget all'accensione
+
+= Start widget when computer starts
+> Avvia il widget all'accensione del computer
+
+= Finnhub key: set (change...)
+> Chiave Finnhub: impostata (cambia...)
+
+= Add Finnhub key...
+> Aggiungi chiave Finnhub...
+
+= Free key from finnhub.io: adds analyst recommendations and financial ratios
+> Chiave gratuita da finnhub.io: aggiunge raccomandazioni degli analisti e indici finanziari
+
+= Add any CSV...
+> Aggiungi un CSV...
+
+= Any CSV with a Ticker or Symbol column becomes a data source
+> Ogni CSV con una colonna Ticker o Symbol diventa una fonte di dati
+
+= Remove my CSV files
+> Rimuovi i miei file CSV
+
+= Remove all the CSV files you added with "Add any CSV"?
+> Rimuovere tutti i file CSV aggiunti con "Aggiungi un CSV"?
+
+= Remove CSV files
+> Rimuovi file CSV
+
+= Couldn't remove them: 
+> Impossibile rimuoverli: 
+
+= Alpha Vantage key: set (change...)
+> Chiave Alpha Vantage: impostata (cambia...)
+
+= Add Alpha Vantage key...
+> Aggiungi chiave Alpha Vantage...
+
+= Free key from alphavantage.co: news sentiment
+> Chiave gratuita da alphavantage.co: sentiment delle notizie
+
+= SEC email (optional)...
+> Email SEC (facoltativa)...
+
+= SEC email: set (change...)
+> Email SEC: impostata (cambia...)
+
+= The SEC asks programs to say who is asking
+> La SEC chiede ai programmi di dire chi sta chiedendo
+
+= <html><div style='width:380px'>The SEC (sec.gov) asks every program to say who it is. 
+> <html><div style='width:380px'>La SEC (sec.gov) chiede a ogni programma di identificarsi. 
+
+= StockBuddy works without this, but if the SEC data doesn't load, enter your email here. It is only ever sent to sec.gov.</div></html>
+> StockBuddy funziona anche senza, ma se i dati SEC non si caricano, inserisci qui la tua email. Viene inviata solo a sec.gov.</div></html>
+
+= Include world stocks (choose how many on the World Stocks page)
+> Includi titoli mondiali (scegli quanti nella pagina Titoli mondiali)
+
+= Also analyse the biggest companies of the other 13 big stock markets (refreshing takes a bit longer)
+> Analizza anche le maggiori aziende delle altre 13 grandi borse (l'aggiornamento richiede un po' di più)
+
+= Your files:
+> I tuoi file:
+
+= Keys & settings:
+> Chiavi e impostazioni:
+
+= This computer:
+> Questo computer:
+
+= Add Reddit posts...
+> Aggiungi post di Reddit...
+
+= Paste post titles you copied from Reddit (works even when Reddit blocks StockBuddy)
+> Incolla titoli di post copiati da Reddit (funziona anche quando Reddit blocca StockBuddy)
+
+= Import Reddit CSV...
+> Importa CSV di Reddit...
+
+= A CSV with a title column (optional: date, subreddit, upvotes)
+> Un CSV con una colonna title (facoltative: date, subreddit, upvotes)
+
+= Clear my Reddit posts
+> Cancella i miei post di Reddit
+
+= Delete the posts you added yourself
+> Elimina i post che hai aggiunto tu
+
+= Delete all the Reddit posts you added yourself?
+> Eliminare tutti i post di Reddit che hai aggiunto?
+
+= Couldn't delete them: 
+> Impossibile eliminarli: 
+
+=    [PRACTICE MODE - made-up data]
+>    [MODALITÀ PRATICA - dati inventati]
+
+= Getting today's data...
+> Recupero dei dati di oggi...
+
+= StockBuddy is reading stockanalysis.com, WallStreetZen, Reddit, your Stock Rover file and price charts. This can take a minute.
+> StockBuddy sta leggendo stockanalysis.com, WallStreetZen, Reddit, il tuo file Stock Rover e i grafici dei prezzi. Può volerci un minuto.
+
+= Every stock you check stays here for %d days, then it is cleared automatically.
+> Ogni titolo che controlli resta qui per %d giorni, poi viene cancellato automaticamente.
+
+= %d old stocks were just cleared.
+> Sono stati appena cancellati %d titoli vecchi.
+
+= Next clean-up: %s.
+> Prossima pulizia: %s.
+
+= Practice data - made-up numbers.
+> Dati di pratica - numeri inventati.
+
+= Index prices update every minute while StockBuddy is open.
+> I prezzi degli indici si aggiornano ogni minuto mentre StockBuddy è aperto.
+
+= Index prices update every minute (some exchanges are a few minutes delayed). Last update: 
+> I prezzi degli indici si aggiornano ogni minuto (alcune borse hanno qualche minuto di ritardo). Ultimo aggiornamento: 
+
+= Looking up 
+> Cerco 
+
+= One moment.
+> Un momento.
+
+= Couldn't find "
+> Non trovato: "
+
+= Practice mode only knows these: 
+> La modalità pratica conosce solo questi: 
+
+= Check the spelling, or your internet connection. Tip: US tickers are 1-5 letters, like AAPL or MSFT.
+> Controlla l'ortografia o la connessione internet. Suggerimento: i ticker USA hanno da 1 a 5 lettere, come AAPL o MSFT.
+
+= Something went wrong
+> Qualcosa è andato storto
+
+= Please wait until the data has finished loading.
+> Attendi che i dati finiscano di caricarsi.
+
+= Save today's report as:
+> Salva il report di oggi come:
+
+= \n(only 
+> \n(solo 
+
+= , the market you picked)
+> , il mercato scelto)
+
+= Saved your report:\n
+> Report salvato:\n
+
+= \n\nOpen it now?
+> \n\nAprirlo ora?
+
+= Report saved
+> Report salvato
+
+= Couldn't save or open the report: 
+> Impossibile salvare o aprire il report: 
+
+= Choose your 
+> Scegli il tuo file 
+
+=  CSV file
+>  CSV
+
+= CSV files
+> File CSV
+
+= Imported 
+> Importati 
+
+=  stocks from your 
+>  titoli dal tuo file 
+
+=  file.\nStockBuddy will now refresh.
+>  .\nStockBuddy ora si aggiornerà.
+
+= Couldn't import the file: 
+> Impossibile importare il file: 
+
+= Choose any CSV file with a Ticker or Symbol column
+> Scegli un file CSV con una colonna Ticker o Symbol
+
+= This file has no column called Ticker or Symbol in its first line, so StockBuddy can't use it.
+> Questo file non ha una colonna Ticker o Symbol nella prima riga, quindi StockBuddy non può usarlo.
+
+= Added "
+> Aggiunto "
+
+= " with 
+> " con 
+
+=  stocks.\n
+>  titoli.\n
+
+= Its columns appear on each stock's page. Columns like score, rating, recommendation or target are also used in the score.\nStockBuddy will now refresh.
+> Le sue colonne appaiono nella pagina di ogni titolo. Colonne come punteggio, rating, raccomandazione o target contano anche nel punteggio.\nStockBuddy ora si aggiornerà.
+
+= Couldn't add the file: 
+> Impossibile aggiungere il file: 
+
+= <html><div style='width:400px'><b>Alpha Vantage</b> adds news sentiment: is the news about a company 
+> <html><div style='width:400px'><b>Alpha Vantage</b> aggiunge il sentiment delle notizie: le notizie su un'azienda sono 
+
+= positive or negative?<br><br>Get a free key at <b>alphavantage.co/support/#api-key</b> and paste it below. It is saved only on this computer. 
+> positive o negative?<br><br>Ottieni una chiave gratuita su <b>alphavantage.co/support/#api-key</b> e incollala qui sotto. Viene salvata solo su questo computer. 
+
+= The free plan allows about 25 requests a day, so StockBuddy checks your first 
+> Il piano gratuito consente circa 25 richieste al giorno, quindi StockBuddy controlla i tuoi primi 
+
+=  stocks and remembers the answers all day.<br><br>Leave it empty to turn it off.</div></html>
+>  titoli e ricorda le risposte per tutto il giorno.<br><br>Lascia vuoto per disattivarlo.</div></html>
+
+= Alpha Vantage key
+> Chiave Alpha Vantage
+
+= Your Alpha Vantage key works and is saved. Click Refresh data to use it.
+> La tua chiave Alpha Vantage funziona ed è salvata. Clicca Aggiorna dati per usarla.
+
+= <html><div style='width:420px'><b>Finnhub</b> adds Wall Street analyst recommendations and financial ratios 
+> <html><div style='width:420px'><b>Finnhub</b> aggiunge le raccomandazioni degli analisti di Wall Street e gli indici finanziari 
+
+= (profit margin, debt, beta...).<br><br>1. Get a free key at <b>finnhub.io/register</b> (it's on your dashboard).<br>
+> (margine di profitto, debito, beta...).<br><br>1. Ottieni una chiave gratuita su <b>finnhub.io/register</b> (è nella tua dashboard).<br>
+
+= 2. Paste it below. It is saved only on this computer.<br><br>Leave it empty and click OK to turn Finnhub off.</div></html>
+> 2. Incollala qui sotto. Viene salvata solo su questo computer.<br><br>Lascia vuoto e clicca OK per disattivare Finnhub.</div></html>
+
+= Finnhub key
+> Chiave Finnhub
+
+= Finnhub is turned off.
+> Finnhub è disattivato.
+
+= Your Finnhub key works and is saved.\nStockBuddy will now refresh (the first time takes about 2 minutes).
+> La tua chiave Finnhub funziona ed è salvata.\nStockBuddy ora si aggiornerà (la prima volta ci vogliono circa 2 minuti).
+
+= \n\nSave the key anyway?
+> \n\nSalvare comunque la chiave?
+
+= <html><div style='width:460px'><b>How:</b> open the subreddit in your browser, copy the titles of the posts 
+> <html><div style='width:460px'><b>Come:</b> apri il subreddit nel browser, copia i titoli dei post 
+
+= you find interesting, and paste them below - <b>one post per line</b>. Tickers like <b>$NVDA</b> or <b>NVDA</b> are 
+> che ti interessano e incollali qui sotto - <b>un post per riga</b>. I ticker come <b>$NVDA</b> o <b>NVDA</b> vengono 
+
+= recognised automatically. Your posts are used for 
+> riconosciuti automaticamente. I tuoi post vengono usati per 
+
+=  days.<br><br>
+>  giorni.<br><br>
+
+= Tip: a line can start with the subreddit, e.g. <i>r/options: SPY calls look good</i></div></html>
+> Suggerimento: una riga può iniziare con il subreddit, es. <i>r/options: SPY calls look good</i></div></html>
+
+= Which subreddit are they from?
+> Da quale subreddit vengono?
+
+= Add Reddit posts
+> Aggiungi post di Reddit
+
+= Nothing to add - paste at least one post title.
+> Niente da aggiungere - incolla almeno un titolo.
+
+= .\nStockBuddy will now refresh to include them.
+> .\nStockBuddy ora si aggiornerà per includerli.
+
+= Couldn't save the posts: 
+> Impossibile salvare i post: 
+
+= Choose a CSV file with Reddit posts (needs a 'title' column)
+> Scegli un file CSV con post di Reddit (serve una colonna 'title')
+
+= No usable posts found. The file needs a first line with a column called 'title'\n
+> Nessun post utilizzabile. Il file deve avere una prima riga con una colonna 'title'\n
+
+= (optional columns: date, subreddit, upvotes). Dates older than 
+> (colonne facoltative: date, subreddit, upvotes). Le date più vecchie di 
+
+=  days are skipped.
+>  giorni vengono saltate.
+
+=  Reddit posts (this replaced the posts you had added before).\nStockBuddy will now refresh.
+>  post di Reddit (sostituiscono quelli aggiunti prima).\nStockBuddy ora si aggiornerà.
+
+= Your StockBuddy folder is:\n
+> La tua cartella StockBuddy è:\n
+
+= Sell all your pretend 
+> Vendere tutte le tue azioni fittizie 
+
+=  shares?
+>  ?
+
+= Start again with $10,000 and delete all pretend trades?
+> Ricominciare con 10.000 $ e cancellare tutte le operazioni fittizie?
+
+= United States
+> Stati Uniti
+
+= Eurozone
+> Eurozona
+
+= United Kingdom
+> Regno Unito
+
+= Japan
+> Giappone
+
+= China
+> Cina
+
+= Australia
+> Australia
+
+= Canada
+> Canada
+
+= Switzerland
+> Svizzera
+
+= New Zealand
+> Nuova Zelanda
+
+= Worldwide
+> Mondo
+
+= Inflation report: how fast prices are rising. Higher than expected often pushes stocks down (interest rates may stay high).
+> Inflazione: quanto velocemente salgono i prezzi. Se più alta del previsto spesso fa scendere le azioni (i tassi possono restare alti).
+
+= Producer prices: inflation at the factory level - an early hint of future consumer inflation.
+> Prezzi alla produzione: l'inflazione a livello di fabbrica - un primo segnale dell'inflazione futura.
+
+= Jobs report: how many jobs were created. One of the biggest market movers of the month.
+> Rapporto sul lavoro: quanti posti sono stati creati. Uno dei dati che più muovono i mercati nel mese.
+
+= How many people are out of work. A sudden rise can mean the economy is slowing.
+> Quante persone sono senza lavoro. Un aumento improvviso può indicare un rallentamento.
+
+= The US central bank (the Fed) on interest rates. Can move every market within seconds.
+> La banca centrale USA (la Fed) sui tassi d'interesse. Può muovere tutti i mercati in pochi secondi.
+
+= A central bank decides its interest rate. Surprises move currencies and stock markets.
+> Una banca centrale decide il suo tasso. Le sorprese muovono valute e borse.
+
+= GDP: how fast the whole economy is growing (or shrinking).
+> PIL: quanto cresce (o si contrae) l'intera economia.
+
+= How much people spent in shops - shoppers drive a big part of the economy.
+> Quanto hanno speso le persone nei negozi - i consumatori muovono gran parte dell'economia.
+
+= Survey of business managers. Above 50 = business is growing, below 50 = shrinking.
+> Sondaggio tra i responsabili d'azienda. Sopra 50 = l'attività cresce, sotto 50 = cala.
+
+= How optimistic people feel about the economy.
+> Quanto le persone sono ottimiste sull'economia.
+
+= Oil stockpiles - moves oil prices and energy stocks.
+> Scorte di petrolio - muovono il prezzo del greggio e i titoli energetici.
+
+= An official speaks - hints about future interest rates can move markets.
+> Parla un funzionario - accenni sui tassi futuri possono muovere i mercati.
+
+= Bank holiday - markets in this country may be closed or quiet.
+> Festività - i mercati di questo paese possono essere chiusi o tranquilli.
+
+= Checking the world's biggest stock markets...
+> Controllo delle maggiori borse del mondo...
+
+= Reading this week's economic calendar (inflation, jobs, interest rates)...
+> Lettura del calendario economico della settimana (inflazione, lavoro, tassi)...
+
+= Reading market news...
+> Lettura delle notizie di mercato...
+
+= Looking at today's biggest movers on stockanalysis.com...
+> Analisi dei maggiori movimenti di oggi su stockanalysis.com...
+
+= Reading hot posts on r/ValueInvesting, r/options and r/wallstreetbets...
+> Lettura dei post più caldi di r/ValueInvesting, r/options e r/wallstreetbets...
+
+= Checking today's WallStreetBets sentiment...
+> Controllo del sentiment di WallStreetBets di oggi...
+
+= Downloading prices and ratings for 
+> Download di prezzi e valutazioni per 
+
+=  stocks (this can take a minute)...
+>  titoli (può volerci un minuto)...
+
+= Asking Finnhub about 
+> Richiesta a Finnhub per 
+
+=  stocks (the free plan is slow - about 2 minutes the first time)...
+>  titoli (il piano gratuito è lento - circa 2 minuti la prima volta)...
+
+= Not set up - export a CSV from Stock Rover to data/stockrover.csv
+> Non configurato - esporta un CSV da Stock Rover in data/stockrover.csv
+
+= OK - data for 
+> OK - dati per 
+
+= Could not read - check your Finnhub key
+> Lettura non riuscita - controlla la chiave Finnhub
+
+= Asking Alpha Vantage about today's news...
+> Richiesta ad Alpha Vantage sulle notizie di oggi...
+
+= Checking today's minute-by-minute moves for 0DTE ideas...
+> Controllo dei movimenti minuto per minuto per le idee 0DTE...
+
+= Checking the biggest companies of the world's largest stock markets...
+> Controllo delle maggiori aziende delle maggiori borse del mondo...
+
+= Type it like: NVDA above 150   or   TSLA below 200   or   AAPL move 5%
+> Scrivilo così: NVDA above 150   o   TSLA below 200   o   AAPL move 5%
+
+= The number must be more than 0.
+> Il numero deve essere maggiore di 0.
+
+= For a daily move, use a percentage like 5 (meaning 5%).
+> Per un movimento giornaliero usa una percentuale come 5 (cioè 5%).
+
+=  (%+.2f%% today)
+>  (%+.2f%% oggi)
+
+= StockBuddy widget
+> Widget StockBuddy
+
+= Open StockBuddy window
+> Apri la finestra di StockBuddy
+
+= Refreshing...
+> Aggiornamento...
+
+= Refresh now
+> Aggiorna ora
+
+= Widget skin
+> Aspetto del widget
+
+= Size
+> Dimensione
+
+= Full (markets + ideas)
+> Completo (mercati + idee)
+
+= Compact (markets only)
+> Compatto (solo mercati)
+
+= See-through
+> Trasparente
+
+= Solid
+> Pieno
+
+= % see-through
+> % trasparente
+
+= Always on top of other windows
+> Sempre sopra le altre finestre
+
+= Show widget when my computer starts
+> Mostra il widget all'avvio del computer
+
+= Close widget
+> Chiudi widget
+
+= PRACTICE DATA
+> DATI DI PRATICA
+
+= WORLD MARKETS
+> MERCATI MONDIALI
+
+= TOP BUYS TODAY
+> MIGLIORI ACQUISTI DI OGGI
+
+= none today - waiting is fine
+> nessuno oggi - aspettare va bene
+
+= CAREFUL WITH (sell signals)
+> ATTENZIONE A (segnali di vendita)
+
+= no strong warnings
+> nessun avviso forte
+
+= 0DTE (OPTIONS EXPIRING TODAY)
+> 0DTE (OPZIONI IN SCADENZA OGGI)
+
+= Not financial advice  ·  right-click for options
+> Non è consulenza finanziaria  ·  clic destro per le opzioni
+
+= good / bad
+> buono / cattivo
+
+= The price is in an uptrend (above its 50-day and 200-day average prices). 
+> Il prezzo è in tendenza rialzista (sopra le medie a 50 e 200 giorni). 
+
+= The price is in a downtrend (below its 50-day and 200-day average prices). 
+> Il prezzo è in tendenza ribassista (sotto le medie a 50 e 200 giorni). 
+
+= The price has no clear direction right now. 
+> Il prezzo non ha una direzione chiara al momento. 
+
+= RSI is %.0f, meaning it rose a lot recently and may be due for a pause. 
+> L'RSI è %.0f: è salito molto di recente e potrebbe fare una pausa. 
+
+= RSI is %.0f, meaning it fell a lot recently and could bounce back. 
+> L'RSI è %.0f: è sceso molto di recente e potrebbe rimbalzare. 
+
+= MACD just turned positive - momentum is shifting upward. 
+> Il MACD è appena diventato positivo - lo slancio gira al rialzo. 
+
+= MACD just turned negative - momentum is shifting downward. 
+> Il MACD è appena diventato negativo - lo slancio gira al ribasso. 
+
+= Its StockCharts Technical Rank is %.0f/99 (higher = stronger than the other stocks we checked).
+> Il suo Technical Rank di StockCharts è %.0f/99 (più alto = più forte degli altri titoli controllati).
+
+= Wall Street analysts rate it "
+> Gli analisti di Wall Street lo valutano "
+
+= Their average price target is $%.2f, which is %+.0f%% from today's price. 
+> Il loro prezzo obiettivo medio è $%.2f, cioè %+.0f%% rispetto al prezzo di oggi. 
+
+= P/E is %.1f - fairly cheap for what the company earns. 
+> Il P/E è %.1f - abbastanza economico rispetto a quanto guadagna l'azienda. 
+
+= P/E is %.1f - investors are paying a lot for each $1 of profit. 
+> Il P/E è %.1f - gli investitori pagano molto per ogni 1 $ di utile. 
+
+= P/E is %.1f - a normal price for its profits. 
+> Il P/E è %.1f - un prezzo normale per i suoi utili. 
+
+= Stock Rover's fair value is $%.2f, so the stock looks %s by about %.0f%%. 
+> Il valore equo di Stock Rover è $%.2f, quindi il titolo sembra %s di circa il %.0f%%. 
+
+= underpriced (on sale)
+> sottovalutato (in saldo)
+
+= Its average quality/value/growth score is %.0f out of 100.
+> Il suo punteggio medio qualità/valore/crescita è %.0f su 100.
+
+= Zen Score is %.0f/100. 
+> Lo Zen Score è %.0f/100. 
+
+= Zen Rating is 
+> Lo Zen Rating è 
+
+=  (A is best, F is worst).
+>  (A è il migliore, F il peggiore).
+
+= Of %d analysts, %d say strong buy, %d buy, %d hold, %d sell and %d strong sell%s.
+> Su %d analisti, %d dicono acquisto forte, %d acquisto, %d mantenere, %d vendita e %d vendita forte%s.
+
+= %d comments on r/wallstreetbets today; the overall mood is %s (score %+.2f).
+> %d commenti su r/wallstreetbets oggi; l'umore generale è %s (punteggio %+.2f).
+
+=  It's one of the most-talked-about stocks there - expect big swings.
+>  È uno dei titoli più discussi lì - aspettati grandi oscillazioni.
+
+= In its official yearly report, sales %s %.0f%%. 
+> Nel rapporto annuale ufficiale, le vendite %s %.0f%%. 
+
+= The company made a profit. 
+> L'azienda ha fatto utili. 
+
+= The company lost money last year. 
+> L'azienda ha perso denaro l'anno scorso. 
+
+=  insider-trading reports in 90 days (insiders bought or sold shares). 
+>  segnalazioni di insider trading in 90 giorni (gli insider hanno comprato o venduto azioni). 
+
+=  major-event report
+>  rapporto su eventi rilevanti
+
+=  (8-K) in the last 30 days.
+>  (8-K) negli ultimi 30 giorni.
+
+= slightly positive
+> leggermente positivo
+
+= slightly negative
+> leggermente negativo
+
+= %d recent news articles; the tone is %s.
+> %d articoli recenti; il tono è %s.
+
+= mostly positive
+> per lo più positivo
+
+= mostly negative
+> per lo più negativo
+
+= Mentioned in %d hot Reddit post%s; the mood is %s.
+> Citato in %d post%s popolari di Reddit; l'umore è %s.
+
+=  Careful: lots of hype can mean the price already moved.
+>  Attenzione: tanto entusiasmo può significare che il prezzo si è già mosso.
+
+= Most signs are positive. If you believe in the company long term, this could be a reasonable time to buy a small amount. 
+> La maggior parte dei segnali è positiva. Se credi nell'azienda a lungo termine, potrebbe essere un buon momento per comprarne un po'. 
+
+= Most signs are negative right now. If you're thinking of buying, it may be wiser to wait. If you own it, think about protecting yourself with a stop-loss. 
+> La maggior parte dei segnali è negativa ora. Se pensi di comprare, forse è meglio aspettare. Se lo possiedi, valuta di proteggerti con uno stop-loss. 
+
+= The signs are mixed, so there's no strong reason to buy or sell today. Waiting and watching is fine. 
+> I segnali sono misti, quindi non c'è un motivo forte per comprare o vendere oggi. Aspettare e osservare va bene. 
+
+= Note: this stock swings a lot, so only use money you're comfortable seeing go up and down quickly.
+> Nota: questo titolo oscilla molto, usa solo denaro che accetti di veder salire e scendere in fretta.
+
+= STRONG BUY signal
+> Segnale di ACQUISTO FORTE
+
+= BUY signal
+> Segnale di ACQUISTO
+
+= HOLD / WAIT
+> MANTENERE / ASPETTARE
+
+= SELL signal
+> Segnale di VENDITA
+
+= STRONG SELL signal
+> Segnale di VENDITA FORTE
+
+= Type it like: buy 10 AAPL   or   sell 5 AAPL   or   sell all AAPL
+> Scrivilo così: buy 10 AAPL   o   sell 5 AAPL   o   sell all AAPL
+
+= Couldn't find a price for 
+> Prezzo non trovato per 
+
+= . Check the ticker (US-listed stocks only, e.g. TSM instead of 2330.TW).
+> . Controlla il ticker (solo titoli quotati negli USA, es. TSM invece di 2330.TW).
+
+= Not enough pretend cash to buy even 1 share.
+> Non c'è abbastanza denaro fittizio nemmeno per 1 azione.
+
+= You don't own any 
+> Non possiedi azioni 
+
+= Not enough pretend cash: %s shares cost $%,.2f but you have $%,.2f.
+> Denaro fittizio insufficiente: %s azioni costano $%,.2f ma hai $%,.2f.
+
+= You only own 
+> Possiedi solo 
+
+=  shares of 
+>  azioni di 
+
+= OK - %s %s shares of %s at $%,.2f (pretend money). Cash left: $%,.2f.
+> OK - %s %s azioni di %s a $%,.2f (denaro fittizio). Contanti rimasti: $%,.2f.
+
+= No market data available right now.
+> Nessun dato di mercato al momento.
+
+= Around the world it's %s: %d markets are up, %d are down (average move %+.2f%%).
+> Nel mondo è %s: %d mercati salgono, %d scendono (movimento medio %+.2f%%).
+
+= Starting...
+> Avvio...
+
+= Loading practice data...
+> Caricamento dei dati di pratica...
+
+= Collecting today's data from the websites...
+> Raccolta dei dati di oggi dai siti...
+
+= Couldn't download any stock prices. Check your internet connection, or turn on Practice mode.
+> Impossibile scaricare i prezzi. Controlla la connessione internet o attiva la modalità pratica.
+
+= Ready - 
+> Pronto - 
+
+=  stocks analysed
+>  titoli analizzati
+
+=  (PRACTICE DATA - not real)
+>  (DATI DI PRATICA - non reali)
+
+= Something went wrong while loading: 
+> Qualcosa è andato storto durante il caricamento: 
+
+= StockBuddy alerts
+> Avvisi StockBuddy
+
+= StockBuddy price alert
+> Avviso di prezzo StockBuddy
+
+= <html><b>Price alert
+> <html><b>Avviso di prezzo
+
+= <br><br><span style='color:gray'>See the Price Alerts page.</span></html>
+> <br><br><span style='color:gray'>Vedi la pagina Avvisi di prezzo.</span></html>
+
+= StockBuddy index prices
+> Indici StockBuddy
+
+= Today's ideas
+> Idee di oggi
+
+= 0DTE ideas are only for US index options (SPY and QQQ). Choose All markets or a US market to see them.
+> Le idee 0DTE riguardano solo le opzioni sugli indici USA (SPY e QQQ). Scegli Tutti i mercati o un mercato USA per vederle.
+
+=  (in this market)
+>  (in questo mercato)
+
+=  <span class=muted style='font-size:10.5pt'>- outside the US many companies only have chart data, and an idea 
+>  <span class=muted style='font-size:10.5pt'>- fuori dagli USA molte aziende hanno solo dati del grafico, e un'idea 
+
+= needs at least two sources, so fewer ideas appear. <a href='sb://page/worldstocks'>See every company's verdict on World Stocks &rarr;</a></span>
+> richiede almeno due fonti, quindi le idee sono meno. <a href='sb://page/worldstocks'>Vedi il verdetto di ogni azienda in Titoli mondiali &rarr;</a></span>
+
+= '>Showing only: 
+> '>Mostro solo: 
+
+= </b> <a href='sb://page/calendar'>See the Economic Calendar &rarr;</a></p>
+> </b> <a href='sb://page/calendar'>Vedi il calendario economico &rarr;</a></p>
+
+=  <span class=warn>(practice data)</span>
+>  <span class=warn>(dati di pratica)</span>
+
+= <div class=label>Why</div><ul>
+> <div class=label>Perché</div><ul>
+
+= <div class=label>How to do it</div><ul>
+> <div class=label>Come fare</div><ul>
+
+= <p class=warn><b>Risk:</b> 
+> <p class=warn><b>Rischio:</b> 
+
+= '>Full explanation and chart for 
+> '>Spiegazione completa e grafico di 
+
+= '>&#128276; Set a price alert</a>
+> '>&#128276; Imposta un avviso di prezzo</a>
+
+= '>Paper-trade it (pretend money)</a>
+> '>Fai trading simulato (denaro fittizio)</a>
+
+= <h1>World markets</h1>
+> <h1>Mercati mondiali</h1>
+
+= <p class=muted style='font-size:10pt'>Index prices update every minute while this page is open (some exchanges are a few minutes delayed). Last update: 
+> <p class=muted style='font-size:10pt'>I prezzi degli indici si aggiornano ogni minuto mentre questa pagina è aperta (alcune borse hanno qualche minuto di ritardo). Ultimo aggiornamento: 
+
+= <div class=card><table class=grid><tr><th>Market</th><th class=num>Price</th><th class=num>Today</th><th class=num>Month</th></tr>
+> <div class=card><table class=grid><tr><th>Mercato</th><th class=num>Prezzo</th><th class=num>Oggi</th><th class=num>Mese</th></tr>
+
+= Tap a market to see all its stocks.
+> Tocca un mercato per vedere tutti i suoi titoli.
+
+= </p><p><a href='sb://page/worldstocks'>The biggest companies of each market, and where to buy them &rarr;</a></p>
+> </p><p><a href='sb://page/worldstocks'>Le maggiori aziende di ogni mercato e dove comprarle &rarr;</a></p>
+
+= <p class=muted>An "index" is a basket of a country's biggest companies. Asian markets open first, then Europe, then the Americas.</p>
+> <p class=muted>Un "indice" è un paniere delle maggiori aziende di un paese. Aprono prima i mercati asiatici, poi l'Europa, poi le Americhe.</p>
+
+= <h1>Price alerts</h1><p class=muted>Get told when a stock reaches a price. Type an alert above, for example 
+> <h1>Avvisi di prezzo</h1><p class=muted>Ricevi un avviso quando un titolo raggiunge un prezzo. Scrivi un avviso sopra, per esempio 
+
+= <b>NVDA above 150</b>, <b>TSLA below 200</b> or <b>AAPL move 5%</b> (a move of 5% up or down in one day). 
+> <b>NVDA above 150</b>, <b>TSLA below 200</b> o <b>AAPL move 5%</b> (un movimento del 5% su o giù in un giorno). 
+
+= Alerts are checked on every refresh and every few minutes while StockBuddy runs.</p>
+> Gli avvisi vengono controllati a ogni aggiornamento e ogni pochi minuti mentre StockBuddy è attivo.</p>
+
+= <div class=card>No alerts yet.</div>
+> <div class=card>Ancora nessun avviso.</div>
+
+= <div class=card><table class=grid><tr><th>Alert</th><th class=num>Price now</th><th>Status</th><th></th></tr>
+> <div class=card><table class=grid><tr><th>Avviso</th><th class=num>Prezzo ora</th><th>Stato</th><th></th></tr>
+
+= <span class=muted>Waiting</span>
+> <span class=muted>In attesa</span>
+
+= '>Remove</a></td></tr>
+> '>Rimuovi</a></td></tr>
+
+= <p><a href='sb://alertclear'>Remove all triggered alerts</a></p>
+> <p><a href='sb://alertclear'>Rimuovi tutti gli avvisi scattati</a></p>
+
+= <h1>Paper trading</h1><p class=muted>Practise with <b>pretend money</b> - nothing real is bought or sold. 
+> <h1>Trading simulato</h1><p class=muted>Esercitati con <b>denaro fittizio</b> - non si compra né si vende nulla di reale. 
+
+= Type a trade above, for example <b>buy 10 AAPL</b>, <b>sell 5 AAPL</b> or <b>sell all AAPL</b>. Trades use today's real prices 
+> Scrivi un'operazione sopra, per esempio <b>buy 10 AAPL</b>, <b>sell 5 AAPL</b> o <b>sell all AAPL</b>. Le operazioni usano i prezzi reali di oggi 
+
+= (US-listed stocks).
+> (titoli quotati negli USA).
+
+=  <span class=warn>Practice mode is on: prices are made up.</span>
+>  <span class=warn>La modalità pratica è attiva: i prezzi sono inventati.</span>
+
+= <tr><td class=muted>Total value</td><td class=num><b style='font-size:15pt'>
+> <tr><td class=muted>Valore totale</td><td class=num><b style='font-size:15pt'>
+
+= <tr><td class=muted>Since you started (
+> <tr><td class=muted>Da quando hai iniziato (
+
+= <tr><td class=muted>Pretend cash</td><td class=num>
+> <tr><td class=muted>Contanti fittizi</td><td class=num>
+
+= <tr><td class=muted>Invested in stocks</td><td class=num>
+> <tr><td class=muted>Investito in azioni</td><td class=num>
+
+= <tr><td class=muted>The S&amp;P 500 did</td><td class=num>
+> <tr><td class=muted>L'S&amp;P 500 ha fatto</td><td class=num>
+
+= <b class=good>you're ahead</b>
+> <b class=good>sei avanti</b>
+
+= <b class=warn>you're behind</b>
+> <b class=warn>sei indietro</b>
+
+= <h2>What you hold</h2><div class=card><table class=grid><tr><th>Stock</th><th class=num>Shares</th><th class=num>Paid / now</th><th class=num>Profit</th><th></th></tr>
+> <h2>Cosa possiedi</h2><div class=card><table class=grid><tr><th>Titolo</th><th class=num>Azioni</th><th class=num>Pagato / ora</th><th class=num>Profitto</th><th></th></tr>
+
+= <span class=muted>refresh</span>
+> <span class=muted>aggiorna</span>
+
+= '>Sell all</a></td></tr>
+> '>Vendi tutto</a></td></tr>
+
+= <h2>Your trades</h2><div class=card><table class=grid>
+> <h2>Le tue operazioni</h2><div class=card><table class=grid>
+
+= <p><a href='sb://preset'>Start again with $10,000</a></p>
+> <p><a href='sb://preset'>Ricomincia con 10.000 $</a></p>
+
+= <h1>Economic calendar</h1>
+> <h1>Calendario economico</h1>
+
+= <p class=muted>Big economic news (inflation, jobs, interest rates) can move whole markets in seconds - especially 
+> <p class=muted>Le grandi notizie economiche (inflazione, lavoro, tassi) possono muovere interi mercati in pochi secondi - soprattutto gli eventi 
+
+= <b class=bad>high-impact</b> events. Times are shown in your own time zone. Source: ForexFactory
+> <b class=bad>ad alto impatto</b>. Gli orari sono nel tuo fuso orario. Fonte: ForexFactory
+
+= <div class=card>No calendar data right now. Check the Data Sources page.</div>
+> <div class=card>Nessun dato del calendario al momento. Controlla la pagina Fonti dei dati.</div>
+
+= <p class=banner><b>&#9888; Big US news today.</b> Be extra careful with short-term trades and 0DTE options around these times.</p>
+> <p class=banner><b>&#9888; Grandi notizie USA oggi.</b> Fai molta attenzione alle operazioni di breve periodo e alle opzioni 0DTE in questi orari.</p>
+
+=  &middot; TODAY
+>  &middot; OGGI
+
+= All day
+> Tutto il giorno
+
+= Medium
+> Medio
+
+= Expected 
+> Previsto 
+
+= Last time 
+> Precedente 
+
+= <b>Actual 
+> <b>Effettivo 
+
+= News about it
+> Notizie in merito
+
+= <p class=muted>Tip: when the actual number is very different from what was expected, prices usually move the most.</p>
+> <p class=muted>Suggerimento: quando il dato effettivo è molto diverso dalle attese, i prezzi di solito si muovono di più.</p>
+
+= <h1>World stocks</h1><p class=muted>The biggest companies of the world's largest stock markets, 
+> <h1>Titoli mondiali</h1><p class=muted>Le maggiori aziende delle maggiori borse del mondo, 
+
+= what StockBuddy thinks of them today, and <b>where you can buy them</b>. Tap a name for the full explanation and chart.
+> cosa ne pensa StockBuddy oggi e <b>dove comprarle</b>. Tocca un nome per spiegazione completa e grafico.
+
+= <p><b>Companies per market:</b> &nbsp;
+> <p><b>Aziende per mercato:</b> &nbsp;
+
+= '>[ Top 
+> '>[ Top 
+
+= '>Top 
+> '>Top 
+
+= <a href='sb://wtop/0'>Off</a> &nbsp; <span class=muted>(more companies = slower refresh)</span></p>
+> <a href='sb://wtop/0'>Disattivato</a> &nbsp; <span class=muted>(più aziende = aggiornamento più lento)</span></p>
+
+= <div class=card>World stocks are turned off. Choose 3, 5, 10 or 20 above.</div>
+> <div class=card>I titoli mondiali sono disattivati. Scegli 3, 5, 10 o 20 sopra.</div>
+
+= <p class=banner>Refresh the data to analyse the companies you just added.</p>
+> <p class=banner>Aggiorna i dati per analizzare le aziende appena aggiunte.</p>
+
+=  today &middot; 
+>  oggi &middot; 
+
+= <b class=good>open now</b>
+> <b class=good>aperto ora</b>
+
+= closed now
+> chiuso ora
+
+=  &nbsp; <span class=muted>no price data right now</span>
+>  &nbsp; <span class=muted>nessun prezzo al momento</span>
+
+= <p class=muted>Prices of stocks analysed on their home exchange are in local currency. Buying abroad can add currency-exchange 
+> <p class=muted>I prezzi dei titoli analizzati sulla loro borsa d'origine sono in valuta locale. Comprare all'estero può aggiungere costi di cambio 
+
+= costs and different taxes - check with your broker.</p>
+> e tasse diverse - chiedi al tuo broker.</p>
+
+= Track record
+> Storico delle idee
+
+= Every day StockBuddy remembers its ideas and the price at that moment. 
+> Ogni giorno StockBuddy ricorda le sue idee e il prezzo di quel momento. 
+
+= Here you can see how they actually did - the honest way to learn how much to trust the signals. It gets more useful the longer you use the app.
+> Qui vedi come sono andate davvero - il modo onesto per capire quanto fidarti dei segnali. Più usi l'app, più diventa utile.
+
+= (practice data)
+> (dati di pratica)
+
+= Last %d days
+> Ultimi %d giorni
+
+= Nothing yet for this period - your ideas are saved every day. Come back in a few days!
+> Ancora niente per questo periodo - le tue idee vengono salvate ogni giorno. Torna tra qualche giorno!
+
+= Ideas older than today
+> Idee precedenti a oggi
+
+= Went the right way
+> Andate nella direzione giusta
+
+= Average move
+> Movimento medio
+
+= Buys (want: up)
+> Acquisti (si vuole: rialzo)
+
+= Sells (want: down)
+> Vendite (si vuole: ribasso)
+
+= Calls (want: up)
+> Call (si vuole: rialzo)
+
+= Puts (want: down)
+> Put (si vuole: ribasso)
+
+= About 50% is what you'd expect from a coin flip. A few weeks of data is still very little - 
+> Circa il 50% è quello che ti aspetteresti da testa o croce. Qualche settimana di dati è ancora pochissimo - 
+
+= markets go through good and bad spells.
+> i mercati attraversano periodi buoni e cattivi.
+
+= Every idea, day by day (last %d days)
+> Ogni idea, giorno per giorno (ultimi %d giorni)
+
+= B = buy, S = sell, C = call, P = put. The number is how much the price moved since that day: 
+> B = acquisto, S = vendita, C = call, P = put. Il numero indica quanto si è mosso il prezzo da quel giorno: 
+
+= green = it went the way the idea said, red = it didn't.
+> verde = è andato come diceva l'idea, rosso = no.
+
+= Stock
+> Titolo
+
+= Now
+> Ora
+
+= Showing only:
+> Mostro solo:
+
+= Show every market
+> Mostra tutti i mercati
+
+= Every stock you check stays in this list for %d days, then it is cleared automatically.
+> Ogni titolo che controlli resta in questa lista per %d giorni, poi viene cancellato automaticamente.
+
+= Tap a ticker for the full explanation.
+> Tocca un ticker per la spiegazione completa.
+
+= Checked today
+> Controllati oggi
+
+= No stock from this market today.
+> Nessun titolo di questo mercato oggi.
+
+= Checked earlier (last %d days)
+> Controllati prima (ultimi %d giorni)
+
+= Price then
+> Prezzo allora
+
+= Verdict then
+> Verdetto allora
+
+= My watchlist
+> La mia lista
+
+= These stocks are always checked, plus today's biggest 
+> Questi titoli sono sempre controllati, più i maggiori 
+
+= movers and the stocks Reddit talks about most. Type tickers above to add them (saved straight away). Tap a ticker to look it up, or &times; to remove it.
+> movimenti di oggi e i titoli di cui Reddit parla di più. Scrivi i ticker sopra per aggiungerli (salvati subito). Tocca un ticker per cercarlo, o &times; per rimuoverlo.
+
+= Buy
+> Comprare
+
+= Hold / wait
+> Mantenere / aspettare
+
+= Sell
+> Vendere
+
+= not analysed yet
+> non ancora analizzato
+
+= Reset to the default list
+> Ripristina la lista predefinita
+
+= Tap the refresh button at the top to analyse your changes.
+> Tocca il pulsante di aggiornamento in alto per analizzare le modifiche.
+
+= Market news
+> Notizie di mercato
+
+= Headlines in %s from the local financial press. Tap a headline to read the original article.
+> Titoli in %s dalla stampa finanziaria locale. Tocca un titolo per leggere l'articolo originale.
+
+= Practice mode has no news - turn it off and refresh to read today's headlines.
+> La modalità pratica non ha notizie - disattivala e aggiorna per leggere i titoli di oggi.
+
+= No headlines right now. Check your internet connection and refresh.
+> Nessun titolo al momento. Controlla la connessione internet e aggiorna.
+
+= Trusted sources
+> Fonti affidabili
+
+=  ago</text>
+>  fa</text>
+
+= ' font-size='13'>today</text></svg>
+> ' font-size='13'>oggi</text></svg>
+
+= Candles
+> Candele
+
+= <span class=muted>Chart:</span> 
+> <span class=muted>Grafico:</span> 
+
+=  &nbsp;<span class=muted>Period:</span> 
+>  &nbsp;<span class=muted>Periodo:</span> 
+
+= <br><span class=muted>Lines:</span> 
+> <br><span class=muted>Linee:</span> 
+
+= <br><span class=muted>Bottom panel:</span> 
+> <br><span class=muted>Pannello inferiore:</span> 
+
+= <text x='%d' y='%d' fill='%s' font-size='12'>Volume</text>
+> <text x='%d' y='%d' fill='%s' font-size='12'>Volume</text>
+
+= <p>Price <b>
+> <p>Prezzo <b>
+
+= </b> &nbsp; Today 
+> </b> &nbsp; Oggi 
+
+=  &nbsp; 1-year range $
+>  &nbsp; Intervallo a 1 anno $
+
+=  &nbsp; 1-year range $%.2f - $%.2f
+>  &nbsp; Intervallo a 1 anno $%.2f - $%.2f
+
+= <div class=card><h3>Overall: <span class=
+> <div class=card><h3>In sintesi: <span class=
+
+= Score %+.0f out of 100 &nbsp;&middot;&nbsp; confidence %s
+> Punteggio %+.0f su 100 &nbsp;&middot;&nbsp; fiducia %s
+
+= '>&#9733; Add 
+> '>&#9733; Aggiungi 
+
+=  to My Watchlist</a>
+>  alla mia lista</a>
+
+= '>Paper-trade it</a>
+> '>Trading simulato</a>
+
+= <h2>Key statistics</h2><div class=card><table class=grid>
+> <h2>Statistiche chiave</h2><div class=card><table class=grid>
+
+= News in your language
+> Notizie nella tua lingua
+
+= Search the news about this company
+> Cerca le notizie su questa azienda
+
+= <h2>In the news</h2><ul>
+> <h2>Nelle notizie</h2><ul>
+
+= <h2>From your CSV file: 
+> <h2>Dal tuo file CSV: 
+
+= <h2>What each source says</h2>
+> <h2>Cosa dice ogni fonte</h2>
+
+= <p class=muted>Only a few sources had data for this stock, so treat the result with extra caution.</p>
+> <p class=muted>Solo poche fonti avevano dati su questo titolo, quindi prendi il risultato con più cautela.</p>
+
+= <h2>Chart numbers (StockCharts-style)</h2><table>
+> <h2>Numeri del grafico (stile StockCharts)</h2><table>
+
+=  &nbsp;<span class=warn>rose fast</span>
+>  &nbsp;<span class=warn>salito in fretta</span>
+
+=  &nbsp;<span class=warn>fell fast</span>
+>  &nbsp;<span class=warn>sceso in fretta</span>
+
+= <h2>What Reddit is saying</h2><ul>
+> <h2>Cosa dice Reddit</h2><ul>
+
+= <h1>Beginner's dictionary</h1><p class=muted>Investing words, explained simply.</p>
+> <h1>Dizionario per principianti</h1><p class=muted>Le parole degli investimenti, spiegate in modo semplice.</p>
+
+= <p>No word matches "
+> <p>Nessuna parola corrisponde a "
+
+= <h1>Where the data comes from</h1>
+> <h1>Da dove vengono i dati</h1>
+
+= <p class=muted>Green = worked, orange = needs attention. Your files are kept in: 
+> <p class=muted>Verde = ha funzionato, arancione = richiede attenzione. I tuoi file sono in: 
+
+= <h2>Tips</h2><ul>
+> <h2>Suggerimenti</h2><ul>
+
+= <li><b>Stock Rover</b> needs a paid login, so export a CSV from Stock Rover (with Ticker and Fair Value columns) and click <b>Import Stock Rover CSV</b> below.</li>
+> <li><b>Stock Rover</b> richiede un account a pagamento: esporta un CSV da Stock Rover (con colonne Ticker e Fair Value) e clicca <b>Importa CSV di Stock Rover</b> qui sotto.</li>
+
+= <li><b>WallStreetZen</b> sometimes blocks programs. You can import a CSV with Ticker, Zen Score and Zen Rating columns instead.</li>
+> <li><b>WallStreetZen</b> a volte blocca i programmi. Puoi invece importare un CSV con colonne Ticker, Zen Score e Zen Rating.</li>
+
+= <li><b>StockCharts</b> has no public data feed. Its indicators (moving averages, RSI, MACD, SCTR) are calculated by StockBuddy from price history.</li>
+> <li><b>StockCharts</b> non ha un flusso di dati pubblico. I suoi indicatori (medie mobili, RSI, MACD, SCTR) sono calcolati da StockBuddy dallo storico dei prezzi.</li>
+
+= <li><b>Reddit</b> is read automatically (no account needed). If Reddit blocks it, add posts yourself: copy post titles from 
+> <li><b>Reddit</b> viene letto automaticamente (senza account). Se Reddit lo blocca, aggiungi i post tu stesso: copia i titoli da 
+
+= Reddit and use <b>Add Reddit posts</b>, or import a CSV with a <i>title</i> column (optional: date, subreddit, upvotes). 
+> Reddit e usa <b>Aggiungi post di Reddit</b>, oppure importa un CSV con una colonna <i>title</i> (facoltative: date, subreddit, upvotes). 
+
+= Your own posts are used for 
+> I tuoi post vengono usati per 
+
+=  days.</li></ul>
+>  giorni.</li></ul>
+
+= Get a free Finnhub key (finnhub.io/register)
+> Ottieni una chiave Finnhub gratuita (finnhub.io/register)
+
+= Get a free Alpha Vantage key
+> Ottieni una chiave Alpha Vantage gratuita
+
+= WallStreetBets sentiment API page (Tradestie)
+> Pagina dell'API di sentiment WallStreetBets (Tradestie)
+
+= Ask Reddit for API access (Reddit developer page)
+> Chiedi a Reddit l'accesso API (pagina sviluppatori Reddit)
+
+= How the SEC wants programs to identify themselves
+> Come la SEC vuole che i programmi si identifichino
+
+= Open Stock Rover (export a screener as CSV)
+> Apri Stock Rover (esporta uno screener in CSV)
+
+= Open WallStreetZen (Zen Scores)
+> Apri WallStreetZen (Zen Score)
+
+= Open stockanalysis.com
+> Apri stockanalysis.com
+
+= Open the ForexFactory calendar
+> Apri il calendario ForexFactory
+
+= Open Yahoo Finance
+> Apri Yahoo Finance
+
+= Open Google News
+> Apri Google News
+
+= How to add a CSV (README)
+> Come aggiungere un CSV (README)
+
+= <p class=banner><b>Important:</b> StockBuddy is a learning and research helper, not a financial advisor. 
+> <p class=banner><b>Importante:</b> StockBuddy è un aiuto per imparare e fare ricerca, non un consulente finanziario. 
+
+= It can be wrong, data can be late, and you can lose money. Never invest money you can't afford to lose.</p>
+> Può sbagliare, i dati possono essere in ritardo e puoi perdere denaro. Non investire mai denaro che non puoi permetterti di perdere.</p>
+
+= Tap ↻ to load
+> Tocca ↻ per caricare
+
+= PRACTICE DATA - 
+> DATI DI PRATICA - 
+
+= Not financial advice · tap to open
+> Non è consulenza finanziaria · tocca per aprire
+
+= '>No data yet. Open StockBuddy once, or tap ↻.</font>
+> '>Ancora nessun dato. Apri StockBuddy una volta o tocca ↻.</font>
+
+= '>WORLD MARKETS</font></b></small><br>
+> '>MERCATI MONDIALI</font></b></small><br>
+
+= '>TOP BUYS TODAY</font></b></small><br>
+> '>MIGLIORI ACQUISTI DI OGGI</font></b></small><br>
+
+= '>CAREFUL WITH</font></b></small><br>
+> '>ATTENZIONE A</font></b></small><br>
+
+= '>0DTE (EXPIRING TODAY)</font></b></small><br>
+> '>0DTE (SCADE OGGI)</font></b></small><br>
+
+= Tip: tap ☰ for all pages, swipe left or right to move between them, ★ for your watchlist.
+> Suggerimento: tocca ☰ per tutte le pagine, scorri a sinistra o a destra per spostarti, ★ per la tua lista.
+
+= All markets ▾
+> Tutti i mercati ▾
+
+= PRACTICE MODE - made-up data
+> MODALITÀ PRATICA - dati inventati
+
+= StockBuddy is reading stockanalysis.com, WallStreetZen, Reddit and price charts. 
+> StockBuddy sta leggendo stockanalysis.com, WallStreetZen, Reddit e i grafici dei prezzi. 
+
+= This can take a minute. Tip: turn on Practice mode in the More menu to learn with made-up data.
+> Può volerci un minuto. Suggerimento: attiva la modalità pratica nel menu Altro per imparare con dati inventati.
+
+= Type a ticker above (like AAPL or MSFT) to get a chart and a plain-English explanation. 
+> Scrivi un ticker sopra (come AAPL o MSFT) per avere un grafico e una spiegazione semplice. 
+
+= You can also tap any ticker on the "All stocks" page.
+> Puoi anche toccare qualsiasi ticker nella pagina "Tutti i titoli".
+
+= Type a ticker, e.g. AAPL
+> Scrivi un ticker, es. AAPL
+
+= Explain
+> Spiega
+
+= Add tickers, e.g. AAPL MSFT
+> Aggiungi ticker, es. AAPL MSFT
+
+= e.g. NVDA above 150 / AAPL move 5%
+> es. NVDA above 150 / AAPL move 5%
+
+= e.g. buy 10 AAPL / sell all AAPL
+> es. buy 10 AAPL / sell all AAPL
+
+= Search a word
+> Cerca una parola
+
+= Check the spelling, or your internet connection. US tickers are 1-5 letters, like AAPL or MSFT.
+> Controlla l'ortografia o la connessione internet. I ticker USA hanno da 1 a 5 lettere, come AAPL o MSFT.
+
+= Paper-buy 
+> Acquisto fittizio: 
+
+= How many pretend shares? (Pretend money - nothing real is bought.)
+> Quante azioni fittizie? (Denaro fittizio - non si compra nulla di reale.)
+
+= Cancel
+> Annulla
+
+= Sell all 
+> Vendi tutto: 
+
+= Sell all your pretend shares of 
+> Vendere tutte le tue azioni fittizie di 
+
+= Start again?
+> Ricominciare?
+
+= Start again
+> Ricomincia
+
+= 🎓 Practice mode (made-up data): 
+> 🎓 Modalità pratica (dati inventati): 
+
+= 🌐 World stocks: 
+> 🌐 Titoli mondiali: 
+
+=  of each market
+>  di ogni mercato
+
+= ✍ Add Reddit posts (paste titles)
+> ✍ Aggiungi post di Reddit (incolla titoli)
+
+= 📥 Import Reddit CSV
+> 📥 Importa CSV di Reddit
+
+= 🗑 Clear my Reddit posts
+> 🗑 Cancella i miei post di Reddit
+
+= 📄 Add any CSV as a data source
+> 📄 Aggiungi un CSV come fonte di dati
+
+= 🗑 Remove my CSV files
+> 🗑 Rimuovi i miei file CSV
+
+= 📥 Import Stock Rover CSV
+> 📥 Importa CSV di Stock Rover
+
+= 📥 Import WallStreetZen CSV
+> 📥 Importa CSV di WallStreetZen
+
+= 🔑 Finnhub key (
+> 🔑 Chiave Finnhub (
+
+= not set
+> non impostata
+
+= 🔑 Alpha Vantage key (
+> 🔑 Chiave Alpha Vantage (
+
+= ✉ SEC email (optional)
+> ✉ Email SEC (facoltativa)
+
+= ↕ Reset the menu order
+> ↕ Ripristina l'ordine del menu
+
+= ❓ How to add the home-screen widget
+> ❓ Come aggiungere il widget alla schermata Home
+
+= ℹ About & disclaimer
+> ℹ Informazioni e avvertenze
+
+= Delete
+> Elimina
+
+= Your CSV files were removed.
+> I tuoi file CSV sono stati rimossi.
+
+= Menu order reset.
+> Ordine del menu ripristinato.
+
+= Add the widget to your home screen
+> Aggiungi il widget alla schermata Home
+
+= 1. Go to your home screen.\n2. Touch and hold an empty spot.\n3. Tap "Widgets".\n4. Find StockBuddy and drag it onto your home screen.\n\n
+> 1. Vai alla schermata Home.\n2. Tieni premuto su uno spazio vuoto.\n3. Tocca "Widget".\n4. Trova StockBuddy e trascinalo sulla schermata Home.\n\n
+
+= Tap the widget to open the app, or tap ↻ on it to refresh. Change its colours in ⋮ > Home-screen widget skin.
+> Tocca il widget per aprire l'app, o tocca ↻ per aggiornarlo. Cambia i colori in ⋮ > Aspetto del widget Home.
+
+= About StockBuddy
+> Informazioni su StockBuddy
+
+= StockBuddy combines stockanalysis.com, WallStreetZen, Reddit, the WallStreetBets sentiment API, Finnhub, Alpha Vantage, SEC EDGAR, 
+> StockBuddy combina stockanalysis.com, WallStreetZen, Reddit, l'API di sentiment WallStreetBets, Finnhub, Alpha Vantage, SEC EDGAR, 
+
+= the economic calendar, your own CSV files and StockCharts-style chart signals, and explains them in plain English.\n\nIMPORTANT: this is a learning and research helper, 
+> il calendario economico, i tuoi file CSV e segnali grafici in stile StockCharts, e li spiega in modo semplice.\n\nIMPORTANTE: è un aiuto per imparare e fare ricerca, 
+
+= NOT a financial advisor. It can be wrong, data can be late, and you can lose money. Never invest money you can't afford to lose.
+> NON un consulente finanziario. Può sbagliare, i dati possono essere in ritardo e puoi perdere denaro. Non investire mai denaro che non puoi permetterti di perdere.
+
+= ★ My watchlist
+> ★ La mia lista
+
+= SETTINGS & DATA
+> IMPOSTAZIONI E DATI
+
+= 💾  Save report (web page, Word, CSV or JSON)
+> 💾  Salva report (pagina web, Word, CSV o JSON)
+
+= 🎨  App skin
+> 🎨  Aspetto dell'app
+
+= 🖼  Home-screen widget skin
+> 🖼  Aspetto del widget Home
+
+= 👓  Widget see-through
+> 👓  Trasparenza del widget
+
+= Show ideas for
+> Mostra idee per
+
+= Off
+> Disattivato
+
+= Top 3 of each market
+> Top 3 di ogni mercato
+
+= Top 5
+> Top 5
+
+= Top 10
+> Top 10
+
+= Top 20 (slower refresh)
+> Top 20 (aggiornamento più lento)
+
+= World stocks
+> Titoli mondiali
+
+= Please wait until the data has loaded.
+> Attendi che i dati siano caricati.
+
+= Save today's report as
+> Salva il report di oggi come
+
+= No file saver available on this phone.
+> Nessuna app per salvare file su questo telefono.
+
+= Your Alpha Vantage key
+> La tua chiave Alpha Vantage
+
+= Alpha Vantage adds news sentiment (is the news about a company positive or negative?). Get a free key at 
+> Alpha Vantage aggiunge il sentiment delle notizie (le notizie su un'azienda sono positive o negative?). Ottieni una chiave gratuita su 
+
+= alphavantage.co/support/#api-key. The free plan allows about 25 requests a day, so StockBuddy checks your first 
+> alphavantage.co/support/#api-key. Il piano gratuito consente circa 25 richieste al giorno, quindi StockBuddy controlla i tuoi primi 
+
+=  stocks and remembers the answers all day. Leave empty to turn it off.
+>  titoli e ricorda le risposte per tutto il giorno. Lascia vuoto per disattivarlo.
+
+= Save
+> Salva
+
+= Alpha Vantage is turned off.
+> Alpha Vantage è disattivato.
+
+= Key works and is saved. Tap refresh to use it.
+> La chiave funziona ed è salvata. Tocca aggiorna per usarla.
+
+= you@example.com (optional)
+> tu@esempio.com (facoltativa)
+
+= The SEC (sec.gov) asks every program to say who it is. StockBuddy works without this, but if the SEC data doesn't load, 
+> La SEC (sec.gov) chiede a ogni programma di identificarsi. StockBuddy funziona anche senza, ma se i dati SEC non si caricano, 
+
+= enter your email. It is only ever sent to sec.gov.
+> inserisci la tua email. Viene inviata solo a sec.gov.
+
+= Saved.
+> Salvato.
+
+= Finnhub adds Wall Street analyst recommendations and financial ratios. Get a free key at finnhub.io/register 
+> Finnhub aggiunge le raccomandazioni degli analisti di Wall Street e gli indici finanziari. Ottieni una chiave gratuita su finnhub.io/register 
+
+= and paste it below. It is saved only on this phone. Leave it empty to turn Finnhub off.
+> e incollala qui sotto. Viene salvata solo su questo telefono. Lascia vuoto per disattivare Finnhub.
+
+= Your Finnhub API key
+> La tua chiave API Finnhub
+
+= Checking the key...
+> Verifica della chiave...
+
+= Key works and is saved. Refreshing (about 2 minutes the first time)...
+> La chiave funziona ed è salvata. Aggiornamento (circa 2 minuti la prima volta)...
+
+= Finnhub key saved, but...
+> Chiave Finnhub salvata, ma...
+
+= Open Reddit, copy the titles of posts you find interesting, and paste them below - one post per line. 
+> Apri Reddit, copia i titoli dei post che ti interessano e incollali qui sotto - un post per riga. 
+
+= Tickers like $NVDA or NVDA are recognised automatically. Your posts are used for 
+> I ticker come $NVDA o NVDA vengono riconosciuti automaticamente. I tuoi post vengono usati per 
+
+=  days.
+>  giorni.
+
+= Subreddit, e.g. wallstreetbets
+> Subreddit, es. wallstreetbets
+
+= Paste post titles here, one per line
+> Incolla qui i titoli, uno per riga
+
+= . Refreshing...
+> . Aggiornamento...
+
+= Home-screen widget skin
+> Aspetto del widget Home
+
+= App skin
+> Aspetto dell'app
+
+= Widget skin changed
+> Aspetto del widget cambiato
+
+= A little see-through
+> Un po' trasparente
+
+= Very see-through
+> Molto trasparente
+
+= Mostly transparent
+> Quasi trasparente
+
+= Widget see-through
+> Trasparenza del widget
+
+= No file picker available on this phone.
+> Nessun selettore di file su questo telefono.
+
+= Report saved.
+> Report salvato.
+
+= Couldn't save the report: 
+> Impossibile salvare il report: 
+
+=  stocks. Refreshing...
+>  titoli. Aggiornamento...
+
+= Can't use this file
+> Impossibile usare questo file
+
+= The first line needs a column called Ticker or Symbol.
+> La prima riga deve avere una colonna Ticker o Symbol.
+
+=  stocks from your file. Refreshing...
+>  titoli dal tuo file. Aggiornamento...
+
+= No usable posts found
+> Nessun post utilizzabile
+
+= The file needs a first line with a column called 'title' (optional: date, subreddit, upvotes). 
+> Il file deve avere una prima riga con una colonna 'title' (facoltative: date, subreddit, upvotes). 
+
+= Dates older than 
+> Le date più vecchie di 
+
+=  Reddit posts. Refreshing...
+>  post di Reddit. Aggiornamento...
+
+= Sorry - StockBuddy closed unexpectedly last time
+> Spiacenti - StockBuddy si è chiuso inaspettatamente l'ultima volta
+
+= Details (useful if you report the problem):\n\n
+> Dettagli (utili se segnali il problema):\n\n
+
+= %d StockBuddy price alerts
+> %d avvisi di prezzo StockBuddy
+
+= Couldn't download any stock prices. Check your internet, or turn on Practice mode (More menu).
+> Impossibile scaricare i prezzi. Controlla internet o attiva la modalità pratica (menu Altro).
+
+= StockBuddy refresh
+> Aggiornamento StockBuddy
+
+= Stock / share
+> Azione
+
+= A tiny piece of ownership in a company. If the company does well, the price usually goes up.
+> Un piccolo pezzo di proprietà di un'azienda. Se l'azienda va bene, di solito il prezzo sale.
+
+= The short code for a stock, like AAPL for Apple or MSFT for Microsoft.
+> Il codice breve di un titolo, come AAPL per Apple o MSFT per Microsoft.
+
+= Index
+> Indice
+
+= A basket of many stocks that shows how a whole market is doing (e.g. the S&P 500 = 500 big US companies).
+> Un paniere di molti titoli che mostra come va un intero mercato (es. l'S&P 500 = 500 grandi aziende USA).
+
+= A fund you can buy like a single stock that holds many stocks at once (SPY holds the whole S&P 500). Great for beginners.
+> Un fondo che si compra come un'azione e contiene molti titoli insieme (SPY contiene tutto l'S&P 500). Ottimo per principianti.
+
+= Buying shares because you expect the price to go up over time.
+> Comprare azioni perché ti aspetti che il prezzo salga nel tempo.
+
+= Selling shares you own - to take a profit or to stop a loss from growing.
+> Vendere azioni che possiedi - per incassare un guadagno o fermare una perdita.
+
+= Short (short selling)
+> Vendita allo scoperto (short)
+
+= Borrowing shares, selling them, and buying them back later. You win if the price falls, but losses are unlimited if it rises.
+> Prendere in prestito azioni, venderle e ricomprarle più tardi. Guadagni se il prezzo scende, ma le perdite sono illimitate se sale.
+
+= Option
+> Opzione
+
+= A contract that lets you bet on a stock's direction for a small price. One contract = 100 shares. It expires on a set date.
+> Un contratto che ti permette di scommettere sulla direzione di un titolo a basso prezzo. Un contratto = 100 azioni. Scade in una data fissata.
+
+= Call option
+> Opzione call
+
+= Makes money if the stock goes UP past the strike price before expiry.
+> Guadagna se il titolo SALE oltre il prezzo di esercizio prima della scadenza.
+
+= Put option
+> Opzione put
+
+= Makes money if the stock goes DOWN below the strike price before expiry.
+> Guadagna se il titolo SCENDE sotto il prezzo di esercizio prima della scadenza.
+
+= Strike price
+> Prezzo di esercizio (strike)
+
+= The price written in the option contract that the stock has to beat.
+> Il prezzo scritto nel contratto d'opzione che il titolo deve superare.
+
+= Expiry / expiration
+> Scadenza
+
+= The last day the option is valid. After that it's worth nothing if it didn't pay off.
+> L'ultimo giorno in cui l'opzione è valida. Dopo non vale nulla se non ha reso.
+
+= Premium
+> Premio
+
+= The price you pay for an option. It's the most you can lose when you BUY an option.
+> Il prezzo che paghi per un'opzione. È il massimo che puoi perdere quando COMPRI un'opzione.
+
+= Breakeven
+> Punto di pareggio
+
+= The stock price where your option trade neither makes nor loses money at expiry.
+> Il prezzo del titolo a cui la tua opzione non guadagna né perde alla scadenza.
+
+= "Zero Days To Expiration": options that expire TODAY. Very cheap, very fast, very risky - like a coin flip with a ticking clock.
+> "Zero giorni alla scadenza": opzioni che scadono OGGI. Molto economiche, molto veloci, molto rischiose - come testa o croce con un timer.
+
+= Time decay
+> Decadimento temporale
+
+= Options lose a little value every day just from time passing. 0DTE options lose it by the minute.
+> Le opzioni perdono un po' di valore ogni giorno solo perché passa il tempo. Le 0DTE lo perdono minuto per minuto.
+
+= Limit order
+> Ordine limite
+
+= An order that says "buy only at this price or better". Protects you from overpaying.
+> Un ordine che dice "compra solo a questo prezzo o meglio". Ti protegge dal pagare troppo.
+
+= Stop-loss
+> Stop-loss
+
+= An automatic sell order if the price falls to a level you choose. It limits how much you can lose.
+> Un ordine di vendita automatico se il prezzo scende al livello che scegli. Limita quanto puoi perdere.
+
+= P/E ratio
+> Rapporto P/E
+
+= Price divided by yearly profit per share. P/E 20 = you pay $20 for every $1 the company earns. Lower can mean cheaper.
+> Il prezzo diviso per l'utile annuo per azione. P/E 20 = paghi 20 $ per ogni 1 $ che l'azienda guadagna. Più basso può voler dire più economico.
+
+= Price target
+> Prezzo obiettivo
+
+= Where Wall Street analysts think the price will be in about 12 months.
+> Dove gli analisti di Wall Street pensano sarà il prezzo tra circa 12 mesi.
+
+= Fair value
+> Valore equo
+
+= Stock Rover's estimate of what the stock is really worth. Price below fair value = possibly "on sale".
+> La stima di Stock Rover di quanto vale davvero il titolo. Prezzo sotto il valore equo = forse "in saldo".
+
+= WallStreetZen's 0-100 grade for a company's overall quality (higher = better).
+> Il voto da 0 a 100 di WallStreetZen sulla qualità complessiva di un'azienda (più alto = meglio).
+
+= Moving average (50-day, 200-day)
+> Media mobile (50 giorni, 200 giorni)
+
+= The average price of the last 50 or 200 days. Price above them = generally an uptrend.
+> Il prezzo medio degli ultimi 50 o 200 giorni. Prezzo sopra = in genere tendenza al rialzo.
+
+= A 0-100 meter of how fast a price moved recently. Above 70 = maybe "overheated", below 30 = maybe "oversold".
+> Un indicatore da 0 a 100 di quanto velocemente si è mosso il prezzo di recente. Sopra 70 = forse "surriscaldato", sotto 30 = forse "ipervenduto".
+
+= A momentum gauge. When it turns positive, the price is speeding up; negative = slowing down.
+> Un indicatore di slancio. Quando diventa positivo il prezzo accelera; negativo = rallenta.
+
+= StockCharts Technical Rank: 0-99 score of how strong a stock's chart is compared to others. 90+ = among the strongest.
+> Technical Rank di StockCharts: voto da 0 a 99 di quanto è forte il grafico di un titolo rispetto agli altri. 90+ = tra i più forti.
+
+= Candlestick chart
+> Grafico a candele
+
+= Each day is drawn as a 'candle': the thick body goes from the opening to the closing price (green = it rose that day, red = it fell), and the thin wicks show the day's high and low.
+> Ogni giorno è disegnato come una "candela": il corpo spesso va dal prezzo di apertura a quello di chiusura (verde = è salito quel giorno, rosso = è sceso) e gli stoppini sottili mostrano massimo e minimo del giorno.
+
+= SMA / EMA
+> SMA / EMA
+
+= Simple / Exponential Moving Average: the average price of the last N days drawn as a smooth line. The EMA gives recent days more weight, so it reacts faster.
+> Media mobile semplice / esponenziale: il prezzo medio degli ultimi N giorni disegnato come una linea morbida. L'EMA dà più peso ai giorni recenti, quindi reagisce più in fretta.
+
+= Bollinger Bands
+> Bande di Bollinger
+
+= A band drawn 2 'standard deviations' above and below the 20-day average. Price near the top band = it rose fast lately; near the bottom = it fell fast lately.
+> Una banda tracciata a 2 "deviazioni standard" sopra e sotto la media a 20 giorni. Prezzo vicino alla banda alta = è salito in fretta; vicino a quella bassa = è sceso in fretta.
+
+= Market cap
+> Capitalizzazione
+
+= Market capitalisation: share price x number of shares = what the whole company is worth on the stock market.
+> Capitalizzazione di mercato: prezzo dell'azione x numero di azioni = quanto vale l'intera azienda in borsa.
+
+= Beta
+> Beta
+
+= How much a stock swings compared with the whole market. Beta 1 = moves like the market, 2 = twice as much, 0.5 = half as much.
+> Quanto oscilla un titolo rispetto all'intero mercato. Beta 1 = si muove come il mercato, 2 = il doppio, 0,5 = la metà.
+
+= Earnings Per Share: the company's profit divided by its number of shares.
+> Utile per azione: l'utile dell'azienda diviso per il numero di azioni.
+
+= Dividend yield
+> Rendimento da dividendo
+
+= The cash a company pays its shareholders each year, as a % of the share price.
+> Il denaro che un'azienda paga ogni anno agli azionisti, come % del prezzo dell'azione.
+
+= Debt / equity
+> Debito / patrimonio
+
+= How much the company has borrowed compared with what its owners have put in. Lower usually means safer.
+> Quanto ha preso in prestito l'azienda rispetto a quanto hanno messo i proprietari. Più basso di solito significa più sicuro.
+
+= Volume
+> Volume
+
+= How many shares were bought and sold. A big move on high volume is taken more seriously than one on low volume.
+> Quante azioni sono state comprate e vendute. Un grande movimento con volume alto conta più di uno con volume basso.
+
+= Volume-Weighted Average Price: the average price everyone paid today. Day traders use it as a line in the sand.
+> Prezzo medio ponderato per volume: il prezzo medio pagato da tutti oggi. I day trader lo usano come linea di riferimento.
+
+= Volatility
+> Volatilità
+
+= How much a price jumps around. High volatility = bigger gains AND bigger losses.
+> Quanto un prezzo salta su e giù. Alta volatilità = guadagni più grandi E perdite più grandi.
+
+= Bullish / Bearish
+> Rialzista / ribassista
+
+= Bullish = expecting prices to go up. Bearish = expecting prices to go down.
+> Rialzista = aspettarsi che i prezzi salgano. Ribassista = aspettarsi che scendano.
+
+= Bull market / Bear market
+> Mercato rialzista / ribassista
+
+= A bull market is a long period of rising prices (usually +20% or more). A bear market is a long fall of 20% or more.
+> Un mercato rialzista è un lungo periodo di prezzi in salita (di solito +20% o più). Uno ribassista è un lungo calo del 20% o più.
+
+= Correction
+> Correzione
+
+= A drop of about 10% from a recent high. Corrections are normal and happen often.
+> Un calo di circa il 10% da un massimo recente. Le correzioni sono normali e frequenti.
+
+= Recession
+> Recessione
+
+= When a country's economy shrinks for a while (often two quarters in a row). Company profits and stock prices usually suffer.
+> Quando l'economia di un paese si contrae per un po' (spesso due trimestri di fila). Utili e prezzi delle azioni di solito ne soffrono.
+
+= Inflation
+> Inflazione
+
+= Prices of everyday things rising over time. High inflation usually leads central banks to raise interest rates.
+> L'aumento nel tempo dei prezzi delle cose di tutti i giorni. Un'inflazione alta di solito spinge le banche centrali ad alzare i tassi.
+
+= Interest rate
+> Tasso d'interesse
+
+= The price of borrowing money. When central banks raise rates, borrowing costs more and stocks often fall.
+> Il prezzo del denaro preso in prestito. Quando le banche centrali alzano i tassi, prendere in prestito costa di più e le azioni spesso scendono.
+
+= Central bank
+> Banca centrale
+
+= The bank that runs a country's money, like the Fed (US), the ECB (Eurozone), the Bank of Japan. It sets the main interest rate.
+> La banca che gestisce la moneta di un paese, come la Fed (USA), la BCE (Eurozona), la Banca del Giappone. Fissa il tasso principale.
+
+= Bond
+> Obbligazione
+
+= A loan you give to a government or company. They pay you interest and give the money back at the end.
+> Un prestito che fai a uno Stato o a un'azienda. Ti pagano interessi e alla fine ti restituiscono il denaro.
+
+= Yield
+> Rendimento
+
+= How much income an investment pays each year, as a % of its price (for example a bond's interest or a stock's dividend).
+> Quanto rende un investimento ogni anno, come % del suo prezzo (per esempio l'interesse di un'obbligazione o il dividendo di un'azione).
+
+= Blue chip
+> Blue chip
+
+= A big, well-known, financially strong company - usually considered safer.
+> Una grande azienda nota e finanziariamente solida - di solito considerata più sicura.
+
+= Penny stock
+> Penny stock
+
+= A very cheap stock (often under $5) of a small company. Very risky and easy to manipulate.
+> Un'azione molto economica (spesso sotto i 5 $) di una piccola azienda. Molto rischiosa e facile da manipolare.
+
+= Sector
+> Settore
+
+= A group of companies in the same business, like technology, banks, energy or health care.
+> Un gruppo di aziende dello stesso settore, come tecnologia, banche, energia o sanità.
+
+= Index fund
+> Fondo indicizzato
+
+= A fund that simply copies an index (like the S&P 500). Low cost and a good start for beginners.
+> Un fondo che copia semplicemente un indice (come l'S&P 500). Costi bassi e un buon inizio per i principianti.
+
+= Portfolio
+> Portafoglio
+
+= All the investments you own together.
+> Tutti gli investimenti che possiedi insieme.
+
+= Dollar-cost averaging (DCA)
+> Piano di accumulo (DCA)
+
+= Investing the same amount regularly (for example every month), whatever the price. It smooths out ups and downs.
+> Investire la stessa somma regolarmente (per esempio ogni mese), qualunque sia il prezzo. Attenua alti e bassi.
+
+= Rebalancing
+> Ribilanciamento
+
+= Bringing your portfolio back to the mix you planned, by selling a bit of what grew and buying what fell.
+> Riportare il portafoglio al mix previsto, vendendo un po' di ciò che è salito e comprando ciò che è sceso.
+
+= Bid / Ask / Spread
+> Bid / Ask / Spread
+
+= Bid = the highest price buyers offer, Ask = the lowest price sellers want. The spread is the gap between them - a hidden cost.
+> Bid = il prezzo più alto offerto dai compratori, Ask = il più basso chiesto dai venditori. Lo spread è la differenza - un costo nascosto.
+
+= Market order
+> Ordine al mercato
+
+= An order to buy or sell right now at whatever the price is. Fast, but the price can surprise you.
+> Un ordine per comprare o vendere subito a qualsiasi prezzo. Veloce, ma il prezzo può sorprenderti.
+
+= Stop-limit order
+> Ordine stop-limit
+
+= Like a stop-loss, but it only sells at your limit price or better - so it might not sell in a fast fall.
+> Come uno stop-loss, ma vende solo al tuo prezzo limite o meglio - quindi in un crollo veloce potrebbe non vendere.
+
+= Margin
+> Margine
+
+= Money borrowed from your broker to invest. It makes gains and losses bigger - risky for beginners.
+> Denaro preso in prestito dal broker per investire. Ingrandisce guadagni e perdite - rischioso per i principianti.
+
+= Leverage
+> Leva finanziaria
+
+= Using borrowed money (or options) so a small price move makes a big gain or loss.
+> Usare denaro preso in prestito (o opzioni) perché un piccolo movimento di prezzo dia un grande guadagno o una grande perdita.
+
+= Liquidity
+> Liquidità
+
+= How easily you can buy or sell something quickly at a fair price. Big stocks are very liquid.
+> Quanto è facile comprare o vendere velocemente a un prezzo giusto. I grandi titoli sono molto liquidi.
+
+= Short squeeze
+> Short squeeze
+
+= When a stock that many people bet against rises fast, forcing them to buy it back, which pushes the price up even more.
+> Quando un titolo su cui molti scommettono al ribasso sale in fretta, costringendoli a ricomprarlo, il che spinge il prezzo ancora più su.
+
+= Earnings
+> Utili
+
+= A company's profit. Companies report earnings every 3 months - prices often jump or fall that day.
+> L'utile di un'azienda. Le aziende pubblicano gli utili ogni 3 mesi - quel giorno i prezzi spesso saltano o crollano.
+
+= Guidance
+> Previsioni (guidance)
+
+= What a company says it expects for the next months. Disappointing guidance often hurts the price more than past results.
+> Ciò che un'azienda dice di aspettarsi per i prossimi mesi. Previsioni deludenti spesso pesano sul prezzo più dei risultati passati.
+
+= Stock split
+> Frazionamento azionario
+
+= Cutting each share into several cheaper ones (for example 1 into 10). It doesn't change what your shares are worth.
+> Dividere ogni azione in più azioni più economiche (per esempio 1 in 10). Non cambia quanto valgono le tue azioni.
+
+= Buyback
+> Riacquisto di azioni proprie
+
+= When a company buys its own shares. Fewer shares left usually supports the price.
+> Quando un'azienda compra le proprie azioni. Meno azioni in circolazione di solito sostengono il prezzo.
+
+= Ex-dividend date
+> Data di stacco del dividendo
+
+= You must own the stock BEFORE this date to receive the next dividend.
+> Devi possedere l'azione PRIMA di questa data per ricevere il prossimo dividendo.
+
+= Implied volatility (IV)
+> Volatilità implicita (IV)
+
+= How big a move the options market expects. High IV makes options more expensive.
+> Quanto grande si aspetta il mercato delle opzioni che sia il movimento. Un'IV alta rende le opzioni più care.
+
+= Delta / Theta (the Greeks)
+> Delta / Theta (le greche)
+
+= Delta: how much an option's price moves when the stock moves $1. Theta: how much value it loses each day from time decay.
+> Delta: quanto si muove il prezzo di un'opzione quando il titolo si muove di 1 $. Theta: quanto valore perde ogni giorno per il passare del tempo.
+
+= In / out of the money
+> In / out of the money
+
+= A call is "in the money" when the stock is above the strike (a put: below). "Out of the money" options are cheaper but riskier.
+> Una call è "in the money" quando il titolo è sopra lo strike (una put: sotto). Le opzioni "out of the money" costano meno ma sono più rischiose.
+
+= Covered call
+> Call coperta
+
+= Owning 100 shares and selling a call on them to earn extra income. You give up big gains above the strike.
+> Possedere 100 azioni e vendere una call su di esse per avere un reddito extra. Rinunci ai grandi guadagni sopra lo strike.
+
+= Hedge
+> Copertura
+
+= An investment that protects you against losses on another one - like insurance.
+> Un investimento che ti protegge dalle perdite di un altro - come un'assicurazione.
+
+= Risk / reward
+> Rischio / rendimento
+
+= How much you could lose compared with how much you could win. Good trades risk little to win a lot.
+> Quanto potresti perdere rispetto a quanto potresti vincere. Le buone operazioni rischiano poco per vincere molto.
+
+= American Depositary Receipt: a foreign company's shares traded in the US, in dollars (for example TSM for TSMC).
+> American Depositary Receipt: azioni di un'azienda straniera scambiate negli USA, in dollari (per esempio TSM per TSMC).
+
+= All-Time High: the highest price a stock has ever reached.
+> Massimo storico: il prezzo più alto mai raggiunto da un titolo.
+
+= Assets Under Management: how much money a fund manages.
+> Patrimonio gestito: quanto denaro gestisce un fondo.
+
+= Compound Annual Growth Rate: the average yearly growth over several years, including compounding.
+> Tasso di crescita annuo composto: la crescita media annua su più anni, compreso l'effetto composto.
+
+= Discounted Cash Flow: a way to estimate what a company is worth from the cash it should make in future.
+> Flussi di cassa scontati: un modo per stimare quanto vale un'azienda dal denaro che dovrebbe generare in futuro.
+
+= Earnings Before Interest, Taxes, Depreciation and Amortization - a rough measure of a company's operating profit.
+> Utile prima di interessi, tasse, deprezzamenti e ammortamenti - una misura approssimativa dell'utile operativo.
+
+= Free Cash Flow: the cash a company has left after paying for its operations and investments.
+> Flusso di cassa libero: il denaro che resta a un'azienda dopo aver pagato operazioni e investimenti.
+
+= Federal Open Market Committee: the group at the US Fed that decides interest rates, 8 times a year.
+> Federal Open Market Committee: il gruppo della Fed USA che decide i tassi d'interesse, 8 volte l'anno.
+
+= Consumer Price Index: the main measure of inflation (how fast everyday prices rise).
+> Indice dei prezzi al consumo: la misura principale dell'inflazione (quanto salgono i prezzi di tutti i giorni).
+
+= Gross Domestic Product: the total value of everything a country produces - the size of its economy.
+> Prodotto interno lordo: il valore totale di tutto ciò che un paese produce - la dimensione della sua economia.
+
+= Initial Public Offering: when a company sells shares to the public for the first time.
+> Offerta pubblica iniziale: quando un'azienda vende azioni al pubblico per la prima volta.
+
+= Mergers and Acquisitions: companies joining or buying each other.
+> Fusioni e acquisizioni: aziende che si uniscono o si comprano a vicenda.
+
+= Net Asset Value: what one share of a fund is worth, based on everything it owns.
+> Valore patrimoniale netto: quanto vale una quota di un fondo, in base a tutto ciò che possiede.
+
+= P/B ratio
+> Rapporto P/B
+
+= Price-to-Book: the share price divided by what the company's assets are worth on paper. Below 1 can mean cheap.
+> Prezzo / valore contabile: il prezzo dell'azione diviso per quanto valgono sulla carta i beni dell'azienda. Sotto 1 può voler dire economico.
+
+= P/S ratio
+> Rapporto P/S
+
+= Price-to-Sales: the company's value divided by its yearly sales. Useful for companies with no profit yet.
+> Prezzo / vendite: il valore dell'azienda diviso per le vendite annue. Utile per aziende ancora senza utili.
+
+= PEG ratio
+> Rapporto PEG
+
+= P/E divided by the expected profit growth. Around 1 or below can mean a fair price for a growing company.
+> Il P/E diviso per la crescita attesa degli utili. Intorno a 1 o meno può indicare un prezzo giusto per un'azienda in crescita.
+
+= ROE / ROA
+> ROE / ROA
+
+= Return on Equity / on Assets: how much profit the company makes with its owners' money / with everything it owns.
+> Rendimento del capitale proprio / degli attivi: quanto utile fa l'azienda con il denaro dei proprietari / con tutto ciò che possiede.
+
+= Return on Investment: how much you gained or lost compared with what you put in.
+> Ritorno sull'investimento: quanto hai guadagnato o perso rispetto a quanto hai messo.
+
+= Year To Date: since January 1st of this year.
+> Da inizio anno: dal 1° gennaio di quest'anno.
+
+= YoY / QoQ
+> Anno su anno / trimestre su trimestre
+
+= Year over Year / Quarter over Quarter: compared with the same period last year / the previous 3 months.
+> Anno su anno / trimestre su trimestre: confrontato con lo stesso periodo dell'anno scorso / con i 3 mesi precedenti.
+
+= Over The Counter: shares traded outside the big exchanges - often foreign or small companies.
+> Over The Counter: azioni scambiate fuori dalle grandi borse - spesso aziende estere o piccole.
+
+= Securities and Exchange Commission: the US authority that oversees the stock market and company reports.
+> Securities and Exchange Commission: l'autorità USA che vigila sulla borsa e sui rapporti delle aziende (in Italia: la CONSOB).
+
+= Practising with fake money in a broker's simulator. The best way to learn options safely.
+> Esercitarsi con denaro finto nel simulatore di un broker. Il modo migliore per imparare le opzioni in sicurezza.
+
+= Diversification
+> Diversificazione
+
+= Spreading money across many stocks so one bad one doesn't sink you.
+> Distribuire il denaro su molti titoli così che uno cattivo non ti affondi.
+
+= Previous close
+> Chiusura precedente
+
+= Open
+> Apertura
+
+= Day's range
+> Intervallo del giorno
+
+= 52-week range
+> Intervallo a 52 settimane
+
+= Avg. volume (3 months)
+> Volume medio (3 mesi)
+
+= Beta (5Y monthly)
+> Beta (5 anni, mensile)
+
+= P/E ratio (TTM)
+> P/E (ultimi 12 mesi)
+
+= Forward P/E
+> P/E prospettico
+
+= EPS (TTM)
+> EPS (ultimi 12 mesi)
+
+= Earnings date
+> Data degli utili
+
+= Dividend & yield
+> Dividendo e rendimento
+
+= 1y target estimate
+> Obiettivo a 1 anno
+
+= Analyst rating
+> Giudizio degli analisti
+
+= Revenue (TTM)
+> Ricavi (12 mesi)
+
+= Net income (TTM)
+> Utile netto (12 mesi)
+
+= Shares outstanding
+> Azioni in circolazione
+
+= Profit margin
+> Margine di profitto
+
+= Return on equity
+> Rendimento del capitale proprio
+
+= Revenue growth (YoY)
+> Crescita dei ricavi (anno su anno)
+
+= Current ratio
+> Indice di liquidità
+
+= The price when the market closed last time.
+> Il prezzo all'ultima chiusura del mercato.
+
+= Today's lowest and highest price.
+> Il prezzo più basso e più alto di oggi.
+
+= The lowest and highest price in the past year.
+> Il prezzo più basso e più alto dell'ultimo anno.
+
+= How many shares changed hands today.
+> Quante azioni sono passate di mano oggi.
+
+= How many shares usually change hands in a day.
+> Quante azioni passano di mano di solito in un giorno.
+
+= What the whole company is worth on the stock market.
+> Quanto vale l'intera azienda in borsa.
+
+= How much the stock swings compared with the whole market. 1 = same, 2 = twice as much.
+> Quanto oscilla il titolo rispetto all'intero mercato. 1 = uguale, 2 = il doppio.
+
+= Price divided by the last 12 months' profit per share. Lower can mean cheaper.
+> Il prezzo diviso per l'utile per azione degli ultimi 12 mesi. Più basso può voler dire più economico.
+
+= Like P/E, but using next year's expected profit.
+> Come il P/E, ma con l'utile atteso l'anno prossimo.
+
+= Profit per share over the last 12 months.
+> L'utile per azione degli ultimi 12 mesi.
+
+= When the company next reports its results - prices often jump that day.
+> Quando l'azienda pubblicherà i prossimi risultati - quel giorno i prezzi spesso saltano.
+
+= Cash paid to shareholders each year, and as a % of the price.
+> Il denaro pagato agli azionisti ogni anno, e come % del prezzo.
+
+= Where analysts think the price will be in a year.
+> Dove gli analisti pensano sarà il prezzo tra un anno.
+
+= How many cents of every $1 of sales the company keeps as profit.
+> Quanti centesimi di ogni 1 $ di vendite l'azienda tiene come profitto.
+
+= How much profit the company makes with its owners' money.
+> Quanto utile fa l'azienda con il denaro dei proprietari.
+
+= How much the company borrowed compared with what it owns. Lower is safer.
+> Quanto ha preso in prestito l'azienda rispetto a ciò che possiede. Più basso è più sicuro.
+
+= Can it pay its bills this year? Above 1 is usually fine.
+> Può pagare i suoi conti quest'anno? Sopra 1 di solito va bene.
+
+= Line
+> Linea
+
+= Area
+> Area
+
+= Nothing
+> Niente
+
+= Best Buys
+> Migliori acquisti
+
+= Sells & Shorts
+> Vendite e allo scoperto
+
+= Best Calls
+> Migliori call
+
+= Best Puts
+> Migliori put
+
+= 0DTE (today)
+> 0DTE (oggi)
+
+= Best buys today
+> Migliori acquisti di oggi
+
+= Stocks where most sources see good signs. [+] = a source likes it, [-] = a source sees a problem. More stars = sources agree more.
+> Titoli in cui la maggior parte delle fonti vede buoni segnali. [+] = a una fonte piace, [-] = una fonte vede un problema. Più stelle = fonti più d'accordo.
+
+= No stock had enough good signals today. That's OK - waiting is a strategy too.
+> Nessun titolo aveva abbastanza segnali buoni oggi. Va bene così - anche aspettare è una strategia.
+
+= Sells & shorts
+> Vendite e allo scoperto
+
+= Stocks where most sources see warning signs. If you own one, think about selling or protecting it; if you don't, this means "don't buy right now". 
+> Titoli in cui la maggior parte delle fonti vede segnali d'allarme. Se ne possiedi uno, valuta di venderlo o proteggerlo; se no, significa "non comprare ora". 
+
+= Ideas marked SHORT are also in a clear downtrend - shorting is for advanced traders only.
+> Le idee contrassegnate SHORT sono anche in chiara tendenza ribassista - la vendita allo scoperto è solo per trader esperti.
+
+= No stock had strong sell signals today.
+> Nessun titolo aveva forti segnali di vendita oggi.
+
+= Best calls (bet on up, 1-2 months)
+> Migliori call (scommessa sul rialzo, 1-2 mesi)
+
+= Call options on stocks with strong, clear good signals and a rising price. Costs are estimates - check your broker.
+> Opzioni call su titoli con segnali buoni forti e chiari e prezzo in salita. I costi sono stime - controlla dal tuo broker.
+
+= No stock had signals strong and clear enough for a call today.
+> Nessun titolo aveva segnali abbastanza forti e chiari per una call oggi.
+
+= Best puts (bet on down, 1-2 months)
+> Migliori put (scommessa sul ribasso, 1-2 mesi)
+
+= Put options on stocks with strong warning signs and a falling price. A put is the beginner-safer way to bet on a fall: you can't lose more than you paid.
+> Opzioni put su titoli con forti segnali d'allarme e prezzo in calo. Una put è il modo più sicuro per un principiante di puntare sul ribasso: non puoi perdere più di quanto hai pagato.
+
+= No stock had signals strong and clear enough for a put today.
+> Nessun titolo aveva segnali abbastanza forti e chiari per una put oggi.
+
+= 0DTE ideas (expire today)
+> Idee 0DTE (scadono oggi)
+
+= Options on SPY and QQQ that expire at today's close. Extremely risky - often the best idea is to sit out.
+> Opzioni su SPY e QQQ che scadono alla chiusura di oggi. Estremamente rischioso - spesso l'idea migliore è stare fuori.
+
+= Today's Ideas
+> Idee di oggi
+
+= World Markets
+> Mercati mondiali
+
+= World Stocks
+> Titoli mondiali
+
+= Economic Calendar
+> Calendario economico
+
+= Look Up a Stock
+> Cerca un titolo
+
+= All Stocks
+> Tutti i titoli
+
+= Market News
+> Notizie di mercato
+
+= Price Alerts
+> Avvisi di prezzo
+
+= Paper Trading
+> Trading simulato
+
+= Track Record
+> Storico delle idee
+
+= Dictionary
+> Dizionario
+
+= My Watchlist
+> La mia lista
+
+= Data Sources
+> Fonti dei dati
+
+= Buys, sells, options, shorts and 0DTE
+> Acquisti, vendite, opzioni, short e 0DTE
+
+= The 16 biggest stock markets
+> Le 16 borse più grandi
+
+= Big companies abroad + where to buy
+> Grandi aziende estere + dove comprare
+
+= Big news this week
+> Le grandi notizie della settimana
+
+= Full explanation and chart
+> Spiegazione completa e grafico
+
+= Every stock checked (30 days)
+> Tutti i titoli controllati (30 giorni)
+
+= Headlines in your language
+> Titoli nella tua lingua
+
+= Get told when a price is reached
+> Ricevi un avviso al raggiungimento di un prezzo
+
+= Practise with pretend money
+> Esercitati con denaro fittizio
+
+= How past ideas turned out
+> Come sono andate le idee passate
+
+= Investing words made simple
+> Le parole degli investimenti, semplici
+
+= Stocks you always want checked
+> Titoli da controllare sempre
+
+= Which websites worked
+> Quali siti hanno funzionato
+
+= World markets
+> Mercati mondiali
+
+= Economic calendar
+> Calendario economico
+
+= All stocks
+> Tutti i titoli
+
+= Price alerts
+> Avvisi di prezzo
+
+= Data sources
+> Fonti dei dati
+
+= S&P 500 (500 biggest US companies)
+> S&P 500 (le 500 maggiori aziende USA)
+
+= Nasdaq (US tech-heavy)
+> Nasdaq (molta tecnologia USA)
+
+= Dow Jones (30 big US companies)
+> Dow Jones (30 grandi aziende USA)
+
+= TSX (Canada)
+> TSX (Canada)
+
+= Bovespa (Brazil)
+> Bovespa (Brasile)
+
+= Brazil
+> Brasile
+
+= FTSE 100 (UK)
+> FTSE 100 (Regno Unito)
+
+= DAX (Germany)
+> DAX (Germania)
+
+= Germany
+> Germania
+
+= CAC 40 (France)
+> CAC 40 (Francia)
+
+= France
+> Francia
+
+= Euro Stoxx 50 (Eurozone)
+> Euro Stoxx 50 (Eurozona)
+
+= Europe
+> Europa
+
+= Nikkei 225 (Japan)
+> Nikkei 225 (Giappone)
+
+= Shanghai Composite (China)
+> Shanghai Composite (Cina)
+
+= Hang Seng (Hong Kong)
+> Hang Seng (Hong Kong)
+
+= Hong Kong
+> Hong Kong
+
+= Sensex (India)
+> Sensex (India)
+
+= India
+> India
+
+= KOSPI (South Korea)
+> KOSPI (Corea del Sud)
+
+= South Korea
+> Corea del Sud
+
+= TAIEX (Taiwan)
+> TAIEX (Taiwan)
+
+= Taiwan
+> Taiwan
+
+= ASX 200 (Australia)
+> ASX 200 (Australia)
+
+= Your CSV files
+> I tuoi file CSV
+
+= World markets (Yahoo Finance)
+> Mercati mondiali (Yahoo Finance)
+
+= Economic calendar (ForexFactory)
+> Calendario economico (ForexFactory)
+
+= Market news (Google News)
+> Notizie di mercato (Google News)
+
+= WallStreetBets sentiment (WSB API)
+> Sentiment WallStreetBets (API WSB)
+
+= StockCharts-style technicals
+> Indicatori tecnici stile StockCharts
+
+= SEC EDGAR (official filings)
+> SEC EDGAR (documenti ufficiali)
+
+= News sentiment (Alpha Vantage)
+> Sentiment delle notizie (Alpha Vantage)
+
+= World stocks (16 biggest markets)
+> Titoli mondiali (16 borse più grandi)
+
+= PRACTICE MODE
+> MODALITÀ PRATICA
+
+= Skin:
+> Aspetto:
+
+= Market:
+> Mercato:
+
+= Trade:
+> Operazione:
+
+= Chart:
+> Grafico:
+
+= Period:
+> Periodo:
+
+= Lines:
+> Linee:
+
+=  days
+>  giorni
+
+= Reddit:
+> Reddit:
+
+= today
+> oggi
+
+= OPEN
+> APERTO
+
+= closed
+> chiuso
+
+=  post
+>  post
+
+= updated 
+> aggiornato 
+
+= a strong, happy day
+> una giornata forte e felice
+
+= a mildly positive day
+> una giornata leggermente positiva
+
+= a quiet, mixed day
+> una giornata tranquilla e mista
+
+= a mildly negative day
+> una giornata leggermente negativa
+
+= a rough day
+> una giornata difficile
+
+=  at 
+>  a 
+
+= Source:
+> Fonte:
+
+= Show:
+> Mostra:
+
+= top 
+> top 
+
+= bullish
+> rialzista
+
+= bearish
+> ribassista
+
+= neutral
+> neutrale
+
+= StockCharts-style chart analysis
+> Analisi grafica stile StockCharts
+
+= stockanalysis.com (company numbers & analysts)
+> stockanalysis.com (numeri dell'azienda e analisti)
+
+= Stock Rover (fair value & scores)
+> Stock Rover (valore equo e punteggi)
+
+= Finnhub (analyst recommendations)
+> Finnhub (raccomandazioni degli analisti)
+
+= SEC EDGAR (official company reports)
+> SEC EDGAR (rapporti ufficiali delle aziende)
+
+= Reddit (r/ValueInvesting, r/options, r/wallstreetbets)
+> Reddit (r/ValueInvesting, r/options, r/wallstreetbets)
+
+= overpriced
+> sopravvalutato
+
+= Where to buy: 
+> Dove comprare: 
+
+= In your broker app, search 
+> Nell'app del tuo broker, cerca 
+
+= , choose "Buy", and use a LIMIT order near 
+> , scegli "Compra" e usa un ordine limite vicino a 
+
+=  so you don't overpay.
+>  per non pagare troppo.
+
+= Only put in money you can leave alone for months; don't put everything into one stock.
+> Investi solo denaro che puoi lasciare fermo per mesi; non mettere tutto su un solo titolo.
+
+= If you own 
+> Se possiedi 
+
+= , you could sell part (for example half) to lower your risk, or set a stop-loss just below today's price.
+> , potresti venderne una parte (per esempio metà) per ridurre il rischio, o mettere uno stop-loss appena sotto il prezzo di oggi.
+
+= If you don't own it: this just means "don't buy it right now".
+> Se non lo possiedi: significa semplicemente "non comprarlo ora".
+
+= SHORT (advanced): "shorting" means borrowing shares, selling them now and buying them back later - you profit if the price FALLS. You need a margin account.
+> ALLO SCOPERTO (avanzato): "andare short" significa prendere in prestito azioni, venderle ora e ricomprarle più tardi - guadagni se il prezzo SCENDE. Serve un conto a margine.
+
+= A CALL gains value if the stock goes UP. It gives you the right to buy 100 shares at the strike price.
+> Una CALL guadagna valore se l'azione SALE. Ti dà il diritto di comprare 100 azioni al prezzo di esercizio.
+
+= above
+> sopra
+
+= below
+> sotto
+
+= Many traders take profit at +50% and cut losses at -50% instead of waiting until expiry.
+> Molti trader incassano a +50% e tagliano le perdite a -50% invece di aspettare la scadenza.
+
+= The US market is closed (it's open 9:30am-4:00pm New York time, Monday-Friday; it's 
+> La borsa USA è chiusa (è aperta dalle 9:30 alle 16:00 ora di New York, dal lunedì al venerdì; lì sono le 
+
+= Run the program again during market hours. The first 30 minutes are very jumpy, so most people wait until about 10:00am.
+> Riavvia il programma durante l'orario di borsa. I primi 30 minuti sono molto nervosi, quindi quasi tutti aspettano le 10:00 circa.
+
+= ABOVE
+> SOPRA
+
+= BELOW
+> SOTTO
+
+= The signals disagree, and with no clear direction 0DTE options usually just lose value. Not trading is a valid choice!
+> I segnali non concordano, e senza una direzione chiara le opzioni 0DTE di solito perdono solo valore. Non fare trading è una scelta valida!
+
+= Check again later in the day if a clear trend shows up.
+> Ricontrolla più tardi nella giornata se appare una tendenza chiara.
+
+= Price is rising steadily and staying above VWAP: buyers are in control right now.
+> Il prezzo sale costantemente e resta sopra il VWAP: ora comandano i compratori.
+
+= Decide your exit BEFORE buying: e.g. sell at +30% profit or -30% loss, and always close before 3:45pm.
+> Decidi l'uscita PRIMA di comprare: es. vendi a +30% di guadagno o -30% di perdita, e chiudi sempre prima delle 15:45.
+
+= Less than 1 hour left: prices move extremely fast now. Even more caution needed.
+> Manca meno di 1 ora: i prezzi si muovono velocissimi ora. Serve ancora più cautela.
+
+= Seen on 
+> Visto su 
+
+= MEDIUM
+> MEDIO
+
+= a big move in Asia overnight often affects how Europe and the US start the day.</html>
+> un grande movimento in Asia durante la notte spesso influenza l'apertura di Europa e USA.</html>
+
+=  rises above 
+>  sale sopra 
+
+=  falls below 
+>  scende sotto 
+
+=  moves more than 
+>  si muove più del 
+
+= % in a day (up or down)
+> % in un giorno (su o giù)
+
+=  - now 
+>  - ora 
+
+= Buy 
+> Compra 
+
+=  in almost any broker app - it trades on the 
+>  in quasi tutte le app dei broker - è quotato al 
+
+=  in US dollars.
+>  in dollari USA.
+
+= Simplest way to own the 500 biggest US companies at once: an S&P 500 ETF such as SPY or VOO.
+> Il modo più semplice per possedere le 500 maggiori aziende USA in un colpo: un ETF sull'S&P 500 come SPY o VOO.
+
+= Easiest: buy 
+> Il più semplice: compra 
+
+=  on the 
+>  sul 
+
+=  - almost every broker app has it, priced in US dollars.
+>  - quasi tutte le app dei broker ce l'hanno, in dollari USA.
+
+= In the US: 
+> Negli USA: 
+
+=  on the OTC market. Some broker apps allow it (Schwab, Fidelity, Interactive Brokers...); prices can be less smooth.
+>  sul mercato OTC. Alcune app lo consentono (Schwab, Fidelity, Interactive Brokers...); i prezzi possono essere meno fluidi.
+
+= At home: 
+> Nel suo paese: 
+
+= . Needs a broker with international trading 
+> . Serve un broker con accesso ai mercati internazionali 
+
+= (for example Interactive Brokers or Saxo - check what is offered in your country).
+> (per esempio Interactive Brokers o Saxo - controlla cosa è offerto nel tuo paese).
+
+= Mainland China shares are usually bought by foreigners through Hong Kong's "Stock Connect" (international brokers), or via a China ETF.
+> Gli stranieri comprano di solito le azioni della Cina continentale tramite lo "Stock Connect" di Hong Kong (broker internazionali) o con un ETF sulla Cina.
+
+= Indian shares are hard for foreigners to buy directly - an India ETF is the practical way.
+> Le azioni indiane sono difficili da comprare direttamente per gli stranieri - un ETF sull'India è la via pratica.
+
+= Simplest way to own the whole market: the ETF 
+> Il modo più semplice per possedere tutto il mercato: l'ETF 
+
+=  (a basket of this country's big companies, sold in US broker apps).
+>  (un paniere delle grandi aziende di questo paese, venduto nelle app dei broker USA).
+
+= grew
+> sono cresciute del
+
+= shrank
+> sono calate del
+
+= positive
+> positivo
+
+= negative
+> negativo
+
+= mixed
+> misto
+
+= USA
+> USA
+
+= UK
+> Regno Unito
+
+= ~OK - data for 
+> OK - dati per 
+
+= ~ stocks
+>  titoli
+
+= ~Could not connect
+> Connessione non riuscita
+
+= ~Not set up - add your free key from finnhub.io (optional)
+> Non configurato - aggiungi la tua chiave gratuita di finnhub.io (facoltativo)
+
+= ~Not set up - add your free key from alphavantage.co (optional)
+> Non configurato - aggiungi la tua chiave gratuita di alphavantage.co (facoltativo)
+
+= ~Not set up - export a CSV from Stock Rover to data/stockrover.csv
+> Non configurato - esporta un CSV da Stock Rover in data/stockrover.csv
+
+= ~Could not read - check your Finnhub key
+> Lettura non riuscita - controlla la chiave Finnhub
+
+= ~Could not read (site may block programs; you can use data/wallstreetzen.csv)
+> Lettura non riuscita (il sito può bloccare i programmi; puoi usare data/wallstreetzen.csv)
+
+= ~Calculated from price history (StockCharts has no public data feed)
+> Calcolato dallo storico dei prezzi (StockCharts non ha dati pubblici)
+
+= ~ stocks from data/stockrover.csv
+>  titoli da data/stockrover.csv
+
+= ~OK - news sentiment for 
+> OK - sentiment delle notizie per 
+
+= ~ (remembered from earlier today)
+>  (ricordato da prima, oggi)
+
+= ~ events this week (
+>  eventi questa settimana (
+
+= ~ high-impact)
+>  ad alto impatto)
+
+= ~Could not connect to the economic calendar (ForexFactory)
+> Connessione al calendario economico (ForexFactory) non riuscita
+
+= ~Not loaded yet
+> Non ancora caricato
+
+= ~practice data
+> dati di pratica
+
+= ~practice posts
+> post di pratica
+
+= ~calculated from practice prices
+> calcolato dai prezzi di pratica
+
+= ~All data below is MADE UP for learning - not real prices!
+> Tutti i dati qui sotto sono INVENTATI per imparare - non sono prezzi reali!
+
+= ~Could not connect to the news feed
+> Connessione al feed delle notizie non riuscita
+
+= ~ headlines in 
+>  titoli in 
+
+= ~ posts read from 
+>  post letti da 
+
+= ~, plus 
+> , più 
+
+= ~OK - using 
+> OK - uso 
+
+= ~ (Reddit itself could not be reached)
+>  (Reddit non è raggiungibile)
+
+= ~Could not connect - you can add posts yourself (Data Sources: "Add Reddit posts")
+> Connessione non riuscita - puoi aggiungere i post tu stesso (Fonti dei dati: "Aggiungi post di Reddit")
+
+= ~OK - official filings for 
+> OK - documenti ufficiali per 
+
+= ~ US stocks
+>  titoli USA
+
+= ~Could not get data from sec.gov - check your internet; if it keeps failing, add your email (Data Sources) so the SEC knows who is asking
+> Impossibile ottenere dati da sec.gov - controlla internet; se continua, aggiungi la tua email (Fonti dei dati) così la SEC sa chi chiede
+
+= ~ stocks discussed on r/wallstreetbets today
+>  titoli discussi oggi su r/wallstreetbets
+
+= ~Could not connect to the WallStreetBets sentiment service
+> Connessione al servizio di sentiment WallStreetBets non riuscita
+
+= ~ markets
+>  mercati
+
+= ~OK - top 
+> OK - top 
+
+= ~ companies of each market (
+>  aziende di ogni mercato (
+
+= ~ with prices)
+>  con prezzi)
+
+= ~Could not download their prices
+> Impossibile scaricare i loro prezzi
+
+= ~Not set up
+> Non configurato
+
+= ~None yet - you can add any CSV with a Ticker or Symbol column (optional)
+> Ancora nessuno - puoi aggiungere un CSV con una colonna Ticker o Symbol (facoltativo)
+
+= Scroll to zoom in or out, drag to move through time, double-click to reset
+> Rotella per zoomare, trascina per muoverti nel tempo, doppio clic per reimpostare
+
+= Look up a stock to see its price chart here.
+> Cerca un titolo per vedere qui il suo grafico.
+
+= %d days ago
+> %d giorni fa
+
+= %s ago
+> %s fa
+
+= Zoomed - double-click to reset
+> Zoom attivo - doppio clic per reimpostare
+
+= Scroll to zoom, drag to move
+> Rotella per zoomare, trascina per muoverti
+
+= 1 day ago
+> 1 giorno fa
+
+=    Open %,.2f   High %,.2f   Low %,.2f   Close %,.2f
+>    Apertura %,.2f   Max %,.2f   Min %,.2f   Chiusura %,.2f
+
+=    Close %,.2f
+>    Chiusura %,.2f
+
+= No volume data
+> Nessun dato di volume
+
